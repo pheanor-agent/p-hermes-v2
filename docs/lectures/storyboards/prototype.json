@@ -1,0 +1,7 @@
+[
+  {"slide_id":"map","objective":"다섯 분야와 공통 기반을 구분한다.","prev_bridge":"개별 기능 대신 전체 관계에서 시작한다.","claim":"작업·지식·카탈로그·영상·이미지를 하나의 학습 지도로 연결한다.","visual":"다섯 갈래 관계도와 공통 기반선","doc_ref":"../overview.md","next_bridge":"분야를 알았다면 하나의 작업을 따라가 보자.","source_status":"proposed"},
+  {"slide_id":"flow","objective":"요청에서 검증까지의 책임 경계를 이해한다.","prev_bridge":"전체 지도에서 작업 분야를 확대한다.","claim":"선택과 실행 사이에 명시적 승인 경계를 둔다.","visual":"요청·선택·승인·실행·검증의 연결 흐름","doc_ref":"../overview.md","next_bridge":"같은 흐름을 시간 기반 매체에 적용하면 무엇이 달라질까?","source_status":"proposed"},
+  {"slide_id":"timeline","objective":"영상의 샷과 연속성 검토를 분리한다.","prev_bridge":"실행 대상을 영상으로 바꾸어 본다.","claim":"영상은 개별 장면뿐 아니라 장면 사이의 연결을 검토한다.","visual":"도입·전개·마무리의 개념 타임라인","doc_ref":"../overview.md","next_bridge":"시간의 연결에서 한 장의 이미지 안으로 시선을 옮긴다.","source_status":"proposed"},
+  {"slide_id":"compare","objective":"이미지 비교의 기준과 증거를 구분한다.","prev_bridge":"영상의 연속성 다음으로 이미지의 구도를 살핀다.","claim":"같은 기준으로 관찰하되 도식과 실제 생성 증거를 혼동하지 않는다.","visual":"신규 저작 SVG의 중앙 구도와 여백 구도 비교","doc_ref":"../overview.md","next_bridge":"시각적 판단을 넘어 데이터 조건도 명시해 보자.","source_status":"proposed · illustrative"},
+  {"slide_id":"contract","objective":"순수 데이터 계약과 실행 결과의 차이를 이해한다.","prev_bridge":"비교 기준을 기계가 읽을 수 있는 조건으로 옮긴다.","claim":"선택 수와 필수 식별자를 명시하는 것과 검증에 성공하는 것은 다르다.","visual":"합성 JSON fixture와 미검증 상태의 분리 배치","doc_ref":"../overview.md","next_bridge":"상세 문서로 돌아가 관측 근거와 제안 계약을 따로 확인한다.","source_status":"proposed · synthetic · unverified"}
+]
