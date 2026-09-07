@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+<title id="title">LUMA — 교육용 데스크 램프 일러스트</title><desc id="desc">청록색 납작한 헤드와 가는 지지대, 타원 받침을 가진 램프. 따뜻한 빛이 책과 나무 책상을 비춘다. 실제 생성물이나 실제품이 아니다.</desc>
+<defs>
+ <linearGradient id="metal" x1="0" x2="1"><stop stop-color="#195b58"/><stop offset=".28" stop-color="#5baca1"/><stop offset=".52" stop-color="#2e827a"/><stop offset="1" stop-color="#103b3b"/></linearGradient>
+ <linearGradient id="shade" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#75bcb0"/><stop offset=".45" stop-color="#367c73"/><stop offset="1" stop-color="#16423f"/></linearGradient>
+ <linearGradient id="desk" x2="0" y2="1"><stop stop-color="#675e4b"/><stop offset="1" stop-color="#262b29"/></linearGradient>
+ <linearGradient id="beam" x2="0" y2="1"><stop stop-color="#ffe5a3" stop-opacity=".22"/><stop offset="1" stop-color="#ffe5a3" stop-opacity="0"/></linearGradient>
+ <radialGradient id="pool"><stop stop-color="#ffdf99" stop-opacity=".48"/><stop offset=".6" stop-color="#fbdc9b" stop-opacity=".18"/><stop offset="1" stop-color="#fbdc9b" stop-opacity="0"/></radialGradient>
+ <radialGradient id="wall"><stop stop-color="#354441"/><stop offset="1" stop-color="#111b1d"/></radialGradient>
+ <linearGradient id="paper" x2="0" y2="1"><stop stop-color="#fff2d1"/><stop offset="1" stop-color="#b5ad91"/></linearGradient>
+ <filter id="shadow"><feGaussianBlur stdDeviation="9"/></filter>
+ <g id="lamp">
+  <path d="M541 451 C586 432 665 443 702 451 C725 457 722 469 680 476 C629 485 565 477 543 468Z" fill="#080f0f" opacity=".6" filter="url(#shadow)"/>
+  <path d="M526 432 Q527 413 612 412 Q693 414 696 437 L696 445 Q686 460 611 461 Q539 459 527 447Z" fill="url(#metal)"/>
+  <ellipse cx="611" cy="431" rx="84" ry="21" fill="url(#shade)" stroke="#79b7aa" stroke-width="1.2"/>
+  <ellipse cx="650" cy="431" rx="10" ry="4" fill="#143d3b"/><path d="M650 427v4" stroke="#a4d9c8" stroke-width="1.5"/>
+  <path d="M609 425 L609 163 Q609 141 588 141 L554 141" fill="none" stroke="#102e2e" stroke-width="18"/>
+  <path d="M606 424 L606 162 Q606 143 587 143 L554 143" fill="none" stroke="url(#metal)" stroke-width="13"/>
+  <path d="M602 424 L602 164 Q602 149 588 149" fill="none" stroke="#8dbeb0" stroke-width="1.8" opacity=".7"/>
+  <circle cx="563" cy="143" r="13" fill="#214e49" stroke="#91c5b4" stroke-width="1.5"/><circle cx="563" cy="143" r="4" fill="#122e2d"/>
+  <path d="M419 147 Q420 125 460 109 Q508 87 554 103 Q581 112 591 142 L591 156 Q542 179 423 166Z" fill="url(#shade)" stroke="#75a99b" stroke-width="1"/>
+  <ellipse cx="505" cy="158" rx="87" ry="18" fill="#193b37" transform="rotate(-3 505 158)"/>
+  <ellipse cx="503" cy="159" rx="74" ry="11" fill="#f8dd9d" transform="rotate(-3 503 159)"/>
+  <ellipse cx="503" cy="158" rx="61" ry="5" fill="#fff4cd" transform="rotate(-3 503 158)"/>
+  <path d="M437 132 Q492 106 548 112" fill="none" stroke="#b4d7be" stroke-width="2" opacity=".55"/>
+  <path d="M692 447 C743 455 728 484 798 479" fill="none" stroke="#111c1c" stroke-width="3"/>
+ </g>
+ <g id="book">
+  <path d="M234 400 L376 378 L466 415 L324 444Z" fill="#162b2a"/><path d="M239 392 L376 374 L462 404 L324 433 L239 407Z" fill="#b6b59c"/>
+  <path d="M238 392 Q309 365 375 374 L327 425 Q285 399 238 392Z" fill="url(#paper)"/>
+  <path d="M375 374 Q420 374 465 399 L327 425Z" fill="#eadcba"/>
+  <path d="M375 375 L327 425 M253 391 L309 406 M263 385 L323 399 M392 384 L437 397 M379 390 L424 403" stroke="#817e69" stroke-width="1.2" opacity=".55"/>
+ </g>
+ <symbol id="hero" viewBox="0 0 900 520">
+  <rect width="900" height="520" fill="url(#wall)"/>
+  <path d="M760 0V340M775 0V340M790 0V340M805 0V340M820 0V340M835 0V340M850 0V340M865 0V340M880 0V340" stroke="#728077" stroke-opacity=".13" stroke-width="5"/>
+  <path d="M0 370L900 342V520H0Z" fill="url(#desk)"/><path d="M0 494L900 474V520H0Z" fill="#1b2525"/>
+  <path d="M0 494L900 474" stroke="#9a9478" stroke-opacity=".35"/>
+  <ellipse cx="471" cy="414" rx="296" ry="99" fill="url(#pool)"/>
+  <path d="M431 165L583 161L728 453L239 451Z" fill="url(#beam)"/>
+  <use href="#book"/><use href="#lamp"/>
+  <path d="M127 406L175 402L180 372L130 375Z" fill="#c2b998"/><ellipse cx="155" cy="375" rx="25" ry="7" fill="#e5d5b0"/><ellipse cx="155" cy="375" rx="18" ry="4" fill="#3a3329"/><path d="M178 381Q199 377 189 396L179 399" fill="none" stroke="#c2b998" stroke-width="6"/>
+  <path d="M209 431L280 418" stroke="#b98754" stroke-width="4" stroke-linecap="round"/>
+ </symbol>
+ <symbol id="detail" viewBox="0 0 420 230">
+  <rect width="420" height="230" fill="#172728"/><path d="M0 214L420 154" stroke="#355250"/>
+  <g transform="translate(-360 -106) scale(1.13)"><use href="#lamp"/></g>
+  <path d="M122 97L67 151H26" fill="none" stroke="#abc4b8"/><circle cx="122" cy="97" r="3" fill="#e0e8d9"/>
+  <path d="M118 102L300 91L367 230H30Z" fill="url(#beam)"/>
+ </symbol>
+ <symbol id="overhead" viewBox="0 0 420 230">
+  <rect width="420" height="230" fill="#817b65"/><path d="M0 65H420M0 160H420" stroke="#595b4d"/>
+  <ellipse cx="267" cy="130" rx="127" ry="99" fill="url(#pool)"/>
+  <g transform="rotate(-13 180 130)"><rect x="57" y="76" width="149" height="115" rx="2" fill="#203735"/><path d="M66 82H131V181H66Z" fill="#eee1bf"/><path d="M133 82H197V181H133Z" fill="#d9d0b2"/><path d="M76 101H118M76 113H118M76 125H118M147 101H183M147 113H183" stroke="#a7a18b" stroke-width="2"/></g>
+  <circle cx="324" cy="171" r="47" fill="url(#shade)" stroke="#93b7a4"/><path d="M324 171V54" stroke="#143e3b" stroke-width="12"/><path d="M320 171V54" stroke="#8cb9a6" stroke-width="2"/>
+  <ellipse cx="299" cy="58" rx="64" ry="37" fill="url(#shade)" stroke="#80b8a3"/><path d="M250 56Q294 29 338 53" fill="none" stroke="#a2c8b1"/>
+  <circle cx="40" cy="32" r="20" fill="#cec1a0"/><circle cx="40" cy="32" r="14" fill="#3a382e"/><path d="M224 157L229 219" stroke="#b54e35" stroke-width="5"/>
+ </symbol>
+ <symbol id="layout-a" viewBox="0 0 420 300">
+  <rect width="420" height="300" fill="#172526"/><g transform="translate(-295 -72) scale(.82)"><use href="#hero" width="900" height="520"/></g>
+ </symbol>
+ <symbol id="layout-b" viewBox="0 0 420 300">
+  <rect width="420" height="300" fill="#172526"/><g transform="translate(-166 33) scale(.59)"><use href="#hero" width="900" height="520"/></g>
+  <rect x="22" y="23" width="211" height="77" fill="#142628" stroke="#94c9bb" stroke-dasharray="4 5"/>
+  <path d="M39 46H178M39 65H146M39 81H110" stroke="#d9e7d8" stroke-width="5"/>
+ </symbol>
+</defs><use href="#hero"/>
+</svg>

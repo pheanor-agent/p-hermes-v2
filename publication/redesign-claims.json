@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "kind": "educational-preview",
+  "real_media_generation": "NOT_RUN",
+  "operational_system_execution": "NOT_RUN",
+  "visual_assets": {"kind": "original-svg-illustration", "provenance": "Newly authored fictional product and shot compositions. Not AI-generated evidence."},
+  "example": {"kind": "synthetic", "source": "docs/lectures/redesign/fixtures.json"},
+  "verification": {"kind": "executable-fixture-check", "entrypoint": "tests/check_redesign.py", "browser_function": "validateFixture", "scope": "Selection count, identifier presence and declared text-space flag; not image pixel analysis or generation quality."},
+  "deployment": {"target": "https://pheanor-agent.github.io/p-hermes-v2/lectures/redesign/", "note": "Hosting status is separate from educational and operational evidence."},
+  "visual_acceptance": "USER_REVIEW_REQUIRED"
+}

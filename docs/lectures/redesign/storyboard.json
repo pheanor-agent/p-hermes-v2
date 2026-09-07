@@ -1,0 +1,13 @@
+{
+  "title": "한 줄의 요청, 다섯 가지 판단",
+  "fixture_source": "fixtures.json",
+  "product": "LUMA",
+  "provenance": "자체 SVG 교육용 일러스트와 합성 명세. 실제 생성 미디어·실제품·운영 실행 증거 아님.",
+  "scenes": [
+    {"id": "outcome", "objective": "만들려는 결과와 일관성 문제를 이해한다", "claim": "예쁜 한 장만으로는 일관된 결과가 되지 않는다", "visual": "짙은 잉크 무대, 큰 램프 제품 컷, 전경·헤드 근접·탑뷰 3샷", "input": "brief", "previous": null, "next_question": "누가 조건을 기억하고 어떤 자원을 골랐나?", "guide": "guide.html#brief", "evidence_label": "교육용 일러스트 · 목표 예시 / 기획 예시 · 생성 영상 아님"},
+    {"id": "inside", "objective": "다섯 분야의 입력·처리·출력을 연결한다", "claim": "각 단계가 맡는 질문은 다르다", "visual": "밝은 작업대, 고정 brief, 5단계 경로, 선택한 단계 inspector", "input": "nodes + variants + brief", "previous": "outcome", "next_question": "이 선택은 문구 공간 필수 조건에 맞을까?", "guide": "guide.html#nodes", "evidence_label": "교육용 단계 전환 · 실운영 orchestration 아님"},
+    {"id": "proof", "objective": "선택이 실제 fixture 검사 결과에 미치는 영향을 이해한다", "claim": "취향이 아니라 선언된 조건을 검사한다", "visual": "왼쪽 제품 레이아웃 A/B 대비, 오른쪽 실제 JSON과 PASS/FAIL", "input": "defaultFixture + variants + testVectors", "previous": "inside", "next_question": "근거·선택·검증을 어떻게 분리해 설명할까?", "guide": "guide.html#validation", "evidence_label": "PASS는 fixture 조건 검사만 의미 · 미디어 생성 성공 아님"}
+  ],
+  "state_contract": {"default_variant": "title-space", "inside_to_proof": "동일 메모리 fixture 유지", "direct_hash_and_reload": "defaultFixture로 결정적 초기화", "reset": "defaultFixture 깊은 복사", "faults": ["COUNT", "RELEASE_ID"], "variant_mismatch": "TEXT_SPACE"},
+  "scope": {"svg": "original instructional illustration", "live_validation": "browser CPU pure function on displayed fixture", "generation": "not performed", "publication": "not asserted by this artifact", "visual_acceptance": "requires independent review and user evaluation"}
+}

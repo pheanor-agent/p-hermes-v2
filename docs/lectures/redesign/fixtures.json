@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "provenance": "합성 교육용 명세. 실제 제품·생성 미디어·운영 실행의 증거가 아님.",
+  "brief": {"product": "LUMA", "request": "작은 책상용 램프를 소개하는 이미지와 짧은 영상 기획을 만들어 줘.", "color": "청록", "shape": "납작한 헤드 · 가는 지지대 · 타원 받침", "required_text_space": true, "continuity": "세 샷에서 제품 색과 형태 유지"},
+  "defaultFixture": {"selected_count": 1, "template_id": "desk-launch", "variant_id": "title-space", "release_id": "lesson-r1", "required_text_space": true, "variant": {"text_space": true}},
+  "variants": [
+    {"key": "A", "label": "제품으로 꽉 찬 구성", "template_id": "desk-launch", "variant_id": "close-up", "release_id": "lesson-r1", "variant": {"text_space": false}, "composition": "제품을 크게 배치. 별도 타이틀 영역 없음."},
+    {"key": "B", "label": "문구를 위한 여백", "template_id": "desk-launch", "variant_id": "title-space", "release_id": "lesson-r1", "variant": {"text_space": true}, "composition": "좌측 상단 타이틀 영역과 우측 제품 영역을 분리."}
+  ],
+  "nodes": [
+    {"id": "task", "title": "작업", "question": "어디까지 해도 될까?", "input": "작은 책상용 램프 소개 이미지 + 짧은 영상 기획 요청", "process": "목표를 나누고, 승인된 제작과 대기할 실행을 구분한다.", "output": "허용: 교육용 제품 컷·3샷 기획. 대기: 실제 미디어 생성·운영 실행."},
+    {"id": "knowledge", "title": "지식", "question": "무엇을 바꾸면 안 될까?", "input": "합성 명세: LUMA / 청록 / 납작한 헤드·가는 지지대·타원 받침", "process": "제품 조건과 출처를 묶는다. 명세에 없는 성능은 덧붙이지 않는다.", "output": "근거 묶음: 합성 brief + 제품 색·형태 + 문구 공간 필수 + 샷 간 동일성."},
+    {"id": "catalog", "title": "카탈로그", "question": "어떤 구성이 조건에 맞을까?", "input": "목적: 소개 이미지 / required_text_space=true / 교육용 후보 A·B", "process": "후보 한 개를 선택하고 template·variant·release 식별자를 기록한다.", "output": "선택한 식별자와 text_space 값을 이미지 기획 및 다음 화면의 검사로 전달."},
+    {"id": "image", "title": "이미지", "question": "제품과 문구는 어디에 놓을까?", "input": "고정된 제품 명세 + 현재 선택한 카탈로그 레이아웃", "process": "제품 영역과 타이틀 영역을 구분해 한 장의 구도를 기획한다.", "output": "선택된 구성의 교육용 composition. 실제 이미지 생성 요청은 실행하지 않음."},
+    {"id": "video", "title": "영상", "question": "다른 샷에서도 같은 제품일까?", "input": "같은 brief + 제품 색·형태 기준 + 선택한 레이아웃", "process": "전경 → 헤드 디테일 → 탑뷰 순서로 기획하고 제품 동일성을 고정한다.", "output": "3샷 계획: 01 책상 전경 / 02 헤드와 빛 / 03 위에서 본 사용 공간. 생성 영상 아님."}
+  ],
+  "testVectors": [
+    {"name": "valid", "input": {"selected_count": 1, "template_id": "desk-launch", "variant_id": "title-space", "release_id": "lesson-r1", "required_text_space": true, "variant": {"text_space": true}}, "expected": {"ok": true, "errors": []}},
+    {"name": "space-false", "input": {"selected_count": 1, "template_id": "desk-launch", "variant_id": "close-up", "release_id": "lesson-r1", "required_text_space": true, "variant": {"text_space": false}}, "expected": {"ok": false, "errors": ["TEXT_SPACE"]}},
+    {"name": "count-two", "input": {"selected_count": 2, "template_id": "desk-launch", "variant_id": "title-space", "release_id": "lesson-r1", "required_text_space": true, "variant": {"text_space": true}}, "expected": {"ok": false, "errors": ["COUNT"]}},
+    {"name": "missing-id", "input": {"selected_count": 1, "template_id": "desk-launch", "variant_id": "title-space", "required_text_space": true, "variant": {"text_space": true}}, "expected": {"ok": false, "errors": ["RELEASE_ID"]}},
+    {"name": "string-count", "input": {"selected_count": "1", "template_id": "desk-launch", "variant_id": "title-space", "release_id": "lesson-r1", "required_text_space": true, "variant": {"text_space": true}}, "expected": {"ok": false, "errors": ["COUNT"]}},
+    {"name": "blank-identifiers", "input": {"selected_count": 1, "template_id": " ", "variant_id": "", "release_id": null, "required_text_space": true, "variant": {"text_space": true}}, "expected": {"ok": false, "errors": ["TEMPLATE_ID", "VARIANT_ID", "RELEASE_ID"]}},
+    {"name": "null-input", "input": null, "expected": {"ok": false, "errors": ["COUNT", "TEMPLATE_ID", "VARIANT_ID", "RELEASE_ID"]}},
+    {"name": "space-must-be-boolean", "input": {"selected_count": 1, "template_id": "desk-launch", "variant_id": "title-space", "release_id": "lesson-r1", "required_text_space": true, "variant": {"text_space": "true"}}, "expected": {"ok": false, "errors": ["TEXT_SPACE"]}}
+  ]
+}
