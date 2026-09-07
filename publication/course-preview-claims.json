@@ -1,0 +1,14 @@
+{
+  "kind": "educational-course-preview",
+  "included_sections": ["request-gap", "system-role", "five-responsibilities", "brief"],
+  "total_planned_sections": 16,
+  "remaining_sections": "05–16 are not implemented in this preview",
+  "source_status": "Original educational prose and diagrams; not a reproduction of a private operating environment",
+  "real_media_generation": "NOT_RUN",
+  "operational_engine_execution": "NOT_RUN",
+  "data_validator_exercise": "NOT_INCLUDED_IN_FIRST_FOUR_SECTIONS",
+  "visual_assets": "Original explanatory SVG vectors with HTML labels; not generated media",
+  "font": "Self-hosted Noto Sans KR, full variable font, OFL-1.1; see fonts/SOURCE.json and OFL.txt",
+  "runtime_network": "Same-origin static assets only; no analytics or external font service",
+  "acceptance_boundary": "Engineering checks and editorial review do not establish human learning outcomes or user visual acceptance"
+}

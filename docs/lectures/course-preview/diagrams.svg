@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="request-gap" viewBox="0 0 64 40"><path d="M3 20h54m-12-11 12 11-12 11" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
+  <symbol id="system-role" viewBox="0 0 640 64"><path d="M566 3v28q0 12-12 12H242q-12 0-12-12V8m-9 10 9-10 9 10" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="566" cy="3" r="3" fill="currentColor"/></symbol>
+  <symbol id="five-responsibilities" viewBox="0 0 640 64"><path d="M320 0v23M160 54V23h320v31m-328-8 8 8 8-8m304 0 8 8 8-8" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="optional-reference" viewBox="0 0 90 28"><path d="M0 14h80" stroke="currentColor" stroke-width="2" stroke-dasharray="5 5" fill="none"/><path d="m70 5 10 9-10 9" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
+  <symbol id="brief" viewBox="0 0 48 56"><path d="M7 2h25l9 9v42H7zM31 2v11h10M14 24h20M14 32h20M14 40h12" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
+</svg>

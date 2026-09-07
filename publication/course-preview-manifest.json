@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "scope": "new course preview files only; prior releases unchanged",
+  "self_hash": "excluded to avoid circular digest; manifest bound by release commit",
+  "files": [
+    {
+      "path": "docs/lectures/course-preview/index.html",
+      "bytes": 16072,
+      "sha256": "57437aae5eed9a3706e0961c3bff9ae1677b10c622db432d03e1f177ff3e8c1c"
+    },
+    {
+      "path": "docs/lectures/course-preview/course.css",
+      "bytes": 8739,
+      "sha256": "95a941d028d09e00216abda3d5b18daada24130202e6b989558cb8ca3e9bfd59"
+    },
+    {
+      "path": "docs/lectures/course-preview/course.js",
+      "bytes": 1661,
+      "sha256": "62a20b96c5d987ea8e95fefe79e316e490dfdab4aee265a84c8c5c49749945f3"
+    },
+    {
+      "path": "docs/lectures/course-preview/manuscript.json",
+      "bytes": 6979,
+      "sha256": "9be8a59a21eeb49657a7019b6df424c02702d483ee4839ea7f9cf7b9a94a02e0"
+    },
+    {
+      "path": "docs/lectures/course-preview/diagrams.svg",
+      "bytes": 1012,
+      "sha256": "2fdd185ac776a760fa6a9528ebb1f6b5b46a720d78de1db8cb62458ce1288c6b"
+    },
+    {
+      "path": "docs/lectures/course-preview/reading.html",
+      "bytes": 16049,
+      "sha256": "6689f6f4c85aef475bca0df021c8b18fa19fbe28b2d8e0b5a6613f7dafd8cd89"
+    },
+    {
+      "path": "docs/lectures/course-preview/fonts/NotoSansKR-variable.ttf",
+      "bytes": 10414588,
+      "sha256": "194018e6b2b293a7964f037b25c0249ce1418bc9ab3c971060a03aa57861e252"
+    },
+    {
+      "path": "docs/lectures/course-preview/fonts/NotoSansKR-variable.woff2",
+      "bytes": 3908716,
+      "sha256": "f484190a87503ac2af2cf9771ec35122128453fe0cd92f4368117562d99547e6"
+    },
+    {
+      "path": "docs/lectures/course-preview/fonts/OFL.txt",
+      "bytes": 4388,
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+    },
+    {
+      "path": "docs/lectures/course-preview/fonts/SOURCE.json",
+      "bytes": 1265,
+      "sha256": "4996b7e3816888a35b655ab8ba547e4e9ca9643f609062e83f01c030452f4adb"
+    },
+    {
+      "path": "tests/check_course_preview.py",
+      "bytes": 4188,
+      "sha256": "3f3d8d41a165edcb173869137457024415df4365b34a19af335995e1a19e01d3"
+    },
+    {
+      "path": "tests/check_course_fonts.py",
+      "bytes": 2754,
+      "sha256": "f3cb487793f90db83c1b9efbd5b87a3bc02df909f0aa45c68c18490125743313"
+    },
+    {
+      "path": "publication/course-preview-claims.json",
+      "bytes": 927,
+      "sha256": "0eb739c6dfe12f3d46cafada36d5025872f01b7579f93c853e3f635fcec9b38f"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 1006,
+      "sha256": "7750c7c5628cba4fe0591e81b48f732ea77c8146b9034e35c15afc1ed1907198"
+    }
+  ]
+}

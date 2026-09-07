@@ -1,0 +1,18 @@
+{
+  "family": "Noto Sans KR",
+  "license": "OFL-1.1",
+  "upstream_repository": "https://github.com/google/fonts",
+  "upstream_revision": "b38c5c93af322c45f633e17ac440ec1e6c94d489",
+  "source_url": "https://raw.githubusercontent.com/google/fonts/b38c5c93af322c45f633e17ac440ec1e6c94d489/ofl/notosanskr/NotoSansKR%5Bwght%5D.ttf",
+  "license_url": "https://raw.githubusercontent.com/google/fonts/b38c5c93af322c45f633e17ac440ec1e6c94d489/ofl/notosanskr/OFL.txt",
+  "conversion": "FontTools 4.64.0 TTFont, recalcTimestamp=False, flavor=woff2; Brotli 1.2.0. No subsetting, outlines or naming edits.",
+  "files": {
+    "NotoSansKR-variable.ttf": {"bytes": 10414588, "sha256": "194018e6b2b293a7964f037b25c0249ce1418bc9ab3c971060a03aa57861e252"},
+    "NotoSansKR-variable.woff2": {"bytes": 3908716, "sha256": "f484190a87503ac2af2cf9771ec35122128453fe0cd92f4368117562d99547e6"},
+    "OFL.txt": {"bytes": 4388, "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"}
+  },
+  "axes": [{"tag":"wght","min":100,"max":900}],
+  "glyph_count": 24964,
+  "cmap_preserved": true,
+  "delivery": "Only WOFF2 requested by the page, self-hosted with font-display:swap. Complete font is intentionally not subset. TTF is archival/source material, not a page request."
+}
