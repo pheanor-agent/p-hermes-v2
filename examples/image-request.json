@@ -1,0 +1,62 @@
+{
+  "catalog": [
+    {
+      "id": "studio-image",
+      "version": "1.0",
+      "operation": "image",
+      "runtime": "example-graph-v1",
+      "state": "active",
+      "health": "healthy",
+      "license_ref": "MIT",
+      "bindings": {
+        "prompt": [
+          "text",
+          "prompt"
+        ],
+        "width": [
+          "canvas",
+          "width"
+        ],
+        "height": [
+          "canvas",
+          "height"
+        ],
+        "seed": [
+          "noise",
+          "seed"
+        ]
+      },
+      "template_digest": "9f9a5d44537694a4121b99e085740f9018cd1afdc79163a1bf7801773ba390fe"
+    }
+  ],
+  "pin": {
+    "asset_id": "studio-image",
+    "version": "1.0",
+    "operation": "image",
+    "runtime": "example-graph-v1"
+  },
+  "spec": {
+    "prompt": "Teal lamp with warm light at left, clear text space at right",
+    "width": 1280,
+    "height": 720,
+    "seed": 42
+  },
+  "template": {
+    "text": {
+      "inputs": {
+        "prompt": ""
+      }
+    },
+    "canvas": {
+      "inputs": {
+        "width": 0,
+        "height": 0
+      }
+    },
+    "noise": {
+      "inputs": {
+        "seed": 0
+      }
+    }
+  }
+}
