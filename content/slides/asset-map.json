@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "delivery": "GitHub Pages HTML",
+  "rights": "THIRD_PARTY_NOTICES.md",
+  "transcripts": "docs/lectures/media.html",
+  "assets": [
+    {
+      "id": "A01",
+      "title": "역할과 참조 관계",
+      "scenes": [
+        "O02",
+        "O08",
+        "O11"
+      ],
+      "files": [
+        "tools/build_slides.py"
+      ],
+      "scope": "Editable native diagrams; explanatory relationships labeled."
+    },
+    {
+      "id": "A02",
+      "title": "두 수정과 CAS",
+      "scenes": [
+        "T04",
+        "T05"
+      ],
+      "files": [
+        "content/slides/evidence.json",
+        "content/slides/recording-cas.json",
+        "site/slides/media/demo-cas.webm"
+      ],
+      "scope": "Executed public Store values and a real four-step recording."
+    },
+    {
+      "id": "A03",
+      "title": "승인 대상과 원자적 기록",
+      "scenes": [
+        "T06",
+        "T07"
+      ],
+      "files": [
+        "content/slides/evidence.json"
+      ],
+      "scope": "Executed approval invalidation and intentional transaction rollback."
+    },
+    {
+      "id": "A04",
+      "title": "자료의 범위와 수명주기",
+      "scenes": [
+        "K01",
+        "K02",
+        "K03",
+        "K04",
+        "K05"
+      ],
+      "files": [
+        "content/slides/lessons/knowledge.json"
+      ],
+      "scope": "Synthetic source records and native lifecycle diagrams."
+    },
+    {
+      "id": "A05",
+      "title": "검색과 퇴역",
+      "scenes": [
+        "K06",
+        "K09",
+        "K10"
+      ],
+      "files": [
+        "content/slides/recording-knowledge.json",
+        "site/slides/media/demo-knowledge.webm"
+      ],
+      "scope": "Literal substring search before/after retirement; retained row shown."
+    },
+    {
+      "id": "A06",
+      "title": "선택 조건과 내용 동일성",
+      "scenes": [
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07"
+      ],
+      "files": [
+        "content/slides/evidence.json"
+      ],
+      "scope": "Executed exact-pin, compatibility, health and digest checks."
+    },
+    {
+      "id": "A07",
+      "title": "입력 대응과 컴파일",
+      "scenes": [
+        "C08",
+        "C09",
+        "C10",
+        "I06"
+      ],
+      "files": [
+        "content/slides/evidence.json"
+      ],
+      "scope": "Four declared bindings and executed compiled output; no model inference."
+    },
+    {
+      "id": "A08",
+      "title": "구도 비교 두 쌍",
+      "scenes": [
+        "I01",
+        "I03",
+        "I10"
+      ],
+      "files": [
+        "site/slides/media/luma-left.png",
+        "site/slides/media/luma-center.png",
+        "site/slides/media/luma-detail.png",
+        "site/slides/media/luma-crop.png",
+        "content/slides/media-provenance.json"
+      ],
+      "scope": "Synthetic educational photos; placement and crop changes documented."
+    },
+    {
+      "id": "A09",
+      "title": "파라미터 입력 비교",
+      "scenes": [
+        "I07",
+        "I08"
+      ],
+      "files": [
+        "content/slides/evidence.json"
+      ],
+      "scope": "Width changes with height/seed fixed; invalid width rejected. Not a pixel-quality claim."
+    },
+    {
+      "id": "A10",
+      "title": "같은 샷의 12초 편집",
+      "scenes": [
+        "V01",
+        "V04",
+        "V06",
+        "V07"
+      ],
+      "files": [
+        "site/slides/media/edit-a.mp4",
+        "site/slides/media/edit-b.mp4",
+        "content/slides/video-evidence.json"
+      ],
+      "scope": "Same source hashes and order, durations 4+4+4 versus 2+6+4; separately encoded still-shot edits."
+    },
+    {
+      "id": "A11",
+      "title": "경계와 재검수",
+      "scenes": [
+        "V06",
+        "V10",
+        "V11"
+      ],
+      "files": [
+        "site/slides/media/boundary-before.png",
+        "site/slides/media/boundary-after.png",
+        "content/slides/evidence.json"
+      ],
+      "scope": "Frames extracted at 3.96 and 4.00 seconds; actual changed-reference rejection."
+    },
+    {
+      "id": "A12",
+      "title": "실제 파일 규격",
+      "scenes": [
+        "V09"
+      ],
+      "files": [
+        "site/slides/media/probe-2s.mp4",
+        "site/slides/media/demo-probe.webm",
+        "content/slides/recording-probe.json"
+      ],
+      "scope": "Actual two-second H.264 file inspected by ffprobe through public inspect_video."
+    },
+    {
+      "id": "A13",
+      "title": "적용 문제와 해설",
+      "scenes": [
+        "O12",
+        "T12",
+        "K12",
+        "C12",
+        "I12",
+        "V12"
+      ],
+      "files": [
+        "content/slides/courses/overview.json",
+        "content/slides/courses/tasks.json",
+        "content/slides/courses/knowledge.json",
+        "content/slides/courses/catalog.json",
+        "content/slides/courses/image.json",
+        "content/slides/courses/video.json"
+      ],
+      "scope": "Authored questions, fragment-revealed answers and full presenter explanations."
+    }
+  ]
+}

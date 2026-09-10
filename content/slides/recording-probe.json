@@ -1,0 +1,30 @@
+{
+  "scenario": "probe",
+  "scope": "Real function calls on synthetic inputs; selected fields displayed immediately after each return.",
+  "receipts": [
+    {
+      "command": "inspect_video(\"probe-2s.mp4\",\n  expected_duration=2)",
+      "output": {
+        "duration_seconds": 2,
+        "validation": "container-metadata-checked"
+      }
+    },
+    {
+      "command": "inspect_video(\"probe-2s.mp4\",\n  expected_duration=2)",
+      "output": {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "25/1"
+      }
+    },
+    {
+      "command": "inspect_video(\"probe-2s.mp4\",\n  expected_duration=2)",
+      "output": {
+        "audio_stream_count": 0,
+        "sha256": "329081fb66ec0ac0060db76ab2f9cacb07591108697e4ace4adb920c44de80c4"
+      }
+    }
+  ]
+}

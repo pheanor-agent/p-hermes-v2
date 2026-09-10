@@ -1,8 +1,8 @@
 # p-hermes 강의 상세 설계 — 키워드와 동작을 연결하는 6편 구성
 
-2026-09-10 · 개정 2 · 상태: 제작 전 상세 설계
+2026-09-10 · 개정 3 · 상태: HTML 강의 구현 기준
 
-현재 기준 문서다. 이번 설계는 전체 강의 1편과 분야별 강의 5편으로 교체하고, 키워드 정의·학습 순서·관심 환기·매체·검증을 구체화한다. 새 강의 슬라이드, 이미지·영상 자산, 시연 녹화와 PDF는 아직 제작하지 않았다. 기존 블로그 전환은 완료된 상태다.
+현재 기준 문서다. 이번 설계는 전체 강의 1편과 분야별 강의 5편으로 교체하고, 키워드 정의·학습 순서·관심 환기·매체·검증을 구체화한다. 여섯 HTML 강의와 이미지·영상 자산을 구현하고 실제 화면을 검토하고 있다. 배포 대상은 GitHub Pages이며, 사용자 요청에 따라 PDF 배포는 범위에서 제외했다. 기존 블로그 전환은 완료된 상태다.
 
 ## 1. 설계의 기준
 
@@ -290,7 +290,7 @@
 | 4:00–5:10 | 실제 코드의 리비전 비교와 해당 오류 출력 | 시각 설명과 코드의 비교 위치를 같은 강조색으로 연결. 전체 함수는 이 장면에 축소 배치하지 않음 |
 | 5:10–6:00 | 같은 도해에서 두 번째 요청이 최신 번호를 가진 경우 | “번호가 맞으면 항상 실행 가능한가?”를 남겨 전이 조건·승인 설명에 연결 |
 
-A·B와 번호는 설명용 값이다. 실제 실행 녹화는 공개 Store에서 얻은 값을 사용하며 화면의 사건 순서를 일치시킨다. 자동 반복 애니메이션은 사용하지 않고 발표자가 단계마다 진행한다. 정적 PDF에는 마지막 비교 결과가 남도록 한다.
+A·B와 번호는 설명용 값이다. 실제 실행 녹화는 공개 Store에서 얻은 값을 사용하며 화면의 사건 순서를 일치시킨다. 자동 반복 애니메이션은 사용하지 않고 발표자가 단계마다 진행한다. 강의의 마지막 공개 단계에서 비교 결과를 충분히 확인할 수 있게 한다.
 
 ## 12. 디자인 체계
 
@@ -364,11 +364,11 @@ A·B와 번호는 설명용 값이다. 실제 실행 녹화는 공개 Store에�
 3. **연속 구간 시연:** T03–T06과 I09–I12를 각각 이어 발표해 용어 도입·변화·회상이 자연스러운지 확인한다. 개별 화면의 미감만으로 확장하지 않는다.
 4. **전체 강의와 작업 강의:** 시스템 공통 용어와 기술 깊이를 먼저 확정한다. 전체는 약 24장, 분야별은 약 30장을 출발점으로 하되 장면의 필요와 리허설에 따라 조정한다. 정의·도해·실행을 한 장에 과밀하게 합치지 않는다.
 5. **나머지 네 강의:** 지식·카탈로그·이미지·영상을 만들고 공통 용어의 표기와 구현 근거를 교차 확인한다. 필요한 코드·스키마·추가 실습은 각 강의 부록으로 제공한다.
-6. **리허설·교정·배포:** 각 강의 시간과 참여 구간을 재고 실제 표시·재생·질문 대응을 확인한다. GitHub Pages에 강의별 HTML, 발표자 노트, PDF, 오프라인 묶음을 제공한다.
+6. **리허설·교정·배포:** 각 강의 시간과 참여 구간을 재고 실제 표시·재생·질문 대응을 확인한다. GitHub Pages에 강의별 HTML, 발표자 노트와 로컬 미디어를 제공한다. 웹 강의를 주 배포 형식으로 사용한다.
 
-예정 경로는 `/slides/overview/`, `/slides/tasks/`, `/slides/knowledge/`, `/slides/catalog/`, `/slides/image/`, `/slides/video/`다. `/slides/` 목록은 강의 선택을 위한 페이지이고, 강의 화면은 고정 비율의 발표 화면이다. 블로그 `/blog/`와 위키 `/wiki/`는 읽기·참조 역할을 유지한다. 아직 이 슬라이드 경로들은 구현하거나 공개하지 않았다.
+예정 경로는 `/slides/overview/`, `/slides/tasks/`, `/slides/knowledge/`, `/slides/catalog/`, `/slides/image/`, `/slides/video/`다. `/lectures/` 목록은 강의 선택을 위한 페이지이고, 강의 화면은 고정 비율의 발표 화면이다. 블로그 `/blog/`와 위키 `/wiki/`는 읽기·참조 역할을 유지한다. 여섯 강의의 구현 경로다. 강의 선택의 주 진입점은 `/lectures/`다. 배포 검증은 [강의 검토 기록](../publication/lecture-validation.md)에 남긴다.
 
-HTML은 reveal.js의 발표자 노트·단계 공개·PDF 기능을 우선 검토한다. 실제 제작 시 버전과 자산을 고정하고 오프라인 재생을 확인한다. 핵심 원고에는 `course_id`, `scene_id`, `keyword_ids`, `learning_goal`, `on_screen`, `speaker_notes`, `visual_asset_ids`, `reveal_steps`, `question`, `answer`, `bridge`, `duration_seconds`, `evidence`, `offline_fallback`을 기록해 내용·시각·시간을 함께 관리한다. 이번에는 렌더러나 새 슬라이드를 구현하지 않는다.
+HTML은 reveal.js의 발표자 노트·단계 공개·미디어 재생 기능을 사용한다. 실제 제작 시 버전과 자산을 고정하고 오프라인 재생을 확인한다. 핵심 원고에는 `course_id`, `scene_id`, `keyword_ids`, `learning_goal`, `on_screen`, `speaker_notes`, `visual_asset_ids`, `reveal_steps`, `question`, `answer`, `bridge`, `duration_seconds`, `evidence`, `offline_fallback`을 기록해 내용·시각·시간을 함께 관리한다. 이 설계를 기준으로 HTML 강의를 구현하고 화면·재생·발표자 제어를 검증한다.
 
 ## 16. 품질 판정과 검증
 
@@ -383,7 +383,7 @@ HTML은 reveal.js의 발표자 노트·단계 공개·PDF 기능을 우선 검�
 | 가독성 | 1280×720과 1920×1080에서 잘림·겹침·스크롤 없이 읽힌다. 실제 공유·투사 환경에서도 주요 용어와 코드를 읽는다. |
 | 진행 | 키보드·리모컨 진행, 전체화면·복귀, 별도 발표자 노트가 동작한다. 청중 화면에 답안 노트를 노출하지 않는다. |
 | 시간 | 전체 50분, 주제별 65분 안에 설명·영상·짧은 참여를 마치고 질문 시간을 확보한다. 리허설이 길면 장면을 재편한다. |
-| PDF·오프라인 | PDF 실제 출력과 렌더를 확인한다. 단계 공개의 최종 증거가 남고, 영상에는 대표 프레임·짧은 설명과 로컬 대체가 있다. |
+| 웹 배포·오프라인 자산 | GitHub Pages의 실제 강의 화면을 확인한다. 단계 공개와 영상이 동작하고 발표자 노트는 별도 창에 표시된다. 자산은 사이트에 포함한다. |
 | 접근성 | 색 이외의 라벨·위치·선 형태로 의미를 전달하고, 영상 자막·전사·동작 축소를 제공한다. |
 | 사실·권리 | 자료 출처·자산 권리·실제 실행 여부를 확인하고, 생성 이미지와 실제 시스템 출력의 범위를 구분한다. |
 
@@ -395,6 +395,6 @@ HTML은 reveal.js의 발표자 노트·단계 공개·PDF 기능을 우선 검�
 - [Mayer & Fiorella — Coherence and Signaling](https://www.cambridge.org/core/books/abs/cambridge-handbook-of-multimedia-learning/principles-for-reducing-extraneous-processing-in-multimedia-learning-coherence-signaling-redundancy-spatial-contiguity-and-temporal-contiguity-principles/CD5B7AE1279A9AB81F8EEBB53DBEC86E): 불필요한 정보를 덜고 중요한 구조를 가리키는 신호를 주는 원칙을 매체 선택과 강조 규칙에 적용했다.
 - [Cambridge Handbook — Segmenting, Pre-training, Modality](https://www.cambridge.org/core/books/abs/cambridge-handbook-of-multimedia-learning/principles-for-managing-essential-processing-in-multimedia-learning-segmenting-pretraining-and-modality-principles/DD24C2F48B9B1277CE59F78276110258): 복잡한 설명을 나누고 청중이 처리할 틈을 두는 설계에 참고했다. 연구의 학습자 조절 조건을 강의자의 단계 공개와 동일한 효과라고 단정하지 않는다.
 - [Duarte — Presenting](https://www.duarte.com/blog/presenting/), [Presentation Zen — Signal-to-noise](https://presentationzen.com/blog/the-signal-to-noise-ratio-activity): 장면의 중심 생각과 시각 증거를 명확히 하고, 정보에 기여하지 않는 요소를 줄이는 편집에 참고했다.
-- [reveal.js — Speaker View](https://revealjs.com/speaker-view/), [PDF Export](https://revealjs.com/pdf-export/): 발표자 화면과 배포 형식을 구분할 구현 근거다.
+- [reveal.js — Speaker View](https://revealjs.com/speaker-view/): 발표자 화면과 배포 형식을 구분할 구현 근거다.
 
 키워드 개수, 강의 시간, 장면 길이, 시안 순서와 화면 수치는 p-hermes를 위한 편집안이다. 연구가 보장하는 최적 수치나 검증된 집중도 지표로 제시하지 않는다.

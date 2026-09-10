@@ -1,0 +1,84 @@
+{
+  "scope": "Educational editing of synthetic still images using FFmpeg, separate from p-hermes compilation. No generated motion or audio.",
+  "variants": {
+    "edit-a.mp4": {
+      "images": [
+        "luma-left.png",
+        "luma-detail.png",
+        "luma-center.png"
+      ],
+      "durations": [
+        4,
+        4,
+        4
+      ],
+      "probe": {
+        "validation": "container-metadata-checked",
+        "sha256": "7a990a6679431cea9ac863a1ca722af5382bdb7c6ede02f39bcf14a8c9e8ed32",
+        "duration_seconds": 12.0,
+        "video_streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "r_frame_rate": "25/1"
+          }
+        ],
+        "audio_stream_count": 0
+      },
+      "source_sha256": {
+        "luma-left.png": "a18d665409e4b265feff78f6c4cf5a8a9bf4d0c159d145eab03ca8c2454c5075",
+        "luma-detail.png": "bd6b6afa90d02838acddeec51635eac256bb95929b0f604b773c58c0eec8f666",
+        "luma-center.png": "347c36cbd7b0e0f3d15ee2bcb4c230e6a84fb4c43d30b9849be448058bd452f3"
+      }
+    },
+    "edit-b.mp4": {
+      "images": [
+        "luma-left.png",
+        "luma-detail.png",
+        "luma-center.png"
+      ],
+      "durations": [
+        2,
+        6,
+        4
+      ],
+      "probe": {
+        "validation": "container-metadata-checked",
+        "sha256": "9f7714cb1990f33b2c2054845a32a9e50eea82000e665271a1025973b725f643",
+        "duration_seconds": 12.0,
+        "video_streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "r_frame_rate": "25/1"
+          }
+        ],
+        "audio_stream_count": 0
+      },
+      "source_sha256": {
+        "luma-left.png": "a18d665409e4b265feff78f6c4cf5a8a9bf4d0c159d145eab03ca8c2454c5075",
+        "luma-detail.png": "bd6b6afa90d02838acddeec51635eac256bb95929b0f604b773c58c0eec8f666",
+        "luma-center.png": "347c36cbd7b0e0f3d15ee2bcb4c230e6a84fb4c43d30b9849be448058bd452f3"
+      }
+    }
+  },
+  "probe_fixture": {
+    "validation": "container-metadata-checked",
+    "sha256": "329081fb66ec0ac0060db76ab2f9cacb07591108697e4ace4adb920c44de80c4",
+    "duration_seconds": 2.0,
+    "video_streams": [
+      {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "25/1"
+      }
+    ],
+    "audio_stream_count": 0
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "scenario": "knowledge",
+  "scope": "Real function calls on synthetic inputs; selected fields displayed immediately after each return.",
+  "receipts": [
+    {
+      "command": "store.register_knowledge(v1)\nstore.register_knowledge(v2)\nstore.search(\"연결\")",
+      "output": {
+        "hits": [
+          "guide-v1",
+          "guide-v2"
+        ]
+      }
+    },
+    {
+      "command": "store.retire_knowledge(\"guide-v1\")\nSELECT id, state FROM knowledge",
+      "output": {
+        "records": [
+          {
+            "id": "guide-v1",
+            "state": "retired"
+          },
+          {
+            "id": "guide-v2",
+            "state": "active"
+          }
+        ]
+      }
+    },
+    {
+      "command": "store.search(\"연결\")",
+      "output": {
+        "hits": [
+          "guide-v2"
+        ]
+      }
+    },
+    {
+      "command": "store.search(\"접속\")",
+      "output": {
+        "hits": [],
+        "method": "literal substring"
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "design_revision": 2,
-  "status": "planning_only",
+  "status": "implemented_reference",
   "source": "course-plan.md",
   "source_commit": "d7d43569fe93b51c8d10404479f826d5c5a00632",
   "total_minutes_including_qa": 435,

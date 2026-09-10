@@ -1,0 +1,199 @@
+{
+  "scope": "Ten-minute visual cue rehearsal using actual media and authored notes; no speech performance or audience response measured.",
+  "durationSeconds": 600.397,
+  "events": [
+    {
+      "at": 0,
+      "elapsed": 0,
+      "cue": "두 요청이 읽은 번호를 관찰합니다.",
+      "slide": "T04-1",
+      "fragment": -1,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 40,
+      "elapsed": 40.076,
+      "cue": "A의 반영 뒤 현재 값 8을 확인합니다.",
+      "slide": "T04-1",
+      "fragment": 0,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 95,
+      "elapsed": 95.015,
+      "cue": "B의 결과를 예측하고 15초 기다립니다.",
+      "slide": "T04-1",
+      "fragment": 1,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 110,
+      "elapsed": 110.001,
+      "cue": "B 거부를 공개하고 두 번호를 대응시킵니다.",
+      "slide": "T04-1",
+      "fragment": 2,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 142,
+      "elapsed": 142.011,
+      "cue": "관찰한 상태 번호를 리비전으로 정의합니다.",
+      "slide": "T04-2",
+      "fragment": -1,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 180,
+      "elapsed": 180.015,
+      "cue": "비교 후 갱신에 이 정의를 적용합니다.",
+      "slide": "T04-2",
+      "fragment": 0,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 218,
+      "elapsed": 218.015,
+      "cue": "읽었던 7과 현재 8을 다시 대조합니다.",
+      "slide": "T04-3",
+      "fragment": -1,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 280,
+      "elapsed": 280.023,
+      "cue": "최신 상태를 읽어야 하는 이유를 설명합니다.",
+      "slide": "T04-3",
+      "fragment": 0,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 360,
+      "elapsed": 360.017,
+      "cue": "그림의 두 번호를 코드의 두 변수에 대응시킵니다.",
+      "slide": "T05-1",
+      "fragment": -1,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 395,
+      "elapsed": 395.012,
+      "cue": "실제 오류 문구를 공개합니다.",
+      "slide": "T05-1",
+      "fragment": 0,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 425,
+      "elapsed": 425.015,
+      "cue": "비교가 변경보다 먼저라는 규칙을 정리합니다.",
+      "slide": "T05-1",
+      "fragment": 1,
+      "video": {
+        "time": 0,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 450,
+      "elapsed": 450.008,
+      "cue": "실제 실행 녹화를 재생합니다.",
+      "slide": "T05-2",
+      "video": {
+        "time": 0.218063,
+        "duration": 21.04,
+        "ended": false
+      }
+    },
+    {
+      "at": 495,
+      "elapsed": 495.017,
+      "cue": "최신 번호만 넣으면 충분한지 적용 질문을 냅니다.",
+      "slide": "T05-3",
+      "fragment": -1,
+      "video": {
+        "time": 21.04,
+        "duration": 21.04,
+        "ended": true
+      }
+    },
+    {
+      "at": 525,
+      "elapsed": 525.013,
+      "cue": "최신 계획과 상태를 읽는 선택을 설명합니다.",
+      "slide": "T05-3",
+      "fragment": 0,
+      "video": {
+        "time": 21.04,
+        "duration": 21.04,
+        "ended": true
+      }
+    },
+    {
+      "at": 570,
+      "elapsed": 570.004,
+      "cue": "번호에서 계획의 승인으로 다음 질문을 연결합니다.",
+      "slide": "T05-3",
+      "fragment": 1,
+      "video": {
+        "time": 21.04,
+        "duration": 21.04,
+        "ended": true
+      }
+    },
+    {
+      "at": 600,
+      "elapsed": 600.015,
+      "cue": "10분 발췌 큐 점검을 마칩니다.",
+      "slide": "T05-3",
+      "fragment": 1,
+      "video": {
+        "time": 21.04,
+        "duration": 21.04,
+        "ended": true
+      }
+    }
+  ],
+  "errors": [],
+  "ok": true
+}

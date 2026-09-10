@@ -73,7 +73,10 @@ def build():
             records = [dict(row) for row in store.db.execute('SELECT id,state FROM knowledge ORDER BY id')]
             result['knowledge'] = {'query': '연결', 'before': search_before, 'after': search_after, 'records': records,
                                    'no_semantic_match': [i['id'] for i in store.search('접속')],
-                                   'duplicate_error': rejected(lambda: store.register_knowledge(items[1]))}
+                                   'duplicate_error': rejected(lambda: store.register_knowledge(items[1])),
+                                   'missing_source_error': rejected(lambda: store.register_knowledge(items[1] | {'id':'missing-source','source_ref':''})),
+                                   'not_public_error': rejected(lambda: store.register_knowledge(items[1] | {'id':'unmarked','public':False})),
+                                   'repeated_query_hits': [i['id'] for i in store.search('새버전')]}
         request = json.loads((ROOT / 'examples/image-request.json').read_text(encoding='utf-8'))
         selection = resolve(request['catalog'], **request['pin'])
         compiled = compile_image(request['spec'], selection, request['template'])
@@ -81,6 +84,9 @@ def build():
         template_changed = deepcopy(request['template']); template_changed['noise']['inputs']['seed'] = 99
         bad_binding = deepcopy(request['catalog']); bad_binding[0]['bindings']['seed'] = ['canvas', 'width']
         bad_selection = resolve(bad_binding, **request['pin'])
+        missing_slot = deepcopy(request['catalog']); missing_slot[0]['bindings']['seed']=['noise','missing']
+        missing_selection = resolve(missing_slot, **request['pin'])
+        inactive = deepcopy(request['catalog']); inactive[0]['state']='inactive'
         wider = request['spec'] | {'width': 1920}
         wider_output = compile_image(wider, selection, request['template'])
         result['catalog'] = {'version': request['catalog'][0]['version'], 'original_runtime': request['pin']['runtime'],
@@ -89,9 +95,15 @@ def build():
                              'metadata_digest_error': rejected(lambda: resolve(changed, **(request['pin'] | {'runtime': 'another-runtime'}), expected_digest=selection['digest'])),
                              'template_digest_error': rejected(lambda: compile_image(request['spec'], selection, template_changed)),
                              'binding_error': rejected(lambda: compile_image(request['spec'], bad_selection, request['template'])),
-                             'bindings': request['catalog'][0]['bindings']}
+                             'bindings': request['catalog'][0]['bindings'],
+                             'zero_match_error': rejected(lambda: resolve([], **request['pin'])),
+                             'duplicate_match_error': rejected(lambda: resolve(request['catalog']*2, **request['pin'])),
+                             'inactive_error': rejected(lambda: resolve(inactive, **request['pin'])),
+                             'missing_slot_error': rejected(lambda: compile_image(request['spec'], missing_selection, request['template'])),
+                             'template_digest': digest(request['template'])}
         result['image'] = {'spec': request['spec'], 'workflow': compiled['workflow'], 'validation': compiled['validation'],
-                           'wider_spec': wider, 'wider_workflow': wider_output['workflow'], 'model_inference': False}
+                           'wider_spec': wider, 'wider_workflow': wider_output['workflow'], 'model_inference': False,
+                           'invalid_width_error': rejected(lambda: compile_image(request['spec'] | {'width':1281}, selection, request['template']))}
         # A minimal declared image fixture tests reference bytes; it is not a teaching illustration.
         (directory / 'reference.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"/>', encoding='utf-8')
         artifact = record_artifact(directory, 'reference.svg', artifact_id='reference', media_type='image/svg+xml', license_ref='CC0-1.0', input_refs=['synthetic:input'])

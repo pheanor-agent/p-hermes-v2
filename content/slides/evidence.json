@@ -40,7 +40,12 @@
       }
     ],
     "no_semantic_match": [],
-    "duplicate_error": "duplicate knowledge identifier"
+    "duplicate_error": "duplicate knowledge identifier",
+    "missing_source_error": "source_ref must be nonempty text",
+    "not_public_error": "knowledge must be explicitly marked public",
+    "repeated_query_hits": [
+      "guide-v2"
+    ]
   },
   "catalog": {
     "version": "1.0",
@@ -69,7 +74,12 @@
         "noise",
         "seed"
       ]
-    }
+    },
+    "zero_match_error": "catalog pin must match exactly one entry",
+    "duplicate_match_error": "catalog pin must match exactly one entry",
+    "inactive_error": "catalog entry must be active and healthy",
+    "missing_slot_error": "binding input does not exist",
+    "template_digest": "9f9a5d44537694a4121b99e085740f9018cd1afdc79163a1bf7801773ba390fe"
   },
   "image": {
     "spec": {
@@ -121,7 +131,8 @@
         }
       }
     },
-    "model_inference": false
+    "model_inference": false,
+    "invalid_width_error": "width must be an integer multiple of 8 in [64,8192]"
   },
   "video": {
     "timeline": {

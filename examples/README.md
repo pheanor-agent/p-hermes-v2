@@ -59,3 +59,9 @@ p-hermes knowledge --db demo-output/workspace.sqlite3 retire composition-note
 실행 시 선택한 경로에 로컬 파일이 작성됩니다. 원격 서비스 호출·자동 Git
 커밋·개인 작업 디렉터리 탐색은 없습니다. public 선언은 작성자의 책임이며
 자유 서술문에 민감한 내용이 없는지 자동으로 증명하지 않습니다.
+
+## 강의의 실행 근거
+
+`python tools/build_lecture_evidence.py`는 합성 입력으로 충돌·승인 변경·롤백·검색·퇴역·고정·바인딩과 참조 변경을 실제 실행합니다. 결과는 `content/slides/evidence.json`에 기록합니다. GitHub Pages의 [강의](https://pheanor-agent.github.io/p-hermes-v2/lectures/)에서 같은 값을 도해와 녹화로 확인할 수 있습니다. `tools/lecture_worker.py`는 각 녹화 단계의 실제 함수를 실행합니다.
+
+12초 편집 MP4와 2초 규격 검사 파일은 `site/slides/media/`에 있습니다. 실제 검사 명령은 `p-hermes inspect-video site/slides/media/probe-2s.mp4 --duration 2`입니다. ffprobe가 필요하며, 이 파일은 공개 5초 시간선 JSON과 별도입니다.

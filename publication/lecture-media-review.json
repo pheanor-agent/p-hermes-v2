@@ -1,0 +1,78 @@
+{
+  "scope": "Actual browser playback to ended, including first and last rendered frames.",
+  "items": [
+    {
+      "file": "demo-cas.webm",
+      "elapsedSeconds": 20.245,
+      "duration": 21.04,
+      "time": 21.04,
+      "width": 1280,
+      "height": 720,
+      "ended": true,
+      "error": null
+    },
+    {
+      "file": "demo-knowledge.webm",
+      "elapsedSeconds": 24.401,
+      "duration": 24.68,
+      "time": 24.68,
+      "width": 1280,
+      "height": 720,
+      "ended": true,
+      "error": null
+    },
+    {
+      "file": "demo-probe.webm",
+      "elapsedSeconds": 16.481,
+      "duration": 16.6,
+      "time": 16.6,
+      "width": 1280,
+      "height": 720,
+      "ended": true,
+      "error": null
+    },
+    {
+      "file": "edit-a.mp4",
+      "elapsedSeconds": 11.995,
+      "duration": 12,
+      "time": 12,
+      "width": 1280,
+      "height": 720,
+      "ended": true,
+      "error": null
+    },
+    {
+      "file": "edit-b.mp4",
+      "elapsedSeconds": 11.87,
+      "duration": 12,
+      "time": 12,
+      "width": 1280,
+      "height": 720,
+      "ended": true,
+      "error": null
+    },
+    {
+      "file": "probe-2s.mp4",
+      "elapsedSeconds": 1.81,
+      "duration": 2,
+      "time": 2,
+      "width": 1280,
+      "height": 720,
+      "ended": true,
+      "error": null
+    },
+    {
+      "file": "demo-integration.webm",
+      "elapsedSeconds": 21.179,
+      "reviewedAt": "2026-09-10T06:12:56.366Z",
+      "sha256": "35e97ea8beefd7c7c88eb7e239637053a8bbafa29c76b6fd766a9fc4ee882d29",
+      "duration": 21.4,
+      "time": 21.4,
+      "width": 1280,
+      "height": 720,
+      "ended": true,
+      "error": null
+    }
+  ],
+  "ok": true
+}

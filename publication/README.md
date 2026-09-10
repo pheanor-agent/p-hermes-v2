@@ -1,7 +1,11 @@
 # Release validation
 
+Current six-course HTML release: [lecture validation](lecture-validation.md) and [release checklist](lecture-release-checklist.md).
+
+## Initial release archive
+
 This record covers the initial release before its reading material was
-reclassified as a seven-part blog. New presentation slides are planned separately.
+reclassified as a seven-part blog. The six-course replacement is covered by the current record above.
 The initial release contained 8 wiki pages, 7 chapters and 26 lecture sections.
 
 Validated locally:

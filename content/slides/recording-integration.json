@@ -1,0 +1,61 @@
+{
+  "scenario": "integration",
+  "scope": "Real function calls on synthetic inputs; selected fields displayed immediately after each return.",
+  "receipts": [
+    {
+      "command": "p-hermes demo --output demo-output",
+      "output": {
+        "status": "completed",
+        "files": [
+          "artifact.json",
+          "image-plan.json",
+          "report.json",
+          "storyboard.svg",
+          "timeline.json",
+          "workspace.sqlite3"
+        ]
+      }
+    },
+    {
+      "command": "open demo-output/report.json",
+      "output": {
+        "persistent_store": true,
+        "image_binding_compile": true,
+        "storyboard_file": true,
+        "reference_hashes": true,
+        "model_inference": false,
+        "video_encoding": false
+      }
+    },
+    {
+      "command": "Store(\"demo-output/workspace.sqlite3\")\nreopened.job(\"studio-demo\")",
+      "output": {
+        "state": "completed",
+        "revision": 3,
+        "events": [
+          "create",
+          "approve",
+          "start",
+          "complete"
+        ]
+      }
+    },
+    {
+      "command": "open demo-output/timeline.json",
+      "output": {
+        "duration_seconds": 5,
+        "validation": "reference-bytes-checked",
+        "intervals": [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            5
+          ]
+        ]
+      }
+    }
+  ]
+}

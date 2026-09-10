@@ -38,6 +38,12 @@
     const refresh=()=>{document.getElementById('slide-count').textContent=`${Reveal.getIndices().h+1} / ${notes.length}`;updateSpeaker()};
     Reveal.on('slidechanged',refresh);Reveal.on('fragmentshown',updateSpeaker);Reveal.on('fragmenthidden',updateSpeaker);
     refresh();document.body.dataset.ready='true';
+    document.querySelectorAll('video').forEach(video=>video.addEventListener('timeupdate',()=>{
+      const slide=video.closest('section'),cursor=slide.querySelector('[data-cursor]'),label=slide.querySelector('[data-playback-time]');
+      if(cursor&&Number.isFinite(video.duration))cursor.style.left=(100*video.currentTime/video.duration)+'%';
+      if(label)label.textContent=video.currentTime.toFixed(2)+'s';
+    }));
+    Reveal.on('slidechanged',event=>{event.previousSlide?.querySelectorAll('video').forEach(v=>v.pause())});
   });
   document.querySelector('[data-deck="next"]').onclick=()=>Reveal.next();
   document.querySelector('[data-deck="prev"]').onclick=()=>Reveal.prev();

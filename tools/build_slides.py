@@ -35,6 +35,46 @@ def notes_html(slide):
 def body(slide, evidence):
     kind = slide['kind']
     d = slide.get('data', {})
+    if kind == 'demo':
+        return f'<div class="demo-stage"><video controls playsinline preload="metadata" poster="../assets/media/{e(d["poster"])}" aria-label="{e(d["alt"])}"><source src="../assets/media/{e(d["video"])}" type="video/webm"></video></div>'
+    if kind == 'definition':
+        return f'<p class="definition">{lines(d["definition"])}</p><div class="keyword-strip">'+''.join(f'<span>{e(t)}</span>' for t in d.get('terms',[]))+f'</div><p class="takeaway fragment" data-fragment-index="0">{lines(d.get("application",""))}</p>'
+    if kind == 'compare':
+        cells=[]
+        for i,side in enumerate(d['sides']):
+            cls='fragment' if i and d.get('reveal',True) else ''
+            cells.append(f'<div class="{cls}" data-fragment-index="0"><p class="compare-label">{e(side[0])}</p><p class="compare-value">{lines(side[1])}</p><p class="compare-detail">{lines(side[2])}</p></div>')
+        return '<div class="comparison">'+''.join(cells)+f'</div><p class="takeaway fragment" data-fragment-index="1">{lines(d.get("takeaway",""))}</p>'
+    if kind == 'flow':
+        nodes=[]
+        for i,(label,detail) in enumerate(d['nodes']):
+            cls='fragment' if i else ''
+            nodes.append(f'<div class="{cls}" data-fragment-index="{max(0,i-1)}"><span class="flow-index">{i+1:02}</span><strong>{lines(label)}</strong><p>{lines(detail)}</p></div>')
+        return '<div class="flow-map">'+''.join(nodes)+f'</div><p class="takeaway">{lines(d.get("takeaway",""))}</p>'
+    if kind == 'code':
+        output=d.get('output','')
+        return f'<div class="code-stage"><div><p class="subhead">{e(d.get("label","公開 참고 코드").replace("公開","공개"))}</p><pre><code>{e(d["code"])}</code></pre></div><div class="fragment" data-fragment-index="0"><p class="subhead">{e(d.get("output_label","실행 결과"))}</p><pre class="result-code"><code>{e(output)}</code></pre></div></div><p class="code-meaning fragment" data-fragment-index="1">{lines(d.get("takeaway",""))}</p>'
+    if kind == 'table':
+        head=''.join(f'<th>{e(t)}</th>' for t in d['headers'])
+        rows=''.join('<tr>'+''.join(f'<td>{lines(c)}</td>' for c in row)+'</tr>' for row in d['rows'])
+        return f'<table class="lesson-table"><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table><p class="takeaway fragment" data-fragment-index="0">{lines(d.get("takeaway",""))}</p>'
+    if kind == 'recall':
+        questions=''.join(f'<p><span>{i+1:02}</span>{lines(q)}</p>' for i,q in enumerate(d['questions']))
+        return f'<div class="recall-questions">{questions}</div><div class="recall-answers fragment" data-fragment-index="0">{lines(d["answer"])}</div>'
+    if kind == 'image-pair':
+        sides=''.join(f'<div><img src="../assets/media/{e(s[0])}" alt="{e(s[1])}"><p>{e(s[1])}</p></div>' for s in d['images'])
+        return f'<div class="image-pair">{sides}</div><p class="takeaway fragment" data-fragment-index="0">{lines(d["takeaway"])}</p>'
+    if kind in {'media','timeline'}:
+        timeline=''
+        if kind=='timeline':
+            cursor=0;bars=[]
+            for i,duration in enumerate(d['segments']):
+                bars.append(f'<div style="flex:{duration}"><b>{chr(65+i)}</b><span>{cursor}–{cursor+duration}s</span></div>');cursor+=duration
+            timeline='<div class="live-timeline">'+''.join(bars)+'<span class="playhead" data-cursor></span></div><p class="playback-time" data-playback-time>0.00s</p>'
+        return f'<div class="video-stage"><video controls playsinline preload="metadata" poster="../assets/media/{e(d.get("poster","luma-left.png"))}" aria-label="{e(d["alt"])}"><source src="../assets/media/{e(d["video"])}" type="video/mp4"></video><div><p class="media-duration">{e(d["duration"])}</p><p>{lines(d["observe"])}</p></div></div>{timeline}<p class="takeaway">{lines(d.get("takeaway",""))}</p>'
+    if kind == 'binding':
+        rows=''.join(f'<div><code>{e(field)}</code><span class="binding-line fragment" data-fragment-index="{i}"></span><code class="fragment" data-fragment-index="{i}">{e(node)}.inputs.{e(name)}</code></div>' for i,(field,(node,name)) in enumerate(evidence['catalog']['bindings'].items()))
+        return f'<div class="bindings">{rows}</div><p class="takeaway">선언한 네 입력을 정해진 슬롯에 전달합니다.</p>'
     if kind == 'roles':
         top = ''.join(f'<div><strong>{e(a)}</strong><span>{e(b)}</span></div>' for a, b in [('작업','진행과 상태'),('지식','재사용할 근거'),('카탈로그','실행할 자원')])
         bottom = '<div><strong>이미지</strong><span>구도와 실행 입력</span></div><div><strong>영상</strong><span>샷과 시간</span></div>'

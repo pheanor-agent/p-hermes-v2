@@ -54,10 +54,10 @@ def main():
             if not all(slide.get(k) for k in ('paragraphs','claim','visual','notes','links')):errors.append(f'{slide["id"]}: incomplete teaching content')
     # Deny specific secret and private operational formats, reporting only file/rule.
     rules={'private-home':r'/(?:home|Users)/[A-Za-z0-9_-]+/', 'windows-home':r'[A-Z]:[\\/]+Users[\\/]+[A-Za-z0-9_-]+', 'private-job':r'JOB-\d{4,}', 'private-key':r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----', 'credential':r'\b(?:sk-proj-|ghp_|gho_)[A-Za-z0-9_-]{20,}', 'tailnet-address':r'\b100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.\d+\.\d+\b'}
-    public_roots=['content','src','examples','site','tools','tests','publication','docs']
+    public_roots=['content','src','examples','site','tools','tests','publication','docs','design']
     checked=[]
     for folder in public_roots:
-        checked.extend(p for p in (ROOT/folder).rglob('*') if p.is_file() and p.suffix in {'.json','.py','.md','.js','.css','.svg','.html'})
+        checked.extend(p for p in (ROOT/folder).rglob('*') if p.is_file() and p.suffix in {'.json','.py','.md','.js','.cjs','.css','.svg','.html'})
     checked.extend(p for p in ROOT.iterdir() if p.is_file() and p.suffix in {'.md','.json','.toml','.yml'})
     checked=list(set(checked))
     for path in checked:

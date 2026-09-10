@@ -34,6 +34,7 @@ def main():
     manifest['probe_fixture']=inspect_video(media/'probe-2s.mp4',expected_duration=2)
     for name,time in [('boundary-before.png','3.96'),('boundary-after.png','4.00')]:
         run(['ffmpeg','-y','-v','error','-ss',time,'-i',str(media/'edit-a.mp4'),'-frames:v','1',str(media/name)])
+    run(['ffmpeg','-y','-v','error','-ss','0.5','-i',str(media/'probe-2s.mp4'),'-frames:v','1',str(media/'probe-frame.png')])
     for item in manifest['variants'].values():
         item['source_sha256']={name:hashlib.sha256((media/name).read_bytes()).hexdigest() for name in images}
     (ROOT/'content/slides/video-evidence.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

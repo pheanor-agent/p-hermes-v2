@@ -1,0 +1,36 @@
+{
+  "scenario": "cas",
+  "scope": "Real function calls on synthetic inputs; selected fields displayed immediately after each return.",
+  "receipts": [
+    {
+      "command": "A = store.job(id)\nB = store.job(id)",
+      "output": {
+        "A_revision": 7,
+        "B_revision": 7,
+        "state": "draft"
+      }
+    },
+    {
+      "command": "store.act(id, A_revision, 'approve', ...)",
+      "output": {
+        "revision": 8,
+        "state": "approved"
+      }
+    },
+    {
+      "command": "store.act(id, B_revision, 'approve', ...)",
+      "output": {
+        "error": "stale revision; reload before deciding",
+        "current_revision": 8
+      }
+    },
+    {
+      "command": "store.act(id, revision, 'revise', plan=new_plan)",
+      "output": {
+        "revision": 9,
+        "state": "draft",
+        "approved_digest": null
+      }
+    }
+  ]
+}
