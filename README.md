@@ -1,8 +1,8 @@
 # p-hermes v2
 
-에이전트가 일을 이어가는 구조를 **작업·지식·카탈로그·이미지·영상**으로 배우는 한국어 위키, HTML 강의, 실행 가능한 Python 참고 구현입니다.
+에이전트가 일을 이어가는 구조를 **작업·지식·카탈로그·이미지·영상**으로 배우는 한국어 위키, 블로그 연재, 실행 가능한 Python 참고 구현입니다.
 
-[사이트](https://pheanor-agent.github.io/p-hermes-v2/) · [위키 시작](https://pheanor-agent.github.io/p-hermes-v2/wiki/start.html) · [전체 강의](https://pheanor-agent.github.io/p-hermes-v2/learn/) · [API와 명령](https://pheanor-agent.github.io/p-hermes-v2/wiki/reference.html)
+[사이트](https://pheanor-agent.github.io/p-hermes-v2/) · [위키 시작](https://pheanor-agent.github.io/p-hermes-v2/wiki/start.html) · [블로그](https://pheanor-agent.github.io/p-hermes-v2/blog/) · [API와 명령](https://pheanor-agent.github.io/p-hermes-v2/wiki/reference.html)
 
 Hermes 운영 시스템을 해설하는 자료와, 그 계약을 작게 실험하는 **독립 공개 도구**를 함께 제공합니다. 운영 시스템 전체의 복제본·설치 패키지나 미디어 엔진 어댑터는 아닙니다. 예제는 단일 사용자 로컬 환경을 전제로 합니다.
 
@@ -41,9 +41,11 @@ p-hermes knowledge --db demo-output/workspace.sqlite3 search lamp
 
 명령과 실제 입출력 파일명은 [API 참고](https://pheanor-agent.github.io/p-hermes-v2/wiki/reference.html)와 `p-hermes --help`에서 확인할 수 있습니다. 실제 영상 파일이 있다면 ffprobe를 별도로 설치한 뒤 `p-hermes inspect-video movie.mp4 --duration 5`로 스트림 정보와 길이를 검사합니다. 전체 프레임 디코딩이나 시각 품질 평가는 별도 검증입니다.
 
-## 자료 읽기와 발표
+## 블로그와 위키
 
-위키 8개 페이지와 강의 7장·26개 슬라이드가 같은 LUMA 램프 사례를 이어 설명합니다. 개념 사례의 영상은 12초이며, 실행 데모의 5초 타임라인과 구분합니다. 강의는 본문을 읽거나 발표 모드로 볼 수 있습니다. 방향키·Page Up/Down으로 이동하면 다음 장으로 이어지고, 발표자 메모를 열 수 있습니다. Esc는 읽기 화면으로 돌아갑니다. JavaScript 없이도 본문과 링크를 읽을 수 있습니다.
+위키 8개 페이지와 블로그 7편·26개 주제가 같은 LUMA 램프 사례를 이어 설명합니다. 블로그는 도해와 코드 예제를 따라 읽는 연재이고, 위키는 구조와 API를 찾아보는 참고 자료입니다. 기존 해설 자료의 명칭을 블로그로 바꿨으며, 청중에게 보여줄 발표용 슬라이드는 별도 제작 계획으로 분리했습니다.
+
+개념 사례의 영상은 12초이며 실행 데모의 5초 타임라인과 구분합니다. 블로그는 JavaScript 없이도 본문과 링크를 읽을 수 있습니다. 이전 `/learn/` 주소는 해당 블로그 글로 연결되며 절별 앵커를 유지합니다.
 
 ## 구조와 검증
 
@@ -51,7 +53,7 @@ p-hermes knowledge --db demo-output/workspace.sqlite3 search lamp
 src/p_hermes/     공개 Python 참고 구현
 examples/        합성 입력 데이터
 content/wiki/    위키 원고
-content/slides/  강의 원고
+content/blog/    블로그 원고
 site/            스타일·상호작용
 tools/           정적 사이트 생성·검사
 docs/            GitHub Pages 결과와 이전 미리보기
@@ -74,7 +76,7 @@ python tools/subset_font.py
 python tools/check_site.py
 ```
 
-기존 강의 미리보기의 주소는 유지합니다. 최신 학습 경로는 `/wiki/`와 `/learn/`입니다.
+기존 시안 주소는 보존합니다. 현재 읽기 경로는 `/wiki/`와 `/blog/`입니다.
 
 ## 공개 범위와 권리
 

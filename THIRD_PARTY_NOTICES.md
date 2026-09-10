@@ -20,7 +20,7 @@ New explanatory diagrams in this preview are original educational vectors,
 not actual model-generated images or evidence of media production. These
 notices do not change the licensing of any previously published files.
 
-## Hermes KR — current wiki and course
+## Hermes KR — current wiki and blog
 
 `docs/assets/HermesKR.woff2` is a character subset of the original Noto Sans KR
 font above, renamed Hermes KR. It remains under the SIL Open Font License 1.1.

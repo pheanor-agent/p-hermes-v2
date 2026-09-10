@@ -1,6 +1,8 @@
 # Release validation
 
-The current release contains8 wiki pages,7 chapters and26 lecture slides.
+This record covers the initial release before its reading material was
+reclassified as a seven-part blog. New presentation slides are planned separately.
+The initial release contained 8 wiki pages, 7 chapters and 26 lecture sections.
 
 Validated locally:
 

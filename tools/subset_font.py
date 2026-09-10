@@ -23,7 +23,7 @@ class Text(HTMLParser):
 
 def codepoints():
     p=Text()
-    paths=[ROOT/'docs/index.html',*sorted((ROOT/'docs/wiki').glob('*.html')),*sorted((ROOT/'docs/learn').glob('*.html'))]
+    paths=[ROOT/'docs/index.html',*sorted((ROOT/'docs/wiki').glob('*.html')),*sorted((ROOT/'docs/blog').glob('*.html')),*sorted((ROOT/'docs/learn').glob('*.html'))]
     for path in paths:p.feed(path.read_text(encoding='utf-8'))
     return set(map(ord,''.join(p.parts)))|set(range(32,127))
 
