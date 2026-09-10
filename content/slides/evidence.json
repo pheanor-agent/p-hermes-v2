@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "scope": "Executed public reference contracts with synthetic inputs.",
+  "task": {
+    "read_revision": 7,
+    "after_first_update": 8,
+    "first_state": "approved",
+    "stale_error": "stale revision; reload before deciding",
+    "revised_state": "draft",
+    "approval_after_revision": null
+  },
+  "transaction": {
+    "state_before": "draft",
+    "state_after_rollback": "draft",
+    "event_count_before": 10,
+    "event_count_after": 10
+  },
+  "recovery": {
+    "unknown_state": "unknown",
+    "direct_complete_error": "action 'complete' is invalid from 'unknown'",
+    "reconciled_state": "completed"
+  },
+  "knowledge": {
+    "query": "연결",
+    "before": [
+      "guide-v1",
+      "guide-v2"
+    ],
+    "after": [
+      "guide-v2"
+    ],
+    "records": [
+      {
+        "id": "guide-v1",
+        "state": "retired"
+      },
+      {
+        "id": "guide-v2",
+        "state": "active"
+      }
+    ],
+    "no_semantic_match": [],
+    "duplicate_error": "duplicate knowledge identifier"
+  },
+  "catalog": {
+    "version": "1.0",
+    "original_runtime": "example-graph-v1",
+    "changed_runtime": "another-runtime",
+    "original_digest": "ef14bbaf44b03405dbfc133833bde5423df19a75f2c3c185c98be31eace3d261",
+    "changed_digest": "11bcb6b63cdae2be266b6bbe219373460dbd1d8d842ef2b7922d0fdfe9365951",
+    "runtime_error": "catalog operation/runtime mismatch",
+    "metadata_digest_error": "catalog changed since pinning",
+    "template_digest_error": "workflow template changed since catalog release",
+    "binding_error": "two public fields cannot overwrite one slot",
+    "bindings": {
+      "prompt": [
+        "text",
+        "prompt"
+      ],
+      "width": [
+        "canvas",
+        "width"
+      ],
+      "height": [
+        "canvas",
+        "height"
+      ],
+      "seed": [
+        "noise",
+        "seed"
+      ]
+    }
+  },
+  "image": {
+    "spec": {
+      "prompt": "Teal lamp with warm light at left, clear text space at right",
+      "width": 1280,
+      "height": 720,
+      "seed": 42
+    },
+    "workflow": {
+      "text": {
+        "inputs": {
+          "prompt": "Teal lamp with warm light at left, clear text space at right"
+        }
+      },
+      "canvas": {
+        "inputs": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "noise": {
+        "inputs": {
+          "seed": 42
+        }
+      }
+    },
+    "validation": "bindings-checked",
+    "wider_spec": {
+      "prompt": "Teal lamp with warm light at left, clear text space at right",
+      "width": 1920,
+      "height": 720,
+      "seed": 42
+    },
+    "wider_workflow": {
+      "text": {
+        "inputs": {
+          "prompt": "Teal lamp with warm light at left, clear text space at right"
+        }
+      },
+      "canvas": {
+        "inputs": {
+          "width": 1920,
+          "height": 720
+        }
+      },
+      "noise": {
+        "inputs": {
+          "seed": 42
+        }
+      }
+    },
+    "model_inference": false
+  },
+  "video": {
+    "timeline": {
+      "schema_version": 1,
+      "shots": [
+        {
+          "id": "shot-a",
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "image_ref": "reference",
+          "image_sha256": "7ed63144149f02b34e0fcd5a40ef4c1bdad7b5ab5249c1f3708d12d62e3f2887",
+          "purpose": "도입"
+        },
+        {
+          "id": "shot-b",
+          "start_seconds": 2.0,
+          "end_seconds": 5.0,
+          "image_ref": "reference",
+          "image_sha256": "7ed63144149f02b34e0fcd5a40ef4c1bdad7b5ab5249c1f3708d12d62e3f2887",
+          "purpose": "설명"
+        }
+      ],
+      "duration_seconds": 5.0,
+      "validation": "reference-bytes-checked",
+      "timeline_digest": "3f2bbbe48ae8f8c9f0556ad3dd0f29fea7a2f5af784f241dc2f188f7d088ba18"
+    },
+    "changed_reference_error": "artifact bytes differ from the recorded hash/size",
+    "video_encoding": false
+  }
+}

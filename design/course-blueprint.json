@@ -1,0 +1,764 @@
+{
+  "schema_version": 1,
+  "design_revision": 2,
+  "status": "planning_only",
+  "source": "course-plan.md",
+  "source_commit": "d7d43569fe93b51c8d10404479f826d5c5a00632",
+  "total_minutes_including_qa": 435,
+  "courses": [
+    {
+      "id": "00",
+      "title": "전체 구조",
+      "teaching_minutes": 50,
+      "qa_minutes": 10,
+      "keywords": [
+        {
+          "term": "역할",
+          "definition": "시스템의 각 부분이 맡는 책임과 주고받는 것",
+          "context": "다섯 분야의 책임 지도"
+        },
+        {
+          "term": "상태",
+          "definition": "지금 무엇이 가능하고 무엇을 확인해야 하는지 나타내는 현재 조건",
+          "context": "작업의 `state`와 관찰된 결과"
+        },
+        {
+          "term": "근거",
+          "definition": "판단에 사용한 자료와 그 출처·적용 범위",
+          "context": "원문, 출처, 선택 이유"
+        },
+        {
+          "term": "계약",
+          "definition": "주고받는 자료가 갖춰야 할 필드·조건·검증 규칙",
+          "context": "입력값과 수락·거부 조건"
+        },
+        {
+          "term": "산출물",
+          "definition": "작업이 남긴 결과와 그 결과를 식별·확인할 기록",
+          "context": "결과 파일, DB, 보고서"
+        },
+        {
+          "term": "추적",
+          "definition": "결과에서 사용한 입력·자원·판단으로 관계를 따라가는 것",
+          "context": "결과와 입력 참조의 연결"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "O01",
+          "duration_minutes": 3,
+          "concept": "역할: 응답 후에도 관리할 일이 남는다",
+          "visual_and_participation": "검토 보고서가 수정 요청을 받은 두 시점을 크게 비교. 무엇을 다시 확인할지 15초 생각",
+          "bridge": "다시 확인할 책임을 나눠 본다"
+        },
+        {
+          "id": "O02",
+          "duration_minutes": 4,
+          "concept": "역할: 다섯 분야의 책임",
+          "visual_and_participation": "한 장의 관계 지도를 공개하고 공통 기반과 제작 분야를 구분. 고정 실행 순서로 그리지 않음",
+          "bridge": "책임을 나눠도 현재 상황을 공유해야 한다"
+        },
+        {
+          "id": "O03",
+          "duration_minutes": 4,
+          "concept": "상태: 현재 조건",
+          "visual_and_participation": "같은 작업의 진행 전후를 비교하고 현재 가능한 행동만 표시",
+          "bridge": "상태 판단에는 자료가 필요하다"
+        },
+        {
+          "id": "O04",
+          "duration_minutes": 4,
+          "concept": "근거: 판단의 출처",
+          "visual_and_participation": "날짜·적용 버전이 다른 문서 두 개. 답을 고른 이유를 짧게 설명",
+          "bridge": "근거를 다음 단계가 읽을 형태로 전달한다"
+        },
+        {
+          "id": "O05",
+          "duration_minutes": 5,
+          "concept": "계약: 전달 조건",
+          "visual_and_participation": "입력 객체의 필요한 세 부분을 확대. 필드 하나가 빠진 경우를 예측",
+          "bridge": "전달 조건이 있어야 실행할 자원을 고를 수 있다"
+        },
+        {
+          "id": "O06",
+          "duration_minutes": 5,
+          "concept": "역할·계약: 카탈로그의 연결",
+          "visual_and_participation": "후보 목록에서 작업·런타임 조건이 맞는 항목을 남기는 개념도",
+          "bridge": "선택된 자원으로 결과를 만든다"
+        },
+        {
+          "id": "O07",
+          "duration_minutes": 5,
+          "concept": "산출물: 결과와 기록",
+          "visual_and_participation": "공개 데모의 결과 파일·DB·보고서를 실제로 열어 필요한 부분만 녹화",
+          "bridge": "결과가 생긴 뒤에도 연결이 남는다"
+        },
+        {
+          "id": "O08",
+          "duration_minutes": 5,
+          "concept": "추적: 결과의 출발점",
+          "visual_and_participation": "같은 결과에서 입력·선택·근거로 되짚는 선을 순서대로 강조",
+          "bridge": "일부가 바뀌면 어떤 결과를 다시 확인할까"
+        },
+        {
+          "id": "O09",
+          "duration_minutes": 5,
+          "concept": "추적·상태: 수정 범위",
+          "visual_and_participation": "참조 하나를 바꾼 관계도. 청중이 재확인 범위를 고른 뒤 이유 공개",
+          "bridge": "같은 구조가 제작 작업에도 적용된다"
+        },
+        {
+          "id": "O10",
+          "duration_minutes": 4,
+          "concept": "역할·계약·산출물: 이미지와 영상",
+          "visual_and_participation": "LUMA 이미지와 짧은 교육용 영상의 구도·시간 조건 비교. 제작 도구 자체보다 전달 관계에 집중",
+          "bridge": "사례를 벗어나 구조만 다시 남긴다"
+        },
+        {
+          "id": "O11",
+          "duration_minutes": 4,
+          "concept": "여섯 키워드의 관계 회상",
+          "visual_and_participation": "처음 지도에서 라벨 두 개와 연결 하나를 가림. 자기 작업을 지도에 대입",
+          "bridge": "각 분야에서 더 자세히 볼 질문을 남긴다"
+        },
+        {
+          "id": "O12",
+          "duration_minutes": 2,
+          "concept": "역할: 주제별 학습 경로",
+          "visual_and_participation": "다섯 강의가 답할 질문을 한 줄씩 제시",
+          "bridge": "질의응답 10분"
+        }
+      ]
+    },
+    {
+      "id": "01",
+      "title": "작업",
+      "teaching_minutes": 65,
+      "qa_minutes": 10,
+      "keywords": [
+        {
+          "term": "상태",
+          "definition": "작업이 지금 어떤 조건에 있는지 나타내는 값",
+          "context": "실행 중·결과 불명·완료 등. 단계와 구분"
+        },
+        {
+          "term": "단계",
+          "definition": "정해진 처리 과정에서 현재 수행하거나 검토하는 위치",
+          "context": "조사·설계·검증 등. 공개 Store에는 운영 그래프의 단계 구조가 없음"
+        },
+        {
+          "term": "리비전",
+          "definition": "변경 전후를 구분하며 오래된 수정 요청을 찾는 상태의 번호",
+          "context": "비교 후 갱신(CAS), 전이"
+        },
+        {
+          "term": "승인",
+          "definition": "특정 계획을 실행해도 된다는 결정과 그 대상의 연결",
+          "context": "계획 digest. 공개 API 기록은 승인자 신원 증명이 아님"
+        },
+        {
+          "term": "트랜잭션",
+          "definition": "서로 연관된 변경을 함께 반영하거나 함께 취소하는 처리 단위",
+          "context": "원자성. 공개 Store의 상태와 감사 기록"
+        },
+        {
+          "term": "복구",
+          "definition": "중단 뒤 실제 결과와 현재 상태를 확인해 진행을 일치시키는 과정",
+          "context": "결과 조회·조정. 모든 요청을 자동 재시도한다는 뜻이 아님"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "T01",
+          "duration_minutes": 4,
+          "concept": "상태·단계: 서로 다른 질문",
+          "visual_and_participation": "같은 작업에 붙은 상태와 단계를 확대. “지금 어떤 조건인가 / 어디까지 왔나”를 연결",
+          "bridge": "두 값을 담는 구조를 본다"
+        },
+        {
+          "id": "T02",
+          "duration_minutes": 5,
+          "concept": "상태·단계: 실제 저장 구조",
+          "visual_and_participation": "운영 구조의 공개 가능한 필드와 공개 Store의 축약 구조를 나란히 설명",
+          "bridge": "상태 변경에는 조건이 있다"
+        },
+        {
+          "id": "T03",
+          "duration_minutes": 6,
+          "concept": "상태: 허용된 전이",
+          "visual_and_participation": "상태 지도에서 가능한 이동만 공개. 정의를 배운 뒤 잘못된 이동 하나를 고름",
+          "bridge": "동시에 변경하면 조건은 언제 확인할까"
+        },
+        {
+          "id": "T04",
+          "duration_minutes": 6,
+          "concept": "리비전: 같은 상태를 읽은 두 수정",
+          "visual_and_participation": "A·B 모두 rev 7을 읽고 A가 먼저 반영되는 순서 공개. B의 결과를 15초 예측",
+          "bridge": "비교 규칙을 코드에서 확인한다"
+        },
+        {
+          "id": "T05",
+          "duration_minutes": 6,
+          "concept": "리비전: CAS 실행",
+          "visual_and_participation": "실제 비교 부분 4–6줄과 거부 출력을 순차 확대. 안전한 실습 DB에서 값 하나 변경",
+          "bridge": "현재 번호만 맞으면 모든 계획을 실행해도 될까"
+        },
+        {
+          "id": "T06",
+          "duration_minutes": 5,
+          "concept": "승인: 실행 대상의 고정",
+          "visual_and_participation": "계획의 조건 한 필드와 digest 대응. 승인 뒤 계획 수정 시 연결이 사라지는 장면",
+          "bridge": "결정과 상태를 기록할 때도 일관성이 필요하다"
+        },
+        {
+          "id": "T07",
+          "duration_minutes": 6,
+          "concept": "트랜잭션: 상태와 감사 기록",
+          "visual_and_participation": "한 변경이 두 기록에 남는 연결도. 정상 처리와 롤백 실험 출력 비교",
+          "bridge": "저장이 일치해도 외부 실행의 응답은 끊길 수 있다"
+        },
+        {
+          "id": "T08",
+          "duration_minutes": 5,
+          "concept": "복구: 결과 불명",
+          "visual_and_participation": "실행 요청·응답 중단·결과 조회의 시간선을 화면 녹화와 함께 설명",
+          "bridge": "결과를 확인한 뒤 상태를 조정한다"
+        },
+        {
+          "id": "T09",
+          "duration_minutes": 6,
+          "concept": "복구: 관찰과 조정",
+          "visual_and_participation": "성공을 확인한 경우와 실패를 확인한 경우를 선택해 상태 이동. 근거 없는 완료를 고르지 않도록 해설",
+          "bridge": "전체 경로에서 기록이 이어지는지 본다"
+        },
+        {
+          "id": "T10",
+          "duration_minutes": 6,
+          "concept": "리비전·승인·복구 적용",
+          "visual_and_participation": "계획 변경과 응답 중단이 섞인 짧은 기록에서 다음 행동을 결정. 익힌 규칙만 사용",
+          "bridge": "결정을 DB와 기록으로 확인한다"
+        },
+        {
+          "id": "T11",
+          "duration_minutes": 6,
+          "concept": "트랜잭션·상태: 실행 기록 다시 읽기",
+          "visual_and_participation": "저장된 DB를 다시 열고 마지막 상태·이벤트를 실제 조회. 운영 구현과 공개 실습의 차이 정리",
+          "bridge": "키워드를 근거로 설명해 본다"
+        },
+        {
+          "id": "T12",
+          "duration_minutes": 4,
+          "concept": "여섯 키워드 회상",
+          "visual_and_participation": "“번호가 맞아도 실행이 거부되는 이유”와 “중단 후 먼저 확인할 것”에 한 문장 답변",
+          "bridge": "질의응답 10분"
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "title": "지식",
+      "teaching_minutes": 65,
+      "qa_minutes": 10,
+      "keywords": [
+        {
+          "term": "출처",
+          "definition": "정보가 어디에서 왔으며 어떤 맥락에 적용되는지 확인할 단서",
+          "context": "원문 위치, 작성 시점, 적용 버전"
+        },
+        {
+          "term": "정규화",
+          "definition": "다른 형식의 자료를 정해진 필드와 표현으로 맞추는 처리",
+          "context": "원문과 공통 필드의 대응. 내용의 참을 보장하지 않음"
+        },
+        {
+          "term": "등록",
+          "definition": "식별자와 필요한 메타데이터를 갖춘 항목을 관리 대상에 넣는 과정",
+          "context": "등록 레코드와 저장 성공"
+        },
+        {
+          "term": "인덱스",
+          "definition": "저장된 자료를 찾기 위해 별도로 구성하는 검색용 표현",
+          "context": "원문·등록 정보·검색 표현의 관계"
+        },
+        {
+          "term": "검색",
+          "definition": "질문이나 검색어에 맞는 후보를 찾아 제시하는 과정",
+          "context": "실제 검색어와 반환 결과"
+        },
+        {
+          "term": "갱신",
+          "definition": "기존 지식의 내용·적용 조건·참조를 새로운 정보에 맞게 바꾸는 과정",
+          "context": "새 판본과 관련 검색 경로의 재확인"
+        },
+        {
+          "term": "퇴역",
+          "definition": "기록을 남기면서 현재 재사용 대상에서 제외하는 처리",
+          "context": "저장된 항목과 현재 검색 결과의 차이"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "K01",
+          "duration_minutes": 4,
+          "concept": "출처: 두 설명의 충돌",
+          "visual_and_participation": "날짜와 적용 버전이 다른 문서 두 개. 어떤 조건이 더 필요한지 질문",
+          "bridge": "판단에 필요한 맥락을 원문에서 꺼낸다"
+        },
+        {
+          "id": "K02",
+          "duration_minutes": 6,
+          "concept": "출처·정규화: 원문에서 필드로",
+          "visual_and_participation": "제목·원문·버전·참조를 대응시키는 도해. 값이 잘못 옮겨진 부분 찾기",
+          "bridge": "맞춘 필드를 관리 대상에 넣는다"
+        },
+        {
+          "id": "K03",
+          "duration_minutes": 5,
+          "concept": "등록: 식별자와 메타데이터",
+          "visual_and_participation": "등록 전후 레코드와 누락 필드 오류를 실제 출력으로 비교",
+          "bridge": "등록된 자료는 어떻게 발견될까"
+        },
+        {
+          "id": "K04",
+          "duration_minutes": 6,
+          "concept": "인덱스: 저장과 검색의 연결",
+          "visual_and_participation": "원문·등록 레코드·인덱스의 세 역할을 위치를 유지하며 설명",
+          "bridge": "역할을 구분하면 등록 성공 후 문제를 찾을 수 있다"
+        },
+        {
+          "id": "K05",
+          "duration_minutes": 5,
+          "concept": "인덱스·검색: 등록됐는데 안 보이는 자료",
+          "visual_and_participation": "운영 구조의 가상 장애 위치를 찾는 활동. 공개 Store에서 재현한 인덱스 장애로 표현하지 않음",
+          "bridge": "실제 공개 검색의 범위를 확인한다"
+        },
+        {
+          "id": "K06",
+          "duration_minutes": 6,
+          "concept": "검색: 질문과 후보",
+          "visual_and_participation": "실제 문자열 검색 녹화와 결과 확대. 같은 의미라도 문자열이 다를 때의 차이",
+          "bridge": "찾은 후보가 적용 가능한지 판단한다"
+        },
+        {
+          "id": "K07",
+          "duration_minutes": 5,
+          "concept": "출처·검색: 적용 범위",
+          "visual_and_participation": "같은 결과를 날짜·버전·근거로 다시 읽음. 최신 날짜만으로 고르지 않는 이유",
+          "bridge": "조건이 바뀌면 관리 정보도 바꾼다"
+        },
+        {
+          "id": "K08",
+          "duration_minutes": 6,
+          "concept": "갱신: 새 판본의 반영",
+          "visual_and_participation": "원문·등록 정보·검색 표현의 영향 범위를 강조. 공개 실습은 새 ID 등록으로 시연",
+          "bridge": "옛 항목을 계속 재사용할지 결정한다"
+        },
+        {
+          "id": "K09",
+          "duration_minutes": 6,
+          "concept": "퇴역: 기록과 현재 사용의 분리",
+          "visual_and_participation": "퇴역 전후 같은 검색을 실제 실행. DB에 남은 레코드와 검색 제외 결과 비교",
+          "bridge": "갱신과 퇴역을 함께 적용한다"
+        },
+        {
+          "id": "K10",
+          "duration_minutes": 6,
+          "concept": "갱신·퇴역: 작은 실습",
+          "visual_and_participation": "합성 문서 v2 등록 후 v1 퇴역, 검색을 다시 실행. 갱신 API가 있는 것처럼 설명하지 않음",
+          "bridge": "과정 전체의 유효성을 확인한다"
+        },
+        {
+          "id": "K11",
+          "duration_minutes": 6,
+          "concept": "등록·검색·출처: 질문 재현",
+          "visual_and_participation": "다른 질문을 넣고 반환 항목·출처·퇴역 여부를 읽음. 대화 메모리와 재사용 지식의 책임 구분",
+          "bridge": "전체 수명주기를 복원한다"
+        },
+        {
+          "id": "K12",
+          "duration_minutes": 4,
+          "concept": "일곱 키워드 회상",
+          "visual_and_participation": "지식 수명주기에서 빈 단계·연결을 채우고 “등록 성공만으로 충분한가” 설명",
+          "bridge": "질의응답 10분"
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "title": "카탈로그",
+      "teaching_minutes": 65,
+      "qa_minutes": 10,
+      "keywords": [
+        {
+          "term": "자산",
+          "definition": "실행에 사용하고 관리하는 모델·워크플로우·도구 등의 대상",
+          "context": "자산 식별자와 관계"
+        },
+        {
+          "term": "메타데이터",
+          "definition": "자산의 종류·상태·지원 조건·참조를 설명하는 정보",
+          "context": "카탈로그 항목의 필드"
+        },
+        {
+          "term": "호환성",
+          "definition": "작업과 실행 환경, 입력 조건을 함께 만족할 수 있는 성질",
+          "context": "요청 조건과 자산 선언의 비교"
+        },
+        {
+          "term": "선택",
+          "definition": "조건에 맞는 자산을 특정 항목으로 결정하는 과정",
+          "context": "남은 후보와 탈락 이유"
+        },
+        {
+          "term": "버전 고정",
+          "definition": "사용할 자산의 판본을 명시해 선택 대상을 유지하는 것",
+          "context": "ID와 정확한 버전"
+        },
+        {
+          "term": "해시",
+          "definition": "내용을 계산해 얻어 내용 변경 여부를 비교하는 값",
+          "context": "메타데이터·템플릿 digest. 품질 평가 점수가 아님"
+        },
+        {
+          "term": "바인딩",
+          "definition": "외부 입력 필드를 실행 템플릿의 특정 입력 위치에 대응시키는 선언",
+          "context": "필드와 노드 입력 슬롯"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "C01",
+          "duration_minutes": 4,
+          "concept": "자산: 같은 이름의 여러 후보",
+          "visual_and_participation": "이름만 보이는 목록에 필요한 정보를 질문",
+          "bridge": "이름 옆에 무엇을 기록해야 할까"
+        },
+        {
+          "id": "C02",
+          "duration_minutes": 5,
+          "concept": "메타데이터: 선택에 필요한 필드",
+          "visual_and_participation": "항목 한 개를 크게 펼치고 ID·작업·런타임·상태를 순서대로 강조",
+          "bridge": "기록된 조건을 요청과 비교한다"
+        },
+        {
+          "id": "C03",
+          "duration_minutes": 5,
+          "concept": "호환성: 조건의 일치",
+          "visual_and_participation": "후보 세 개와 요청 두 조건을 비교. 부적합한 이유를 고른 뒤 표시",
+          "bridge": "조건이 맞는 후보를 특정한다"
+        },
+        {
+          "id": "C04",
+          "duration_minutes": 6,
+          "concept": "선택: 정확한 항목 결정",
+          "visual_and_participation": "실제 `resolve` 입력·출력, 후보 0개·중복·비활성 오류 비교",
+          "bridge": "선택을 다음 실행에서도 유지한다"
+        },
+        {
+          "id": "C05",
+          "duration_minutes": 6,
+          "concept": "버전 고정: 판본 지정",
+          "visual_and_participation": "최신값을 따라가는 개념 사례와 명시된 버전 비교. 공개 구현의 정확한 버전 일치 확인",
+          "bridge": "같은 버전 이름의 내용이 바뀌면 어떨까"
+        },
+        {
+          "id": "C06",
+          "duration_minutes": 6,
+          "concept": "해시: 내용 변경의 발견",
+          "visual_and_participation": "같은 버전 표시 아래 한 필드만 변경. 해시 차이를 공개하기 전 예측",
+          "bridge": "메타데이터 밖의 템플릿 내용도 확인한다"
+        },
+        {
+          "id": "C07",
+          "duration_minutes": 5,
+          "concept": "해시: 두 종류의 대상",
+          "visual_and_participation": "카탈로그 항목과 템플릿을 각각 비교. 값을 섞어 쓰면 안 되는 이유",
+          "bridge": "고정된 템플릿에 입력을 전달한다"
+        },
+        {
+          "id": "C08",
+          "duration_minutes": 6,
+          "concept": "바인딩: 필드의 도착점",
+          "visual_and_participation": "네 입력에서 해당 슬롯으로 선을 하나씩 강조. 전체 그래프를 좁은 코드로 채우지 않음",
+          "bridge": "잘못된 대응은 어디서 검출될까"
+        },
+        {
+          "id": "C09",
+          "duration_minutes": 6,
+          "concept": "바인딩: 실패 조건",
+          "visual_and_participation": "두 필드가 한 슬롯에 겹치거나 슬롯이 없는 사례와 실제 오류 출력",
+          "bridge": "선택과 컴파일을 한 번 이어 실행한다"
+        },
+        {
+          "id": "C10",
+          "duration_minutes": 6,
+          "concept": "선택·고정·바인딩 적용",
+          "visual_and_participation": "안전한 합성 입력으로 선택 후 컴파일. 바꾼 한 조건이 어떤 검사에 걸리는지 확인",
+          "bridge": "선언된 호환성과 실제 실행 가능성을 구분한다"
+        },
+        {
+          "id": "C11",
+          "duration_minutes": 6,
+          "concept": "호환성·메타데이터: 운영 대응",
+          "visual_and_participation": "운영 resolver와 공개 계약의 차이. 실제 런타임·의존성 점검의 역할을 구조로 설명",
+          "bridge": "이름에서 실행 구성까지의 연결을 되짚는다"
+        },
+        {
+          "id": "C12",
+          "duration_minutes": 4,
+          "concept": "일곱 키워드 회상",
+          "visual_and_participation": "“버전이 같은데 왜 거부됐나 / 해시가 같으면 품질도 좋은가”를 설명",
+          "bridge": "질의응답 10분"
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "title": "이미지",
+      "teaching_minutes": 65,
+      "qa_minutes": 10,
+      "keywords": [
+        {
+          "term": "명세",
+          "definition": "만들 결과가 갖춰야 할 조건을 확인 가능한 형태로 정리한 것",
+          "context": "대상·용도·구도·규격 조건"
+        },
+        {
+          "term": "구도",
+          "definition": "화면 안에서 대상·여백·문구 등의 위치와 시선 관계를 조직한 것",
+          "context": "제품과 문구 공간의 배치"
+        },
+        {
+          "term": "프롬프트",
+          "definition": "생성 모델에 전달할 장면·특성·제약을 표현한 입력",
+          "context": "문장과 시각 요구의 대응"
+        },
+        {
+          "term": "컴파일",
+          "definition": "구조화된 조건과 입력을 실행 도구가 읽는 형태로 변환하는 과정",
+          "context": "네 입력과 템플릿 슬롯, 변환 전후 결과"
+        },
+        {
+          "term": "파라미터",
+          "definition": "크기·시드처럼 실행에 명시적으로 전달하는 조절값",
+          "context": "한 번에 바꾼 값과 고정한 값"
+        },
+        {
+          "term": "검수",
+          "definition": "결과가 정한 조건에 맞는지 파일과 화면을 확인하는 과정",
+          "context": "규격·내용·구도·미감의 확인 근거"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "I01",
+          "duration_minutes": 4,
+          "concept": "구도: 두 결과의 차이",
+          "visual_and_participation": "문구가 읽히는 이미지와 가려지는 이미지를 크게 비교. 설명 전 15초 관찰",
+          "bridge": "차이를 원하는 조건으로 표현한다"
+        },
+        {
+          "id": "I02",
+          "duration_minutes": 5,
+          "concept": "명세: 의도의 구체화",
+          "visual_and_participation": "짧은 요청에서 대상·용도·규격을 표시. 모호한 단어를 구체적 조건으로 바꾸기",
+          "bridge": "공간 조건을 그림에서 확인한다"
+        },
+        {
+          "id": "I03",
+          "duration_minutes": 6,
+          "concept": "구도: 대상과 여백",
+          "visual_and_participation": "동일 비율 이미지 위에 필요한 영역만 오버레이. 표시 없는 원본과 번갈아 확인",
+          "bridge": "이 조건을 모델 입력에 어떻게 표현할까"
+        },
+        {
+          "id": "I04",
+          "duration_minutes": 6,
+          "concept": "프롬프트: 조건과 문장의 대응",
+          "visual_and_participation": "문장의 한 부분과 이미지 조건을 같은 위치·표시로 연결. 프롬프트만으로 준수를 보장하지 않음",
+          "bridge": "문장을 실행할 도구 입력에 넣는다"
+        },
+        {
+          "id": "I05",
+          "duration_minutes": 5,
+          "concept": "컴파일: 운영 구조의 단계",
+          "visual_and_participation": "운영 요청 해석·중간 표현·렌더링과 공개 명시 입력 바인딩의 대응도",
+          "bridge": "공개 구현에서 직접 확인할 부분을 확대한다"
+        },
+        {
+          "id": "I06",
+          "duration_minutes": 6,
+          "concept": "컴파일: 네 입력의 실제 전달",
+          "visual_and_participation": "`prompt`, `width`, `height`, `seed`의 코드·출력 시연. 바뀐 슬롯만 강조",
+          "bridge": "어떤 값을 바꿀지 목적을 정한다"
+        },
+        {
+          "id": "I07",
+          "duration_minutes": 6,
+          "concept": "파라미터: 비교의 조건",
+          "visual_and_participation": "변경값·고정값을 나눠 보여주고 크기·시드의 의미 설명. 시드만으로 모든 환경의 재현성을 보장하지 않음",
+          "bridge": "실행 입력과 시각 결과의 차이를 확인한다"
+        },
+        {
+          "id": "I08",
+          "duration_minutes": 5,
+          "concept": "명세·파라미터 적용",
+          "visual_and_participation": "너비 등 한 값을 바꾸고 컴파일 결과를 비교. 픽셀 생성 결과라고 표현하지 않음",
+          "bridge": "결과가 생겼을 때 어떤 검사가 필요할까"
+        },
+        {
+          "id": "I09",
+          "duration_minutes": 6,
+          "concept": "검수: 파일과 화면",
+          "visual_and_participation": "파일 검사 통과 장면과 문구가 가려진 그림을 함께 제시. 다른 검사 목적을 설명",
+          "bridge": "문제를 특정 조건의 수정으로 연결한다"
+        },
+        {
+          "id": "I10",
+          "duration_minutes": 6,
+          "concept": "구도·프롬프트·검수: 수정",
+          "visual_and_participation": "전후 비교에서 바꾼 조건 하나를 명시. 의도치 않게 변한 부분도 확인",
+          "bridge": "최종 결과에 다음 사용 정보를 붙인다"
+        },
+        {
+          "id": "I11",
+          "duration_minutes": 6,
+          "concept": "명세·검수: 산출물 전달",
+          "visual_and_participation": "참조 ID·파일 해시·입력 관계를 결과 이미지 가까이에 설명. 영상으로 넘길 때의 역할 지정",
+          "bridge": "제작 의도부터 결과까지를 다시 연결한다"
+        },
+        {
+          "id": "I12",
+          "duration_minutes": 4,
+          "concept": "여섯 키워드 회상",
+          "visual_and_participation": "새 이미지의 문제를 어떤 키워드로 설명하고 어느 입력을 고칠지 1분 적용",
+          "bridge": "질의응답 10분"
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "title": "영상",
+      "teaching_minutes": 65,
+      "qa_minutes": 10,
+      "keywords": [
+        {
+          "term": "샷",
+          "definition": "하나의 역할과 시작·변화·끝을 갖는 제작 단위",
+          "context": "장면의 목적과 입력"
+        },
+        {
+          "term": "참조",
+          "definition": "샷이 사용하는 이미지·자원·이전 결과를 식별해 연결한 것",
+          "context": "`image_ref`, 실제 파일과 해시"
+        },
+        {
+          "term": "타임라인",
+          "definition": "샷이 언제 시작하고 끝나는지 시간상 배치를 나타낸 것",
+          "context": "시작·종료·전체 길이"
+        },
+        {
+          "term": "연속성",
+          "definition": "샷 사이에서 대상·움직임·빛·시간적 관계가 의도대로 이어지는 성질",
+          "context": "경계 전후 프레임"
+        },
+        {
+          "term": "편집",
+          "definition": "샷의 선택·순서·길이·전환·소리를 조직해 전체를 구성하는 과정",
+          "context": "같은 샷의 다른 길이·배치. 인코딩과 구분"
+        },
+        {
+          "term": "검수",
+          "definition": "파일 규격과 실제 재생 결과가 영상의 조건에 맞는지 확인하는 과정",
+          "context": "메타데이터, 재생, 경계와 전체 흐름"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "V01",
+          "duration_minutes": 4,
+          "concept": "편집: 같은 샷의 다른 호흡",
+          "visual_and_participation": "같은 샷으로 길이를 달리한 두 짧은 영상 재생. 어느 지점에서 느낌이 달랐는지 짚음",
+          "bridge": "각각의 장면이 맡는 역할을 정한다"
+        },
+        {
+          "id": "V02",
+          "duration_minutes": 5,
+          "concept": "샷: 역할과 변화",
+          "visual_and_participation": "세 샷의 시작·변화·끝을 스틸로 정리. 이미지 강의의 산출물 개념 복습",
+          "bridge": "샷이 사용할 재료를 연결한다"
+        },
+        {
+          "id": "V03",
+          "duration_minutes": 6,
+          "concept": "참조: 입력의 연결",
+          "visual_and_participation": "이미지 참조와 파일을 나란히 보여줌. 운영 입력 모드의 차이는 실제 자료가 있는 범위에서 설명",
+          "bridge": "참조를 고정한 샷을 시간에 놓는다"
+        },
+        {
+          "id": "V04",
+          "duration_minutes": 6,
+          "concept": "타임라인: 시작과 끝",
+          "visual_and_participation": "4+4+4초 시간선에 재생 위치를 이동. 다음 샷 시작값을 청중이 예측",
+          "bridge": "코드가 같은 구간을 만드는지 확인한다"
+        },
+        {
+          "id": "V05",
+          "duration_minutes": 6,
+          "concept": "타임라인·참조: 실제 컴파일",
+          "visual_and_participation": "공개 5초 데모 JSON과 검증 출력 확인. 12초 개념 예시와 화면 표기를 구분",
+          "bridge": "시간만 맞으면 샷이 자연스럽게 이어질까"
+        },
+        {
+          "id": "V06",
+          "duration_minutes": 5,
+          "concept": "연속성: 경계의 관찰",
+          "visual_and_participation": "짧은 재생 후 경계 프레임 정지. 대상 위치·빛·움직임 중 한 문제를 찾음",
+          "bridge": "전체 흐름은 샷 길이와 배치로 조절한다"
+        },
+        {
+          "id": "V07",
+          "duration_minutes": 6,
+          "concept": "편집: 의도와 리듬",
+          "visual_and_participation": "같은 샷의 타이밍만 바꾼 A/B 시간선과 재생. 자동 편집 품질 평가로 설명하지 않음",
+          "bridge": "편집 계획을 실제 파일로 만들고 확인한다"
+        },
+        {
+          "id": "V08",
+          "duration_minutes": 5,
+          "concept": "편집·검수: 계획과 인코딩",
+          "visual_and_participation": "시간선 JSON·인코딩 과정·미디어 파일의 관계를 도해로 구분",
+          "bridge": "실제 파일에서 읽을 수 있는 값을 확인한다"
+        },
+        {
+          "id": "V09",
+          "duration_minutes": 6,
+          "concept": "검수: 규격과 시청",
+          "visual_and_participation": "실제 2초 검사 파일의 ffprobe 결과와 재생. 메타데이터로 판단할 수 없는 연속성은 직접 관찰",
+          "bridge": "한 샷을 바꾸면 어떤 확인을 반복할까"
+        },
+        {
+          "id": "V10",
+          "duration_minutes": 6,
+          "concept": "참조·검수: 변경의 영향",
+          "visual_and_participation": "샷 B의 참조 파일을 바꾼 안전한 실습과 해시 거부 결과. 영향받는 연결 선택",
+          "bridge": "새 결과로 연결을 다시 구성한다"
+        },
+        {
+          "id": "V11",
+          "duration_minutes": 6,
+          "concept": "타임라인·연속성·검수 적용",
+          "visual_and_participation": "샷 길이 변경 후 이후 시작값, 전체 길이, 경계 재생의 확인 대상을 적음",
+          "bridge": "개별 샷과 전체 영상의 판단을 정리한다"
+        },
+        {
+          "id": "V12",
+          "duration_minutes": 4,
+          "concept": "여섯 키워드 회상",
+          "visual_and_participation": "“시간은 맞는데 어색한 영상”과 “참조가 바뀐 영상”을 어떤 검사로 구분할지 설명",
+          "bridge": "질의응답 10분"
+        }
+      ]
+    }
+  ]
+}

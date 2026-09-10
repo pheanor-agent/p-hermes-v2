@@ -1,0 +1,53 @@
+@font-face{font-family:Hermes;src:url('../../assets/HermesKR.woff2') format('woff2');font-weight:100 900;font-display:block}
+:root{--ink:#19253b;--paper:#f6f4ed;--night:#121d34;--blue:#315be7;--amber:#a94f1d;--muted:#58677b}
+*{box-sizing:border-box}html,body{margin:0;background:var(--night)}body{font-family:Hermes,'Noto Sans KR',sans-serif}
+.reveal{font-family:Hermes,sans-serif;color:var(--ink);font-size:40px;line-height:1.4}
+.reveal .slides{text-align:left}.reveal .slides>section{height:1080px;width:1920px;padding:82px 120px 70px;background:var(--paper);overflow:hidden;box-sizing:border-box}
+.reveal .slides>section.dark{background:var(--night);color:var(--paper);--blue:#bdd0ff;--amber:#f0b05c;--muted:#b8c6dc}
+.reveal h1,.reveal h2,.reveal h3,.reveal p{margin:0;font-weight:500;text-transform:none;letter-spacing:-.04em}
+.reveal h1{font-size:102px;line-height:1.13;font-weight:750;max-width:1640px;margin:20px 0 44px;word-break:keep-all}
+.reveal .eyebrow{font-size:30px;letter-spacing:0;color:var(--muted)}
+.reveal .definition{font-size:46px;line-height:1.45;max-width:1510px;margin:24px 0 48px;word-break:keep-all}
+.reveal .slide-foot{position:absolute;bottom:50px;left:120px;right:120px;display:flex;justify-content:space-between;gap:30px;font-size:25px;line-height:1.45;color:var(--muted);letter-spacing:0}
+.reveal .slide-foot span:first-child{max-width:1500px}.reveal .slide-foot span:last-child{white-space:nowrap}
+.reveal .accent{color:var(--blue)}.reveal .difference{color:var(--amber)}.reveal .muted{color:var(--muted)}
+.reveal code,.reveal pre{font-family:Consolas,'Liberation Mono',monospace;letter-spacing:-.025em;text-transform:none}
+.reveal pre{box-shadow:none;font-size:42px;line-height:1.48;margin:0;white-space:pre-wrap;word-break:normal;width:auto}
+.reveal code{background:none}.reveal a{color:var(--blue);text-underline-offset:8px}
+.reveal table{border-collapse:collapse;font-size:42px;width:100%;margin:0}.reveal td,.reveal th{padding:20px 0;text-align:left;border-bottom:2px solid #bec5ce;font-weight:500}.reveal th{font-size:30px;color:var(--muted)}
+.reveal .big-value{font-family:Consolas,monospace;font-size:180px;line-height:1.1;letter-spacing:-.07em}
+.reveal .roles{margin-top:85px}.reveal .role-top{display:grid;grid-template-columns:repeat(3,1fr);gap:80px;border-bottom:2px solid #8190a8;padding-bottom:50px}
+.reveal .role-top strong{display:block;font-size:76px;font-weight:600}.reveal .role-top span{display:block;font-size:38px;color:var(--muted);margin-top:20px}
+.reveal .role-bridge{text-align:center;font-size:34px;padding:32px 0;color:var(--muted)}
+.reveal .role-bottom{display:flex;justify-content:center;gap:180px}.reveal .role-bottom strong{font-size:62px;font-weight:550}.reveal .role-bottom span{font-size:34px;color:var(--muted);display:block;margin-top:15px}
+.reveal .cas{display:grid;grid-template-columns:1.15fr 1fr;gap:100px;margin-top:65px;align-items:center}.reveal .cas-requests{display:grid;gap:35px}
+.reveal .cas-row{display:grid;grid-template-columns:85px 170px 1fr;align-items:center;gap:32px;font-size:65px;border-bottom:2px solid #bcc3cd;padding-bottom:22px}
+.reveal .cas-row code{font-size:115px}.reveal .cas-row .result{font-size:48px}.reveal .current-state{border-left:3px solid #bcc3cd;padding-left:90px}.reveal .current-state>p{font-size:36px;color:var(--muted)}
+.reveal .current-number{height:230px;position:relative;margin:10px 0}.reveal .current-number span{position:absolute;left:0;top:0;font-size:220px;font-family:Consolas,monospace;font-weight:650;line-height:1}
+.reveal .prompt-line{font-size:43px;line-height:1.4;margin-top:42px;word-break:keep-all}.reveal .cas .actual-label{font-size:30px;color:var(--muted)}
+.reveal .two-up{display:grid;grid-template-columns:1fr 1fr;gap:110px;margin-top:65px}.reveal .two-up>div{min-width:0}
+.reveal .subhead{font-size:32px;letter-spacing:0;color:var(--muted);margin-bottom:26px}
+.reveal .record-row{display:flex;align-items:baseline;justify-content:space-between;gap:30px;border-bottom:2px solid #bdc5d0;padding:22px 0;font-size:43px}.reveal .record-state{font-size:32px}
+.reveal .search-result p{font-size:59px;line-height:1.4;padding:18px 0}.reveal .inline-swap{display:inline-grid}.reveal .inline-swap>*{grid-area:1/1}
+.reveal .version-pair .big-value{font-size:175px;margin-bottom:28px}.reveal .version-pair .field{border-top:2px solid #8190a8;padding-top:26px;font-size:33px}.reveal .version-pair .field code{font-size:39px;display:block;margin-top:12px}
+.reveal .hash-value{font-size:35px;margin-top:30px}.reveal .meaning{font-size:44px;margin-top:60px;word-break:keep-all}
+.reveal .photo-slide{padding:0!important}.reveal .photo-slide .photo{width:1920px;height:1080px;object-fit:cover;max-width:none;max-height:none;margin:0;border:0;display:block}
+.reveal .photo-copy{position:absolute;top:130px;left:1030px;right:125px;color:var(--ink)}.reveal .photo-copy h1{font-size:118px;margin:24px 0 32px}.reveal .photo-copy p{font-size:44px;line-height:1.5;word-break:keep-all}
+.reveal .photo-guide{position:absolute;top:85px;bottom:125px;left:51%;border-left:3px dashed var(--blue)}.reveal .photo-guide:before{content:'문구 공간';position:absolute;top:20px;left:45px;color:var(--blue);font-size:38px;white-space:nowrap}
+.reveal .film-frames{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}.reveal .film-frames img{width:100%;height:460px;object-fit:cover;margin:0;max-height:none;max-width:none}.reveal .film-label{font-size:28px;color:var(--muted);margin-top:12px}
+.reveal .timeline{display:flex;margin-top:34px;height:82px;border-bottom:2px solid #8190a8;position:relative}.reveal .timeline>div{background:#283c60;border-right:5px solid var(--night);padding:12px 20px;font-size:34px;position:relative}
+.reveal .time-ticks{display:flex;justify-content:space-between;font-size:29px;margin-top:15px;font-family:Consolas,monospace}.reveal .boundary-mark{position:absolute;left:33.3333%;top:-20px;bottom:-12px;border-left:4px solid #f0b05c;z-index:2}.reveal .boundary-mark:before{content:'';width:18px;height:18px;border-radius:50%;background:#f0b05c;position:absolute;left:-11px;top:0}
+.reveal .boundary-caption{font-size:39px;margin-top:27px}
+.reveal .notes{display:none!important}
+.reveal .cas{margin-top:35px}.reveal .cas-requests{gap:22px}.reveal .cas-row{padding-bottom:15px;line-height:1.1}.reveal .cas-row code{font-size:98px;line-height:1.1}
+.reveal .layout-hash .two-up{margin-top:38px}.reveal .layout-hash .meaning{margin-top:36px}
+.reveal .photo-guide:before{top:-48px}
+.reveal .layout-boundary h1{font-size:82px;margin-bottom:30px}.reveal .layout-boundary .film-frames img{height:350px}.reveal .layout-boundary .timeline{height:65px;margin-top:24px}.reveal .layout-boundary .boundary-caption{margin-top:16px}
+.deck-tools{position:fixed;z-index:60;left:18px;bottom:15px;display:flex;gap:8px;align-items:center;opacity:0;transition:opacity .2s;font:14px Hermes,sans-serif}.deck-tools:focus-within,.deck-tools:hover,body.show-tools .deck-tools{opacity:1}
+.deck-tools button,.deck-tools a{appearance:none;border:1px solid #60708b;background:#121d34;color:#f6f4ed;padding:9px 13px;border-radius:3px;font:inherit;text-decoration:none;cursor:pointer}.deck-tools button:focus-visible,.deck-tools a:focus-visible{outline:3px solid #9fbaff;outline-offset:2px}
+.deck-tools .count{color:white;background:#121d34;padding:9px 13px}
+.deck-help{position:fixed;inset:15% 20%;z-index:100;background:var(--paper);color:var(--ink);padding:40px;font:24px/1.7 Hermes,sans-serif;box-shadow:0 10px 80px #0008}.deck-help[hidden]{display:none}.deck-help button{font:inherit;padding:8px 20px;margin-top:20px}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{.deck-tools,.deck-help{display:none!important}.reveal .fragment.fade-out{display:none!important}.reveal .fragment{opacity:1!important;visibility:visible!important}.reveal .slides>section{overflow:hidden!important}}
+.print-pdf .deck-tools,.print-pdf .deck-help{display:none}.print-pdf .fragment.fade-out{display:none!important}
+.reveal .layout-boundary .film-frames img{object-fit:contain}
