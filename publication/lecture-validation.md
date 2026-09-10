@@ -36,8 +36,8 @@ The native slide controls and all runtime assets are served locally with the sit
 
 The ten-minute T04–T05 excerpt is checked as a timed **visual cue rehearsal** using the real recording, question hold and sequential reveals. Its event log records wall-clock time and slide state. It does not measure spoken delivery or audience reactions. A human lecturer should adjust the planned lesson times after teaching practice with their intended audience.
 
-Automated checks and author review do not establish learner engagement, retention or acceptance. Safari, physical projectors and screen-reader speech were not tested. The contract tests previously passed 15 cases on Windows with the unprivileged symlink test skipped; the Linux CI runs the full suite.
+Automated checks and author review do not establish learner engagement, retention or acceptance. Safari, physical projectors and screen-reader speech were not tested. The contract tests previously passed 15 cases on Windows with the unprivileged symlink test skipped; the Linux CI passed all 16 tests.
 
 ## Release evidence
 
-Completed local results: [browser review](lecture-browser-review.json), [full media playback](lecture-media-review.json) and [600-second visual cue rehearsal](lecture-cue-review.json). All three passed. GitHub CI, Pages deployment and public asset verification are recorded in `lecture-deployment.json` after publication. The release checklist distinguishes verified implementation from any pending deployment check.
+Completed local results: [browser review](lecture-browser-review.json), [full media playback](lecture-media-review.json) and [600-second visual cue rehearsal](lecture-cue-review.json). All three passed. [GitHub deployment verification](lecture-deployment.json) records successful CI and Pages runs, and exact byte comparisons for 55 public pages and assets against content commit `6301fa72710ebcdfa7bc9fb4f97c202d4bf5a59e`. [Public browser review](lecture-public-browser-review.json) passed desktop/mobile navigation, scene links, fragments, full screen, seven media controls, speaker view and reduced motion at the live URL.

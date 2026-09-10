@@ -1,0 +1,166 @@
+{
+  "base": "https://pheanor-agent.github.io/p-hermes-v2",
+  "views": [
+    {
+      "name": "home",
+      "width": 1280,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "lectures",
+      "width": 1280,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "course",
+      "width": 1280,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "guide",
+      "width": 1280,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "media",
+      "width": 1280,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "blog",
+      "width": 1280,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "home",
+      "width": 390,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "lectures",
+      "width": 390,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "course",
+      "width": 390,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "guide",
+      "width": 390,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "media",
+      "width": 390,
+      "overflow": false,
+      "missingImages": []
+    },
+    {
+      "name": "blog",
+      "width": 390,
+      "overflow": false,
+      "missingImages": []
+    }
+  ],
+  "media": [
+    {
+      "slug": "overview",
+      "id": "O07-4",
+      "time": 1.373094,
+      "duration": 21.4,
+      "paused": false,
+      "width": 1280,
+      "height": 720,
+      "ready": 4,
+      "pauses": true
+    },
+    {
+      "slug": "tasks",
+      "id": "T05-2",
+      "time": 1.419802,
+      "duration": 21.04,
+      "paused": false,
+      "width": 1280,
+      "height": 720,
+      "ready": 4,
+      "pauses": true
+    },
+    {
+      "slug": "knowledge",
+      "id": "K10-3",
+      "time": 1.35094,
+      "duration": 24.68,
+      "paused": false,
+      "width": 1280,
+      "height": 720,
+      "ready": 4,
+      "pauses": true
+    },
+    {
+      "slug": "video",
+      "id": "V09-3",
+      "time": 1.363473,
+      "duration": 16.6,
+      "paused": false,
+      "width": 1280,
+      "height": 720,
+      "ready": 4,
+      "pauses": true
+    },
+    {
+      "slug": "video",
+      "id": "V04-1",
+      "time": 1.500478,
+      "duration": 12,
+      "paused": false,
+      "width": 1280,
+      "height": 720,
+      "ready": 4,
+      "pauses": true
+    },
+    {
+      "slug": "video",
+      "id": "V07-2",
+      "time": 1.335128,
+      "duration": 12,
+      "paused": false,
+      "width": 1280,
+      "height": 720,
+      "ready": 4,
+      "pauses": true
+    },
+    {
+      "slug": "video",
+      "id": "V09-1",
+      "time": 1.35571,
+      "duration": 2,
+      "paused": false,
+      "width": 1280,
+      "height": 720,
+      "ready": 4,
+      "pauses": true
+    }
+  ],
+  "errors": [],
+  "deepLink": true,
+  "fullscreen": true,
+  "fragment": true,
+  "reducedMotion": true,
+  "localMedia": true,
+  "localSpeaker": true,
+  "externalRequests": [],
+  "ok": true,
+  "content_commit": "6301fa72710ebcdfa7bc9fb4f97c202d4bf5a59e"
+}

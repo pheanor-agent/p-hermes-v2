@@ -1,0 +1,405 @@
+{
+  "commit": "6301fa72710ebcdfa7bc9fb4f97c202d4bf5a59e",
+  "base": "https://pheanor-agent.github.io/p-hermes-v2/",
+  "checked_at": "2026-09-10T06:16:59.160573+00:00",
+  "files": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 5459,
+      "sha256": "8cdfb753ad4564bced899b3c2e8ffe57484fd7beec5c7839a123796edefe0c34",
+      "matches_commit": true
+    },
+    {
+      "path": "assets/site.css",
+      "status": 200,
+      "bytes": 21549,
+      "sha256": "82ba299737d1d338b1b4b1a2960d1d42ed0757207820175e446bc2a0da7c0d46",
+      "matches_commit": true
+    },
+    {
+      "path": "assets/site.js",
+      "status": 200,
+      "bytes": 441,
+      "sha256": "5462820b4a19b85b65956f3160663e8e2d87cfa8d822b9874de643214c99f3cd",
+      "matches_commit": true
+    },
+    {
+      "path": "assets/HermesKR.woff2",
+      "status": 200,
+      "bytes": 89732,
+      "sha256": "29eb9851cd754bc42965a99f30cedea3ca49865b647cff4ebe5d097ee5fb3895",
+      "matches_commit": true
+    },
+    {
+      "path": "assets/font-manifest.json",
+      "status": 200,
+      "bytes": 8111,
+      "sha256": "02bdfeefa7629e96a2b26514007a3dd9d9144a2bc5f28dcf8c6672c521afc8ba",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/deck.js",
+      "status": 200,
+      "bytes": 5059,
+      "sha256": "b14090b3b0fdaf8eec7cee27928d7b99a0cec261132bfa5ff92c2a7c3cc9a023",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/deck.css",
+      "status": 200,
+      "bytes": 12985,
+      "sha256": "9e18b183a50cf084821626c889e912be10724b9040eee364a3ad91ecbe335ba9",
+      "matches_commit": true
+    },
+    {
+      "path": "lectures/catalog.html",
+      "status": 200,
+      "bytes": 5141,
+      "sha256": "92064af786e5f4ba2e5c39f80f98fca4b07cc9f70b8898ae0429be9eccc97ea6",
+      "matches_commit": true
+    },
+    {
+      "path": "lectures/guide.html",
+      "status": 200,
+      "bytes": 3541,
+      "sha256": "12fa73db21bd64c4b459155e737ab6fd7ddc23d252ead220862ecfd5bdda16ad",
+      "matches_commit": true
+    },
+    {
+      "path": "lectures/image.html",
+      "status": 200,
+      "bytes": 4992,
+      "sha256": "c1fdbe0493786864b6c99feca2c86548324de76022e63ffaab6984b493551aa8",
+      "matches_commit": true
+    },
+    {
+      "path": "lectures/index.html",
+      "status": 200,
+      "bytes": 4119,
+      "sha256": "622ced4a5b146e413969df921c844873c1b830a41666162de2bf2d75296c6837",
+      "matches_commit": true
+    },
+    {
+      "path": "lectures/knowledge.html",
+      "status": 200,
+      "bytes": 5240,
+      "sha256": "a9504aaf81e23c6c1042a33008776eefa459a76b35247ef88baff06dd7efb77b",
+      "matches_commit": true
+    },
+    {
+      "path": "lectures/media.html",
+      "status": 200,
+      "bytes": 8913,
+      "sha256": "a0304b26615739c61421473d1e190a6254ae84e427d2e652a304444746c793a3",
+      "matches_commit": true
+    },
+    {
+      "path": "lectures/overview.html",
+      "status": 200,
+      "bytes": 4967,
+      "sha256": "a53edc6994f9e430d978ac8aa6252266902ae3570ff66e8fa871039530eecab8",
+      "matches_commit": true
+    },
+    {
+      "path": "lectures/prototype.html",
+      "status": 200,
+      "bytes": 8217,
+      "sha256": "bae9eef5f5b572bebe7d30344b9c9c43d2851ef3983f62855c2059893ea9737d",
+      "matches_commit": true
+    },
+    {
+      "path": "lectures/tasks.html",
+      "status": 200,
+      "bytes": 4962,
+      "sha256": "638c2358a6b6f0f944e5148aaef9081edc17c49e96f272479a47f3a7aa803ee1",
+      "matches_commit": true
+    },
+    {
+      "path": "lectures/video.html",
+      "status": 200,
+      "bytes": 4971,
+      "sha256": "3d2456c02560d1b07ad6d67c8e2fcd9bc68fe4a23fd5ff66ddbc337eebec70d7",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/overview/index.html",
+      "status": 200,
+      "bytes": 127318,
+      "sha256": "50bc1bb1b2709959daa53bf8b07694603b42a503abdfe7798cdc0ecdeb320b8d",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/tasks/index.html",
+      "status": 200,
+      "bytes": 126521,
+      "sha256": "e92399ffeafebed1f6ea18b4a6124538168b20f59da304000e8a09b629daa363",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/knowledge/index.html",
+      "status": 200,
+      "bytes": 131020,
+      "sha256": "01a2f18dc8a29766d3e3a3d7c6d1b87254eaa411b4de57a97d32a6daf0aa7e86",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/catalog/index.html",
+      "status": 200,
+      "bytes": 126712,
+      "sha256": "c80257ddfa1a3db8d22573235db65e5faff1e4e6994edfd84481af66560a1032",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/image/index.html",
+      "status": 200,
+      "bytes": 124333,
+      "sha256": "56e07dcead6079fb284676c52884b9597cdb581eff6a3dbe350a770e04182340",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/video/index.html",
+      "status": 200,
+      "bytes": 130215,
+      "sha256": "cbccfeebc706b4fd90d775da4357cd26a272c611f93fcbf194b999806642b940",
+      "matches_commit": true
+    },
+    {
+      "path": "blog/start.html",
+      "status": 200,
+      "bytes": 10839,
+      "sha256": "e9d166ade4bbdc771b32daa4d4c216c9e7a07bd5346dfb5451846036c412a029",
+      "matches_commit": true
+    },
+    {
+      "path": "blog/tasks.html",
+      "status": 200,
+      "bytes": 14295,
+      "sha256": "ffb9171c8150c15e9656b4e21f465d819d89f23668faa3e58bf47cfa3c8eb763",
+      "matches_commit": true
+    },
+    {
+      "path": "blog/knowledge.html",
+      "status": 200,
+      "bytes": 13679,
+      "sha256": "1d1abcc53bac228ce6a984250726ae649fc7a0c7e435b70f3a07b6d6771ebebd",
+      "matches_commit": true
+    },
+    {
+      "path": "blog/catalog.html",
+      "status": 200,
+      "bytes": 13533,
+      "sha256": "1077ca669d98387136d242126bd134b30dcf8857d0629c4660f621384b5d8dd7",
+      "matches_commit": true
+    },
+    {
+      "path": "blog/image.html",
+      "status": 200,
+      "bytes": 13960,
+      "sha256": "472f7307decbb1879e73a4c66077da84548c53c41a6917443cec3c9c580b2214",
+      "matches_commit": true
+    },
+    {
+      "path": "blog/video.html",
+      "status": 200,
+      "bytes": 14403,
+      "sha256": "f9e415a1ba07bbd96eea28ee4a04ec1c1c8069cf579a3856525fa41e82e714f1",
+      "matches_commit": true
+    },
+    {
+      "path": "blog/integration.html",
+      "status": 200,
+      "bytes": 11040,
+      "sha256": "6f62942df15c81b244c3dfa3b8d4556058c360d787bbd246355980d846db3240",
+      "matches_commit": true
+    },
+    {
+      "path": "wiki/start.html",
+      "status": 200,
+      "bytes": 8048,
+      "sha256": "bf8331d7e6f6c7607849150154160395354e969cd6c3d59be42b317c042d888c",
+      "matches_commit": true
+    },
+    {
+      "path": "wiki/tasks.html",
+      "status": 200,
+      "bytes": 11413,
+      "sha256": "3fbb120effa27828ee8ec01b1d84152382b100e87e5a318f6499006a51c87f7d",
+      "matches_commit": true
+    },
+    {
+      "path": "wiki/knowledge.html",
+      "status": 200,
+      "bytes": 11044,
+      "sha256": "b3d1bf9ae8ed8ddd2524ddd79b0d2fd9e85b4a752b37ef6de38aaf7bafea2ba6",
+      "matches_commit": true
+    },
+    {
+      "path": "wiki/catalog.html",
+      "status": 200,
+      "bytes": 10913,
+      "sha256": "3b568d31b731754543cc561991c69a3da6446db565193a89f44bbf5dd02a3e19",
+      "matches_commit": true
+    },
+    {
+      "path": "wiki/image.html",
+      "status": 200,
+      "bytes": 10919,
+      "sha256": "18b7a81f93debe075b9775f34b824be6437e3d5c5519caa5bd2ed84c93c95217",
+      "matches_commit": true
+    },
+    {
+      "path": "wiki/video.html",
+      "status": 200,
+      "bytes": 10906,
+      "sha256": "10db6e1da9ab13202cc7a5765cad03b440330a729a79544b89be8fe63b8c6943",
+      "matches_commit": true
+    },
+    {
+      "path": "wiki/integration.html",
+      "status": 200,
+      "bytes": 10410,
+      "sha256": "79c951ca5ffc67351ec6f56ef79a56a255af6bdb0d4700cb24ee05417ddcb626",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/boundary-after.png",
+      "status": 200,
+      "bytes": 761281,
+      "sha256": "55da856b9855455396c0bccd8647ea3eaa9a36f9aa8f1451ab807a1b4add0bb9",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/boundary-before.png",
+      "status": 200,
+      "bytes": 449113,
+      "sha256": "aa7997acd8ad47349b98188e12404cc14f004accc713e6e8ea2fd9aeb71b189f",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/demo-cas-poster.png",
+      "status": 200,
+      "bytes": 39457,
+      "sha256": "8b3f0680483028941535eadf6523a71ceeb81d9b16dc5b0eddd66a50e08151a1",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/demo-cas.webm",
+      "status": 200,
+      "bytes": 773389,
+      "sha256": "f2a2aa154358db7adb00d12042adbf15ac20e357c23ff87af7a3b33eef1fbfd9",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/demo-integration-poster.png",
+      "status": 200,
+      "bytes": 52837,
+      "sha256": "807c566f214e59bb1b552c39623eee5badc4c22b0ae47d70b426afed91285507",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/demo-integration.webm",
+      "status": 200,
+      "bytes": 919226,
+      "sha256": "35e97ea8beefd7c7c88eb7e239637053a8bbafa29c76b6fd766a9fc4ee882d29",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/demo-knowledge-poster.png",
+      "status": 200,
+      "bytes": 46640,
+      "sha256": "12c3233d70e407df27446c5d2098f788c6eb06a25cdb9700bf4a520a1d902a0c",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/demo-knowledge.webm",
+      "status": 200,
+      "bytes": 786689,
+      "sha256": "7545c2a9ddc5aaca3b83847ecf749784dd8627c7e4443aa18cfe3278952d46c1",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/demo-probe-poster.png",
+      "status": 200,
+      "bytes": 44111,
+      "sha256": "9887d0dc590161269ceecccae7660374bea01f68057ff56409914be017f3acc0",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/demo-probe.webm",
+      "status": 200,
+      "bytes": 696508,
+      "sha256": "10a2178100842799380dfcb895fa7ed2116fb2b94afa34f2f0eec9b48bf8f741",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/edit-a.mp4",
+      "status": 200,
+      "bytes": 452661,
+      "sha256": "7a990a6679431cea9ac863a1ca722af5382bdb7c6ede02f39bcf14a8c9e8ed32",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/edit-b.mp4",
+      "status": 200,
+      "bytes": 443943,
+      "sha256": "9f7714cb1990f33b2c2054845a32a9e50eea82000e665271a1025973b725f643",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/luma-center.png",
+      "status": 200,
+      "bytes": 1298787,
+      "sha256": "347c36cbd7b0e0f3d15ee2bcb4c230e6a84fb4c43d30b9849be448058bd452f3",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/luma-crop.png",
+      "status": 200,
+      "bytes": 2150153,
+      "sha256": "13a09b5efbd5a205adad250ad54cd7ad4fe4f13e7d177c95e3c67f71d2dcdbb6",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/luma-detail.png",
+      "status": 200,
+      "bytes": 1637393,
+      "sha256": "bd6b6afa90d02838acddeec51635eac256bb95929b0f604b773c58c0eec8f666",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/luma-left.png",
+      "status": 200,
+      "bytes": 1324876,
+      "sha256": "a18d665409e4b265feff78f6c4cf5a8a9bf4d0c159d145eab03ca8c2454c5075",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/probe-2s.mp4",
+      "status": 200,
+      "bytes": 677628,
+      "sha256": "329081fb66ec0ac0060db76ab2f9cacb07591108697e4ace4adb920c44de80c4",
+      "matches_commit": true
+    },
+    {
+      "path": "slides/assets/media/probe-frame.png",
+      "status": 200,
+      "bytes": 176372,
+      "sha256": "dfffdf82a17b4d2e31577f66e7214a08e3bbc069ccfa6536fe633c29c1e3e9aa",
+      "matches_commit": true
+    }
+  ],
+  "ok": true,
+  "ci": {
+    "run_id": 34444350542,
+    "url": "https://github.com/pheanor-agent/p-hermes-v2/actions/runs/34444350542",
+    "conclusion": "success",
+    "contract_tests_passed": 16
+  },
+  "pages": {
+    "run_id": 34444350181,
+    "url": "https://github.com/pheanor-agent/p-hermes-v2/actions/runs/34444350181",
+    "conclusion": "success"
+  },
+  "scope": "Verified publication of content commit. The following audit commit only adds validation records and leaves docs unchanged."
+}
