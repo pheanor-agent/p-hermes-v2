@@ -1,0 +1,20 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="요청부터 실행, 검토와 재사용까지 p-hermes의 전체 흐름을 3분으로 이해합니다."><meta name="color-scheme" content="light"><title>전체 시스템 지도 · p-hermes</title><link rel="icon" href="../assets/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/site.css"><script defer src="../assets/site.js"></script></head><body class=""><a class="skip" href="#main">본문으로 건너뛰기</a><header class="site-header"><a class="brand" href="../index.html"><span class="brand-mark">p<span>h</span></span>p-hermes<span class="version">v2</span></a><nav aria-label="주 메뉴"><a href="../system/index.html">전체 그림</a><a href="../scenarios/index.html">활용 장면</a><a href="../components/index.html">구성 요소</a><a href="../blog/index.html">설계 이야기</a><a href="../wiki/start.html">기술 명세</a><a href="../wiki/reference.html">시작하기</a></nav></header><main id="main" class="course-index">
+<header class="chapter-intro"><p class="eyebrow">하나의 요청, 이어지는 일</p><h1>전체 시스템 지도</h1><p class="lead">요청부터 실행, 검토와 재사용까지 p-hermes의 전체 흐름을 3분으로 이해합니다.</p></header>
+<nav class="on-page" aria-label="이 페이지에서"><a href="#problem">해결하려는 문제</a><a href="#journey">요청의 흐름</a><a href="#cooperation">협력 지도</a><a href="#continuity">중단과 재개</a><a href="#next">더 깊게</a></nav>
+<section id="problem" class="wiki-section"><h2>답변은 시작이고, 완료까지는 여러 단계입니다.</h2>
+<p>좋은 답을 얻어도 자료 확인, 실제 제작, 검토와 전달은 남아 있습니다. 대화가 길어지거나 담당자가 바뀌면 어디까지 했는지, 무엇을 확인해야 하는지 다시 짚어야 합니다.</p><p>p-hermes는 이 사이를 연결하는 AI 작업 시스템입니다. 단순히 답변을 더 길게 쓰는 것이 아니라, 요청의 목표와 진행, 근거와 결과를 함께 다룹니다. 이 페이지는 약 3분 안에 그 전체 흐름을 살펴보는 지도입니다.</p>
+</section>
+<section id="journey" class="wiki-section"><h2>사람의 요청에서 다음 행동까지</h2>
+<figure class="visual visual-flow"><figcaption>사람 / 외부 채널 → p-hermes → 완료 결과 / 다음 행동 / 재사용 지식</figcaption><ol class="visual-steps"><li><span class="step-no">01</span><strong>요청을 이해</strong><span>사람이나 외부 채널의 요청에서 목표와 완료 조건을 확인합니다.</span></li><li><span class="step-no">02</span><strong>진행을 관리</strong><span>해야 할 일과 지금 할 일을 구분하고 검토 지점을 정합니다.</span></li><li><span class="step-no">03</span><strong>지식·자원 탐색</strong><span>기존 자료의 근거와 필요한 도구·모델을 찾습니다.</span></li><li><span class="step-no">04</span><strong>실행·생성</strong><span>문서와 코드, 이미지와 영상 등 필요한 결과를 만듭니다.</span></li><li><span class="step-no">05</span><strong>검수·기록</strong><span>목표에 맞는지 살피고 결과와 판단 근거를 남깁니다.</span></li></ol></figure><p>새 요청이 오면 남겨 둔 기록을 다시 확인합니다. 앞선 결과를 그대로 반복하는 대신, 유효한 근거와 필요한 작업을 골라 이어갑니다.</p>
+</section>
+<section id="cooperation" class="wiki-section"><h2>다섯 능력이 같은 작업 안에서 협력합니다.</h2>
+<ul class="checkpoints"><li><strong>진행</strong>은 지금 필요한 행동을 정리하고 지식과 자원 탐색으로 연결합니다.</li><li><strong>지식</strong>은 왜 그렇게 판단하는지 설명할 자료와 출처를 제공합니다.</li><li><strong>자원</strong>은 그 일을 수행할 도구, 모델과 템플릿 선택을 돕습니다.</li><li><strong>생성</strong>은 그 선택을 실제 이미지와 영상 같은 산출물로 바꿉니다.</li><li><strong>통합</strong>은 산출물끼리 맥락이 맞는지 살피고 진행 기록으로 돌려보냅니다.</li></ul><p>문서·코드 실행과 미디어 생성은 같은 목표에서 갈라졌다가 검토에서 다시 만납니다. 따라서 여러 기능이 있어도 방문자가 따라갈 중심은 하나의 요청입니다.</p><div class="related"><a href="../components/index.html">공개 이름과 내부 구성 요소 연결하기 →</a></div>
+</section>
+<section id="continuity" class="wiki-section"><h2>멈추더라도, 확인하고 이어갑니다.</h2>
+<ul class="checkpoints"><li><strong>중단:</strong> 완료하지 못한 단계와 확인할 사항을 남깁니다.</li><li><strong>재개:</strong> 이전 기록과 실제 결과를 확인한 뒤 다음 행동을 정합니다.</li><li><strong>검토:</strong> 중요한 변경은 사람이 판단할 지점을 마련합니다.</li><li><strong>재사용:</strong> 결과뿐 아니라 선택 이유와 출처도 다음 작업에 연결합니다.</li></ul><p>모든 일을 무조건 자동으로 끝낸다는 뜻은 아닙니다. 확인이 필요한 순간을 드러내고, 그 판단 이후의 일을 이어가려는 구조입니다.</p>
+</section>
+<section id="next" class="wiki-section"><h2>이제 요청 하나를 따라가 보세요.</h2>
+<div class="related"><a href="../scenarios/index.html#project-package">프로젝트 소개 패키지 만들기</a><a href="../lectures/overview.html">쉽게 이해하기 · 강의</a><a href="../blog/start.html">설계 이유 · 블로그</a><a href="../wiki/start.html">정확한 명세 · 위키</a></div>
+</section>
+
+</main><footer class="site-footer"><a class="brand" href="../index.html">p-hermes</a><p>개념을 읽고, 구조를 따라가고, 코드로 확인합니다.</p><a href="../wiki/reference.html">구현과 출처</a><a href="https://github.com/pheanor-agent/p-hermes-v2/blob/main/LICENSE">라이선스 ↗</a></footer></body></html>

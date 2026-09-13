@@ -1,0 +1,87 @@
+{
+  "components": [
+    {
+      "id": "tasks",
+      "public_label": "진행을 이어가기",
+      "internal_label": "Tasks",
+      "summary": "작업의 현재 상태와 다음 행동을 관리합니다.",
+      "group": "progress",
+      "order": 10,
+      "entry": {
+        "overview": "/components/tasks.html",
+        "blog": "/blog/tasks.html",
+        "wiki": "/wiki/tasks.html",
+        "lecture": "/lectures/tasks.html"
+      }
+    },
+    {
+      "id": "knowledge",
+      "public_label": "근거를 기억하기",
+      "internal_label": "Knowledge",
+      "summary": "자료와 출처, 판단 근거를 찾고 다시 씁니다.",
+      "group": "knowledge",
+      "order": 20,
+      "entry": {
+        "overview": "/components/index.html#knowledge",
+        "blog": "/blog/knowledge.html",
+        "wiki": "/wiki/knowledge.html",
+        "lecture": "/lectures/knowledge.html"
+      }
+    },
+    {
+      "id": "catalog",
+      "public_label": "필요한 자원을 고르기",
+      "internal_label": "Catalog",
+      "summary": "도구와 모델, 템플릿과 리퍼런스를 고릅니다.",
+      "group": "resources",
+      "order": 30,
+      "entry": {
+        "overview": "/components/index.html#resources",
+        "blog": "/blog/catalog.html",
+        "wiki": "/wiki/catalog.html",
+        "lecture": "/lectures/catalog.html"
+      }
+    },
+    {
+      "id": "image",
+      "public_label": "결과물을 만들기 · 이미지",
+      "internal_label": "Image",
+      "summary": "선택한 자원으로 이미지 산출물을 만듭니다.",
+      "group": "generation",
+      "order": 40,
+      "entry": {
+        "overview": "/components/index.html#generation",
+        "blog": "/blog/image.html",
+        "wiki": "/wiki/image.html",
+        "lecture": "/lectures/image.html"
+      }
+    },
+    {
+      "id": "video",
+      "public_label": "결과물을 만들기 · 영상",
+      "internal_label": "Video",
+      "summary": "선택한 자원으로 영상 산출물을 만듭니다.",
+      "group": "generation",
+      "order": 50,
+      "entry": {
+        "overview": "/components/index.html#generation",
+        "blog": "/blog/video.html",
+        "wiki": "/wiki/video.html",
+        "lecture": "/lectures/video.html"
+      }
+    },
+    {
+      "id": "integration",
+      "public_label": "결과를 연결하고 검수하기",
+      "internal_label": "Integration",
+      "summary": "여러 산출물의 맥락을 맞추고 검토를 연결합니다.",
+      "group": "integration",
+      "order": 60,
+      "entry": {
+        "overview": "/components/index.html#integration",
+        "blog": "/blog/integration.html",
+        "wiki": "/wiki/integration.html"
+      }
+    }
+  ]
+}

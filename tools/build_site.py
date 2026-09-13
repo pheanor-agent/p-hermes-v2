@@ -58,7 +58,11 @@ def visual(v, context=''):
 
 def shell(title, body, depth=1, kind='', description='Hermes의 작업·지식·카탈로그·이미지·영상 구조를 이해하고 공개 코드로 확인합니다.'):
     base='../'*depth
-    return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="{esc(description)}"><meta name="color-scheme" content="light"><title>{esc(title)} · p-hermes</title><link rel="icon" href="{base}assets/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="{base}assets/site.css"><script defer src="{base}assets/site.js"></script></head><body class="{kind}"><a class="skip" href="#main">본문으로 건너뛰기</a><header class="site-header"><a class="brand" href="{base}index.html"><span class="brand-mark">p<span>h</span></span>p-hermes<span class="version">v2</span></a><nav aria-label="주 메뉴"><a href="{base}lectures/index.html">강의</a><a href="{base}wiki/start.html">위키</a><a href="{base}blog/index.html">블로그</a><a href="{base}wiki/reference.html">코드 시작하기</a><a class="github-link" href="{REPO}">GitHub ↗</a></nav></header>{body}<footer class="site-footer"><a class="brand" href="{base}index.html">p-hermes</a><p>개념을 읽고, 구조를 따라가고, 코드로 확인합니다.</p><a href="{base}wiki/reference.html">구현과 출처</a><a href="{REPO}/blob/main/LICENSE">라이선스 ↗</a></footer></body></html>'''
+    navigation=''.join(link(base+href,label) for href,label in (
+        ('system/index.html','전체 그림'),('scenarios/index.html','활용 장면'),
+        ('components/index.html','구성 요소'),('blog/index.html','설계 이야기'),
+        ('wiki/start.html','기술 명세'),('wiki/reference.html','시작하기')))
+    return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="{esc(description)}"><meta name="color-scheme" content="light"><title>{esc(title)} · p-hermes</title><link rel="icon" href="{base}assets/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="{base}assets/site.css"><script defer src="{base}assets/site.js"></script></head><body class="{kind}"><a class="skip" href="#main">본문으로 건너뛰기</a><header class="site-header"><a class="brand" href="{base}index.html"><span class="brand-mark">p<span>h</span></span>p-hermes<span class="version">v2</span></a><nav aria-label="주 메뉴">{navigation}</nav></header>{body}<footer class="site-footer"><a class="brand" href="{base}index.html">p-hermes</a><p>개념을 읽고, 구조를 따라가고, 코드로 확인합니다.</p><a href="{base}wiki/reference.html">구현과 출처</a><a href="{REPO}/blob/main/LICENSE">라이선스 ↗</a></footer></body></html>'''
 
 def write(name,text):
     p=OUT/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(text,encoding='utf-8',newline='\n')
@@ -147,11 +151,125 @@ def blog(series):
     body=f'<main id="main" class="course-index"><div class="eyebrow">P-HERMES BLOG</div><h1>시스템을 이해하는<br>일곱 편의 이야기</h1><p class="lead">한 요청을 따라 다섯 분야의 구조와 기술을 읽습니다.<br>도해와 코드 예제를 곁들인 연재입니다.</p><p class="scope-note">교육용 사례와 공개 코드의 동작을 사용합니다. 실제 Hermes의 구조는 위키에서 함께 확인하세요.</p><div class="chapter-list">{rows}</div>{sources(series.get("sources",[]))}</main>'
     publish('index.html',shell('블로그',body))
 
+def system_index():
+    # Public hubs own orientation and routes, not the detailed technical contracts.
+    body='''<main id="main" class="course-index">
+<header class="chapter-intro"><p class="eyebrow">하나의 요청, 이어지는 일</p><h1>전체 시스템 지도</h1><p class="lead">요청부터 실행, 검토와 재사용까지 p-hermes의 전체 흐름을 3분으로 이해합니다.</p></header>
+<nav class="on-page" aria-label="이 페이지에서"><a href="#problem">해결하려는 문제</a><a href="#journey">요청의 흐름</a><a href="#cooperation">협력 지도</a><a href="#continuity">중단과 재개</a><a href="#next">더 깊게</a></nav>
+<section id="problem" class="wiki-section"><h2>답변은 시작이고, 완료까지는 여러 단계입니다.</h2>
+<p>좋은 답을 얻어도 자료 확인, 실제 제작, 검토와 전달은 남아 있습니다. 대화가 길어지거나 담당자가 바뀌면 어디까지 했는지, 무엇을 확인해야 하는지 다시 짚어야 합니다.</p><p>p-hermes는 이 사이를 연결하는 AI 작업 시스템입니다. 단순히 답변을 더 길게 쓰는 것이 아니라, 요청의 목표와 진행, 근거와 결과를 함께 다룹니다. 이 페이지는 약 3분 안에 그 전체 흐름을 살펴보는 지도입니다.</p>
+</section>
+<section id="journey" class="wiki-section"><h2>사람의 요청에서 다음 행동까지</h2>
+<figure class="visual visual-flow"><figcaption>사람 / 외부 채널 → p-hermes → 완료 결과 / 다음 행동 / 재사용 지식</figcaption><ol class="visual-steps"><li><span class="step-no">01</span><strong>요청을 이해</strong><span>사람이나 외부 채널의 요청에서 목표와 완료 조건을 확인합니다.</span></li><li><span class="step-no">02</span><strong>진행을 관리</strong><span>해야 할 일과 지금 할 일을 구분하고 검토 지점을 정합니다.</span></li><li><span class="step-no">03</span><strong>지식·자원 탐색</strong><span>기존 자료의 근거와 필요한 도구·모델을 찾습니다.</span></li><li><span class="step-no">04</span><strong>실행·생성</strong><span>문서와 코드, 이미지와 영상 등 필요한 결과를 만듭니다.</span></li><li><span class="step-no">05</span><strong>검수·기록</strong><span>목표에 맞는지 살피고 결과와 판단 근거를 남깁니다.</span></li></ol></figure><p>새 요청이 오면 남겨 둔 기록을 다시 확인합니다. 앞선 결과를 그대로 반복하는 대신, 유효한 근거와 필요한 작업을 골라 이어갑니다.</p>
+</section>
+<section id="cooperation" class="wiki-section"><h2>다섯 능력이 같은 작업 안에서 협력합니다.</h2>
+<ul class="checkpoints"><li><strong>진행</strong>은 지금 필요한 행동을 정리하고 지식과 자원 탐색으로 연결합니다.</li><li><strong>지식</strong>은 왜 그렇게 판단하는지 설명할 자료와 출처를 제공합니다.</li><li><strong>자원</strong>은 그 일을 수행할 도구, 모델과 템플릿 선택을 돕습니다.</li><li><strong>생성</strong>은 그 선택을 실제 이미지와 영상 같은 산출물로 바꿉니다.</li><li><strong>통합</strong>은 산출물끼리 맥락이 맞는지 살피고 진행 기록으로 돌려보냅니다.</li></ul><p>문서·코드 실행과 미디어 생성은 같은 목표에서 갈라졌다가 검토에서 다시 만납니다. 따라서 여러 기능이 있어도 방문자가 따라갈 중심은 하나의 요청입니다.</p><div class="related"><a href="../components/index.html">공개 이름과 내부 구성 요소 연결하기 →</a></div>
+</section>
+<section id="continuity" class="wiki-section"><h2>멈추더라도, 확인하고 이어갑니다.</h2>
+<ul class="checkpoints"><li><strong>중단:</strong> 완료하지 못한 단계와 확인할 사항을 남깁니다.</li><li><strong>재개:</strong> 이전 기록과 실제 결과를 확인한 뒤 다음 행동을 정합니다.</li><li><strong>검토:</strong> 중요한 변경은 사람이 판단할 지점을 마련합니다.</li><li><strong>재사용:</strong> 결과뿐 아니라 선택 이유와 출처도 다음 작업에 연결합니다.</li></ul><p>모든 일을 무조건 자동으로 끝낸다는 뜻은 아닙니다. 확인이 필요한 순간을 드러내고, 그 판단 이후의 일을 이어가려는 구조입니다.</p>
+</section>
+<section id="next" class="wiki-section"><h2>이제 요청 하나를 따라가 보세요.</h2>
+<div class="related"><a href="../scenarios/index.html#project-package">프로젝트 소개 패키지 만들기</a><a href="../lectures/overview.html">쉽게 이해하기 · 강의</a><a href="../blog/start.html">설계 이유 · 블로그</a><a href="../wiki/start.html">정확한 명세 · 위키</a></div>
+</section>
+
+</main>'''
+    write('system/index.html',shell('전체 시스템 지도',body,description='요청부터 실행, 검토와 재사용까지 p-hermes의 전체 흐름을 3분으로 이해합니다.'))
+
+def scenarios_index():
+    body='''<main id="main" class="course-index">
+<header class="chapter-intro"><p class="eyebrow">하나의 요청, 이어지는 일</p><h1>활용 장면</h1><p class="lead">프로젝트 소개 패키지라는 하나의 요청에서 다섯 능력이 협력하는 과정을 따라갑니다.</p></header>
+<nav class="on-page" aria-label="이 페이지에서"><a href="#project-package">대표 시나리오</a><a href="#journey">작업 여정</a><a href="#review">검토와 전달</a><a href="#reuse">다음 작업</a></nav>
+<section id="project-package" class="wiki-section"><h2>프로젝트 소개 패키지 만들기</h2>
+<p>“프로젝트를 외부에 소개할 문서·이미지·짧은 영상을 준비해줘.”</p><p>이것은 시스템의 협력을 보여주는 설명용 시나리오입니다. 실제 생성 결과나 실행 완료를 주장하는 사례가 아닙니다. 조사와 문서화, 프로젝트 실행, 콘텐츠 제작이 한 요청 안에서 만나는 과정을 따라갑니다.</p><p>먼저 누구에게 소개할지, 무엇을 전달할지, 어떤 결과가 있으면 완료로 볼지 확인합니다. 문서 한 장, 대표 이미지, 짧은 소개 영상이 필요한지부터 사람과 맞춥니다.</p>
+</section>
+<section id="journey" class="wiki-section"><h2>한 요청이 각 능력을 거치는 과정</h2>
+<figure class="visual visual-flow"><figcaption>요청 → 진행 → 근거 → 자원</figcaption><ol class="visual-steps"><li><span class="step-no">01</span><strong>목표와 완료 조건</strong><span>진행 관리 · Tasks: 요청을 작업으로 정리하고 현재 단계와 다음 검토를 남깁니다.</span></li><li><span class="step-no">02</span><strong>기존 근거 찾기</strong><span>지식 · Knowledge: 프로젝트 문서, 기존 결정, 참고자료를 찾아 설명의 바탕을 모읍니다.</span></li><li><span class="step-no">03</span><strong>필요한 자원 선택</strong><span>자원 · Catalog: 목적에 맞는 도구, 모델, 템플릿과 리퍼런스를 고릅니다.</span></li></ol></figure><div class="visual visual-comparison"><ul class="visual-steps"><li><h3>문서·코드 작업</h3><p>핵심 소개 문구와 문서를 구성하고, 필요하다면 소개 페이지용 코드도 준비합니다.</p></li><li><h3>이미지·영상 생성</h3><p>Image / Video가 같은 자료와 방향을 바탕으로 대표 이미지와 짧은 영상을 만듭니다.</p></li></ul></div><p>두 작업의 형식은 다르지만 대상 독자와 핵심 메시지는 같습니다. 결과가 모이면 하나의 패키지로 검토합니다.</p>
+</section>
+<section id="review" class="wiki-section"><h2>만들었다고 곧바로 완료하지 않습니다.</h2>
+<p><strong>통합 · Integration</strong>은 문서의 주장, 이미지의 표현, 영상의 설명이 서로 맞는지 살피는 연결 지점입니다. 같은 프로젝트를 다르게 소개하고 있지 않은지, 빠진 자료는 없는지 확인합니다.</p><p>검토할 사람에게 결과와 확인 사항을 함께 제시합니다. 수정이 필요하면 해당 작업으로 돌아가고, 목표에 맞는지 검토·승인한 뒤 전달합니다. 생성 자체와 승인된 완료를 구분하는 이유입니다.</p>
+</section>
+<section id="reuse" class="wiki-section"><h2>완료 결과와 근거를 다음 작업에 남깁니다.</h2>
+<p><strong>Tasks + Knowledge</strong>에 완료 상태, 결과를 찾을 위치, 검토에서 결정한 내용과 재사용할 근거를 연결합니다. 다음에 “다른 독자에게 맞춰 소개해줘”라는 요청이 오면, 무엇을 유지하고 바꿀지 이 기록부터 확인합니다.</p><p>진행 관리만으로는 자료를 만들 수 없고, 생성만으로는 완료 여부를 설명하기 어렵습니다. 다섯 능력이 한 시스템에 있는 이유는 요청부터 다음 작업까지 이 연결을 유지하기 위해서입니다.</p><div class="related"><a href="../components/tasks.html">진행을 이어가는 역할 보기</a><a href="../components/index.html">구성 요소 전체 보기</a><a href="../blog/integration.html">왜 결과를 함께 검토하는가</a><a href="../system/index.html">전체 지도 다시 보기</a></div>
+</section>
+
+</main>'''
+    write('scenarios/index.html',shell('활용 장면',body,description='프로젝트 소개 패키지라는 하나의 요청에서 다섯 능력이 협력하는 과정을 따라갑니다.'))
+
+def components_index():
+    body='''<main id="main" class="course-index">
+<header class="chapter-intro"><p class="eyebrow">하나의 요청, 이어지는 일</p><h1>구성 요소 지도</h1><p class="lead">진행·지식·자원·생성·통합, 하나의 요청을 이어가는 다섯 공개 그룹을 살펴봅니다.</p></header>
+<nav class="on-page" aria-label="공개 그룹"><a href="#progress">진행</a><a href="#knowledge">지식</a><a href="#resources">자원</a><a href="#generation">생성</a><a href="#integration">통합</a></nav>
+<p>공개 지도에서는 다섯 그룹으로 읽습니다. 내부 구성 요소를 합치거나 이름을 바꾼 것이 아니라, 전체 흐름에서 맡는 역할로 묶었습니다.</p>
+<section id="progress" class="wiki-section"><h2>진행</h2>
+<h3>진행을 이어가기</h3><small>Tasks</small><p>작업의 현재 상태와 다음 행동을 관리합니다.</p><div class="related"><a href="tasks.html">역할과 보장 · Tasks 허브</a><a href="../lectures/tasks.html">쉽게 이해하기 · 강의</a><a href="../blog/tasks.html">설계 이유 · 블로그</a><a href="../wiki/tasks.html">정확한 명세 · 위키</a></div>
+</section>
+<section id="knowledge" class="wiki-section"><h2>지식</h2>
+<h3>근거를 기억하기</h3><small>Knowledge</small><p>자료와 출처, 판단 근거를 찾고 다시 씁니다.</p><div class="related"><a href="../lectures/knowledge.html">쉽게 이해하기 · 강의</a><a href="../blog/knowledge.html">설계 이유 · 블로그</a><a href="../wiki/knowledge.html">정확한 명세 · 위키</a></div>
+</section>
+<section id="resources" class="wiki-section"><h2>자원</h2>
+<h3>필요한 자원을 고르기</h3><small>Catalog</small><p>도구와 모델, 템플릿과 리퍼런스를 고릅니다.</p><div class="related"><a href="../lectures/catalog.html">쉽게 이해하기 · 강의</a><a href="../blog/catalog.html">설계 이유 · 블로그</a><a href="../wiki/catalog.html">정확한 명세 · 위키</a></div>
+</section>
+<section id="generation" class="wiki-section"><h2>생성</h2>
+<p>결과물을 만들기 — Image와 Video를 하나의 생성 그룹에서 봅니다. 문서·코드 등 다른 실행 결과와 함께 같은 요청의 산출물로 연결됩니다.</p><h3>결과물을 만들기 · 이미지</h3><small>Image</small><p>선택한 자원으로 이미지 산출물을 만듭니다.</p><div class="related"><a href="../lectures/image.html">쉽게 이해하기 · 강의</a><a href="../blog/image.html">설계 이유 · 블로그</a><a href="../wiki/image.html">정확한 명세 · 위키</a></div><h3>결과물을 만들기 · 영상</h3><small>Video</small><p>선택한 자원으로 영상 산출물을 만듭니다.</p><div class="related"><a href="../lectures/video.html">쉽게 이해하기 · 강의</a><a href="../blog/video.html">설계 이유 · 블로그</a><a href="../wiki/video.html">정확한 명세 · 위키</a></div>
+</section>
+<section id="integration" class="wiki-section"><h2>통합</h2>
+<h3>결과를 연결하고 검수하기</h3><small>Integration</small><p>여러 산출물의 맥락을 맞추고 검토를 연결합니다.</p><div class="related"><a href="../blog/integration.html">설계 이유 · 블로그</a><a href="../wiki/integration.html">정확한 명세 · 위키</a></div><p>통합 전용 강의 페이지 대신 기존 설계 이야기와 기술 명세로 연결합니다.</p>
+</section>
+<div class="related"><a href="../scenarios/index.html#project-package">이 구성 요소가 협력하는 시나리오 →</a></div>
+</main>'''
+    write('components/index.html',shell('구성 요소 지도',body,description='진행·지식·자원·생성·통합, 하나의 요청을 이어가는 다섯 공개 그룹을 살펴봅니다.'))
+
+def component_tasks():
+    body='''<main id="main" class="course-index">
+<header class="chapter-intro"><p class="eyebrow">하나의 요청, 이어지는 일</p><h1>진행을 이어가기</h1><p class="lead">현재 상태와 다음 행동의 근거를 남겨, 복잡한 요청을 중단 이후에도 확인하고 이어갑니다.</p></header>
+<p class="hero-note">Tasks · 시스템이 “지금 어디까지 왔는지” 잊지 않는 방법</p><nav class="on-page" aria-label="이 페이지에서"><a href="#role">왜 필요한가</a><a href="#position">시스템에서의 위치</a><a href="#guarantees">다섯 가지 보장 목표</a><a href="#depth">더 깊게</a></nav>
+<section id="role" class="wiki-section"><h2>왜 진행 관리가 필요한가</h2>
+<p>조사하고 계획한 뒤 검토를 기다리거나, 실행 중 예상하지 못한 결과를 만나면 다음 행동이 달라집니다. 대화 내용만으로는 지금 어디까지 왔는지 다시 확인하기 어렵습니다.</p><p>Tasks는 현재 진행과 다음 행동의 근거를 보존하는 영역입니다. 결과를 직접 만드는 모든 기능을 대신하지 않고, 각 기능의 일을 같은 요청의 진행으로 연결합니다.</p>
+</section>
+<section id="position" class="wiki-section"><h2>실행 앞뒤에서 진행을 연결합니다.</h2>
+<figure class="visual visual-flow"><figcaption>요청 → 진행 관리 → 근거·자원 → 실행 → 진행 기록</figcaption><ol class="visual-steps"><li><span class="step-no">01</span><strong>요청 → 진행 관리</strong><span>목표와 현재 단계를 정리하고 필요한 확인을 드러냅니다.</span></li><li><span class="step-no">02</span><strong>근거·자원 요청</strong><span>Knowledge에서 자료를, Catalog에서 도구와 자원을 찾습니다.</span></li><li><span class="step-no">03</span><strong>실행 / 생성</strong><span>선택한 근거와 자원으로 실제 결과를 준비합니다.</span></li><li><span class="step-no">04</span><strong>다시 진행 관리</strong><span>결과와 검수 내용을 확인하고 다음 단계 또는 완료를 기록합니다.</span></li></ol></figure><div class="related"><a href="index.html#knowledge">근거를 기억하기</a><a href="index.html#resources">필요한 자원을 고르기</a><a href="../scenarios/index.html#project-package">대표 시나리오에서 위치 보기</a></div>
+</section>
+<section id="guarantees" class="wiki-section"><h2>무엇을 보장하려는가</h2>
+<p>진행 관리가 지키려는 다섯 가지 목표입니다. 적용 범위와 정확한 동작 조건은 기술 명세에서 확인합니다.</p><ol class="checkpoints"><li><strong>현재 상태를 알 수 있다.</strong> 진행 중인 일과 남은 일을 구분합니다.</li><li><strong>다음 행동의 근거를 알 수 있다.</strong> 왜 그 일을 하는지 기록과 연결합니다.</li><li><strong>중요한 전환에 검토를 요구할 수 있다.</strong> 사람이 판단할 지점을 둡니다.</li><li><strong>중단된 작업을 확인 후 재개할 수 있다.</strong> 실제 결과를 확인하고 이어갈 일을 정합니다.</li><li><strong>여러 실행이 서로 덮어쓰는 것을 막는다.</strong> 앞선 진행을 잃지 않도록 변경을 다룹니다.</li></ol>
+</section>
+<section id="depth" class="wiki-section"><h2>원하는 깊이로 선택하세요.</h2>
+<div class="visual visual-comparison"><ul class="visual-steps"><li><h3>쉽게 이해하기</h3><p>그림과 사례로 진행 관리의 역할을 봅니다.</p><div class="related"><a href="../lectures/tasks.html">Tasks 강의 →</a></div></li><li><h3>왜 이렇게 만들었나</h3><p>진행을 지키는 설계 선택의 이유를 읽습니다.</p><div class="related"><a href="../blog/tasks.html">Tasks 블로그 →</a></div></li><li><h3>정확한 명세</h3><p>정의와 동작 조건, 구현 근거를 확인합니다.</p><div class="related"><a href="../wiki/tasks.html">Tasks 위키 →</a></div></li></ul></div>
+</section>
+
+</main>'''
+    write('components/tasks.html',shell('진행을 이어가기',body,description='현재 상태와 다음 행동의 근거를 남겨, 복잡한 요청을 중단 이후에도 확인하고 이어갑니다.'))
+
 def home():
-    rows=''.join(f'<a class="domain-row" href="wiki/{key}.html"><span class="domain-num">{i+1:02d}</span><h3>{title}</h3><span>{desc}</span><b>↗</b></a>' for i,(key,title,desc) in enumerate(DOMAINS))
-    system=''.join(f'<a href="wiki/{key}.html" class="map-node node-{i}"><span>0{i+1}</span><strong>{title}</strong><small>{desc}</small></a>' for i,(key,title,desc) in enumerate(DOMAINS))
-    body=f'''<main id="main"><section class="home-hero"><div><div class="eyebrow">AN OPEN GUIDE TO AGENT SYSTEMS</div><h1>에이전트가 일을<br><span>이어가는 구조</span></h1><p class="lead">에이전트가 일을 이어가는 구조를 탐구합니다.<br>작업·지식·카탈로그·이미지·영상을<br>하나의 연결된 시스템으로 읽어 보세요.</p><div class="hero-actions"><a class="primary-link" href="lectures/index.html">강의에서 시작하기 <span>→</span></a><a href="wiki/start.html">위키에서 살펴보기 ↗</a></div><p class="hero-note">Hermes 시스템 해설과 독립적으로 실행하는 공개 도구</p></div><div class="system-map"><div class="map-caption">FIVE DOMAINS / ONE SYSTEM</div><svg viewBox="0 0 560 430" aria-hidden="true"><path d="M115 135H440M280 135V275M115 275H440M115 135V275M440 135V275" fill="none" stroke="#aebdea" stroke-width="2" stroke-dasharray="5 7"/><circle cx="280" cy="205" r="28" fill="#3455ed"/><path d="M269 205H291M284 198L291 205L284 212" stroke="white" fill="none" stroke-width="2"/></svg>{system}<div class="map-foot">목표 · 근거 · 선택 · 산출물</div></div></section><section class="home-path"><div><span class="eyebrow">CHOOSE YOUR PATH</span><h2>어디서 시작할까요?</h2></div><a href="lectures/index.html"><span class="path-icon">01</span><h3>큰 화면에서 함께 배우기</h3><p>전체 구조와 다섯 주제의 강의에서<br>차이를 발견하고 개념을 적용합니다.</p><span>강의 보기 →</span></a><a href="wiki/reference.html"><span class="path-icon">02</span><h3>직접 확인하며 만들기</h3><p>실행 가능한 공개 코드와<br>입출력 계약을 살펴봅니다.</p><span>코드 시작하기 →</span></a></section><section class="home-domains"><div><span class="eyebrow">EXPLORE THE SYSTEM</span><h2>다섯 분야,<br>서로 다른 책임</h2><p>각 분야를 개념, 구조, 동작,<br>기술과 검증으로 나누어 설명합니다.</p></div><div>{rows}</div></section><section class="home-case"><div><span class="eyebrow">A SHARED EXAMPLE</span><h2>짧은 요청 하나에<br>어떤 판단이 담길까요?</h2><p>책상용 램프의 소개 자료를 만든다고 생각해 보세요. 제품의 특징을 확인하고, 구성을 선택하고, 장면을 연결하는 동안 시스템의 역할이 드러납니다.</p><a href="blog/start.html">LUMA 사례 따라가기 ↗</a></div><figure>{lamp(0)}<figcaption>교육용 생성 이미지 · 제품과 문구 공간의 배치</figcaption></figure></section></main>'''
-    write('index.html',shell('에이전트 시스템의 구조와 기술',body,depth=0,kind='home'))
+    body='''<main id="main" class="course-index">
+<section class="chapter-intro"><p class="eyebrow">하나의 요청, 이어지는 일</p><h1>AI가 답하고 끝나지 않도록.</h1><p class="lead">p-hermes는 작업의 상태, 지식, 자원, 생성 결과와 검토 근거를 연결해 복잡한 일을 여러 단계에 걸쳐 이어가는 AI 작업 시스템입니다.</p><div class="hero-actions"><a class="primary-link" href="system/index.html">전체 그림 보기 <span>→</span></a><a href="scenarios/index.html#project-package">실제 작업 흐름 보기 →</a></div><p class="hero-note">아래 활용 장면은 시스템의 협력을 설명하는 시나리오이며, 실제 실행 완료를 주장하는 사례가 아닙니다.</p></section>
+<nav class="on-page" aria-label="이 페이지에서"><a href="#system">한 요청의 흐름</a><a href="#scenarios">활용 장면</a><a href="#components">다섯 능력</a><a href="#depth">깊이 선택</a></nav>
+<section id="system" class="wiki-section"><h2>한 요청이 들어오면</h2><figure class="visual visual-flow"><figcaption>요청 → 진행관리 → 지식·자원 → 실행·생성 → 검수·기록 → 이어짐</figcaption><ol class="visual-steps">
+<li><span class="step-no">01</span><strong>요청</strong><span>목표와 완료 조건을 확인합니다.</span></li>
+<li><span class="step-no">02</span><strong>진행관리</strong><span>현재 상태와 다음 행동, 검토할 지점을 정합니다.</span></li>
+<li><span class="step-no">03</span><strong>지식·자원</strong><span>판단의 근거와 필요한 도구·모델을 찾습니다.</span></li>
+<li><span class="step-no">04</span><strong>실행·생성</strong><span>문서와 코드, 이미지와 영상으로 결과를 만듭니다.</span></li>
+<li><span class="step-no">05</span><strong>검수·기록</strong><span>목표에 맞는지 살피고 결과와 판단 근거를 남깁니다.</span></li>
+</ol></figure><p><strong>다음 작업으로 이어짐 →</strong> 중단된 작업도 실제 결과와 기록을 확인한 뒤 재개하고, 남긴 근거를 다음 요청에 다시 씁니다.</p><div class="related"><a href="system/index.html">전체 시스템 지도 보기 →</a></div></section>
+<section id="components" class="wiki-section"><h2>하나의 시스템을 이루는 능력</h2><p>진행·지식·자원·생성·통합이 같은 요청 안에서 협력합니다. 이미지와 영상은 하나의 생성 그룹으로 읽습니다.</p><ul class="visual-steps">
+<li><h3><a href="components/tasks.html">진행을 이어가기</a></h3><small>Tasks</small><p>작업의 현재 상태와 다음 행동을 잃지 않도록 관리합니다.</p><a href="wiki/tasks.html">기술 명세 →</a></li>
+<li><h3><a href="components/index.html#knowledge">근거를 기억하기</a></h3><small>Knowledge</small><p>자료와 출처, 판단 근거를 찾고 다시 씁니다.</p><a href="wiki/knowledge.html">기술 명세 →</a></li>
+<li><h3><a href="components/index.html#resources">필요한 자원을 고르기</a></h3><small>Catalog</small><p>도구와 모델, 템플릿과 리퍼런스를 고릅니다.</p><a href="wiki/catalog.html">기술 명세 →</a></li>
+<li><h3><a href="components/index.html#generation">결과물을 만들기</a></h3><small>Image / Video</small><p>같은 목표와 자료를 바탕으로 이미지와 영상 산출물을 만듭니다.</p><div class="related"><a href="wiki/image.html">이미지 명세 →</a><a href="wiki/video.html">영상 명세 →</a></div></li>
+<li><h3><a href="components/index.html#integration">결과를 연결하고 검수하기</a></h3><small>Integration</small><p>여러 산출물의 맥락을 맞추고 검토 결과를 진행 기록으로 연결합니다.</p><a href="wiki/integration.html">기술 명세 →</a></li>
+</ul></section>
+<section id="scenarios" class="wiki-section"><h2>활용 장면</h2><p>프로젝트 소개 패키지 만들기라는 하나의 설명용 시나리오에서 세 가지 장면을 따라갑니다.</p><ul class="visual-steps">
+<li><h3>조사·문서화</h3><p>프로젝트 자료와 출처를 확인하고, 소개 문서의 주장과 근거를 정리합니다.</p><a href="scenarios/index.html#journey">근거에서 문서로 →</a></li>
+<li><h3>프로젝트 실행</h3><p>완료 조건과 현재 단계를 정하고, 필요한 실행과 검토·승인을 거쳐 전달합니다.</p><a href="scenarios/index.html#review">실행에서 검토로 →</a></li>
+<li><h3>콘텐츠 제작</h3><p>제품의 특징과 핵심 메시지에 맞춰 이미지와 짧은 영상을 하나의 패키지로 준비합니다.</p><a href="scenarios/index.html#project-package">소개 패키지 흐름 보기 →</a></li>
+</ul></section>
+<section id="depth" class="wiki-section"><h2>얼마나 깊게 볼까요?</h2><ul class="visual-steps">
+<li><h3>처음 보는 사람</h3><p>큰 흐름을 먼저 보고, 강의에서 차이를 발견하고 개념을 적용합니다.</p><div class="related"><a href="system/index.html">전체 그림 →</a><a href="lectures/index.html">강의 →</a></div></li>
+<li><h3>설계 이유가 궁금한 사람</h3><p>한 요청을 따라 구조와 선택의 이유를 읽습니다.</p><a href="blog/index.html">설계 이야기 · 블로그 →</a></li>
+<li><h3>정확한 구현이 필요한 사람</h3><p>기술 명세와 실행 가능한 공개 코드의 입출력 계약을 확인합니다.</p><a href="wiki/start.html">기술 명세 · 위키 →</a></li>
+<li><h3>순서대로 보고 싶은 사람</h3><p>기존 읽기 경로에서 전체 구조부터 통합 실행까지 차례로 살펴봅니다.</p><a href="learn/index.html">순서대로 배우기 · Guided Path →</a></li>
+</ul></section>
+</main>'''
+    write('index.html',shell('여러 단계의 일을 이어가는 AI 작업 시스템',body,depth=0,kind='home',description='작업의 상태, 지식, 자원, 생성 결과와 검토 근거를 연결해 복잡한 일을 이어가는 p-hermes.'))
 
 def main():
     (OUT/'assets').mkdir(parents=True,exist_ok=True)
@@ -162,6 +280,10 @@ def main():
     if wp.exists():wiki(json.loads(wp.read_text(encoding='utf-8-sig'))['pages'])
     if cp.exists():blog(json.loads(cp.read_text(encoding='utf-8-sig')))
     home()
+    system_index()
+    scenarios_index()
+    components_index()
+    component_tasks()
     write('.nojekyll','')
     lectures()
     print('Built public website in docs/')
