@@ -68,11 +68,14 @@ def write(name,text):
     p=OUT/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(text,encoding='utf-8',newline='\n')
 
 def lectures():
-    slugs=['overview','tasks','knowledge','catalog','image','video']
+    slugs=['system','overview','tasks','knowledge','catalog','image','video']
     rows=[]
     for index,slug in enumerate(slugs):
         course=json.loads((ROOT/f'content/slides/courses/{slug}.json').read_text(encoding='utf-8'))
         total=course['teaching_minutes']+course['qa_minutes']
+        if slug=='system':
+            rows.append(f'<a class="chapter-row" href="../slides/system/index.html"><span class="chapter-number">{index:02}</span><div><h2>전체 그림 — p-hermes는 무엇을 하는가</h2><p>한 문장 · 시스템 지도 · 다섯 능력 · 강의 지도</p></div><span class="row-meta">{total}분<br>{len(course["slides"])}장 <b>↗</b></span></a>')
+            continue
         terms=' · '.join(k['term'] for k in course['keywords'])
         rows.append(f'<a class="chapter-row" href="{slug}.html"><span class="chapter-number">{index:02}</span><div><h2>{esc(course["title"])}</h2><p>{esc(terms)}</p></div><span class="row-meta">{total}분<br>{len(course["slides"])}장 <b>↗</b></span></a>')
         definitions=''.join(f'<tr><th scope="row">{esc(k["term"])}</th><td>{esc(k["definition"])}</td></tr>' for k in course['keywords'])
@@ -83,9 +86,9 @@ def lectures():
             minutes=sum(s['seconds'] for s in course['slides'] if s['scene']==slide['scene'])//60
             scenes.append(f'<a class="scene-row" href="../slides/{slug}/index.html#/{slide["id"]}"><span>{slide["scene"]}</span><strong>{esc(slide["title"]).replace(chr(10)," ")}</strong><span>{minutes}분 ↗</span></a>')
         blog_slug='start' if slug=='overview' else slug
-        body=f'''<main id="main" class="course-index"><a href="index.html">← 전체 강의</a><div class="eyebrow lecture-kicker">LECTURE / {index:02}</div><h1>{esc(course['title'])}</h1><p class="lead">{course['teaching_minutes']}분의 설명과 적용, 10분의 질문.<br>관찰한 장면을 키워드로 이해하고 다음 판단에 적용합니다.</p><div class="hero-actions"><a class="primary-link" href="../slides/{slug}/index.html">슬라이드 시작 <span>→</span></a><a href="guide.html">발표 도구 안내 ↗</a></div><section class="lecture-outline"><h2>기억할 키워드</h2><table class="keyword-table">{definitions}</table></section><section class="lecture-outline"><h2>장면으로 바로 이동</h2>{''.join(scenes)}</section><div class="related"><a href="../blog/{blog_slug}.html">블로그로 다시 읽기</a><a href="../wiki/{blog_slug}.html">위키에서 구조 확인</a><a href="../wiki/reference.html">실행 예제 확인</a><a href="media.html">영상과 실행 기록 읽기</a></div></main>'''
+        body=f'''<main id="main" class="course-index"><a href="index.html">← 전체 강의</a><div class="eyebrow lecture-kicker">LECTURE / {index:02}</div><h1>{esc(course['title'])}</h1><p class="lead">{course['teaching_minutes']}분의 설명과 적용, 10분의 질문.<br>관찰한 장면을 키워드로 이해하고 다음 판단에 적용합니다.</p><div class="hero-actions"><a class="primary-link" href="../slides/{slug}/index.html">슬라이드 시작 <span>→</span></a><a href="guide.html">발표 도구 안내 ↗</a></div><p class="scope-note">읽기로 이해하기 (이 페이지) ↔ <a href="../slides/{slug}/index.html">발표로 보기 (slides) →</a></p><section class="lecture-outline"><h2>기억할 키워드</h2><table class="keyword-table">{definitions}</table></section><section class="lecture-outline"><h2>장면으로 바로 이동</h2>{''.join(scenes)}</section><div class="related"><a href="../blog/{blog_slug}.html">블로그로 다시 읽기</a><a href="../wiki/{blog_slug}.html">위키에서 구조 확인</a><a href="../wiki/reference.html">실행 예제 확인</a><a href="media.html">영상과 실행 기록 읽기</a></div></main>'''
         write(f'lectures/{slug}.html',shell(course['title']+' · 강의',body))
-    body=f'''<main id="main" class="course-index"><div class="eyebrow">P-HERMES LECTURES</div><h1>큰 흐름 하나,<br>깊이 있는 다섯 강의</h1><p class="lead">큰 화면에서 차이를 발견하고, 핵심 개념으로 설명합니다.<br>전체 구조를 익힌 뒤 필요한 주제부터 깊게 들어가세요.</p><p class="scope-note">슬라이드의 단계 공개, 짧은 영상과 질문으로 진행합니다. 별도 발표자 창에서 설명과 답안, 진행 시간을 확인할 수 있습니다.</p><div class="hero-actions"><a class="primary-link" href="../slides/overview/index.html">전체 구조 강의 시작 <span>→</span></a><a href="guide.html">발표 도구 안내 ↗</a></div><div class="chapter-list">{''.join(rows)}</div><div class="related"><a href="../blog/index.html">읽기 자료는 블로그에서</a><a href="../wiki/start.html">개념과 구현은 위키에서</a></div><details class="archive-links"><summary>이전 시안 기록</summary><a href="prototype.html">첫 시안</a><a href="redesign/index.html">상호작용 시안</a><a href="course-preview/index.html">이전 읽기 시안</a></details></main>'''
+    body=f'''<main id="main" class="course-index"><div class="eyebrow">P-HERMES LECTURES</div><h1>큰 흐름 하나,<br>깊이 있는 다섯 강의</h1><p class="lead">큰 화면에서 차이를 발견하고, 핵심 개념으로 설명합니다.<br>전체 구조를 익힌 뒤 필요한 주제부터 깊게 들어가세요.</p><p class="scope-note">슬라이드의 단계 공개, 짧은 영상과 질문으로 진행합니다. 별도 발표자 창에서 설명과 답안, 진행 시간을 확인할 수 있습니다.</p><div class="hero-actions"><a class="primary-link" href="../slides/overview/index.html">전체 구조 강의 시작 <span>→</span></a><a href="guide.html">발표 도구 안내 ↗</a></div><div class="chapter-list">{''.join(rows)}</div><div class="related"><a href="../blog/index.html">읽기 자료는 블로그에서</a><a href="../wiki/start.html">개념과 구현은 위키에서</a></div><p class="archive-links">이전 시안 기록</p></main>'''
     write('lectures/index.html',shell('강의',body))
     guide='''<main id="main" class="course-index"><a href="index.html">← 전체 강의</a><div class="eyebrow lecture-kicker">PRESENTER GUIDE</div><h1>발표의 흐름을<br>직접 조절합니다</h1><p class="lead">슬라이드를 연 뒤 전체화면으로 전환하세요.<br>키 입력 한 번으로 다음 근거를 공개하고, 질문에서는 잠시 멈춥니다.</p><table class="keyword-table"><tr><th>→ / Space</th><td>다음 공개 단계 또는 다음 슬라이드</td></tr><tr><th>←</th><td>이전 단계</td></tr><tr><th>S</th><td>발표자 노트 창 열기. 팝업 허용 필요</td></tr><tr><th>F</th><td>전체화면</td></tr><tr><th>V</th><td>현재 영상 재생·정지. 영상의 자체 제어도 사용 가능</td></tr><tr><th>Esc</th><td>슬라이드 전체 보기</td></tr><tr><th>H</th><td>키 안내</td></tr></table><section class="lecture-outline"><h2>청중에게는 핵심을, 발표자에게는 맥락을</h2><p>별도 창에 설명, 질문과 해설, 멈출 지점, 다음 장면 연결과 출처가 표시됩니다. 질문을 던진 뒤 답을 공개하기 전 15초 정도 관찰할 시간을 줍니다. 강의 시간은 참여와 실습을 포함한 계획값이며 현장 반응에 따라 조절합니다.</p><p>동작 줄이기 설정을 따르면 전환 이동을 생략합니다. 글자를 읽는 동안 불필요한 자동 동작을 반복하지 않습니다.</p></section><section class="lecture-outline"><h2>시연을 읽는 기준</h2><p>공개 코드는 독립적인 참고 구현입니다. 실제 실행 녹화는 합성 입력의 결과를 보여 줍니다. 램프 사진은 교육용 생성 자산이며, 12초 영상은 같은 사진을 별도 편집한 자료입니다. 공개 5초 시간선과 실제 2초 규격 검사 파일은 각각의 목적을 표시합니다.</p><p>네트워크가 불안정할 때에도 이미지와 영상은 같은 사이트의 자산을 사용합니다. 강의 중에는 핵심 슬라이드와 영상을 미리 열어 재생을 확인하세요.</p><p><a href="media.html">영상의 장면 설명과 실제 실행 기록을 텍스트로 읽기 →</a></p></section></main>'''
     write('lectures/guide.html',shell('발표 도구 안내',guide))
@@ -127,9 +130,6 @@ def blog(series):
         canonical=f'https://pheanor-agent.github.io/p-hermes-v2/blog/{name}'
         page=page.replace('</head>',f'<link rel="canonical" href="{canonical}"></head>')
         write(f'blog/{name}',page)
-        # Keep old section hashes and readable no-JS content at previous addresses.
-        alias=page.replace('<body ',f'<body data-blog-url="../blog/{name}" ',1)
-        write(f'learn/{name}',alias)
     for ci,post in enumerate(posts):
         sections=[]
         for si,section in enumerate(post['sections']):
@@ -150,6 +150,39 @@ def blog(series):
     rows=''.join(f'<a class="chapter-row" href="../blog/{esc(post["id"])}.html"><span class="chapter-number">{i+1:02d}</span><div><h2>{inline(post["title"])}</h2><p>{inline(post["description"])}</p></div><span class="row-meta">{len(post["sections"])}개 주제 <b>↗</b></span></a>' for i,post in enumerate(posts))
     body=f'<main id="main" class="course-index"><div class="eyebrow">P-HERMES BLOG</div><h1>시스템을 이해하는<br>일곱 편의 이야기</h1><p class="lead">한 요청을 따라 다섯 분야의 구조와 기술을 읽습니다.<br>도해와 코드 예제를 곁들인 연재입니다.</p><p class="scope-note">교육용 사례와 공개 코드의 동작을 사용합니다. 실제 Hermes의 구조는 위키에서 함께 확인하세요.</p><div class="chapter-list">{rows}</div>{sources(series.get("sources",[]))}</main>'
     publish('index.html',shell('블로그',body))
+
+
+def learn_guided(series):
+    posts=series['posts']
+    steps=[
+        ('1','전체 그림','약 5분','../system/index.html','p-hermes의 전체 흐름부터 봅니다.'),
+        ('2','요청 하나가 흐르는 과정','약 3분','../scenarios/index.html','대표 장면으로 요청이 이어지는 순서를 봅니다.'),
+        ('3','구성 요소 이해','약 5분','../components/tasks.html','구성 요소가 맡는 역할을 연결해 봅니다.'),
+        ('4','설계 이유','약 10분/편','../blog/index.html','관심 주제의 설계 이야기를 읽습니다.'),
+        ('5','기술 명세','필요한 만큼','../wiki/start.html','정확한 정의와 구현 근거가 필요할 때 찾아봅니다.'),
+    ]
+    rows=''.join(
+        f'<a class="chapter-row" href="{href}"><span class="chapter-number">{num}</span><div><h2>{label}</h2><p>{desc}</p></div><span class="row-meta">{duration} <b>↗</b></span></a>'
+        for num,label,duration,href,desc in steps
+    )
+    body=f'''<main id="main" class="course-index"><div class="eyebrow">GUIDED PATH</div><h1>순서대로 배우기</h1><p class="lead">새 원고를 덧붙이지 않고, 기존 공개 자료를 이해하기 좋은 순서로 연결합니다.</p><div class="chapter-list">{rows}</div></main>'''
+    write('learn/index.html',shell('순서대로 배우기',body,description='전체 그림부터 설계 이유와 기술 명세까지 기존 공개 자료를 순서대로 연결합니다.'))
+
+    for i,post in enumerate(posts):
+        topic=post['id']
+        lecture_slug=topic if topic in {'tasks','knowledge','catalog','image','video'} else 'overview'
+        course=json.loads((ROOT/f'content/slides/courses/{lecture_slug}.json').read_text(encoding='utf-8'))
+        minutes=course['teaching_minutes']+course['qa_minutes']
+        path_rows=''.join((
+            f'<a class="chapter-row" href="../lectures/{lecture_slug}.html"><span class="chapter-number">1</span><div><h2>강의로 이해하기</h2><p>이 주제의 강의 페이지를 읽습니다.</p></div><span class="row-meta">약 {minutes}분 <b>↗</b></span></a>',
+            f'<a class="chapter-row" href="../slides/{lecture_slug}/index.html"><span class="chapter-number">2</span><div><h2>발표로 보기</h2><p>같은 강의를 슬라이드로 봅니다.</p></div><span class="row-meta">약 {minutes}분 <b>↗</b></span></a>',
+            f'<a class="chapter-row" href="../blog/{topic}.html"><span class="chapter-number">3</span><div><h2>설계 이유 읽기</h2><p>이 주제의 블로그 글로 이동합니다.</p></div><span class="row-meta">약 10분 <b>↗</b></span></a>',
+            f'<a class="chapter-row" href="../wiki/{topic}.html"><span class="chapter-number">4</span><div><h2>기술 명세 찾기</h2><p>이 주제의 위키 페이지로 이동합니다.</p></div><span class="row-meta">필요한 만큼 <b>↗</b></span></a>',
+        ))
+        previous=f'<a href="{posts[i-1]["id"]}.html">← 이전 주제 · {inline(posts[i-1]["title"])}</a>' if i else '<a href="index.html">← Guided Path</a>'
+        following=f'<a href="{posts[i+1]["id"]}.html">다음 주제 · {inline(posts[i+1]["title"])} →</a>' if i+1<len(posts) else '<a href="index.html">Guided Path 처음으로 →</a>'
+        body=f'''<main id="main" class="course-index"><a href="index.html">← 순서대로 배우기</a><div class="eyebrow">GUIDED PATH / {i+1:02d}</div><h1>이 주제 배우기 경로</h1><p class="lead">{inline(post['title'])}</p><p class="scope-note">새로운 기술 설명을 추가하지 않고, 이 주제의 기존 강의·슬라이드·블로그·위키를 순서대로 연결합니다.</p><div class="chapter-list">{path_rows}</div><div class="related">{previous}{following}</div></main>'''
+        write(f'learn/{topic}.html',shell('이 주제 배우기 경로 · '+post['title'],body,description='기존 강의, 슬라이드, 블로그, 위키를 순서대로 연결하는 학습 경로입니다.'))
 
 def system_index():
     # Public hubs own orientation and routes, not the detailed technical contracts.
@@ -278,7 +311,10 @@ def main():
     shutil.copyfile(ROOT/'site/slides/media/luma-left.png',OUT/'assets/luma-left.png')
     wp=ROOT/'content/wiki/pages.json';cp=ROOT/'content/blog/series.json'
     if wp.exists():wiki(json.loads(wp.read_text(encoding='utf-8-sig'))['pages'])
-    if cp.exists():blog(json.loads(cp.read_text(encoding='utf-8-sig')))
+    if cp.exists():
+        series=json.loads(cp.read_text(encoding='utf-8-sig'))
+        blog(series)
+        learn_guided(series)
     home()
     system_index()
     scenarios_index()

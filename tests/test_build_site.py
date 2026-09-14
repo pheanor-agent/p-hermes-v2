@@ -26,6 +26,25 @@ NAV = (
 
 
 class BuildSiteTests(unittest.TestCase):
+    def test_lecture_index_starts_with_system(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            with patch.object(build_site, "OUT", output):
+                build_site.lectures()
+            page = (output / "lectures/index.html").read_text(encoding="utf-8")
+            rows = re.findall(r'<a class="chapter-row" href="([^"]+)"><span class="chapter-number">(\d+)</span><div><h2>(.*?)</h2><p>(.*?)</p>', page)
+            self.assertEqual(rows[0], (
+                "../slides/system/index.html", "00",
+                "전체 그림 — p-hermes는 무엇을 하는가",
+                "한 문장 · 시스템 지도 · 다섯 능력 · 강의 지도",
+            ))
+            self.assertEqual([row[0] for row in rows[1:]],
+                             [f"{slug}.html" for slug in
+                              ("overview", "tasks", "knowledge", "catalog", "image", "video")])
+            self.assertEqual([row[1] for row in rows],
+                             [f"{i:02}" for i in range(7)])
+            self.assertIn("LECTURE / 01", (output / "lectures/overview.html").read_text(encoding="utf-8"))
+
     def test_clean_build_generates_public_entries_and_is_repeatable(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "docs"

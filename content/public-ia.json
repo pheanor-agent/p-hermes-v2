@@ -83,5 +83,74 @@
         "wiki": "/wiki/integration.html"
       }
     }
+  ],
+  "lectures": [
+    {
+      "id": "system-overview",
+      "public_label": "전체 그림",
+      "course": "L00",
+      "slug": "system",
+      "summary": "요청부터 검수와 다음 작업까지 이어지는 시스템 전체를 이해한다.",
+      "order": 0,
+      "entry": {
+        "overview": "/system/index.html",
+        "lecture": "/slides/system/index.html",
+        "blog": "/blog/index.html",
+        "wiki": "/wiki/start.html"
+      }
+    }
+  ],
+  "tracks": [
+    {
+      "id": "system",
+      "public_label": "전체 그림",
+      "paths": [
+        "/system/"
+      ]
+    },
+    {
+      "id": "scenarios",
+      "public_label": "활용 장면",
+      "paths": [
+        "/scenarios/"
+      ]
+    },
+    {
+      "id": "components",
+      "public_label": "구성 요소",
+      "paths": [
+        "/components/"
+      ]
+    },
+    {
+      "id": "blog",
+      "public_label": "설계 이야기",
+      "paths": [
+        "/blog/"
+      ]
+    },
+    {
+      "id": "wiki",
+      "public_label": "기술 명세",
+      "paths": [
+        "/wiki/"
+      ]
+    },
+    {
+      "id": "learn",
+      "public_label": "시작하기",
+      "paths": [
+        "/learn/"
+      ]
+    },
+    {
+      "id": "lectures",
+      "public_label": "강의 시리즈",
+      "role": "What·발표",
+      "paths": [
+        "/lectures/",
+        "/slides/"
+      ]
+    }
   ]
 }

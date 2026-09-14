@@ -1,5 +1,7 @@
 # Release validation
 
+이 디렉터리는 공개 산출물의 출판 증적과 검증 메타데이터를 두는 위치입니다. 공개 페이지의 본문 원고를 복제하지 않습니다.
+
 Current six-course HTML release: [lecture validation](lecture-validation.md) and [release checklist](lecture-release-checklist.md).
 
 ## Initial release archive
