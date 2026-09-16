@@ -69,10 +69,6 @@
             {
               "label": "한 요청에서 출발하기 위키",
               "href": "../wiki/start.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/__main__.py"
             }
           ]
         },
@@ -120,10 +116,6 @@
             {
               "label": "한 요청에서 출발하기 위키",
               "href": "../wiki/start.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/__main__.py"
             }
           ]
         },
@@ -171,10 +163,6 @@
             {
               "label": "한 요청에서 출발하기 위키",
               "href": "../wiki/start.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/__main__.py"
             }
           ]
         }
@@ -229,10 +217,6 @@
             {
               "label": "작업 · 진행을 이어가는 구조 위키",
               "href": "../wiki/tasks.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/store.py"
             }
           ]
         },
@@ -272,10 +256,6 @@
             {
               "label": "작업 · 진행을 이어가는 구조 위키",
               "href": "../wiki/tasks.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/store.py"
             }
           ]
         },
@@ -319,10 +299,6 @@
             {
               "label": "작업 · 진행을 이어가는 구조 위키",
               "href": "../wiki/tasks.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/store.py"
             }
           ]
         },
@@ -370,10 +346,6 @@
             {
               "label": "작업 · 진행을 이어가는 구조 위키",
               "href": "../wiki/tasks.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/store.py"
             }
           ]
         }
@@ -428,10 +400,6 @@
             {
               "label": "지식 · 출처를 가진 판단 위키",
               "href": "../wiki/knowledge.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/store.py"
             }
           ]
         },
@@ -475,10 +443,6 @@
             {
               "label": "지식 · 출처를 가진 판단 위키",
               "href": "../wiki/knowledge.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/store.py"
             }
           ]
         },
@@ -518,10 +482,6 @@
             {
               "label": "지식 · 출처를 가진 판단 위키",
               "href": "../wiki/knowledge.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/store.py"
             }
           ]
         },
@@ -565,10 +525,6 @@
             {
               "label": "지식 · 출처를 가진 판단 위키",
               "href": "../wiki/knowledge.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/store.py"
             }
           ]
         }
@@ -623,10 +579,6 @@
             {
               "label": "카탈로그 · 실행할 자원을 고르기 위키",
               "href": "../wiki/catalog.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/catalog.py"
             }
           ]
         },
@@ -666,10 +618,6 @@
             {
               "label": "카탈로그 · 실행할 자원을 고르기 위키",
               "href": "../wiki/catalog.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/catalog.py"
             }
           ]
         },
@@ -713,10 +661,6 @@
             {
               "label": "카탈로그 · 실행할 자원을 고르기 위키",
               "href": "../wiki/catalog.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/catalog.py"
             }
           ]
         },
@@ -756,10 +700,6 @@
             {
               "label": "카탈로그 · 실행할 자원을 고르기 위키",
               "href": "../wiki/catalog.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/catalog.py"
             }
           ]
         }
@@ -814,10 +754,6 @@
             {
               "label": "이미지 · 의도를 한 장의 구성으로 위키",
               "href": "../wiki/image.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/media.py"
             }
           ]
         },
@@ -865,10 +801,6 @@
             {
               "label": "이미지 · 의도를 한 장의 구성으로 위키",
               "href": "../wiki/image.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/catalog.py"
             }
           ]
         },
@@ -912,10 +844,6 @@
             {
               "label": "이미지 · 의도를 한 장의 구성으로 위키",
               "href": "../wiki/image.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/media.py"
             }
           ]
         },
@@ -955,10 +883,6 @@
             {
               "label": "이미지 · 의도를 한 장의 구성으로 위키",
               "href": "../wiki/image.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/media.py"
             }
           ]
         }
@@ -1009,10 +933,6 @@
             {
               "label": "영상 · 장면을 시간으로 연결하기 위키",
               "href": "../wiki/video.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/media.py"
             }
           ]
         },
@@ -1056,10 +976,6 @@
             {
               "label": "영상 · 장면을 시간으로 연결하기 위키",
               "href": "../wiki/video.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/media.py"
             }
           ]
         },
@@ -1103,10 +1019,6 @@
             {
               "label": "영상 · 장면을 시간으로 연결하기 위키",
               "href": "../wiki/video.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/media.py"
             }
           ]
         },
@@ -1150,10 +1062,6 @@
             {
               "label": "영상 · 장면을 시간으로 연결하기 위키",
               "href": "../wiki/video.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/media.py"
             }
           ]
         }
@@ -1208,10 +1116,6 @@
             {
               "label": "통합 · 한 결과를 끝까지 설명하기 위키",
               "href": "../wiki/integration.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/__main__.py"
             }
           ]
         },
@@ -1255,10 +1159,6 @@
             {
               "label": "통합 · 한 결과를 끝까지 설명하기 위키",
               "href": "../wiki/integration.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/__main__.py"
             }
           ]
         },
@@ -1306,10 +1206,6 @@
             {
               "label": "통합 · 한 결과를 끝까지 설명하기 위키",
               "href": "../wiki/integration.html"
-            },
-            {
-              "label": "공개 구현 소스",
-              "href": "https://github.com/pheanor-agent/p-hermes-v2/blob/main/src/p_hermes/__main__.py"
             }
           ]
         }
