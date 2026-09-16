@@ -141,7 +141,7 @@ def blog(series):
         for si,section in enumerate(post['sections']):
             paragraphs=''.join(f'<p>{inline(t)}</p>' for t in section.get('paragraphs',[]))
             checkpoints='<ul class="checkpoints">'+''.join('<li>'+inline(x)+'</li>' for x in section.get('checkpoints',[]))+'</ul>' if section.get('checkpoints') else ''
-            related='<div class="related">'+''.join(link(x['href'],x['label']) for x in section.get('links',[]))+'</div>'
+            related='<div class="related">'+''.join(link(x['href'],x['label']) for x in section.get('links',[]))+'</div>' if section.get('links') else ''
             sections.append(f'''<section class="lesson-slide" id="{esc(section['id'])}" aria-label="{esc(section['title'])}"><div class="slide-heading"><h2>{inline(section['title'])}</h2><p class="claim">{inline(section['claim'])}</p></div><div class="slide-evidence">{visual(section.get('visual'),post['id'])}{codeblock(section.get('code'))}</div><div class="reading-body">{paragraphs}{checkpoints}{related}<p class="transition">{inline(section.get('transition',''))}</p></div><details class="speaker-notes"><summary>덧붙이는 설명</summary><p>{inline(section.get('notes',''))}</p></details></section>''')
         nav=''.join(f'<a {"aria-current=page" if x["id"]==post["id"] else ""} href="../blog/{esc(x["id"])}.html">{i+1:02d} {inline(x["title"])}</a>' for i,x in enumerate(posts))
         contents=''.join(f'<a href="#{esc(x["id"])}">{inline(x["title"])}</a>' for x in post['sections'])

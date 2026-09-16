@@ -51,7 +51,8 @@ def main():
     for ch in course:
         if len(ch['sections'])<3:errors.append(f'{ch["id"]}: missing depth')
         for slide in ch['sections']:
-            if not all(slide.get(k) for k in ('paragraphs','claim','visual','notes','links')):errors.append(f'{slide["id"]}: incomplete teaching content')
+            if not all(slide.get(k) for k in ('paragraphs','claim','visual','notes')):errors.append(f'{slide["id"]}: incomplete teaching content')
+            if 'links' in slide and not isinstance(slide.get('links'), list):errors.append(f'{slide["id"]}: invalid links field')
     # Deny specific secret and private operational formats, reporting only file/rule.
     rules={'private-home':r'/(?:home|Users)/[A-Za-z0-9_-]+/', 'windows-home':r'[A-Z]:[\\/]+Users[\\/]+[A-Za-z0-9_-]+', 'private-job':r'JOB-\d{4,}', 'private-key':r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----', 'credential':r'\b(?:sk-proj-|ghp_|gho_)[A-Za-z0-9_-]{20,}', 'tailnet-address':r'\b100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.\d+\.\d+\b'}
     public_roots=['content','src','examples','site','tools','tests','publication','docs','design']
