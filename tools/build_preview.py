@@ -13,7 +13,9 @@ SOURCE = ROOT / "preview"
 OUT = ROOT / "docs" / "preview"
 
 ALLOWED = {
+    "site/lectures/00-overview.html",
     "site/lectures/01-orchestrator-worker.html",
+    "site/assets/design-system.css",
     "site/vendor/reveal/reveal.css",
     "site/vendor/reveal/reveal.js",
     "site/vendor/reveal/LICENSE",
@@ -31,6 +33,7 @@ ALLOWED = {
 }
 
 CSS = """*{box-sizing:border-box}body{margin:0;background:#f7f8fa;color:#17212b;font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}header,main,footer{max-width:920px;margin:auto;padding:1.25rem}header{border-bottom:1px solid #d7dee8}header a,footer a{color:#315c8c}main{padding-top:2rem;padding-bottom:4rem}h1,h2,h3{line-height:1.25;color:#12233a;text-wrap:pretty;word-break:keep-all}h1{font-size:clamp(2rem,5vw,3.25rem)}h2{margin-top:2.25rem}a{color:#145ca8}a:focus-visible{outline:3px solid #efb544;outline-offset:3px}nav ul{padding-left:1.25rem}.card{padding:1rem 1.2rem;margin:1rem 0;border:1px solid #d7dee8;border-radius:12px;background:white}.muted{color:#536273}pre{overflow:auto;padding:1rem;background:#101a27;color:#e9f0fa;border-radius:10px;font:14px/1.55 ui-monospace,SFMono-Regular,monospace}code{font-family:ui-monospace,SFMono-Regular,monospace}p code,li code,td code{background:#e9edf3;padding:.1em .3em;border-radius:4px}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto}th,td{border:1px solid #ccd5e0;text-align:left;vertical-align:top;padding:.55rem .7rem}th{background:#edf2f7}footer{border-top:1px solid #d7dee8;color:#536273;font-size:.9rem}.tag{font-size:.85rem;border:1px solid #b9c6d5;border-radius:99px;padding:.2rem .65rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}.grid .card{margin:.25rem 0}.download{font-size:.9rem} @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}"""
+CSS += """\nbody{word-break:keep-all;line-break:strict}p,li,td{overflow-wrap:normal}pre,code{word-break:normal;overflow-wrap:normal}pre{max-width:100%}.grid{gap:1.25rem}.card{margin:1rem 0;padding:1.25rem}h1,h2,h3{text-wrap:balance}@media(max-width:760px){body{font-size:17px}header,main,footer{padding-left:1rem;padding-right:1rem}.grid{grid-template-columns:1fr}}@media(max-width:360px){body{font-size:16px}h1{font-size:2rem}}"""
 
 
 def inline(text: str) -> str:
@@ -140,6 +143,9 @@ def main() -> int:
     lecture_out = OUT / "lectures/01-orchestrator-worker.html"
     lecture_out.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(SOURCE / "site/lectures/01-orchestrator-worker.html", lecture_out)
+    overview_out = OUT / "lectures/00-overview.html"
+    shutil.copyfile(SOURCE / "site/lectures/00-overview.html", overview_out)
+    shutil.copyfile(SOURCE / "site/assets/design-system.css", OUT / "assets/design-system.css")
     for name in ("reveal.css", "reveal.js", "LICENSE"):
         dest = OUT / "vendor/reveal" / name
         dest.parent.mkdir(parents=True, exist_ok=True)
@@ -152,7 +158,8 @@ def main() -> int:
         ("publication/claude-code-mapping.md", "publication/claude-code-mapping.html", "환경 대응표 · Claude Code / Codex / Python", "확인된 사례와 아직 제안인 적용 지점을 구분합니다."),
     ]
     cards = [
-        ("강의", "lectures/01-orchestrator-worker.html", "오케스트레이터와 워커의 역할·파일 handoff를 장면과 함께 봅니다."),
+        ("강의 00 · 전체 그림", "lectures/00-overview.html", "Hermes가 필요한 이유와 네 축이 만나는 흐름을 먼저 살펴봅니다."),
+        ("강의 01 · 상위 에이전트와 워커", "lectures/01-orchestrator-worker.html", "요청을 맡기고 결과를 확인하는 역할과 책임을 살펴봅니다."),
         ("해설", "articles/why-file-handoffs.html", "파일 handoff가 시도 구분과 결과 확인에 주는 이점을 읽습니다."),
         ("위키", "reference/contracts.html", "portable 교육 킷의 요청·응답 계약과 실패 경계를 찾아봅니다."),
         ("실습", "tutorials/portable-worker.html", "합성 fixture로 worker와 검증 테스트를 실행하는 방법을 따라 합니다."),
