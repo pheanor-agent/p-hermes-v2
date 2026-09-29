@@ -1,0 +1,130 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="p-hermes 검토용 문서 미리보기"><title>test_contracts.py · p-hermes</title><link rel="stylesheet" href="../../../../assets/design-system.css"></head><body><a class="skip" href="#main">본문으로 건너뛰기</a><header class="topbar"><a href="../../../../index.html">p-hermes · 미리보기</a><span>test_contracts.py</span></header><main id="main"><section class="hero"><p class="eyebrow">p-hermes · 검토용 미리보기</p><h1>test_contracts.py</h1><p class="lead">지휘 에이전트와 작업 에이전트의 흐름을 이해하고 확인하기 위한 문서입니다.</p><p><a href="../../../../downloads/examples/portable-worker/tests/test_contracts.py">원본 파일 보기</a></p></section><article class="chapter rendered-doc"><h2>원본 코드</h2><pre><code>&quot;&quot;&quot;Contract tests use only temporary directories and synthetic inputs.&quot;&quot;&quot;
+import json
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / &quot;src&quot;))
+from filesystem_transport import read_json, write_json_atomic
+from orchestrator import collect, submit
+from worker import process_one
+
+
+class ContractsTest(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name)
+        self.inbox = self.root / &quot;inbox&quot;
+        self.outbox = self.root / &quot;outbox&quot;
+        self.allowed = self.root / &quot;allowed&quot;
+        self.allowed.mkdir()
+        (self.allowed / &quot;brief.txt&quot;).write_text(&quot;synthetic input&quot;, encoding=&quot;utf-8&quot;)
+        self.request = {
+            &quot;request_id&quot;: &quot;attempt-a&quot;,
+            &quot;goal_id&quot;: &quot;goal-a&quot;,
+            &quot;intent_revision&quot;: 1,
+            &quot;inputs&quot;: [&quot;brief.txt&quot;],
+            &quot;acceptance&quot;: &quot;produce a terminal receipt&quot;,
+            &quot;policy&quot;: {&quot;allowed_root&quot;: &quot;fixture&quot;},
+        }
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def test_submit_is_idempotent_only_for_identical_attempt(self):
+        first = submit(self.request, self.inbox)
+        self.assertEqual(first.read_text(), (self.inbox / &quot;attempt-a.json&quot;).read_text())
+        self.assertEqual(submit(self.request, self.inbox), first)
+        changed = dict(self.request, acceptance=&quot;different intent&quot;)
+        with self.assertRaisesRegex(ValueError, &quot;immutable&quot;):
+            submit(changed, self.inbox)
+
+    def test_request_id_cannot_escape_inbox_or_outbox(self):
+        bad = dict(self.request, request_id=&quot;../escape&quot;)
+        with self.assertRaisesRegex(ValueError, &quot;safe filename&quot;):
+            submit(bad, self.inbox)
+
+    def test_atomic_write_refuses_overwrite(self):
+        target = self.root / &quot;one.json&quot;
+        write_json_atomic(target, {&quot;value&quot;: 1})
+        with self.assertRaises(FileExistsError):
+            write_json_atomic(target, {&quot;value&quot;: 2})
+        self.assertEqual(read_json(target), {&quot;value&quot;: 1})
+        self.assertEqual(list(self.root.glob(&quot;.one.json.*.tmp&quot;)), [])
+
+    def test_worker_writes_done_and_collect_matches_attempt(self):
+        request_path = submit(self.request, self.inbox)
+        result = process_one(request_path, self.outbox, self.allowed)
+        self.assertEqual(result[&quot;status&quot;], &quot;done&quot;)
+        self.assertEqual(result[&quot;request_id&quot;], &quot;attempt-a&quot;)
+        self.assertEqual(collect(&quot;attempt-a&quot;, self.outbox), result)
+
+    def test_path_traversal_is_blocked(self):
+        bad = dict(self.request, request_id=&quot;attempt-bad&quot;, inputs=[&quot;../secret.txt&quot;])
+        path = submit(bad, self.inbox)
+        result = process_one(path, self.outbox, self.allowed)
+        self.assertEqual(result[&quot;status&quot;], &quot;blocked&quot;)
+        self.assertIn(&quot;allowlisted&quot;, result[&quot;error&quot;])
+
+    def test_missing_acceptance_is_blocked(self):
+        request = dict(self.request, request_id=&quot;attempt-no-acceptance&quot;)
+        del request[&quot;acceptance&quot;]
+        path = self.inbox / &quot;attempt-no-acceptance.json&quot;
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(request), encoding=&quot;utf-8&quot;)
+        result = process_one(path, self.outbox, self.allowed)
+        self.assertEqual(result[&quot;status&quot;], &quot;blocked&quot;)
+
+    def test_non_object_policy_is_blocked(self):
+        request = dict(self.request, request_id=&quot;attempt-bad-policy&quot;, policy=&quot;allowed&quot;)
+        path = self.inbox / &quot;attempt-bad-policy.json&quot;
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(request), encoding=&quot;utf-8&quot;)
+        result = process_one(path, self.outbox, self.allowed)
+        self.assertEqual(result[&quot;status&quot;], &quot;blocked&quot;)
+
+    def test_symlink_escape_is_blocked(self):
+        outside = self.root / &quot;outside.txt&quot;
+        outside.write_text(&quot;not allowed&quot;, encoding=&quot;utf-8&quot;)
+        (self.allowed / &quot;escape.txt&quot;).symlink_to(outside)
+        bad = dict(self.request, request_id=&quot;attempt-link&quot;, inputs=[&quot;escape.txt&quot;])
+        result = process_one(submit(bad, self.inbox), self.outbox, self.allowed)
+        self.assertEqual(result[&quot;status&quot;], &quot;blocked&quot;)
+
+    def test_handler_exception_is_failed(self):
+        def broken(_request, _inputs):
+            raise RuntimeError(&quot;synthetic failure&quot;)
+        result = process_one(submit(self.request, self.inbox), self.outbox, self.allowed, broken)
+        self.assertEqual(result[&quot;status&quot;], &quot;failed&quot;)
+        self.assertIn(&quot;RuntimeError&quot;, result[&quot;error&quot;])
+
+    def test_exception_with_artifact_is_partial_and_preserves_path(self):
+        artifact = self.root / &quot;partial.txt&quot;
+        artifact.write_text(&quot;kept&quot;, encoding=&quot;utf-8&quot;)
+        def partially_done(_request, _inputs):
+            error = RuntimeError(&quot;later stage failed&quot;)
+            error.artifacts = [str(artifact)]
+            raise error
+        result = process_one(submit(self.request, self.inbox), self.outbox, self.allowed, partially_done)
+        self.assertEqual(result[&quot;status&quot;], &quot;partial&quot;)
+        self.assertEqual(result[&quot;artifacts&quot;], [str(artifact)])
+        self.assertTrue(artifact.exists())
+
+    def test_existing_terminal_response_is_not_reprocessed(self):
+        path = submit(self.request, self.inbox)
+        first = process_one(path, self.outbox, self.allowed)
+        second = process_one(path, self.outbox, self.allowed, lambda *_: self.fail(&quot;reprocessed&quot;))
+        self.assertEqual(second, first)
+
+    def test_collect_rejects_wrong_response_identity(self):
+        self.outbox.mkdir()
+        (self.outbox / &quot;attempt-a.json&quot;).write_text(json.dumps({&quot;request_id&quot;: &quot;other&quot;, &quot;status&quot;: &quot;done&quot;}))
+        with self.assertRaisesRegex(ValueError, &quot;does not match&quot;):
+            collect(&quot;attempt-a&quot;, self.outbox)
+
+
+if __name__ == &quot;__main__&quot;:
+    unittest.main()
+</code></pre></article></main><footer class="footer"><span>p-hermes · publish-ready preview</span><a href="../../../../index.html">목차</a></footer></body></html>
