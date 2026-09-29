@@ -19,6 +19,10 @@ ALLOWED = {
     "site/vendor/reveal/reveal.css",
     "site/vendor/reveal/reveal.js",
     "site/vendor/reveal/LICENSE",
+    "site/assets/illustrations/context.svg",
+    "site/assets/illustrations/handoff.svg",
+    "site/assets/illustrations/verification.svg",
+    "site/assets/illustrations/prompts.md",
     "content/articles/why-file-handoffs.md",
     "content/reference/contracts.md",
     "content/tutorials/portable-worker.md",
@@ -123,6 +127,52 @@ def page(title: str, body: str, depth: int = 0) -> str:
     return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="p-hermes 재정비 파일럿 미리보기"><title>{escape(title)}</title><link rel="stylesheet" href="{base}assets/preview.css"></head><body><header><a href="{base}index.html">p-hermes 파일럿 미리보기</a></header><main>{body}</main><footer>사용자 리뷰용 파일럿 미리보기 · <a href="{base}index.html">처음으로</a></footer></body></html>'''
 
 
+def prepare_lecture(source: Path, title: str, active: str) -> str:
+    html = source.read_text(encoding="utf-8")
+    html = html.replace("상위", "지휘")
+    html = re.sub(r"(?<!\()워커", "작업 에이전트", html).replace("실행 에이전트", "작업 에이전트")
+    html = html.replace("지휘 에이전트는", "지휘 에이전트(오케스트레이터)는", 1)
+    html = html.replace("작업 에이전트는", "작업 에이전트(워커)는", 1)
+    html = html.replace('<link rel="stylesheet" href="../assets/design-system.css">',
+        '<link rel="stylesheet" href="../vendor/reveal/reveal.css"><link rel="stylesheet" href="../assets/design-system.css">')
+    html = html.replace('<main id="main">', '<main id="main"><div class="reveal"><div class="slides">', 1)
+    html = html.replace('</main>', '</div></div></main>', 1)
+    flow = f'''<figure class="overall-flow" aria-label="전체 동작 흐름도. 이번 강의의 초점은 {escape(active)}입니다.">
+<svg viewBox="0 0 1200 330" role="img" aria-labelledby="flow-title flow-desc"><title id="flow-title">요청에서 결과 보고까지 전체 동작 흐름</title><desc id="flow-desc">사람의 요청에서 지휘 에이전트, 작업 에이전트, 작업 흐름, 지식 참조, 산출, 검증을 거쳐 결과가 사람에게 돌아옵니다.</desc>
+<path class="flow-track" d="M75 164 H1120 M80 230 H1040 C1040 300 80 300 80 218"/><g class="flow-nodes">
+<g class="flow-node"><circle cx="80" cy="164" r="48"/><text x="80" y="158">사람의</text><text x="80" y="184">요청</text></g>
+<g class="flow-node {'focus' if active == '지휘 에이전트' else ''}"><circle cx="240" cy="164" r="48"/><text x="240" y="158">지휘</text><text x="240" y="184">에이전트</text></g>
+<g class="flow-node {'focus' if active == '작업 에이전트' else ''}"><circle cx="400" cy="164" r="48"/><text x="400" y="158">작업</text><text x="400" y="184">에이전트</text></g>
+<g class="flow-node"><circle cx="560" cy="164" r="48"/><text x="560" y="158">작업</text><text x="560" y="184">흐름</text></g>
+<g class="flow-node"><circle cx="720" cy="164" r="48"/><text x="720" y="158">지식</text><text x="720" y="184">참조</text></g>
+<g class="flow-node"><circle cx="880" cy="164" r="48"/><text x="880" y="158">이미지</text><text x="880" y="184">산출</text></g>
+<g class="flow-node"><circle cx="1040" cy="164" r="48"/><text x="1040" y="158">검증</text><text x="1040" y="184">보고</text></g></g>
+<rect class="request-token" x="0" y="0" width="22" height="22" rx="7"><animateMotion dur="9s" repeatCount="indefinite" path="M80 230 H1040 C1040 300 80 300 80 218"/></rect></svg>
+<ol class="flow-mobile"><li>사람의 요청</li><li>지휘 에이전트 · 계획하고 요청서 작성</li><li>작업 에이전트 · 맡은 범위 수행</li><li>작업 흐름 · 조사 → 계획 → 승인 → 실행 → 검증</li><li>필요한 지식 참조</li><li>산출물 만들기 (예: 이미지)</li><li>실제 산출물 검증</li><li>결과 보고</li><li>사람에게 전달</li></ol>
+<figcaption>사람의 요청 → 지휘(계획·요청서) → 작업 에이전트(범위 확인·산출) → 작업 흐름(조사·계획·승인·실행·검증) → 지식 참조 → 산출(예: 이미지) → 검증 → 결과 보고 → 사람 · <strong>지금 보는 부분: {escape(active)}</strong></figcaption></figure>'''
+    html = html.replace('<p class="synthetic">', flow + '<p class="synthetic">', 1)
+    summary = re.search(r'(<h2>요청과 응답을 연결하고, 마지막에는 사람이 실물을 확인합니다</h2>)', html)
+    if summary:
+        diagram = '''<figure class="takeaway-diagram" aria-label="요청을 정하고 맡긴 뒤, 사람이 결과를 확인하는 세 단계"><svg viewBox="0 0 900 150" role="img" aria-labelledby="summary-title"><title id="summary-title">정하기, 맡기기, 직접 확인하기</title><path d="M160 75 H740" stroke="#43536a" stroke-width="7"/><g fill="#202f42" stroke="#74e0c0" stroke-width="4"><circle cx="160" cy="75" r="48"/><circle cx="450" cy="75" r="48"/><circle cx="740" cy="75" r="48"/></g><g fill="#edf2fa" text-anchor="middle" font-family="system-ui,sans-serif" font-size="21" font-weight="700"><text x="160" y="82">정하기</text><text x="450" y="82">맡기기</text><text x="740" y="82">직접 확인</text></g></svg><figcaption>목표와 경계 → 실행 → 응답과 산출물 대조</figcaption></figure>'''
+        html = html[:summary.end()] + diagram + html[summary.end():]
+    for heading, asset, alt in [
+        ('언어 모델은 유능하지만', 'context.svg', '대화의 단편은 흩어지고 다음 작업으로 이어지는 요청 카드만 남는 모습'),
+        ('세 역할과 두 파일이', 'handoff.svg', '지휘 에이전트와 작업 에이전트가 요청과 결과를 파일로 주고받는 모습'),
+        ('파일을 따라가면 누가 무엇을 했는지 보입니다', 'verification.svg', '완료 보고를 실제 산출물과 대조하는 모습'),
+    ]:
+        match = re.search(r'(<h2>[^<]*' + re.escape(heading) + r'[^<]*</h2>)', html)
+        if match:
+            figure = f'<figure class="editorial-illustration"><img src="../assets/illustrations/{asset}" alt="{escape(alt)}"><figcaption>{escape(alt)}</figcaption></figure>'
+            html = html[:match.end()] + figure + html[match.end():]
+    html = html.replace('<body class="lecture">', '<body class="lecture"><div class="deck-title" aria-hidden="true">' + escape(title) + '</div>', 1)
+    html = html.replace('</body>', '<script src="../vendor/reveal/reveal.js"></script><script>Reveal.initialize({hash:true,controls:true,progress:true,center:false,width:"100%",height:"100%",minScale:1,maxScale:1,transition:"slide",keyboard:true,overview:true,scrollActivationWidth:0});</script></body>', 1)
+    html = html.replace('</head>', '''<style>
+.lecture main{max-width:none;padding:0;margin:0}.reveal-viewport,.lecture{background:var(--bg)!important}.lecture .reveal{width:100%;height:calc(100vh - 160px);font-size:16px}.lecture .reveal .slides{text-align:left;width:100%!important;height:100%!important;left:0!important;top:0!important;margin:0!important;transform:none!important}.lecture .reveal .slides>section{height:100%;width:100%!important;left:0!important;top:0!important;transform:none!important;display:none!important;overflow-y:auto;padding:clamp(1rem,3vw,2.5rem);text-align:left;background:var(--bg);border-radius:18px;color:var(--ink)}.lecture .reveal .slides>section.present{display:block!important}.lecture .reveal p,.lecture .reveal li,.lecture .reveal small,.lecture .reveal .map-node *,.lecture .reveal .axis-grid article *,.lecture .reveal .role-flow article *,.lecture .reveal .file-box *,.lecture .reveal .flow-label{color:var(--ink)!important}.lecture .reveal small{font-size:14px!important}.lecture .reveal h1{font-size:clamp(1.8rem,4vw,3rem)}.lecture .reveal h2{font-size:clamp(1.45rem,3vw,2.1rem)}.lecture .reveal .chapter{border-top:0;padding-top:1.2rem}.lecture .reveal .overall-flow{margin:1.4rem 0 1rem;padding:.6rem;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.overall-flow svg{display:block;width:100%;height:auto;max-height:26vh}.takeaway-diagram{max-width:860px;margin:1rem auto;text-align:center}.takeaway-diagram svg{width:100%;max-height:16vh}.takeaway-diagram figcaption{color:var(--muted);font-size:15px}.flow-mobile{display:none}.flow-track{stroke:#43536a;stroke-width:7;stroke-linecap:round;fill:none}.flow-node circle{fill:#202f42;stroke:#9bc2ff;stroke-width:3}.flow-node text{fill:#edf2fa;text-anchor:middle;font:750 23px system-ui,sans-serif}.flow-node.focus circle{fill:#1d4b49;stroke:#74e0c0;stroke-width:7}.request-token{fill:#ffd17d;filter:drop-shadow(0 0 7px #ffd17d)}.overall-flow figcaption,.editorial-illustration figcaption{text-align:center;color:var(--muted);font-size:16px}.editorial-illustration{margin:1rem auto;max-width:600px}.editorial-illustration img{display:block;width:100%;max-height:30vh;object-fit:contain;border-radius:18px}.lecture .reveal .role-flow,.lecture .reveal .flow-map,.lecture .reveal .cards,.lecture .reveal .request-flow{margin-top:1rem}.lecture .deck-title{display:none}.lecture .reveal .controls{color:var(--mint)}.lecture .reveal .progress{color:var(--mint)}@media(max-width:700px){.lecture .reveal{height:calc(100dvh - 190px)}.lecture .reveal .slides>section{padding:1rem}.overall-flow svg{display:none}.flow-mobile{display:grid;gap:.35rem;margin:.6rem 0;padding-left:2rem}.flow-mobile li{padding:.35rem .55rem;border-left:3px solid var(--blue);background:var(--surface-2);font-size:14px}.editorial-illustration img{max-height:24vh}.overall-flow figcaption{display:none}}
+@media(prefers-reduced-motion:reduce){.request-token{display:none!important}.lecture .reveal .slides>section{transition:none!important}.lecture .reveal .progress{transition:none!important}}
+</style></head>''', 1)
+    return html
+
+
 def main() -> int:
     if not SOURCE.is_dir():
         raise SystemExit("preview source directory missing")
@@ -142,14 +192,18 @@ def main() -> int:
     # Keep the teaching slide and local vendor assets together; no CDN dependency.
     lecture_out = OUT / "lectures/01-orchestrator-worker.html"
     lecture_out.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(SOURCE / "site/lectures/01-orchestrator-worker.html", lecture_out)
+    lecture_out.write_text(prepare_lecture(SOURCE / "site/lectures/01-orchestrator-worker.html", "강의 01 · 지휘 / 작업 에이전트", "작업 에이전트"), encoding="utf-8", newline="\n")
     overview_out = OUT / "lectures/00-overview.html"
-    shutil.copyfile(SOURCE / "site/lectures/00-overview.html", overview_out)
+    overview_out.write_text(prepare_lecture(SOURCE / "site/lectures/00-overview.html", "강의 00 · 전체 동작 흐름", "전체 흐름"), encoding="utf-8", newline="\n")
     shutil.copyfile(SOURCE / "site/assets/design-system.css", OUT / "assets/design-system.css")
     for name in ("reveal.css", "reveal.js", "LICENSE"):
         dest = OUT / "vendor/reveal" / name
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(SOURCE / "site/vendor/reveal" / name, dest)
+    for name in ("context.svg", "handoff.svg", "verification.svg", "prompts.md"):
+        dest = OUT / "assets/illustrations" / name
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(SOURCE / "site/assets/illustrations" / name, dest)
 
     docs = [
         ("content/articles/why-file-handoffs.md", "articles/why-file-handoffs.html", "해설 · 왜 파일로 일을 맡길까요", "목표와 시도를 구분하고, 결과를 읽을 수 있는 합의로 남기는 이유를 설명합니다."),
@@ -159,7 +213,7 @@ def main() -> int:
     ]
     cards = [
         ("강의 00 · 전체 그림", "lectures/00-overview.html", "Hermes가 필요한 이유와 네 축이 만나는 흐름을 먼저 살펴봅니다."),
-        ("강의 01 · 상위 에이전트와 워커", "lectures/01-orchestrator-worker.html", "요청을 맡기고 결과를 확인하는 역할과 책임을 살펴봅니다."),
+        ("강의 01 · 지휘 에이전트와 작업 에이전트", "lectures/01-orchestrator-worker.html", "요청을 맡기고 결과를 확인하는 역할과 책임을 살펴봅니다."),
         ("해설", "articles/why-file-handoffs.html", "파일 handoff가 시도 구분과 결과 확인에 주는 이점을 읽습니다."),
         ("위키", "reference/contracts.html", "portable 교육 킷의 요청·응답 계약과 실패 경계를 찾아봅니다."),
         ("실습", "tutorials/portable-worker.html", "합성 fixture로 worker와 검증 테스트를 실행하는 방법을 따라 합니다."),
@@ -172,7 +226,7 @@ def main() -> int:
         dest = OUT / target; dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(page(title, body, target.count("/")), encoding="utf-8", newline="\n")
 
-    body = '<p class="tag">사용자 리뷰용</p><h1>p-hermes 재정비 파일럿 미리보기(리뷰용)</h1><p class="muted">요청에서 허용된 상위 에이전트·워커 파일럿 자료만 모았습니다. 기존 사이트 콘텐츠는 이 경로에서 대체하지 않습니다.</p><div class="grid">'
+    body = '<p class="tag">사용자 리뷰용</p><h1>p-hermes 재정비 파일럿 미리보기(리뷰용)</h1><p class="muted">요청에서 허용된 지휘·작업 에이전트 파일럿 자료만 모았습니다. 기존 사이트 콘텐츠는 이 경로에서 대체하지 않습니다.</p><div class="grid">'
     body += "".join(f'<section class="card"><h2><a href="{href}">{label}</a></h2><p>{desc}</p></section>' for label, href, desc in cards)
     body += '</div><h2>코드로 확인하기</h2><p>코드 페이지는 HTML escape를 적용한 보기 화면과 원본 다운로드 링크를 함께 제공합니다. 예제는 합성 입력이며 실서비스 연동은 하지 않습니다.</p>'
     (OUT / "index.html").write_text(page("p-hermes 재정비 파일럿 미리보기(리뷰용)", body), encoding="utf-8", newline="\n")
