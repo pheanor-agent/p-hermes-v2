@@ -1,0 +1,26 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="p-hermes 재정비 파일럿 미리보기"><title>해설 · 왜 파일로 일을 맡길까요</title><link rel="stylesheet" href="../assets/preview.css"></head><body><header><a href="../index.html">p-hermes 파일럿 미리보기</a></header><main><p class="muted">목표와 시도를 구분하고, 결과를 읽을 수 있는 합의로 남기는 이유를 설명합니다.</p><p><a href="../index.html">← 미리보기 목차</a></p><h1>Why pass work as files?</h1>
+<p>A handoff is not a chat message that happens to mention a task. It is a small, inspectable agreement between the part that decides what should happen and the part that performs it. The agreement needs a stable identity, a bounded input set, a way to report the result, and a rule for what happens when work stops midway.</p>
+<h2>The problem: one goal can have several attempts</h2>
+<p>Suppose an orchestrator wants one outcome: prepare a short explanation. The first attempt may fail because an input is missing. The next attempt may use a corrected input. The goal has not changed, but the attempts are different events. If the same identifier is reused, a late response from the first attempt can be mistaken for the second.</p>
+<p>Keep two identities:</p>
+<ul>
+<li>A <strong>goal ID</strong> names the continuing outcome.</li>
+<li>A <strong>request ID</strong> names one immutable attempt at that outcome.</li>
+</ul>
+<p>A retry keeps the goal ID and gets a new request ID. The request records its intent revision and acceptance condition so a worker can tell what this particular attempt is expected to do.</p>
+<h2>What the file boundary buys you</h2>
+<p>A request file can be read before work starts. It makes the inputs, constraints, and expected result visible together. A worker can reject a malformed request before it touches anything. The same file can be used to reproduce the attempt later, while a response file records what actually happened.</p>
+<p>The boundary also makes delivery clear. A response is not “done” because a process stopped. It is terminal only when it says whether the attempt finished, partially finished, failed, or was blocked—and names any artifacts that were produced.</p>
+<h2>A small lifecycle</h2>
+<pre><code>same goal
+  ├─ attempt A: request → worker → failed (input unavailable)
+  └─ attempt B: new request ID → worker → partial (draft preserved)
+                                      └→ later attempt may finish</code></pre>
+<p>The request is immutable after submission. A correction creates another attempt rather than rewriting history. The worker reads only inputs beneath an explicitly allowed root. It writes a response to a temporary file first and publishes the complete file atomically, so a reader does not see half a JSON document.</p>
+<h2>Why partial is a real result</h2>
+<p>Imagine the worker has already saved a draft, then a later step fails. Deleting the draft or reporting only “failed” loses useful work and hides what remains. A <code>partial</code> response names the saved artifact and explains the failure. A <code>failed</code> response means the attempt produced no preserved deliverable; <code>blocked</code> means the request or its permissions prevent safe execution. These labels describe outcomes, not quality grades.</p>
+<h2>What this does not solve</h2>
+<p>Files do not provide a scheduler, a process lock, a distributed transaction, or authorization by themselves. Atomic replacement prevents torn publication; it does not make a multi-process queue safe without a separate claim/lease protocol. An allowlist is useful only if the worker resolves paths and refuses traversal or symlink escapes. The code kit below is a local, single-worker teaching example—not a production dispatcher.</p>
+<h2>Use the result as evidence</h2>
+<p>A consumer should match the response's request ID to the attempt it asked about, accept only terminal statuses, and inspect the artifact list. If a response is missing, the attempt is still pending from the consumer's point of view. If it belongs to another request, reject it rather than guessing.</p>
+<p>The companion contract reference defines the fields and transitions. The tutorial runs the same pattern with a temporary inbox, outbox, and synthetic input; it sends nothing outside that directory.</p></main><footer>사용자 리뷰용 파일럿 미리보기 · <a href="../index.html">처음으로</a></footer></body></html>

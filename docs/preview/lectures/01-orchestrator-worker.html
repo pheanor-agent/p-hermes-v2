@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="초심자를 위한 오케스트레이터와 워커의 파일 handoff 강의">
+  <title>요청을 맡기고 결과를 받는 법 — 오케스트레이터와 워커</title>
+  <link rel="stylesheet" href="../vendor/reveal/reveal.css">
+  <style>
+    :root { color-scheme: dark; --ink:#edf2fa; --muted:#aab7c9; --line:#334359; --base:#101824; --panel:#192536; --mint:#74e0c0; --blue:#8cbcff; --amber:#ffd17d; --coral:#ff9c8f; }
+    * { box-sizing:border-box; }
+    body { background:var(--base); color:var(--ink); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+    .reveal-viewport { background:var(--base) !important; }
+    .reveal { font-size:22px; color:var(--ink); }
+    .reveal .controls { color:var(--muted); }
+    .reveal .controls .controls-arrow { color:var(--muted); filter:brightness(0) invert(.72); }
+    .reveal .progress { color:var(--mint); }
+    .reveal .slides { text-align:left; }
+    .reveal .slides section { min-height:100%; padding:1.2rem 2rem; }
+    .reveal h1,.reveal h2,.reveal h3 { color:var(--ink); letter-spacing:-.025em; text-transform:none; }
+    .reveal h1 { font-size:2.35em; line-height:1.13; max-width:20ch; }
+    .reveal h2 { font-size:1.65em; margin:.1em 0 .45em; }
+    .reveal h3 { font-size:1em; }
+    p,li { line-height:1.5; }
+    .eyebrow { color:var(--mint); text-transform:uppercase; letter-spacing:.12em; font-size:.65em; font-weight:750; }
+    .lead { color:#d4deec; font-size:1.08em; max-width:53ch; }
+    .small { color:var(--muted); font-size:.72em; }
+    .screen-count { color:var(--muted); font-size:.65em; }
+    .layout { display:grid; grid-template-columns:1fr .82fr; gap:2rem; align-items:center; }
+    .hero-flow { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; align-items:center; gap:.5rem; margin:2rem 0; }
+    .node { background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:1rem; min-height:110px; }
+    .node strong { display:block; color:var(--mint); font-size:.86em; }
+    .node span { display:block; color:var(--muted); font-size:.68em; margin-top:.45rem; }
+    .arrow { color:var(--amber); font-size:1.5em; }
+    .callout { border-left:4px solid var(--amber); padding:.5rem 1rem; color:#e4ebf6; background:#172332; border-radius:0 10px 10px 0; }
+    .diagram { width:100%; height:auto; max-height:340px; background:#131f2d; border:1px solid var(--line); border-radius:20px; padding:1rem; }
+    .diagram text { font-family:system-ui,sans-serif; fill:var(--ink); font-size:19px; }
+    .diagram .label { fill:var(--muted); font-size:15px; }
+    .diagram .goal { fill:#142b31; stroke:var(--mint); stroke-width:2; }
+    .diagram .attempt { fill:#1b2b43; stroke:var(--blue); stroke-width:2; }
+    .diagram .flow { stroke:var(--amber); stroke-width:4; fill:none; }
+    .diagram .lane { fill:#1a2737; stroke:#43536a; stroke-width:1.5; }
+    .diagram .fail { fill:#332326; stroke:var(--coral); stroke-width:2; }
+    .diagram .partial { fill:#352e1d; stroke:var(--amber); stroke-width:2; }
+    .steps { display:flex; gap:.55rem; flex-wrap:wrap; margin:.9rem 0; }
+    .steps button,.nav-hint { color:var(--ink); background:#1d2a3a; border:1px solid #52647b; border-radius:999px; padding:.45rem .85rem; font:inherit; font-size:.65em; cursor:pointer; }
+    button:focus-visible { outline:3px solid var(--amber); outline-offset:3px; }
+    button:hover { background:#293b51; }
+    .step-status { color:var(--mint); min-height:1.5em; font-size:.72em; }
+    .step-dot { transition:transform .45s ease; }
+    .is-highlight { filter:drop-shadow(0 0 9px rgba(116,224,192,.75)); }
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
+    .card { background:var(--panel); border:1px solid var(--line); padding:1rem 1.1rem; border-radius:16px; }
+    .card h3 { color:var(--mint); margin:.1rem 0 .45rem; }
+    .card p { margin:.3rem 0; font-size:.78em; color:#d2dbea; }
+    pre { background:#0a111a; border:1px solid var(--line); border-radius:12px; padding:1rem; font-size:.62em; line-height:1.45; white-space:pre-wrap; color:#d8e6f5; }
+    code { color:#b7d2ff; }
+    .tag { display:inline-block; border:1px solid #596a7f; padding:.18rem .5rem; border-radius:999px; font-size:.62em; color:var(--muted); }
+    .foot { display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); margin-top:1.2rem; padding-top:.5rem; }
+    .accent { color:var(--amber); }
+    @media (max-width:760px) {
+      .reveal { font-size:18px; }
+      .reveal .slides section { padding:1rem 1.15rem; }
+      .layout,.two-col { grid-template-columns:1fr; gap:.6rem; }
+      .hero-flow { grid-template-columns:1fr; gap:.3rem; margin:1rem 0; }
+      .arrow { transform:rotate(90deg); justify-self:center; }
+      .diagram { max-height:310px; }
+      .foot { align-items:flex-start; flex-direction:column; gap:.15rem; }
+      .foot .screen-count { align-self:flex-end; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.001ms !important; animation-iteration-count:1 !important; transition:none !important; }
+      .reveal .slides section { transition:none !important; }
+    }
+    @media print { .steps,.reveal .controls,.reveal .progress { display:none !important; } }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+    <section aria-labelledby="title-slide">
+      <div class="layout">
+        <div>
+          <p class="eyebrow">01 · 상위 에이전트와 실행 워커</p>
+          <h1 id="title-slide">요청을 맡기고,<br>결과를 다시 받는 법</h1>
+          <p class="lead">대화가 끊기거나 시도가 실패해도, 무엇을 부탁했고 어떤 결과를 받았는지 파일로 이어 붙입니다.</p>
+          <p class="tag">이 강의의 예시는 모두 교육용 합성 데이터입니다</p>
+        </div>
+        <svg class="diagram" viewBox="0 0 620 390" role="img" aria-labelledby="cover-title cover-desc">
+          <title id="cover-title">요청에서 응답까지의 세 단계</title>
+          <desc id="cover-desc">오케스트레이터가 요청 파일을 만들고 워커가 실행한 뒤 terminal 응답 파일을 돌려준다.</desc>
+          <path class="flow" d="M155 184 H240 M380 184 H462" />
+          <rect class="goal" x="25" y="105" width="150" height="160" rx="22"/><text x="56" y="157">정할 사람</text><text class="label" x="50" y="193">요청 파일</text><text class="label" x="51" y="220">목표 · 경계</text>
+          <rect class="attempt" x="237" y="105" width="150" height="160" rx="22"/><text x="274" y="157">실행할 사람</text><text class="label" x="271" y="193">입력 확인</text><text class="label" x="276" y="220">작업 · 기록</text>
+          <rect class="goal" x="450" y="105" width="150" height="160" rx="22"/><text x="485" y="157">받을 사람</text><text class="label" x="483" y="193">결과 파일</text><text class="label" x="477" y="220">상태 · 산출물</text>
+          <circle cx="203" cy="184" r="12" fill="#ffd17d"/><circle cx="420" cy="184" r="12" fill="#ffd17d"/>
+          <text class="label" x="145" y="315">같은 약속을 양쪽이 읽을 수 있게</text>
+        </svg>
+      </div>
+      <div class="foot"><span class="small">초심자 안내 · 도구 중립 원리 + 실행 가능한 Python 예</span><span class="screen-count">01 / 05</span></div>
+    </section>
+
+    <section aria-labelledby="why-title">
+      <p class="eyebrow">먼저 생기는 혼란</p>
+      <h2 id="why-title">목표는 하나여도, 시도는 여럿일 수 있어요</h2>
+      <p class="lead">첫 시도에서 입력을 못 찾았다고 합시다. 입력을 고쳐 다시 맡길 때 목표는 같지만, 두 번째 결과가 첫 번째 시도의 응답과 섞이면 안 됩니다.</p>
+      <div class="hero-flow" aria-label="같은 목표에서 두 시도로 나뉘는 흐름">
+        <div class="node"><strong>goal-42</strong><span>계속 유지되는 목표</span></div><div class="arrow" aria-hidden="true">→</div>
+        <div class="node"><strong>attempt-001</strong><span>첫 시도 · failed</span></div><div class="arrow" aria-hidden="true">↻</div>
+        <div class="node"><strong>attempt-002</strong><span>새 ID · 수정된 입력</span></div>
+      </div>
+      <div class="two-col">
+        <div class="card"><h3>Goal ID</h3><p>“무엇을 이루려 하나?”를 가리킵니다. 여러 번 시도해도 같은 목표면 유지합니다.</p></div>
+        <div class="card"><h3>Request ID</h3><p>“이번 시도는 무엇인가?”를 가리킵니다. 요청 내용을 바꾸거나 재시도하면 새 ID를 발급합니다.</p></div>
+      </div>
+      <p class="callout">한번 제출한 요청은 고치지 않아요. 바뀐 의도는 <span class="accent">새 시도</span>로 남깁니다.</p>
+      <div class="foot"><span class="small">ID는 역할이 다릅니다: 목표의 연속성 vs 시도의 고유성</span><span class="screen-count">02 / 05</span></div>
+    </section>
+
+    <section aria-labelledby="scene-a-title" data-stepper="goal">
+      <p class="eyebrow">장면 01-A · goal 고정, request ID 갱신</p>
+      <h2 id="scene-a-title">시도는 갈라져도 목표는 이어집니다</h2>
+      <p class="small">아래 버튼으로 4단계를 직접 확인하세요. 자동 재생은 없습니다. 모든 핵심 표기는 화면에 남고 강조만 이동합니다.</p>
+      <svg class="diagram" viewBox="0 0 1000 365" role="img" aria-labelledby="goal-title goal-desc">
+        <title id="goal-title">하나의 goal에서 두 개의 request 시도로</title>
+        <desc id="goal-desc">goal-42는 유지되고, 첫 attempt-001은 failed가 되며, 수정 후 attempt-002가 새로 만들어진다.</desc>
+        <rect class="goal" x="50" y="60" width="240" height="88" rx="18"/><text x="82" y="112">goal-42 · 같은 목표</text>
+        <path class="flow" d="M290 104 C380 104 365 225 455 225"/><path class="flow" d="M290 104 C410 104 420 104 575 104"/>
+        <rect class="attempt scene-node" data-stage="1" x="455" y="185" width="235" height="88" rx="18"/><text x="490" y="237">attempt-001</text>
+        <rect class="fail scene-node" data-stage="2" x="745" y="185" width="210" height="88" rx="18"/><text x="783" y="237">failed · 입력 없음</text>
+        <rect class="attempt scene-node" data-stage="3" x="575" y="60" width="235" height="88" rx="18"/><text x="606" y="112">attempt-002 · 새 ID</text>
+        <rect class="partial scene-node" data-stage="4" x="820" y="60" width="150" height="88" rx="18"/><text x="844" y="112">done · 수용 충족</text>
+        <path class="flow" d="M690 229 H745"/>
+        <text class="label" x="455" y="320">첫 시도의 응답은 첫 요청에만 연결</text>
+        <text class="label" x="575" y="170">수정된 입력으로 재시도</text>
+        <circle class="step-dot" id="goal-dot" cx="315" cy="104" r="12" fill="#74e0c0"/>
+      </svg>
+      <div class="steps" role="group" aria-label="장면 01-A 단계 조작">
+        <button type="button" data-step="0">처음</button><button type="button" data-step="1">1 · 요청</button><button type="button" data-step="2">2 · 실패</button><button type="button" data-step="3">3 · 새 ID</button><button type="button" data-step="4">4 · 완료</button>
+      </div>
+      <p class="step-status" aria-live="polite">1단계: 목표를 유지하고 첫 시도를 만든다.</p>
+      <div class="foot"><span class="small">교육용 합성 ID · 실제 개인/작업 식별자를 사용하지 않음</span><span class="screen-count">03 / 05</span></div>
+    </section>
+
+    <section aria-labelledby="scene-b-title" data-stepper="handoff">
+      <p class="eyebrow">장면 01-B · inbox → worker → outbox</p>
+      <h2 id="scene-b-title">요청 카드는 경로를 따라 이동합니다</h2>
+      <p class="small">각 칸은 처리 주체와 책임을 나눕니다. 실패·부분 성공도 terminal 응답으로 남겨요.</p>
+      <svg class="diagram" viewBox="0 0 1000 440" role="img" aria-labelledby="handoff-title handoff-desc">
+        <title id="handoff-title">요청 파일이 inbox, worker, outbox를 거치는 흐름</title>
+        <desc id="handoff-desc">오케스트레이터가 요청을 inbox에 놓고, 워커가 입력을 확인해 작업한 뒤 done, partial, failed, blocked 중 하나를 outbox에 기록한다.</desc>
+        <rect class="lane" x="28" y="80" width="240" height="230" rx="18"/><text x="75" y="123">① inbox</text><text class="label" x="62" y="160">불변 요청 파일</text><text class="label" x="62" y="190">ID · 입력 · 조건</text>
+        <rect class="lane" x="380" y="80" width="240" height="230" rx="18"/><text x="423" y="123">② worker</text><text class="label" x="414" y="160">경로를 확인</text><text class="label" x="414" y="190">입력을 읽고 실행</text><text class="label" x="414" y="220">예외도 상태로 기록</text>
+        <rect class="lane" x="730" y="80" width="240" height="230" rx="18"/><text x="775" y="123">③ outbox</text><text class="label" x="765" y="160">응답 ID를 대조</text><text class="label" x="765" y="190">terminal 상태 확인</text><text class="label" x="765" y="220">산출물 read-back</text>
+        <path class="flow" d="M268 195 H380 M620 195 H730"/>
+        <rect class="fail" x="395" y="340" width="155" height="62" rx="15"/><text x="431" y="379">failed</text>
+        <rect class="partial" x="565" y="340" width="170" height="62" rx="15"/><text x="595" y="379">partial · 보존</text>
+        <path d="M500 310 V334" stroke="#ff9c8f" stroke-width="3"/><path d="M500 310 C590 325 640 325 650 334" stroke="#ffd17d" stroke-width="3" fill="none"/>
+        <text class="label" x="758" y="365">done / blocked</text>
+        <circle class="step-dot" id="handoff-dot" cx="170" cy="195" r="12" fill="#74e0c0"/>
+      </svg>
+      <div class="steps" role="group" aria-label="장면 01-B 단계 조작">
+        <button type="button" data-step="0">처음</button><button type="button" data-step="1">1 · 제출</button><button type="button" data-step="2">2 · 경로 확인</button><button type="button" data-step="3">3 · 처리</button><button type="button" data-step="4">4 · 응답 저장</button><button type="button" data-step="5">5 · 결과 확인</button><button type="button" data-step="6">6 · 새 ID로 재시도</button>
+      </div>
+      <p class="step-status" aria-live="polite">1단계: 요청 파일을 inbox에 둔다.</p>
+      <div class="foot"><span class="small">atomic write는 반쪽짜리 JSON 노출을 막지만, 동시 작업 lock은 별도 계약입니다.</span><span class="screen-count">04 / 05</span></div>
+    </section>
+
+    <section aria-labelledby="code-title">
+      <p class="eyebrow">실행 가능한 작은 약속</p>
+      <h2 id="code-title">무엇을 부탁했고, 무엇이 돌아왔는가</h2>
+      <div class="two-col">
+        <div class="card"><h3>요청에 담을 것</h3><pre>{
+  "request_id": "attempt-002",
+  "goal_id": "goal-42",
+  "intent_revision": 2,
+  "inputs": ["brief.txt"],
+  "acceptance": "terminal response exists",
+  "policy": {"dry_run": true}
+}</pre></div>
+        <div class="card"><h3>응답은 상태와 함께</h3><pre>{
+  "request_id": "attempt-002",
+  "status": "partial",
+  "artifacts": ["draft.txt"],
+  "error": "later step unavailable"
+}</pre></div>
+      </div>
+      <div class="two-col">
+        <div class="card"><h3>done</h3><p>요청의 완료조건을 충족했다고 worker가 보고합니다. 소비자는 ID를 대조하고 산출물을 읽습니다.</p></div>
+        <div class="card"><h3>partial · failed · blocked</h3><p>부분 산출물은 보존하고 이름을 남깁니다. 막힌 이유와 남은 작업을 숨기지 않습니다.</p></div>
+      </div>
+      <p class="callout">이 예제는 로컬 파일 기반 교육용 계약입니다. <b>스케줄러·분산 잠금·실서비스 연결</b>을 제공한다고 주장하지 않으며, done은 명시한 acceptance 조건을 worker가 충족했다고 보고할 때만 사용합니다.</p>
+      <div class="foot"><span class="small">다음: portable-worker 튜토리얼에서 임시 폴더로 직접 실행</span><span class="screen-count">05 / 05</span></div>
+    </section>
+  </div>
+</div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script>
+(() => {
+  const steps = {
+    goal: {
+      max: 4,
+      messages: [
+        "1단계: 목표를 유지하고 첫 시도를 만든다.",
+        "2단계: 첫 요청은 고유 ID를 받고 worker로 간다.",
+        "3단계: 입력 누락으로 첫 시도는 failed가 된다.",
+        "4단계: 고친 입력은 새 ID로 다시 제출한다.",
+        "완료: goal은 같고 attempt ID만 다르다."
+      ],
+      dot: "goal-dot",
+      positions: [[315,104],[425,220],[720,229],[550,104],[810,104]]
+    },
+    handoff: {
+      max: 6,
+      messages: [
+        "1단계: 오케스트레이터가 immutable request를 inbox에 둔다.",
+        "2단계: worker가 request ID와 입력 경로를 확인한다.",
+        "3단계: 허용된 파일만 읽고 작업을 시작한다.",
+        "4단계: 완료·오류·부분 산출을 terminal 상태로 기록한다.",
+        "5단계: outbox에 완성된 응답 파일을 atomic하게 게시한다.",
+        "6단계: 소비자는 ID를 대조하고 상태와 산출물을 읽는다.",
+        "다음 재시도는 같은 goal 아래 새 request ID를 쓴다."
+      ],
+      dot: "handoff-dot",
+      positions: [[170,195],[330,195],[450,145],[590,260],[700,195],[820,245],[260,335]]
+    }
+  };
+  function setStep(section, index) {
+    const key = section.dataset.stepper;
+    const model = steps[key];
+    const n = Math.max(0, Math.min(model.max, index));
+    section.dataset.currentStep = String(n);
+    const status = section.querySelector(".step-status");
+    status.textContent = model.messages[n];
+    section.querySelectorAll("[data-step]").forEach(button => {
+      const selected = Number(button.dataset.step) === n;
+      button.setAttribute("aria-pressed", String(selected));
+    });
+    const [x,y] = model.positions[n];
+    document.getElementById(model.dot).setAttribute("cx", String(x));
+    document.getElementById(model.dot).setAttribute("cy", String(y));
+    section.querySelectorAll(".scene-node").forEach(node => {
+      const stage = Number(node.dataset.stage);
+      node.classList.toggle("is-highlight", stage === n);
+    });
+  }
+  document.querySelectorAll("[data-stepper]").forEach(section => {
+    section.querySelectorAll("[data-step]").forEach(button => {
+      button.addEventListener("click", () => setStep(section, Number(button.dataset.step)));
+    });
+    setStep(section, 0);
+  });
+  if (window.Reveal) {
+    const compact = window.matchMedia("(max-width: 760px)").matches;
+    Reveal.initialize({hash:true, controls:true, progress:true, keyboard:true, transition:"fade", transitionSpeed:"fast", width:compact ? window.innerWidth : 1280, height:compact ? window.innerHeight : 720, minScale:compact ? 1 : 0.1, maxScale:compact ? 1 : 2, margin:compact ? 0.04 : 0.06, center:false});
+    let wasCompact = compact;
+    window.addEventListener("resize", () => {
+      const nextCompact = window.matchMedia("(max-width: 760px)").matches;
+      if (nextCompact !== wasCompact) {
+        wasCompact = nextCompact;
+        Reveal.configure({width:nextCompact ? window.innerWidth : 1280, height:nextCompact ? window.innerHeight : 720, minScale:nextCompact ? 1 : 0.1, maxScale:nextCompact ? 1 : 2});
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

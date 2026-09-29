@@ -15,6 +15,7 @@ jobs:
       - run: python tools/compose_courses.py
       - run: python tools/build_slides.py
       - run: python tools/build_site.py
+      - run: python tools/build_preview.py
       - run: python tools/check_site.py
       - run: python tools/check_lectures.py
       - run: git diff --exit-code -- docs

@@ -1,0 +1,48 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="p-hermes 재정비 파일럿 미리보기"><title>위키 · 파일 handoff 계약</title><link rel="stylesheet" href="../assets/preview.css"></head><body><header><a href="../index.html">p-hermes 파일럿 미리보기</a></header><main><p class="muted">요청·응답 필드와 상태, 경계 조건을 빠르게 찾아봅니다.</p><p><a href="../index.html">← 미리보기 목차</a></p><h1>File handoff contracts</h1>
+<p>This reference describes the portable teaching kit in <code>reference/</code>. It is a proposed, local contract; it is not a claim that every agent product implements these files or fields.</p>
+<h2>Request object</h2>
+<p>Required JSON fields:</p>
+<table><thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>request_id</code></td><td>non-empty string</td><td>Unique immutable attempt identifier; do not reuse for a changed request.</td></tr>
+<tr><td><code>goal_id</code></td><td>non-empty string</td><td>Stable outcome identity shared across attempts.</td></tr>
+<tr><td><code>intent_revision</code></td><td>positive integer</td><td>Revision of the user's intent represented by this attempt.</td></tr>
+<tr><td><code>inputs</code></td><td>array of relative path strings</td><td>Files the worker may read beneath its configured allowlist root.</td></tr>
+<tr><td><code>acceptance</code></td><td>string</td><td>Observable condition for this attempt.</td></tr>
+<tr><td><code>policy</code></td><td>object</td><td>Caller-defined constraints; the worker must enforce each constraint it relies on. A recorded label alone is not an access-control mechanism.</td></tr>
+</tbody></table>
+<p>A retry for the same goal uses a new <code>request_id</code>. The file is write-once: identical resubmission is idempotent; different content under the same ID is a conflict.</p>
+<h2>Response object</h2>
+<p>Required fields:</p>
+<table><thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>request_id</code></td><td>string</td><td>Must exactly match the attempt being collected.</td></tr>
+<tr><td><code>goal_id</code></td><td>string or null</td><td>Echo of the request goal when available.</td></tr>
+<tr><td><code>intent_revision</code></td><td>integer or null</td><td>Echo of the request revision when available.</td></tr>
+<tr><td><code>status</code></td><td>enum</td><td>One of <code>done</code>, <code>partial</code>, <code>failed</code>, <code>blocked</code>.</td></tr>
+<tr><td><code>request_sha256</code></td><td>64-character hex string</td><td>Digest of the original request bytes used by this worker.</td></tr>
+<tr><td><code>artifacts</code></td><td>array of strings</td><td>Paths or identifiers for preserved outputs; empty when none.</td></tr>
+<tr><td><code>result</code></td><td>optional JSON value</td><td>Small success details.</td></tr>
+<tr><td><code>error</code></td><td>optional string</td><td>Failure/block reason; do not include secrets.</td></tr>
+</tbody></table>
+<p><code>done</code> means the worker reports the acceptance condition met. <code>partial</code> means at least one artifact is preserved but the attempt did not fully complete. <code>failed</code> means the attempt ended without a preserved deliverable. <code>blocked</code> means validation or policy prevented execution. Consumers treat any other value as non-terminal and reject mismatched IDs.</p>
+<h2>State and file movement</h2>
+<pre><code>created → inbox/request.json → worker reads immutable bytes
+                               ├─ malformed / disallowed → outbox/response.json: blocked
+                               ├─ execution error, no artifact → failed
+                               ├─ execution error, artifact kept → partial
+                               └─ acceptance met → done</code></pre>
+<p>The teaching kit leaves archival or movement of the original request to the caller. It does not delete a request after processing. The caller configures the worker's <code>allowed_root</code>; <code>policy</code> metadata does not itself grant or restrict operating-system permissions. The worker enforces the input-path boundary, but the surrounding application/operator remains responsible for process identity, filesystem permissions, and any additional policy checks. The terminal response is written atomically and is never overwritten. Existing response for the same request is returned only when it binds to the same request digest; a conflicting response is an error.</p>
+<h2>Error cases and limits</h2>
+<ul>
+<li>Missing or malformed request fields: <code>blocked</code> response.</li>
+<li>Absolute path, <code>..</code>, missing input, or symlink resolving outside the allowlist: <code>blocked</code> response.</li>
+<li>Handler raises without reporting artifacts: <code>failed</code> response.</li>
+<li>Handler raises after reporting preserved artifacts: <code>partial</code> response; keep the files.</li>
+<li>A response with a different request ID or a non-terminal status: collection fails closed.</li>
+<li>A request ID reused with changed content: submission fails; allocate a new ID.</li>
+<li>Atomic file publication is not a queue lock or multi-worker claim protocol. Add a lease/claim mechanism before concurrent production use.</li>
+</ul>
+<h2>Directory contract</h2>
+<pre><code>inbox/   immutable request JSON, one file per attempt
+outbox/  terminal response JSON, one file per attempt
+inputs/  caller-owned fixture files beneath the worker allowlist</code></pre>
+<p>The example uses the Python standard library and temporary directories. It performs no network, credential, GPU, or product-specific operation.</p></main><footer>사용자 리뷰용 파일럿 미리보기 · <a href="../index.html">처음으로</a></footer></body></html>

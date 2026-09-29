@@ -1,0 +1,42 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="p-hermes 재정비 파일럿 미리보기"><title>reference/filesystem_transport.py</title><link rel="stylesheet" href="../../assets/preview.css"></head><body><header><a href="../../index.html">p-hermes 파일럿 미리보기</a></header><main><p><a href="../../index.html">← 미리보기</a> · <a href="../../code/index.html">코드 목록</a></p><h1>reference/filesystem_transport.py</h1><p class="download"><a href="../../downloads/reference/filesystem_transport.py">원본 파일 다운로드: reference/filesystem_transport.py</a></p><pre><code>&quot;&quot;&quot;Small atomic JSON transport for a local, portable worker demo.&quot;&quot;&quot;
+from __future__ import annotations
+
+import json
+import os
+import tempfile
+from pathlib import Path
+from typing import Any
+
+
+def encode_json(value: Any) -&gt; bytes:
+    return (json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2) + &quot;\n&quot;).encode(&quot;utf-8&quot;)
+
+
+def write_json_atomic(path: Path, value: Any, *, replace: bool = False) -&gt; None:
+    &quot;&quot;&quot;Publish complete JSON by same-directory replace; optionally refuse overwrite.&quot;&quot;&quot;
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists() and not replace:
+        raise FileExistsError(path)
+    fd, temp_name = tempfile.mkstemp(prefix=f&quot;.{path.name}.&quot;, suffix=&quot;.tmp&quot;, dir=path.parent)
+    temp = Path(temp_name)
+    try:
+        with os.fdopen(fd, &quot;wb&quot;) as stream:
+            stream.write(encode_json(value))
+            stream.flush()
+            os.fsync(stream.fileno())
+        if replace:
+            os.replace(temp, path)
+        else:
+            # Hard-link creation is an atomic no-clobber publish on one filesystem.
+            os.link(temp, path)
+    finally:
+        temp.unlink(missing_ok=True)
+
+
+def read_json(path: Path) -&gt; dict[str, Any]:
+    value = json.loads(Path(path).read_text(encoding=&quot;utf-8&quot;))
+    if not isinstance(value, dict):
+        raise ValueError(&quot;top-level JSON value must be an object&quot;)
+    return value
+</code></pre></main><footer>사용자 리뷰용 파일럿 미리보기 · <a href="../../index.html">처음으로</a></footer></body></html>
