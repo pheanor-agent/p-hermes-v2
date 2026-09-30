@@ -1,0 +1,13 @@
+{
+  "request_id": "synthetic-request-01",
+  "catalog": "soft-diagram",
+  "intent": {
+    "subject": "세 개의 연결된 도형",
+    "action": "왼쪽에서 오른쪽으로 이어짐",
+    "location": "밝은 단색 배경",
+    "camera": "정면의 평면 구도",
+    "lighting": "균일한 부드러운 빛",
+    "style": "",
+    "constraints": "글자와 로고 없음"
+  }
+}

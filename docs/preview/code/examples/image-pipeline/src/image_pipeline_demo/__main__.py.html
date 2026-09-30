@@ -1,0 +1,17 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="p-hermes 재정비 파일럿 미리보기"><title>examples/image-pipeline/src/image_pipeline_demo/__main__.py</title><link rel="stylesheet" href="../../../../../assets/preview.css"></head><body><header><a href="../../../../../index.html">p-hermes 파일럿 미리보기</a></header><main><p><a href="../../../../../index.html">← 미리보기</a> · <a href="../../../../../code/index.html">코드 목록</a></p><h1>examples/image-pipeline/src/image_pipeline_demo/__main__.py</h1><p class="download"><a href="../../../../../downloads/examples/image-pipeline/src/image_pipeline_demo/__main__.py">원본 파일 다운로드: examples/image-pipeline/src/image_pipeline_demo/__main__.py</a></p><pre><code>&quot;&quot;&quot;합성 fixture를 이용한 데모 진입점.&quot;&quot;&quot;
+import json
+from pathlib import Path
+
+from .pipeline import run
+
+
+def main() -&gt; int:
+    root = Path(__file__).resolve().parents[2]
+    output = run(root / &quot;fixtures/request.json&quot;, root / &quot;fixtures/catalog.json&quot;)
+    print(json.dumps(output, ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == &quot;__main__&quot;:
+    raise SystemExit(main())
+</code></pre></main><footer>사용자 리뷰용 파일럿 미리보기 · <a href="../../../../../index.html">처음으로</a></footer></body></html>

@@ -1,0 +1,6 @@
+{
+  "request_id": "synthetic-request-01",
+  "status": "simulated",
+  "output_marker": "synthetic://synthetic-request-01.webp",
+  "aspect_ratio": "16:9"
+}

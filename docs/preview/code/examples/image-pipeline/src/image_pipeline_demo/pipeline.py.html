@@ -1,0 +1,131 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="p-hermes 재정비 파일럿 미리보기"><title>examples/image-pipeline/src/image_pipeline_demo/pipeline.py</title><link rel="stylesheet" href="../../../../../assets/preview.css"></head><body><header><a href="../../../../../index.html">p-hermes 파일럿 미리보기</a></header><main><p><a href="../../../../../index.html">← 미리보기</a> · <a href="../../../../../code/index.html">코드 목록</a></p><h1>examples/image-pipeline/src/image_pipeline_demo/pipeline.py</h1><p class="download"><a href="../../../../../downloads/examples/image-pipeline/src/image_pipeline_demo/pipeline.py">원본 파일 다운로드: examples/image-pipeline/src/image_pipeline_demo/pipeline.py</a></p><pre><code>&quot;&quot;&quot;합성 입력으로 이미지 생성 파이프라인의 데이터 계약을 보여준다.&quot;&quot;&quot;
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+import hashlib
+import json
+from pathlib import Path
+from typing import Any
+
+
+@dataclass(frozen=True)
+class CatalogEntry:
+    name: str
+    style: str
+    aspect_ratio: str
+
+
+@dataclass(frozen=True)
+class SceneIntent:
+    subject: str
+    action: str
+    location: str = &quot;&quot;
+    camera: str = &quot;&quot;
+    lighting: str = &quot;&quot;
+    style: str = &quot;&quot;
+    constraints: str = &quot;&quot;
+
+
+@dataclass(frozen=True)
+class GenerationResult:
+    request_id: str
+    status: str
+    prompt_sha256: str
+    output_marker: str
+
+
+SEGMENTS = (&quot;subject&quot;, &quot;action&quot;, &quot;location&quot;, &quot;camera&quot;, &quot;lighting&quot;, &quot;style&quot;, &quot;constraints&quot;)
+
+
+def load_catalog(path: Path) -&gt; dict[str, CatalogEntry]:
+    &quot;&quot;&quot;합성 카탈로그를 읽고 고유 이름과 필수 기본값을 검사한다.&quot;&quot;&quot;
+    payload = json.loads(path.read_text(encoding=&quot;utf-8&quot;))
+    if payload.get(&quot;schema&quot;) != &quot;synthetic-image-catalog/v1&quot;:
+        raise ValueError(&quot;지원하지 않는 카탈로그 형식&quot;)
+    entries: dict[str, CatalogEntry] = {}
+    for row in payload.get(&quot;entries&quot;, []):
+        name = str(row.get(&quot;name&quot;, &quot;&quot;)).strip()
+        style = str(row.get(&quot;style&quot;, &quot;&quot;)).strip()
+        ratio = str(row.get(&quot;aspect_ratio&quot;, &quot;&quot;)).strip()
+        if not name or not style or not ratio or name in entries:
+            raise ValueError(&quot;카탈로그 항목이 비어 있거나 이름이 중복됨&quot;)
+        entries[name] = CatalogEntry(name, style, ratio)
+    if not entries:
+        raise ValueError(&quot;카탈로그 항목이 없음&quot;)
+    return entries
+
+
+def load_intent(path: Path) -&gt; tuple[str, SceneIntent]:
+    &quot;&quot;&quot;요청에서 식별자, 카탈로그 선택, 일곱 관점의 의도를 읽는다.&quot;&quot;&quot;
+    payload = json.loads(path.read_text(encoding=&quot;utf-8&quot;))
+    request_id = str(payload.get(&quot;request_id&quot;, &quot;&quot;)).strip()
+    catalog_name = str(payload.get(&quot;catalog&quot;, &quot;&quot;)).strip()
+    raw = payload.get(&quot;intent&quot;)
+    if not request_id or not catalog_name or not isinstance(raw, dict):
+        raise ValueError(&quot;요청 식별자, 카탈로그 또는 의도가 누락됨&quot;)
+    values = {key: str(raw.get(key, &quot;&quot;)).strip() for key in SEGMENTS}
+    if not values[&quot;subject&quot;] or not values[&quot;action&quot;]:
+        raise ValueError(&quot;주제와 행동은 필수&quot;)
+    return request_id, SceneIntent(**values)
+
+
+def compile_prompt(intent: SceneIntent, entry: CatalogEntry) -&gt; str:
+    &quot;&quot;&quot;고정된 일곱 관점 순서로 장면 의도를 컴파일한다.&quot;&quot;&quot;
+    effective = asdict(intent)
+    effective[&quot;style&quot;] = effective[&quot;style&quot;] or entry.style
+    labels = {
+        &quot;subject&quot;: &quot;주제&quot;, &quot;action&quot;: &quot;행동&quot;, &quot;location&quot;: &quot;장소&quot;,
+        &quot;camera&quot;: &quot;카메라&quot;, &quot;lighting&quot;: &quot;조명&quot;, &quot;style&quot;: &quot;스타일&quot;,
+        &quot;constraints&quot;: &quot;제약&quot;,
+    }
+    parts = [f&quot;{labels[key]}: {effective[key]}&quot; for key in SEGMENTS if effective[key]]
+    return &quot; / &quot;.join(parts)
+
+
+class GenericAdapter:
+    &quot;&quot;&quot;데모용 백엔드 중립 문자열 어댑터. 모델 API payload는 만들지 않는다.&quot;&quot;&quot;
+
+    def adapt(self, intent: SceneIntent, entry: CatalogEntry) -&gt; str:
+        prompt = compile_prompt(intent, entry)
+        if not prompt or &quot;주제:&quot; not in prompt or &quot;행동:&quot; not in prompt:
+            raise ValueError(&quot;어댑터 출력 계약 위반&quot;)
+        return prompt
+
+
+class FakeRuntime:
+    &quot;&quot;&quot;네트워크·GPU 없이 결정론적 합성 결과 메타데이터를 반환한다.&quot;&quot;&quot;
+
+    def generate(self, request_id: str, prompt: str, entry: CatalogEntry) -&gt; GenerationResult:
+        if not request_id.strip() or not prompt.strip():
+            raise ValueError(&quot;식별자와 프롬프트가 필요함&quot;)
+        digest = hashlib.sha256(prompt.encode(&quot;utf-8&quot;)).hexdigest()
+        return GenerationResult(request_id, &quot;simulated&quot;, digest, f&quot;synthetic://{request_id}.webp&quot;)
+
+
+def validate_result(result: GenerationResult, request_id: str, prompt: str) -&gt; None:
+    &quot;&quot;&quot;실제 이미지 대신 합성 실행의 식별자·상태·지문 계약을 확인한다.&quot;&quot;&quot;
+    expected = hashlib.sha256(prompt.encode(&quot;utf-8&quot;)).hexdigest()
+    if result.request_id != request_id:
+        raise ValueError(&quot;응답 식별자가 요청과 다름&quot;)
+    if result.status != &quot;simulated&quot; or result.output_marker != f&quot;synthetic://{request_id}.webp&quot;:
+        raise ValueError(&quot;합성 결과 상태 또는 표식이 잘못됨&quot;)
+    if result.prompt_sha256 != expected:
+        raise ValueError(&quot;프롬프트 지문이 다름&quot;)
+
+
+def run(request_path: Path, catalog_path: Path) -&gt; dict[str, Any]:
+    request_id, intent = load_intent(request_path)
+    catalog = load_catalog(catalog_path)
+    name = json.loads(request_path.read_text(encoding=&quot;utf-8&quot;))[&quot;catalog&quot;]
+    if name not in catalog:
+        raise ValueError(f&quot;카탈로그 항목을 찾을 수 없음: {name}&quot;)
+    entry = catalog[name]
+    prompt = GenericAdapter().adapt(intent, entry)
+    result = FakeRuntime().generate(request_id, prompt, entry)
+    validate_result(result, request_id, prompt)
+    return {&quot;request_id&quot;: result.request_id, &quot;status&quot;: result.status,
+            &quot;prompt&quot;: prompt, &quot;prompt_sha256&quot;: result.prompt_sha256,
+            &quot;output_marker&quot;: result.output_marker,
+            &quot;aspect_ratio&quot;: entry.aspect_ratio,
+            &quot;note&quot;: &quot;합성 예제 결과이며 실제 이미지 생성·게시를 수행하지 않음&quot;}
+</code></pre></main><footer>사용자 리뷰용 파일럿 미리보기 · <a href="../../../../../index.html">처음으로</a></footer></body></html>
