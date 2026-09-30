@@ -16,6 +16,7 @@ ALLOWED = {
     "site/lectures/00-overview.html",
     "site/lectures/01-orchestrator-worker.html",
     "site/lectures/02-workflow.html",
+    "site/lectures/03-knowledge.html",
     "site/lectures/04-image-pipeline.html",
     "site/assets/design-system.css",
     "site/vendor/reveal/reveal.css",
@@ -49,6 +50,7 @@ ALLOWED = {
     "site/wiki/reference/terms.html",
     "site/wiki/examples/README.html",
     "site/wiki/image-pipeline.html",
+    "site/wiki/knowledge-context.html",
     "site/articles/why-file-handoffs.html",
     "site/examples/portable-worker/README.html",
     "site/examples/portable-worker/PROMPT.html",
@@ -63,6 +65,14 @@ ALLOWED = {
     "examples/image-pipeline/src/image_pipeline_demo/__main__.py",
     "examples/image-pipeline/src/image_pipeline_demo/pipeline.py",
     "examples/image-pipeline/tests/test_pipeline.py",
+    "examples/knowledge-context-check/README.md",
+    "examples/knowledge-context-check/PROMPT.md",
+    "examples/knowledge-context-check/fixtures/invalid-request.json",
+    "examples/knowledge-context-check/fixtures/lessons.json",
+    "examples/knowledge-context-check/fixtures/no-match-request.json",
+    "examples/knowledge-context-check/fixtures/request.json",
+    "examples/knowledge-context-check/src/knowledge_check.py",
+    "examples/knowledge-context-check/tests/test_knowledge_check.py",
 
     "site/code/examples/portable-worker/src/__init__.py.html",
     "site/code/examples/portable-worker/src/filesystem_transport.py.html",
@@ -279,6 +289,7 @@ def main() -> int:
     workflow_out = OUT / "lectures/02-workflow.html"
     workflow_out.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(SOURCE / "site/lectures/02-workflow.html", workflow_out)
+    shutil.copyfile(SOURCE / "site/lectures/03-knowledge.html", OUT / "lectures/03-knowledge.html")
     shutil.copyfile(SOURCE / "site/assets/design-system.css", OUT / "assets/design-system.css")
     for name in ("reveal.css", "reveal.js", "LICENSE"):
         dest = OUT / "vendor/reveal" / name
@@ -293,6 +304,7 @@ def main() -> int:
         ("강의 00 · 전체 그림", "lectures/00-overview.html", "에이전트 시스템의 전체 흐름과 결과 확인을 살펴봅니다."),
         ("강의 01 · 지휘 에이전트와 작업 에이전트", "lectures/01-orchestrator-worker.html", "계획·위임 역할과 맡은 작업을 수행하는 역할을 구분합니다."),
         ("강의 02 · 작업 흐름", "lectures/02-workflow.html", "단계 계약과 검증을 전체 흐름 안에서 살펴봅니다."),
+        ("강의 03 · 지식 참조", "lectures/03-knowledge.html", "검색 후보·원문·출처 상태·사람 검토의 연결을 살펴봅니다."),
         ("강의 04 · 이미지 생성 파이프라인", "lectures/04-image-pipeline.html", "카탈로그·프롬프트·어댑터·검증의 흐름을 살펴봅니다."),
         ("왜 파일 handoff가 필요한가", "articles/why-file-handoffs.html", "요청과 결과를 파일로 주고받는 이유를 설명합니다."),
         ("환경", "wiki/environment/README.html", "실습 저장소와 실행 환경의 전제 조건을 확인합니다."),
@@ -301,14 +313,17 @@ def main() -> int:
         ("작업 흐름 참조", "wiki/reference/workflow.html", "현재 단계 계약, 검사, 활성 범위를 찾아봅니다."),
         ("용어", "wiki/reference/terms.html", "문서에서 사용하는 핵심 용어를 확인합니다."),
         ("이미지 생성 파이프라인 참조", "wiki/image-pipeline.html", "예제의 공개 계약과 확인 절차를 찾아봅니다."),
+        ("지식 참조·출처 상태", "wiki/knowledge-context.html", "context pack, 출처 상태, 교훈 검토 절차를 확인합니다."),
         ("portable worker 실행", "examples/portable-worker/README.html", "합성 fixture로 portable worker를 실행합니다."),
         ("작업 프롬프트", "examples/portable-worker/PROMPT.html", "예제에 사용할 안전한 작업 지시를 확인합니다."),
         ("이미지 파이프라인 예제", "examples/image-pipeline/README.html", "합성 입력으로 오프라인 파이프라인을 재현합니다."),
         ("이미지 파이프라인 과제", "examples/image-pipeline/PROMPT.html", "에이전트에게 맡길 안전한 테스트 과제를 확인합니다."),
+        ("요청 근거 확인 예제", "examples/knowledge-context-check/README.html", "합성 자료의 출처·날짜·검토 상태를 확인합니다."),
+        ("요청 근거 확인 과제", "examples/knowledge-context-check/PROMPT.html", "작업 에이전트에 전달할 테스트 과제를 확인합니다."),
         ("예제 코드·소스와 테스트", "code/index.html", "예제 구현과 테스트를 읽고 원본 파일을 내려받습니다."),
     ]
 
-    sections = [("강의", cards[:4]), ("해설", cards[4:5]), ("위키", cards[5:11]), ("예제", cards[11:15]), ("예제 코드", cards[15:])]
+    sections = [("강의", cards[:5]), ("해설", cards[5:6]), ("위키", cards[6:13]), ("예제", cards[13:19]), ("예제 코드", cards[19:])]
     body = '<p class="tag">사용자 리뷰용</p><h1>p-hermes 재정비 파일럿 미리보기(리뷰용)</h1><p class="muted">준비된 해설·위키·예제와 강의 미리보기입니다.</p>'
     for heading, entries in sections:
         body += f'<section><h2>{heading}</h2><ul>' + "".join(f'<li><a href="{href}">{label}</a> — {desc}</li>' for label, href, desc in entries) + '</ul></section>'
@@ -326,12 +341,14 @@ def main() -> int:
             else:
                 shutil.copyfile(SOURCE / rel, dest)
     # Example README and agent prompt are rendered from the reviewed Markdown sources.
-    for name in ("README", "PROMPT"):
-        source = SOURCE / f"examples/image-pipeline/{name}.md"
-        rendered = page(f"이미지 파이프라인 · {name}", render_markdown(source.read_text(encoding="utf-8")), 2)
-        target = OUT / f"examples/image-pipeline/{name}.html"
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(rendered, encoding="utf-8", newline="\n")
+    for example in ("image-pipeline", "knowledge-context-check"):
+        for name in ("README", "PROMPT"):
+            source = SOURCE / f"examples/{example}/{name}.md"
+            title = ("이미지 파이프라인" if example == "image-pipeline" else "요청 근거 확인") + f" · {name}"
+            rendered = page(title, render_markdown(source.read_text(encoding="utf-8")), 2)
+            target = OUT / f"examples/{example}/{name}.html"
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(rendered, encoding="utf-8", newline="\n")
     shutil.copyfile(SOURCE / "site/assets/publish-design-system.css", OUT / "assets/design-system.css")
 
     items = sorted(p for p in SOURCE.rglob("*") if p.is_file() and p.relative_to(SOURCE).as_posix().startswith(("reference/", "examples/", "tests/")))
