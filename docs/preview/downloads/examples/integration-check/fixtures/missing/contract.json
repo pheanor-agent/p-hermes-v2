@@ -1,0 +1,4 @@
+{
+  "stages": ["request", "contract", "context", "fake_runtime", "verification", "response"],
+  "satisfied_conditions": ["contract_checked"]
+}
