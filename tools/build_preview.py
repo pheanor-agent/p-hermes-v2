@@ -16,6 +16,7 @@ ALLOWED = {
     "site/lectures/03-knowledge.html",
     "site/assets/deck.css",
     "site/assets/deck.js",
+    "site/assets/wiki.css",
     "site/wiki/knowledge-context.html",
     "examples/knowledge-context-check/PROMPT.md",
     "examples/knowledge-context-check/README.md",
@@ -402,8 +403,11 @@ def main() -> int:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import deckify
     deckify.build(SOURCE / "site/lectures", OUT / "lectures")
-    for name in ("deck.css", "deck.js"):
+    for name in ("deck.css", "deck.js", "wiki.css"):
         shutil.copyfile(SOURCE / "site/assets" / name, OUT / "assets" / name)
+    # 위키는 슬라이드가 아닌 찾아보기 문서 틀로 통일한다(tools/wikify.py).
+    import wikify
+    wikify.build(OUT / "wiki")
     print(f"built preview: {len(ALLOWED)} source files, {len(items)} code files -> docs/preview")
     return 0
 
