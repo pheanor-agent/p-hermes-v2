@@ -16,3 +16,4 @@ dist/
 demo-output/
 artifacts/
 
+!examples/*/fixtures/*/artifacts/
