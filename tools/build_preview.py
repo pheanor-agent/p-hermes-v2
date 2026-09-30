@@ -251,12 +251,13 @@ def main() -> int:
     (OUT / "assets").mkdir()
     (OUT / "assets/preview.css").write_text(CSS + "\n", encoding="utf-8")
 
-    # Keep the teaching slide and local vendor assets together; no CDN dependency.
+    # 두 강의는 직접 만든 슬라이드와 자체 질문 연결을 보존해 그대로 게시한다.
     lecture_out = OUT / "lectures/01-orchestrator-worker.html"
     lecture_out.parent.mkdir(parents=True, exist_ok=True)
-    lecture_out.write_text(prepare_lecture(SOURCE / "site/lectures/01-orchestrator-worker.html", "강의 01 · 지휘 / 작업 에이전트", "작업 에이전트"), encoding="utf-8", newline="\n")
+    shutil.copyfile(SOURCE / "site/lectures/01-orchestrator-worker.html", lecture_out)
     overview_out = OUT / "lectures/00-overview.html"
-    overview_out.write_text(prepare_overview(SOURCE / "site/lectures/00-overview.html"), encoding="utf-8", newline="\n")
+    # 강의 00은 자체 슬라이드·단일 공유 SVG를 포함하므로 변환하지 않고 그대로 게시한다.
+    shutil.copyfile(SOURCE / "site/lectures/00-overview.html", overview_out)
     shutil.copyfile(SOURCE / "site/assets/design-system.css", OUT / "assets/design-system.css")
     for name in ("reveal.css", "reveal.js", "LICENSE"):
         dest = OUT / "vendor/reveal" / name

@@ -1,6 +1,130 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Hermes 전체 그림과 네 가지 시스템 축을 안내하는 강의"><title>00 · Hermes 전체 그림</title><link rel="stylesheet" href="../assets/design-system.css"></head><body class="lecture"><a class="skip" href="#main">본문으로 건너뛰기</a><header class="topbar"><a href="../index.html">p-hermes 미리보기</a><span>강의 00 · 전체 그림</span></header><main id="main"><section class="hero"><p class="eyebrow">처음 만나는 Hermes</p><h1>복잡한 일을<br>맡기고, 확인하고,<br>다시 이어가는 시스템</h1><p class="lead">Hermes는 언어 모델이 도구를 사용해 일을 수행하도록 돕는 에이전트 환경입니다. 이 강의에서는 지휘 에이전트(오케스트레이터)와 실행 에이전트(워커)가 왜 필요하고, 네 축이 한 작업 안에서 어떻게 연결되는지 먼저 살펴봅니다.</p><p class="synthetic">화면의 식별자와 흐름은 모두 교육용 합성 데이터입니다.</p><div class="hero-map" aria-label="Hermes의 전체 구성: 사람의 요청, 작업 조정, 네 가지 시스템 축, 확인 가능한 결과"><div class="map-node person"><b>사람의 요청</b><span>목표와 완료 조건</span></div><div class="map-arrow" aria-hidden="true">↓</div><div class="map-node orchestrator"><b>지휘 에이전트</b><span>계획 · 경계 · 위임</span><small>(오케스트레이터)</small></div><div class="map-arrow" aria-hidden="true">↓</div><div class="axis-grid"><article><b>지휘 / 실행 에이전트</b><span>역할을 나눠 실행</span></article><article><b>작업 흐름</b><span>단계와 승인 관리</span></article><article class="knowledge"><b>지식</b><span>근거를 찾아 활용</span><small>세부는 실제 복구 확인 뒤 학습</small></article><article><b>이미지 생성</b><span>카탈로그부터 결과까지</span></article></div><div class="map-arrow" aria-hidden="true">↓</div><div class="map-node result"><b>결과 확인</b><span>상태와 산출물을 직접 읽기</span></div></div></section>
-<section class="chapter"><p class="eyebrow">01 · 왜 필요한가</p><h2>언어 모델은 유능하지만, 혼자서는 모든 일을 보장하지 못합니다</h2><p>대화만으로 오래 걸리는 일을 진행하면 중간에 맥락이 끊기거나, 실패한 시도와 새 시도가 섞일 수 있습니다. 도구가 성공했다고 말해도 결과 파일이 맞는지 별도로 확인해야 합니다. 그래서 목표, 권한, 실행, 증거를 구분하고 다음 사람이 확인할 수 있게 남깁니다.</p><div class="cards"><article class="card"><h3>맥락은 제한적입니다</h3><p>긴 작업은 한 번의 대화에 모두 담기 어렵습니다. 파일로 된 요청과 결과는 작업을 이어갈 수 있는 접점입니다.</p></article><article class="card"><h3>실행과 판단은 다릅니다</h3><p>계획을 정하는 역할과 실제 파일을 바꾸는 역할을 나누면 책임과 승인 경계를 드러낼 수 있습니다.</p></article><article class="card"><h3>보고는 증거가 아닙니다</h3><p>완료 보고와 실제 산출물을 대조해야 결과가 요청을 충족하는지 알 수 있습니다.</p></article></div></section>
-<section class="chapter"><p class="eyebrow">02 · 네 축 지도</p><h2>네 축은 서로 다른 질문에 답하면서 한 작업을 이어줍니다</h2><p>아래 흐름은 시스템의 책임을 보여주는 개념도입니다. 실행 가능한 세부 계약이나 현재 내부 동작을 모두 나타내는 것은 아닙니다.</p><div class="flow-map"><article><span class="number">축 1</span><h3>지휘와 실행 에이전트</h3><p>누가 목표를 정하고, 누가 실행하며, 누가 결과를 읽을까요?</p><span class="flow-label">요청 → 위임 → 확인</span></article><article><span class="number">축 2</span><h3>작업 흐름</h3><p>어떤 단계에서 검토·승인이 필요하고, 무엇이 완료를 뜻할까요?</p><span class="flow-label">조사 → 설계 → 실행 → 검증</span></article><article class="knowledge"><span class="number">축 3</span><h3>지식</h3><p>필요한 근거를 어디서 찾고, 원본과 최신 상태를 어떻게 확인할까요?</p><span class="flow-label">복구된 실물 확인 뒤 상세 학습</span></article><article><span class="number">축 4</span><h3>이미지 생성</h3><p>요청을 적절한 카탈로그와 프롬프트, 실행 환경, 결과 확인으로 어떻게 잇나요?</p><span class="flow-label">의도 → 선택 → 구성 → 생성·검사</span></article></div><p class="callout">지식 축은 전체 지도에 자리만 표시합니다. 상세 설명은 실제 시스템을 복구하고 근거를 대조한 다음에 다룹니다.</p></section>
-<section class="chapter"><p class="eyebrow">03 · 한 요청이 네 축을 지나는 모습</p><h2>각 축은 한 번씩 등장하고, 결과 확인에서 다시 만납니다</h2><div class="request-flow" aria-label="교육용 이미지 요청 예시가 네 축을 통과하는 순서"><div><b>합성 요청</b><span>교육용 포스터 한 장 만들기</span></div><div class="flow-arrow" aria-hidden="true">→</div><div><b>역할 나누기</b><span>범위 결정 · 실행 위임</span></div><div class="flow-arrow" aria-hidden="true">→</div><div><b>단계 확인</b><span>조건 검토 · 승인 경계 준수</span></div><div class="flow-arrow" aria-hidden="true">→</div><div><b>생성 파이프라인</b><span>선택 · 프롬프트 · 실행</span></div><div class="flow-arrow" aria-hidden="true">→</div><div><b>실물 확인</b><span>파일·상태·요구사항 대조</span></div></div><p>예시는 시스템 자체의 흐름을 보여주는 합성 상황입니다. 이 도식은 개념 설명이며, 특정 제품 API나 현행 실행 명령을 약속하지 않습니다.</p></section>
-<section class="chapter route"><p class="eyebrow">04 · 학습 경로</p><h2>큰 그림에서 시작해, 필요한 세부로 이동합니다</h2><ol class="route-list"><li><b>강의 00 · 전체 그림</b><span>Hermes와 네 축의 관계를 파악합니다.</span></li><li><b>강의 01 · 지휘 에이전트와 실행 에이전트</b><span>요청을 맡기고 결과를 확인하는 이유를 배웁니다.</span></li><li><b>강의 02–04 · 나머지 축</b><span>작업 흐름과 이미지 생성을 개념 수준에서 살펴봅니다. 지식 축 세부는 복구 확인 전 보류합니다.</span></li><li><b>위키와 실습</b><span>환경 준비, 계약, 합성 예제 실행을 필요한 순간에 찾아봅니다.</span></li></ol><nav class="lecture-nav"><a class="next" href="01-orchestrator-worker.html">다음 강의: 지휘 에이전트와 실행 에이전트 →</a></nav></section></main><footer class="footer"><span>p-hermes 재정비 · 검토용 파일럿</span><a href="../index.html">미리보기 목차</a></footer></body></html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="사람의 요청에서 결과 보고까지, 에이전트 시스템의 전체 흐름을 이어서 살펴봅니다.">
+  <title>00 · 전체 동작 흐름</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/design-system.css">
+  <style>
+    :root{--flow-bg:#101824;--flow-panel:#192536;--flow-line:#43536a;--flow-ink:#edf2fa;--flow-muted:#b7c3d3;--flow-mint:#74e0c0;--flow-blue:#9bc2ff;--flow-amber:#ffd17d;--flow-coral:#ff9c8f}
+    html{scroll-snap-type:y mandatory;scroll-padding-top:49px}
+    body{background:var(--flow-bg)}
+    .deck-head{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.6rem clamp(1rem,3vw,2.5rem);background:rgba(16,24,36,.94);border-bottom:1px solid var(--flow-line);font-size:14px;color:var(--flow-muted);backdrop-filter:blur(12px)}
+    .deck-head a{color:var(--flow-ink)}
+    .slide{position:relative;min-height:calc(100svh - 49px);scroll-snap-align:start;display:grid;grid-template-rows:auto 1fr auto;gap:clamp(.8rem,2vh,1.5rem);padding:clamp(1rem,3vw,2.5rem) clamp(1rem,4vw,3.5rem)}
+    .slide::after{content:"";position:absolute;left:calc((100vw - min(100vw,1180px))/2 + 54%);right:calc((100vw - min(100vw,1180px))/2);bottom:0;height:1px;background:var(--flow-line)}
+    .slide-head{max-width:none;width:100%;margin:0 auto;padding-left:0;display:flex;justify-content:space-between;align-items:start;gap:1rem}
+    .slide-head .eyebrow{margin:0;color:var(--flow-mint);font-size:14px;font-weight:750;letter-spacing:.04em}
+    .slide-count{color:var(--flow-muted);font-variant-numeric:tabular-nums;font-size:14px}
+    .slide-body{width:100%;max-width:1180px;margin:auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);align-items:center;gap:clamp(1.25rem,4vw,4rem)}
+    .slide:first-child .copy{grid-column:2}
+    .diagram-slot{width:100%;aspect-ratio:760/500;visibility:hidden}
+    .diagram-frame{min-width:0;padding:clamp(.5rem,2vw,1.25rem);border:1px solid var(--flow-line);border-radius:20px;background:radial-gradient(ellipse at 42% 46%,#22334a 0%,#162232 67%,#111a27 100%);box-shadow:0 24px 70px rgba(0,0,0,.22)}
+    .diagram-frame svg{display:block;width:100%;height:auto;overflow:visible}
+    #shared-diagram{position:fixed;left:clamp(1rem,3vw,3rem);top:50%;transform:translateY(-50%);width:min(48vw,650px);z-index:4}
+    .diagram-frame:not(#shared-diagram){visibility:hidden}
+    .copy{min-width:0;max-width:560px}.copy h1,.copy h2{max-width:18ch;margin:0 0 1rem;font-size:clamp(1.7rem,3.4vw,3rem);line-height:1.2;letter-spacing:0}.copy .explain{max-width:48ch;margin:0;color:#d6e0ed;font-size:clamp(1rem,1.35vw,1.2rem);line-height:1.65}.copy .hint{margin-top:1.2rem;padding-left:1rem;border-left:3px solid var(--flow-amber);color:var(--flow-muted);font-size:15px}
+    .question-rail{width:100%;max-width:1180px;margin:0 auto;padding-left:54%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:1rem;color:var(--flow-muted);font-size:14px}
+    .question-rail .bridge{display:none}
+    .question-rail .prev{justify-self:start}.question-rail .next{justify-self:end;text-align:right}.question-rail b{color:var(--flow-amber);font-weight:650}.question-rail a{color:var(--flow-ink);text-decoration:none}.question-rail a:hover{text-decoration:underline}
+    .diagram-frame .node rect{fill:#192536;stroke:#43536a;stroke-width:2}.diagram-frame .node text{fill:#edf2fa;font:700 19px system-ui,sans-serif;text-anchor:middle}.diagram-frame .node .sub{fill:#b7c3d3;font:14px system-ui,sans-serif;font-weight:450}.diagram-frame .node .index{fill:#74e0c0;font:700 13px system-ui,sans-serif;letter-spacing:.08em}.diagram-frame .person rect{stroke:#9bc2ff}.diagram-frame .orchestrator rect,.diagram-frame .worker rect{stroke:#74e0c0}.diagram-frame .verify rect,.diagram-frame .report rect{stroke:#ffd17d}.diagram-frame .wire{fill:none;stroke:#61738a;stroke-width:3;marker-end:url(#arrow)}.diagram-frame .wire-label{fill:#b7c3d3;font:700 14px system-ui,sans-serif;text-anchor:middle;paint-order:stroke;stroke:#162232;stroke-width:5px;stroke-linejoin:round}.diagram-frame [data-step]{opacity:.32;transition:opacity .45s ease,filter .45s ease}.diagram-frame [data-step].revealed{opacity:.55}.diagram-frame [data-step].current{opacity:1;filter:drop-shadow(0 0 9px rgba(116,224,192,.58))}.diagram-frame .focus-label{fill:#ffd17d;font:700 16px system-ui,sans-serif;text-anchor:middle;opacity:0;transition:opacity .3s}.diagram-frame .focus-label.show{opacity:1}
+    .editorial-illustration{display:block;width:36%;max-height:132px;object-fit:contain;margin:.65rem 0 0 auto;border-radius:12px}
+    .deck-controls{position:fixed;right:1rem;bottom:1rem;z-index:8;display:flex;gap:.5rem}.deck-controls button{width:42px;height:42px;border:1px solid var(--flow-line);border-radius:50%;background:#192536;color:var(--flow-ink);cursor:pointer}
+    @media(max-width:760px){html{scroll-padding-top:0}.deck-head{position:relative}.slide{min-height:calc(100svh - 48px);scroll-snap-align:start;gap:.7rem;padding:1rem}.slide::after{left:1.75rem;right:1rem}.slide-body{grid-template-columns:1fr;gap:.85rem;align-content:center}.slide:first-child .copy{grid-column:1}.slide-head{padding-left:0}.question-rail{padding-left:1rem}.diagram-frame{max-width:560px;margin:auto;width:100%;padding:.25rem;aspect-ratio:760/500}#shared-diagram{left:50%;top:65px;transform:translateX(-50%);width:min(94vw,520px);padding:.25rem}.copy{max-width:none}.copy h1,.copy h2{max-width:22ch;font-size:clamp(1.48rem,7vw,2rem);margin-bottom:.55rem}.copy .explain{font-size:1rem;line-height:1.48}.copy .hint{margin-top:.65rem;padding-left:.7rem;font-size:14px}.question-rail{grid-template-columns:minmax(0,1fr) minmax(0,1fr);font-size:12px;gap:.45rem}.slide-head .eyebrow,.slide-count{font-size:12px}.deck-controls{right:.5rem;bottom:.5rem}.deck-controls button{width:38px;height:38px}}
+    @media(max-width:390px){.slide{padding:.8rem .75rem}.slide-body{gap:.65rem}.diagram-frame{max-width:390px}.copy h1,.copy h2{font-size:1.48rem}.copy .explain{font-size:15px}.question-rail{gap:.5rem;font-size:11px}}
+    @media(prefers-reduced-motion:reduce){.diagram-frame [data-step],.diagram-frame .focus-label{transition:none!important}}
+  </style>
+</head>
+<body class="lecture">
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header class="deck-head"><a href="../index.html">p-hermes 미리보기</a><span>강의 00 · 전체 동작 흐름</span></header>
+  <main id="main">
+    <section class="slide" id="slide-1" data-slide="1" aria-labelledby="title-1" data-focus="사람과 언어 모델">
+      <header class="slide-head"><p class="eyebrow">전체 흐름 · 시작</p><span class="slide-count">01 / 08</span></header>
+      <div class="slide-body">
+        <div class="diagram-frame" id="shared-diagram"><svg viewBox="0 0 760 500" role="img" aria-labelledby="diagram-title diagram-desc"><title id="diagram-title">사람의 요청에서 결과 보고까지 이어지는 기준 도해</title><desc id="diagram-desc">한 개의 흐름도에 사람, 언어 모델, 지휘와 작업 에이전트, 작업 흐름, 지식 참조, 산출 파이프라인, 검증, 결과 보고가 배치되어 있습니다. 현재 장에서 해당하는 요소만 강조됩니다.</desc><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#61738a"/></marker></defs>
+          <g class="wire-group" data-step="1"><path class="wire" d="M228 246H328"/><text class="wire-label" x="278" y="198">대화 맥락</text></g>
+          <g class="wire-group" data-step="3"><path class="wire" d="M430 210V140"/><text class="wire-label" x="488" y="176">목표·범위</text></g>
+          <g class="wire-group" data-step="2"><path d="M228 246H268M296 246H328" fill="none" stroke="#ff9c8f" stroke-width="4" stroke-dasharray="5 5"/><circle cx="282" cy="246" r="20" fill="#101824" stroke="#ff9c8f" stroke-width="2"/><text class="wire-label" x="282" y="302" fill="#ff9c8f">공백</text></g>
+          <g class="wire-group" data-step="4"><path class="wire" d="M328 92H228"/><text class="wire-label" x="278" y="140">위임</text><path class="wire" d="M228 72H328"/><text class="wire-label" x="278" y="164">응답</text></g>
+          <g class="wire-group" data-step="5"><path class="wire" d="M480 122H560"/><text class="wire-label" x="620" y="94">순서·경계</text></g>
+          <g class="wire-group" data-step="6"><path class="wire" d="M625 184V218"/><text class="wire-label" x="679" y="207">근거</text></g>
+          <g class="wire-group" data-step="7"><path class="wire" d="M625 288V326"/><text class="wire-label" x="686" y="313">구성</text></g>
+          <g class="wire-group" data-step="8"><path class="wire" d="M625 398V430"/><text class="wire-label" x="684" y="421">대조</text><path class="wire" d="M560 454H480"/><text class="wire-label" x="520" y="480">결과 보고</text></g>
+          <g class="node person" data-step="1"><rect x="48" y="210" width="180" height="72" rx="16"/><text x="138" y="239">사람</text><text class="sub" x="138" y="263">요청 · 완료 조건</text></g>
+          <g class="node model" data-step="1"><rect x="328" y="210" width="204" height="72" rx="16"/><text x="430" y="239">언어 모델</text><text class="sub" x="430" y="263">맥락으로 응답 생성</text></g>
+          <g class="node orchestrator" data-step="3"><rect x="328" y="64" width="204" height="76" rx="16"/><text x="430" y="94">지휘 에이전트</text><text class="sub" x="430" y="119">목표 · 범위 · 위임</text></g>
+          <g class="node worker" data-step="4"><rect x="48" y="42" width="180" height="76" rx="16"/><text x="138" y="73">작업 에이전트</text><text class="sub" x="138" y="98">맡은 범위 처리</text></g>
+          <g class="node workflow" data-step="5"><rect x="560" y="108" width="130" height="76" rx="16"/><text x="625" y="138">작업 흐름</text><text class="sub" x="625" y="162">단계 · 전이</text></g>
+          <g class="node knowledge" data-step="6"><rect x="560" y="218" width="130" height="70" rx="16"/><text x="625" y="247">지식 참조</text><text class="sub" x="625" y="271">원문 · 근거</text></g>
+          <g class="node pipeline" data-step="7"><rect x="560" y="326" width="130" height="72" rx="16"/><text x="625" y="355">산출 파이프라인</text><text class="sub" x="625" y="380">구성 → 결과물</text></g>
+          <g class="node verify" data-step="8"><rect x="560" y="430" width="130" height="48" rx="14"/><text x="625" y="460">검증</text></g><g class="node report" data-step="8"><rect x="328" y="430" width="152" height="48" rx="14"/><text x="404" y="460">결과 보고</text></g>
+          <text class="focus-label" id="focus-label" x="380" y="28">지금 보는 부분</text>
+        </svg></div><div class="diagram-slot" aria-hidden="true"></div>
+        <div class="copy"><h1 id="title-1">시작은 사람과 언어 모델의 대화입니다</h1><p class="explain">사람이 요청을 건네면 언어 모델은 주어진 대화 맥락을 바탕으로 응답을 만듭니다. 이것이 전체 동작 흐름의 출발점입니다.</p></div>
+      </div>
+      <nav class="question-rail" aria-label="앞뒤 질문"><span class="prev"><b>← 앞 질문</b><br>사람과 언어 모델만 있을 때, 무엇을 할 수 있을까?</span><span class="bridge">기준 도해 · 현재 단계 강조</span><a class="next" href="#slide-2"><b>다음 질문 →</b><br>대화가 길어지고 끊기면 무엇이 사라질까?</a></nav>
+    </section>
+    <section class="slide" id="slide-2" data-slide="2" aria-labelledby="title-2" data-focus="맥락 공백">
+      <header class="slide-head"><p class="eyebrow">전체 흐름 · 끊김</p><span class="slide-count">02 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-2">긴 작업에서는 맥락이 끊길 수 있습니다</h2><p class="explain">대화에만 의존하면 장기 작업의 진행 상태와 다음 행동을 안정적으로 이어가기 어렵습니다. 도구를 사용할 때도, 말로 설명한 결과와 실제 결과는 다를 수 있습니다.</p><img class="editorial-illustration" src="../assets/illustrations/forgetting.webp" alt="끊어진 맥락을 다시 잇는 삽화"><p class="hint">기준 도해에서는 대화선이 멈춘 자리에 공백을 표시합니다.</p></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-1"><b>← 앞 질문</b><br>대화가 길어지고 끊기면 무엇이 사라질까?</a><span class="bridge">맥락의 한계</span><a class="next" href="#slide-3"><b>다음 질문 →</b><br>사라진 맥락 대신 무엇이 목표와 다음 행동을 붙들까?</a></nav>
+    </section>
+    <section class="slide" id="slide-3" data-slide="3" aria-labelledby="title-3" data-focus="지휘 에이전트">
+      <header class="slide-head"><p class="eyebrow">전체 흐름 · 조정</p><span class="slide-count">03 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-3">지휘 에이전트가 목표와 범위를 붙듭니다</h2><p class="explain">지휘 에이전트(오케스트레이터)는 요청의 목표와 완료 조건을 살피고, 어디까지 할지 경계를 정합니다. 필요한 일을 나누어 맡기고 다음 단계를 조정합니다.</p><img class="editorial-illustration" src="../assets/illustrations/handoff.webp" alt="지휘 에이전트가 작업을 맡기는 삽화"></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-2"><b>← 앞 질문</b><br>사라진 맥락 대신 무엇이 목표와 다음 행동을 붙들까?</a><span class="bridge">목표 · 범위 · 위임</span><a class="next" href="#slide-4"><b>다음 질문 →</b><br>지휘가 정한 범위를 실제로 맡아 처리하는 역할은 무엇일까?</a></nav>
+    </section>
+    <section class="slide" id="slide-4" data-slide="4" aria-labelledby="title-4" data-focus="작업 에이전트와 분리 이유">
+      <header class="slide-head"><p class="eyebrow">전체 흐름 · 역할 분담</p><span class="slide-count">04 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-4">작업 에이전트가 맡은 범위를 처리합니다</h2><p class="explain">작업 에이전트(워커)는 전달받은 목표와 경계 안에서 맡은 일을 수행하고 결과를 돌려줍니다.</p><img class="editorial-illustration" src="../assets/illustrations/handoff.webp" alt="작업을 수행해 결과를 돌려주는 삽화"><p class="hint"><strong>왜 둘로 나눌까요?</strong> 판단 쪽은 실행 세부에 계속 맥락을 쓰지 않고 목표·경계를 지킵니다. 실행 결과는 다른 쪽이 독립적으로 확인해, 수행과 확인이 한 판단에 섞이지 않게 합니다.</p></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-3"><b>← 앞 질문</b><br>지휘가 정한 범위를 실제로 맡아 처리하는 역할은 무엇일까?</a><span class="bridge">위임 → 수행 → 응답</span><a class="next" href="#slide-5"><b>다음 질문 →</b><br>여러 단계의 일을 어떤 순서와 경계로 연결할까?</a></nav>
+    </section>
+    <section class="slide" id="slide-5" data-slide="5" aria-labelledby="title-5" data-focus="작업 흐름">
+      <header class="slide-head"><p class="eyebrow">전체 흐름 · 순서</p><span class="slide-count">05 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-5">작업 흐름이 단계와 경계를 정합니다</h2><p class="explain">작업 흐름은 조사·설계·승인·실행·검증처럼 일이 거치는 단계와 단계 사이의 전이를 정합니다. 승인처럼 멈춰 확인해야 하는 경계도 흐름에 포함됩니다.</p><img class="editorial-illustration" src="../assets/illustrations/workflow.webp" alt="작업 흐름의 단계와 경계를 나타내는 삽화"></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-4"><b>← 앞 질문</b><br>여러 단계의 일을 어떤 순서와 경계로 연결할까?</a><span class="bridge">단계 · 전이 · 경계</span><a class="next" href="#slide-6"><b>다음 질문 →</b><br>각 단계에서 필요한 근거는 어디서 찾을까?</a></nav>
+    </section>
+    <section class="slide" id="slide-6" data-slide="6" aria-labelledby="title-6" data-focus="지식 참조">
+      <header class="slide-head"><p class="eyebrow">전체 흐름 · 근거</p><span class="slide-count">06 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-6">지식 참조가 필요한 근거를 보탭니다</h2><p class="explain">작업 흐름의 각 단계는 목적에 맞는 원문과 근거를 찾아 사용할 수 있습니다. 지식은 전체 흐름 안에서 필요한 맥락을 제공하는 역할입니다.</p><img class="editorial-illustration" src="../assets/illustrations/knowledge.webp" alt="필요한 원문과 근거를 찾는 삽화"><p class="hint">이 장에서는 지식의 위치와 역할만 표시합니다. 세부 저장소나 복구 상태는 다루지 않습니다.</p></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-5"><b>← 앞 질문</b><br>각 단계에서 필요한 근거는 어디서 찾을까?</a><span class="bridge">필요한 단계에 근거 제공</span><a class="next" href="#slide-7"><b>다음 질문 →</b><br>작업의 결과는 어떤 경로로 만들어지고 남을까?</a></nav>
+    </section>
+    <section class="slide" id="slide-7" data-slide="7" aria-labelledby="title-7" data-focus="산출 파이프라인">
+      <header class="slide-head"><p class="eyebrow">전체 흐름 · 산출</p><span class="slide-count">07 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-7">산출 파이프라인이 결과물을 만듭니다</h2><p class="explain">요청에 맞는 구성을 선택하고 입력을 처리해 결과물로 변환합니다. 결과는 다음 단계에서 실제로 확인할 수 있도록 남습니다.</p><img class="editorial-illustration" src="../assets/illustrations/image-pipeline.webp" alt="구성에서 결과물까지 이어지는 파이프라인 삽화"></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-6"><b>← 앞 질문</b><br>작업의 결과는 어떤 경로로 만들어지고 남을까?</a><span class="bridge">구성 → 결과물</span><a class="next" href="#slide-8"><b>다음 질문 →</b><br>결과가 생겼다는 보고만으로 요청을 충족했다고 볼 수 있을까?</a></nav>
+    </section>
+    <section class="slide" id="slide-8" data-slide="8" aria-labelledby="title-8" data-focus="검증과 결과 보고">
+      <header class="slide-head"><p class="eyebrow">전체 흐름 · 확인</p><span class="slide-count">08 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-8">검증이 결과물과 완료 조건을 대조합니다</h2><p class="explain">검증은 보고된 상태를 실제 산출물과 요청의 완료 조건에 맞춰 확인합니다. 확인된 결과를 지휘 에이전트에 돌려주면 전체 흐름이 닫히고 다음 단계로 이어집니다.</p><img class="editorial-illustration" src="../assets/illustrations/verify.webp" alt="검증 결과를 확인하는 삽화"><p class="hint">요청 → 지휘 → 작업 → 작업 흐름 → 지식 참조 → 산출 파이프라인 → 검증 → 결과 보고</p><nav class="lecture-nav"><a class="next" href="01-orchestrator-worker.html">다음 강의: 지휘와 작업 에이전트 사이의 약속 →</a></nav></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-7"><b>← 앞 질문</b><br>결과가 생겼다는 보고만으로 요청을 충족했다고 볼 수 있을까?</a><span class="bridge">대조 → 확인 → 보고</span><span class="next"><b>다음 질문 →</b><br>지휘가 일을 맡기는 구간은 어떤 약속으로 이어질까?</span></nav>
+    </section>
+  </main>
+  <nav class="deck-controls" aria-label="슬라이드 이동"><button type="button" id="prev" aria-label="이전 장">↑</button><button type="button" id="next" aria-label="다음 장">↓</button></nav>
+  <script>
+    (()=>{
+      const slides=[...document.querySelectorAll('.slide')];
+      const diagram=document.querySelector('#shared-diagram svg');
+      function activate(index){
+        const level=Number(slides[index].dataset.slide);
+        diagram.querySelectorAll('[data-step]').forEach(el=>{const n=Number(el.dataset.step);el.classList.toggle('revealed',n<=level);el.classList.toggle('current',n===level);});
+        const label=diagram.querySelector('.focus-label');
+        if(label){label.textContent=`지금 보는 부분 · ${slides[index].dataset.focus}`;label.classList.add('show');}
+      }
+      window.__diagramBboxQA=()=>{
+        const svg=document.querySelector('#shared-diagram svg');
+        const texts=[...svg.querySelectorAll('text')];
+        const box=e=>{const b=e.getBBox();return{x:b.x,y:b.y,w:b.width,h:b.height}};
+        const hit=(a,b,pad=0)=>a.x<b.x+b.w+pad&&a.x+a.w+pad>b.x&&a.y<b.y+b.h+pad&&a.y+a.h+pad>b.y;
+        const textOverlaps=[];
+        for(let i=0;i<texts.length;i++)for(let j=i+1;j<texts.length;j++)if(hit(box(texts[i]),box(texts[j]),1))textOverlaps.push([texts[i].textContent,texts[j].textContent]);
+        const shapeOverlaps=[];
+        for(const label of svg.querySelectorAll('.wire-label')){
+          const lb=box(label);
+          for(const rect of svg.querySelectorAll('rect,circle'))if(!label.parentElement.contains(rect)&&hit(lb,box(rect),1))shapeOverlaps.push({label:label.textContent,shape:rect.tagName});
+          for(const path of svg.querySelectorAll('path.wire')){
+            const len=path.getTotalLength(),steps=Math.max(2,Math.ceil(len/2));
+            for(let i=0;i<=steps;i++){const p=path.getPointAtLength(len*i/steps);if(p.x>=lb.x-5&&p.x<=lb.x+lb.w+5&&p.y>=lb.y-5&&p.y<=lb.y+lb.h+5){shapeOverlaps.push({label:label.textContent,shape:'wire'});break;}}
+          }
+        }
+        return {textOverlaps,shapeOverlaps,labelCount:svg.querySelectorAll('.wire-label').length};
+      };
+      const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>.55)activate(slides.indexOf(e.target));}),{threshold:[.55,.8]});
+      slides.forEach(s=>observer.observe(s));
+      const move=delta=>{const i=slides.findIndex(s=>s.getBoundingClientRect().top>=-2);const current=i<0?slides.length-1:i;slides[Math.max(0,Math.min(slides.length-1,current+delta))].scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});};
+      document.querySelector('#prev').addEventListener('click',()=>move(-1));document.querySelector('#next').addEventListener('click',()=>move(1));
+      addEventListener('keydown',e=>{if(['ArrowDown','PageDown'].includes(e.key)){e.preventDefault();move(1);}if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();move(-1);}});
+      activate(0);
+    })();
+  </script>
+</body>
+</html>
