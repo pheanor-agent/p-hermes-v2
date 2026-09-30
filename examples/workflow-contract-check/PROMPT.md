@@ -1,0 +1,1 @@
+이 예제 저장소에서만 작업하세요. 합성 요청의 light 단계 계약에서 필수 제출물이 존재하는지 검사하십시오. `src/contract_check.py`를 읽고, `fixtures/pass/`와 `fixtures/missing/`을 비교한 뒤 `python3 -m unittest discover -s examples/workflow-contract-check/tests -v`를 실행합니다. 정상 fixture는 PASS, 누락 fixture는 FAIL이어야 합니다. 결과와 근거 경로를 짧게 보고하세요. 실제 홈 디렉터리, 자격 증명, 네트워크, 외부 서비스, GPU에는 접근하지 마세요. fixture를 변경하지 마세요.
