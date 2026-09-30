@@ -1,0 +1,4 @@
+{
+  "request_id": "synthetic-integration-002",
+  "required_conditions": ["contract_checked", "context_checked", "artifact_exists"]
+}
