@@ -1,93 +1,59 @@
-# p-hermes v2
+# p-hermes — 공개 학습 자료
 
-에이전트가 일을 이어가는 구조를 **작업·지식·카탈로그·이미지·영상**으로 배우는 한국어 HTML 강의, 위키, 블로그 연재, 실행 가능한 Python 참고 구현입니다.
+p-hermes는 지휘 에이전트와 작업 에이전트의 역할, 단계형 작업 흐름, 지식 참조, 이미지 파이프라인, 통합 경계를 한국어 강의·위키·오프라인 예제로 설명합니다. 공개 사이트는 `docs/`에서 제공하며 디자인 원고와 발표 자산은 `site/`에 보존됩니다.
 
-[사이트](https://pheanor-agent.github.io/p-hermes-v2/) · [강의](https://pheanor-agent.github.io/p-hermes-v2/lectures/) · [위키 시작](https://pheanor-agent.github.io/p-hermes-v2/wiki/start.html) · [블로그](https://pheanor-agent.github.io/p-hermes-v2/blog/) · [API와 명령](https://pheanor-agent.github.io/p-hermes-v2/wiki/reference.html)
+## 시작하기
 
-Hermes 운영 시스템을 해설하는 자료와, 그 계약을 작게 실험하는 **독립 공개 도구**를 함께 제공합니다. 운영 시스템 전체의 복제본·설치 패키지나 미디어 엔진 어댑터는 아닙니다. 예제는 단일 사용자 로컬 환경을 전제로 합니다.
-
-| 영역 | 이 저장소에서 실행하는 것 |
-|---|---|
-| 작업 | SQLite revision 비교, 계획 digest에 묶인 승인, 원자적 상태·감사 기록 |
-| 지식 | 공개·출처·라이선스 선언 필드 검사, 등록·문자열 검색·퇴역 |
-| 카탈로그 | 정확한 버전과 작업·런타임 선택, 메타데이터·템플릿 digest 확인 |
-| 이미지 | 선언된 네 입력 슬롯만 바꾸는 템플릿 컴파일 |
-| 영상 | 이미지 파일 크기·해시와 컷 구간 검증, 선택적 ffprobe 검사 |
-
-## 실행해 보기
-
-Python 3.11 이상이 필요합니다.
+Python 3.11 이상이 필요합니다. 외부 서비스, GPU, API key 없이 예제를 실행할 수 있습니다.
 
 ```sh
-git clone https://github.com/pheanor-agent/p-hermes-v2.git
-cd p-hermes-v2
-python -m venv .venv
+make test
+make build
+make check
 ```
 
-가상 환경 활성화: macOS/Linux는 `source .venv/bin/activate`, Windows PowerShell은 `.venv\Scripts\Activate.ps1`을 사용합니다.
+사이트를 로컬에서 확인하려면:
 
 ```sh
-python -m pip install -e .
-p-hermes demo --output demo-output
+python3 -B -m http.server 8765 --bind 127.0.0.1 --directory docs
 ```
 
-출력에는 작업 DB, 직접 작성한 고정 SVG, 컴파일된 이미지 계획, 5초짜리 타임라인 JSON, 검증 보고서가 있습니다. SVG는 이미지 계획을 렌더링한 결과가 아니며, 데모는 모델 추론이나 영상 인코딩을 수행하지 않습니다. 재실행할 때는 새로운 출력 폴더를 지정하세요.
+브라우저에서 `http://127.0.0.1:8765/`를 엽니다. 공개 홈의 단일 정본은 `site/index.html`이며 빌드는 이를 `docs/index.html`에 바이트 그대로 복사합니다.
 
-```sh
-p-hermes compile-image examples/image-request.json image-plan.json
-p-hermes job --db demo-output/workspace.sqlite3 show studio-demo
-p-hermes knowledge --db demo-output/workspace.sqlite3 search lamp
-```
+## 자료 탐색
 
-명령과 실제 입출력 파일명은 [API 참고](https://pheanor-agent.github.io/p-hermes-v2/wiki/reference.html)와 `p-hermes --help`에서 확인할 수 있습니다. 실제 영상 파일이 있다면 ffprobe를 별도로 설치한 뒤 `p-hermes inspect-video movie.mp4 --duration 5`로 스트림 정보와 길이를 검사합니다. 전체 프레임 디코딩이나 시각 품질 평가는 별도 검증입니다.
+- `docs/lectures/` — 여섯 강의와 강의 목차
+- `docs/wiki/` — 8개 참조 페이지와 검색 목차
+- `docs/examples/` — 네 오프라인 예제 가이드
+- `docs/code/` — 소스 열람 페이지
+- `docs/downloads/` — 원본 코드·fixture·테스트와 `examples.zip`
 
-## 강의, 블로그와 위키
+네 예제는 portable-worker(공개 reference + 계약 테스트), image-pipeline, knowledge-context-check, integration-check입니다. 예제 입력은 합성 fixture이며 이 저장소는 전체 Hermes 운영 시스템이나 미디어 엔진을 설치·복제하지 않습니다.
 
-위키 8개 페이지와 블로그 7편·26개 주제가 같은 LUMA 램프 사례를 이어 설명합니다. 블로그는 도해와 코드 예제를 따라 읽는 연재이고, 위키는 구조와 API를 찾아보는 참고 자료입니다. 기존 해설 자료의 명칭을 블로그로 바꿨으며, 청중에게 보여줄 자료는 별도의 HTML 슬라이드로 구성했습니다. GitHub Pages에서 전체 구조 1편과 주제별 5편을 바로 재생합니다. 전체 구조는 설명·적용 50분과 질문 10분, 주제별 강의는 65분과 질문 10분을 기준으로 합니다. 72개 학습 장면과 38개 강의별 키워드 정의가 총 192장에 연결됩니다.
-
-개념 사례의 영상은 12초이며 실행 데모의 5초 타임라인과 구분합니다. 블로그는 JavaScript 없이도 본문과 링크를 읽을 수 있습니다. 이전 `/learn/` 주소는 해당 블로그 글로 연결되며 절별 앵커를 유지합니다.
-
-## 구조와 검증
+## 정본과 빌드
 
 ```text
-src/p_hermes/     공개 Python 참고 구현
-examples/        합성 입력 데이터
-content/wiki/    위키 원고
-content/blog/    블로그 원고
-content/slides/  강의 원고·실행 근거·녹화 기록
-design/          강의 구조와 시각 연출 설계
-site/            스타일·상호작용
-tools/           정적 사이트 생성·검사
-docs/            GitHub Pages 결과와 이전 미리보기
-tests/           계약·실패 경로 검증
+content/       공개 설명 원고
+site/          디자이너 원본 HTML/CSS/JS/SVG와 정적 자산
+examples/      네 개의 독립 offline 예제 및 fixture
+reference/     portable-worker 공개 참조 구현
+tests/         portable-worker 계약 테스트
+publication/   공개 범위 메모
+tools/         deckify, wikify, build_site, check_site
+docs/          재현 가능한 공개 사이트 산출물
 ```
+
+`tools/build_site.py`는 root-level source를 읽어 검증 후 `docs/`를 반복 생성합니다. `tools/check_site.py`는 6강 52장, 실제 질문 레일, 공개 HTML의 local href/src/fragment(같은 페이지 fragment 포함), 공개 배포 트리의 텍스트 자산·전체 경로 및 ZIP member 경로/텍스트 내용에 알려진 private path/credential 패턴이 있는지 검사합니다. 바이너리 자산의 내용은 텍스트로 디코딩하지 않습니다. 검사는 알려진 패턴을 찾는 보조 통제이며 공개 적합성을 보증하지 않습니다.
 
 ```sh
-python -m unittest discover -s tests -p "test_core.py" -v
-python tools/compose_courses.py
-python tools/build_slides.py
-python tools/build_site.py
-python tools/check_site.py
-python tools/check_lectures.py
-python -m http.server 8765 --bind 127.0.0.1 --directory docs
+make test       # 네 오프라인 예제의 계약·성공·실패 테스트
+make build      # docs/ 재생성
+make check      # 사이트 검사
+make verify     # test + build + check + git diff --check
 ```
 
-`http://127.0.0.1:8765/`에서 확인합니다. 새 한글이 추가되면 선택적 글꼴 빌드 도구로 서브셋을 갱신합니다.
-
-```sh
-python -m pip install -r requirements-assets.txt
-python tools/compose_courses.py
-python tools/build_slides.py
-python tools/build_site.py
-python tools/subset_font.py
-python tools/check_site.py
-python tools/check_lectures.py
-```
-
-기존 시안 주소는 보존합니다. 현재 강의 진입점은 `/lectures/`, 발표 화면은 `/slides/`, 읽기 자료는 `/wiki/`와 `/blog/`입니다. PDF는 배포하지 않습니다.
+예제별 테스트는 `make example NAME=portable-worker|image-pipeline|knowledge-context-check|integration-check`로 실행합니다. 문서와 예제는 합성 입력만 사용합니다. 운영 로그·사용자 대화·인증정보를 공개 입력으로 추가하지 않습니다.
 
 ## 공개 범위와 권리
 
-신규 코드와 문서에는 MIT 라이선스를 적용하며 글꼴은 별도 SIL OFL 1.1입니다. 자세한 내용은 [LICENSE](LICENSE)와 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)를 참고하세요. 예제에는 합성 데이터만 사용하고 운영 로그·사용자 대화·내부 작업 기록·인증 정보를 배포하지 않습니다.
-
-지식 입력의 `public: true`는 작성자의 공개 선언입니다. 개인정보 자동 탐지나 공개 권한의 증명을 제공하지 않습니다. 사이트 검사는 이 저장소의 알려진 비공개 형식을 찾는 보조 수단이며, 임의 데이터의 안전성을 보증하지 않습니다.
+`LICENSE`, `PRIVACY.md`, `THIRD_PARTY_NOTICES.md`의 공개·라이선스 조건을 확인하세요. 검사는 알려진 private path/credential 패턴을 찾는 보조 통제이며 임의 입력의 공개 적합성을 보증하지 않습니다. 외부 게시나 원격 Git 변경은 이 로컬 빌드에 포함되지 않습니다.

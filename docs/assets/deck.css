@@ -1,0 +1,99 @@
+/* Presentation canvas: one concept, one diagram, one reading edge. */
+html,body.dk{margin:0!important;padding:0!important;height:100%;overflow:hidden!important;background:#080f18!important;color:#edf2fa}
+body.dk{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif!important;word-break:keep-all;line-break:strict}
+.dk-viewport{position:fixed;inset:0 0 60px;overflow:hidden}
+.dk-stage{width:1600px;height:900px;position:absolute!important;left:50%;top:50%;transform-origin:center;transform:translate(-50%,-50%) scale(var(--dk-scale,1));background:#101b29;overflow:hidden;max-width:none!important;margin:0!important;padding:0!important}
+.dk-brand{position:absolute;left:64px;right:64px;top:26px;display:flex;gap:22px;align-items:baseline;font-size:19px;color:#abb9ca;z-index:2}
+.dk-brand a{color:#82dec6;text-decoration:none;font-weight:750;letter-spacing:.02em}
+#deck .dk-slide{position:absolute;inset:0;padding:84px 64px 40px;box-sizing:border-box;display:none;grid-template-rows:auto auto minmax(0,1fr) auto;row-gap:22px;margin:0;border:0;background:none;min-height:0;height:auto;width:auto}
+#deck .dk-slide.is-active{display:grid}
+#deck .dk-head{display:flex;justify-content:space-between;align-items:center;margin:0;padding:0;border:0;background:none;position:static}
+#deck .dk-eyebrow{color:#82dec6;font-size:21px;font-weight:700;letter-spacing:.03em}
+#deck .dk-count{color:#b6c4d5;font-size:21px;font-variant-numeric:tabular-nums}
+#deck .dk-title{margin:0;padding:0;font-size:52px;line-height:1.25;font-weight:750;color:#f4f7fb;letter-spacing:-.025em;max-width:1440px;text-wrap:balance;word-break:keep-all;overflow-wrap:normal}
+#deck .dk-body{display:grid;grid-template-columns:minmax(0,1fr) 450px;gap:40px;align-items:center;min-height:0}
+#deck .dk-text .dk-body{grid-template-columns:1fr}
+#deck .dk-diagram{margin:0;padding:14px 18px;height:100%;max-height:570px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;min-height:0;background:#132130;border:1px solid #304357;border-radius:8px}
+#deck .dk-diagram .dk-wrap{display:contents!important;visibility:visible!important}
+#deck .dk-diagram svg{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:510px!important;min-height:0;margin:0 auto!important;flex:1 1 auto;overflow:visible;position:static!important;transform:none!important}
+#deck .dk-diagram svg text{font-size:22px!important}
+#deck .dk-diagram svg text.small,#deck .dk-diagram svg text.sub{font-size:18px!important}
+#deck .dk-diagram svg text.dk-svg-note{font-size:18px!important}
+#deck :where(.dk-diagram svg path:not([fill]),.dk-diagram svg line,.dk-diagram svg polyline){fill:none}
+#deck .dk-diagram svg :is(path,line,polyline){marker-end:var(--dk-arrow)!important}
+#deck .dk-diagram svg marker path{fill:#879cb3!important;stroke:none!important;marker-end:none!important}
+#deck .dk-diagram svg .gap path{marker-end:none!important}
+#deck .dk-diagram svg *{filter:none!important}
+#deck .dk-caption{margin:12px 0 0;text-align:left;color:#b7c5d6;font-size:21px;line-height:1.4;word-break:keep-all}
+#deck .dk-pan-hint{display:none}
+#deck .dk-copy{display:flex;flex-direction:column;gap:24px;align-self:center;min-width:0;padding:12px 0 12px 28px;border-left:2px solid #41566d}
+#deck .dk-p{overflow-wrap:normal;word-break:keep-all;margin:0;font-size:30px;line-height:1.55;color:#edf2fa;max-width:none}
+#deck .dk-p+.dk-p{font-size:24px;color:#bbc9da;line-height:1.55;margin:0;padding:0;border:0}
+#deck .dk-p b,#deck .dk-p strong{color:#fff}
+#deck .dk-p code{font-size:.9em;color:#ffcf86;overflow-wrap:anywhere;word-break:normal}
+#deck .dk-art{display:block;width:100%;max-height:200px;object-fit:contain;border-radius:6px;margin-top:2px}
+#deck .dk-cover .dk-art{max-height:90px}
+@media(min-width:761px){body:not(.dk-course-00) #deck .dk-cover .dk-body{grid-template-columns:minmax(0,1fr) 520px}}
+#deck .dk-foot{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;min-height:68px;margin:0;padding:16px 0 0;border:0;border-top:1px solid #405168;background:none;position:static}
+#deck .dk-prev,#deck .dk-next{margin:0;font-size:23px;line-height:1.45;color:#d6e1ee;padding:0;border:0;border-radius:0;background:none;max-width:none;word-break:keep-all}
+#deck .dk-prev{color:#b3c2d3}
+#deck .dk-prev b,#deck .dk-next b{display:block;margin-bottom:5px;white-space:nowrap;font-size:17px;letter-spacing:.04em;color:#9eafc3;font-weight:650}
+#deck .dk-next b{color:#ffcf86}
+#deck .dk-next a{color:#82dec6;font-weight:650;text-decoration:none}
+#deck .dk-progress{position:absolute;left:64px;right:64px;bottom:0;height:4px;background:#26384b}
+#deck .dk-progress span{display:block;height:100%;width:0;background:#82dec6;transition:width .3s}
+/* Overview keeps the same node positions while building a visible concept chain. */
+#deck .dk-map .node rect{fill:#1b2b3d;stroke:#6c839d;stroke-width:2}
+#deck .dk-diagram .dk-map .node text{fill:#edf2fa;font:700 27px system-ui,sans-serif;text-anchor:middle;font-size:27px!important}
+#deck .dk-diagram .dk-map .node .sub{fill:#becbdd;font-size:22px!important;font-weight:450}
+#deck .dk-map .wire{fill:none;stroke:#879cb3;stroke-width:3;marker-end:var(--dk-map-arrow)}
+#deck .dk-map .wire-label{fill:#c3d0e0;font:550 22px system-ui,sans-serif;text-anchor:middle;paint-order:stroke;stroke:#132130;stroke-width:6px}
+#deck .dk-map [data-step]{opacity:.48}
+#deck .dk-map [data-step].revealed{opacity:.86}
+#deck .dk-map [data-step].current{opacity:1;filter:none}
+#deck .dk-map .node.current rect{stroke:#82dec6;stroke-width:3;fill:#193a3b}
+#deck .dk-map .gap.current circle{stroke:#ffad9f;stroke-width:3}
+#deck .dk-map .focus-label{fill:#ffcf86;font:650 23px system-ui,sans-serif;text-anchor:start}
+#deck .dk-slide.is-active .dk-map .current{animation:step-enter .6s ease-out both}
+#deck .dk-slide.is-active svg .focus rect,#deck .dk-slide.is-active svg .on{animation:step-enter .6s ease-out both}
+#deck .dk-slide.is-active .dk-map .current .wire{stroke-dasharray:12 7;animation:request-travel 1.8s linear 2;animation-fill-mode:forwards}
+@keyframes copy-enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes step-enter{from{opacity:.48}to{opacity:1}}
+@keyframes request-travel{from{stroke-dashoffset:38}to{stroke-dashoffset:0}}
+.dk-controls{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;justify-content:center;gap:10px;background:#080f18;color:#b3c2d3;font:15px system-ui,sans-serif;z-index:5}
+.dk-controls button{min-width:46px;height:40px;border:1px solid #41566d;border-radius:6px;background:#172536;color:#edf2fa;font-size:19px;cursor:pointer}
+.dk-controls button:hover{border-color:#82dec6}
+.dk-controls button:focus-visible,.dk-controls a:focus-visible{outline:3px solid #ffcf86;outline-offset:3px}
+.dk-controls button:disabled{opacity:.38;cursor:default}
+.dk-controls .dk-lecs{display:flex;gap:8px;margin:0 14px}
+.dk-controls .dk-lecs a,.dk-controls .dk-lec,.dk-controls .dk-home{color:#b3c2d3;text-decoration:none;padding:7px 10px;border-radius:5px}
+.dk-controls .dk-lecs a[aria-current]{background:#234947;color:#fff}
+.dk-live-count{font-size:14px;min-width:54px;text-align:center;font-variant-numeric:tabular-nums;color:#c3d0e0}
+:fullscreen .dk-viewport,body.dk.is-fs .dk-viewport{inset:0}
+body.dk.is-fs .dk-controls{opacity:0;transition:opacity .2s}
+body.dk.is-fs .dk-controls:hover,body.dk.is-fs .dk-controls:focus-within{opacity:1}
+/* A reading-sized portrait layout: slides remain discrete, tall slides can scroll. */
+@media (orientation:portrait) and (max-width:760px){
+ html,body.dk{height:100%;overflow:hidden!important}
+ .dk-viewport{overflow-y:auto;overscroll-behavior:contain}
+ .dk-stage{position:relative!important;left:auto;top:auto;transform:none!important;width:100%;height:auto;min-height:100%;overflow:visible}
+ .dk-brand{position:relative;left:auto;right:auto;top:auto;padding:20px 22px 0;gap:12px;font-size:12px}
+ #deck .dk-slide{position:relative;inset:auto;padding:22px 22px 32px;min-height:calc(100svh - 102px);row-gap:20px}
+ #deck .dk-eyebrow,#deck .dk-count{font-size:12px}
+ #deck .dk-title{font-size:28px;line-height:1.3;max-width:none}
+ #deck .dk-body{grid-template-columns:1fr;grid-template-rows:auto auto;gap:22px;align-content:start}
+ #deck .dk-diagram{display:block;height:auto;min-height:220px;max-height:none;max-width:100%;padding:12px;overflow-x:auto}
+ #deck .dk-diagram svg{width:700px!important;max-height:none!important;height:auto!important;flex:none}
+ #deck .dk-pan-hint{display:block;position:sticky;left:0;width:260px;font-size:12px;line-height:1.5;color:#b7c5d6;margin:0 0 12px}
+ #deck .dk-caption{font-size:13px;margin-top:10px}
+ #deck .dk-copy{padding:0 0 0 14px;gap:14px}
+ #deck .dk-p{font-size:18px;line-height:1.65}
+ #deck .dk-p+.dk-p{font-size:15px}
+ #deck .dk-art{max-height:150px;width:100%}
+ #deck .dk-foot{grid-template-columns:1fr;gap:16px;min-height:0;padding-top:16px}
+ #deck .dk-prev,#deck .dk-next{font-size:15px}
+ #deck .dk-prev b,#deck .dk-next b{font-size:11px}
+ #deck .dk-progress{left:22px;right:22px}
+ .dk-controls .dk-lecs,.dk-controls .dk-lec{display:none}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

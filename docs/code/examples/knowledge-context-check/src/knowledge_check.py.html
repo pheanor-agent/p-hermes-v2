@@ -1,0 +1,40 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>examples/knowledge-context-check/src/knowledge_check.py</title><link rel="stylesheet" href="../../../../assets/design-system.css"><body><main><p><a href="../../../../code/index.html">코드 목록</a> · <a href="../../../../downloads/examples/knowledge-context-check/src/knowledge_check.py">원본 내려받기</a></p><h1>examples/knowledge-context-check/src/knowledge_check.py</h1><pre><code>&quot;&quot;&quot;Fixture-only knowledge provenance checks with no search side effects.&quot;&quot;&quot;
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+ALLOWED_VALIDATION = {&quot;validated&quot;, &quot;unverified&quot;, &quot;rejected&quot;, &quot;unknown&quot;}
+ALLOWED_REVIEW = {&quot;pending&quot;, &quot;accepted&quot;, &quot;rejected&quot;, &quot;promoted&quot;, &quot;unknown&quot;}
+
+
+def _known(value: object, allowed: set[str]) -&gt; str:
+    return value if isinstance(value, str) and value in allowed else &quot;unknown&quot;
+
+
+def inspect(request_path: Path, lessons_path: Path) -&gt; dict:
+    &quot;&quot;&quot;Inspect provided synthetic fixtures; never assert truth or promote.&quot;&quot;&quot;
+    request = json.loads(request_path.read_text(encoding=&quot;utf-8&quot;))
+    lessons = json.loads(lessons_path.read_text(encoding=&quot;utf-8&quot;))
+    query = request.get(&quot;query&quot;)
+    if not isinstance(query, str) or not query.strip():
+        raise ValueError(&quot;query must be a non-empty string&quot;)
+    if not isinstance(lessons, list):
+        raise ValueError(&quot;lessons fixture must be a list&quot;)
+    hits = [item for item in lessons if isinstance(item, dict) and query.casefold() in str(item.get(&quot;topic&quot;, &quot;&quot;)).casefold()]
+    if not hits:
+        return {&quot;status&quot;: &quot;no_candidate&quot;, &quot;scope&quot;: &quot;fixtures_only&quot;, &quot;items&quot;: []}
+    items = []
+    for item in hits:
+        source, updated = item.get(&quot;source&quot;), item.get(&quot;updated_at&quot;)
+        items.append({
+            &quot;topic&quot;: item.get(&quot;topic&quot;, &quot;unknown&quot;),
+            &quot;source&quot;: source.strip() if isinstance(source, str) and source.strip() else &quot;unknown&quot;,
+            &quot;updated_at&quot;: updated.strip() if isinstance(updated, str) and updated.strip() else &quot;unknown&quot;,
+            &quot;validation_status&quot;: _known(item.get(&quot;validation_status&quot;), ALLOWED_VALIDATION),
+            &quot;review_status&quot;: _known(item.get(&quot;review_status&quot;), ALLOWED_REVIEW),
+            &quot;claim_verified&quot;: False,
+            &quot;promotion_performed&quot;: False,
+        })
+    return {&quot;status&quot;: &quot;candidates_found&quot;, &quot;scope&quot;: &quot;fixtures_only&quot;, &quot;items&quot;: items}
+</code></pre></main></body></html>

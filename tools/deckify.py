@@ -9,6 +9,7 @@ from __future__ import annotations
 import html
 import re
 from pathlib import Path
+import xml.etree.ElementTree as ET
 
 LECTURES = [
     ("00-overview.html", "00", "전체 그림"),
@@ -66,6 +67,45 @@ def pick_diagram(section: str) -> tuple[str | None, str]:
 
 
 def overview_svg(svg: str, level: int, focus: str) -> str:
+    # Same map on every page; readable labels and separate request/return lanes.
+    nodes = [
+        (1, 'person', 24, 254, 180, '사람', '요청 · 완료 조건'),
+        (1, 'model', 272, 254, 230, '언어 모델', '맥락으로 응답 생성'),
+        (3, 'orchestrator', 272, 78, 230, '지휘 에이전트', '목표 · 범위 · 위임'),
+        (4, 'worker', 24, 78, 210, '작업 에이전트', '맡은 범위 처리'),
+        (5, 'workflow', 568, 78, 230, '작업 흐름', '단계 · 전이'),
+        (6, 'knowledge', 568, 254, 230, '지식 참조', '원문 · 근거'),
+        (7, 'pipeline', 568, 430, 230, '산출 파이프라인', '구성 → 결과물'),
+        (8, 'verify', 854, 430, 170, '검증', '실제 결과 대조'),
+        (8, 'report', 854, 254, 170, '결과 보고', '확인한 결과'),
+    ]
+    wires = [
+        (1, 'M204 303H272', 238, 240, '대화'),
+        (3, 'M387 254V176', 438, 214, '목표'),
+        (4, 'M272 110H234', 253, 61, '위임'),
+        (4, 'M234 152H272', 253, 204, '응답'),
+        (5, 'M502 127H568', 535, 98, '경계'),
+        (6, 'M683 176V254', 730, 220, '근거'),
+        (7, 'M683 352V430', 730, 397, '구성'),
+        (8, 'M798 479H854', 826, 402, '대조'),
+        (8, 'M939 430V352', 986, 397, '보고'),
+    ]
+    chunks = [
+        '<svg class="dk-map" style="--dk-map-arrow:url(#map-arrow)" viewBox="0 0 1048 558" role="img" aria-label="사람의 요청에서 결과 보고까지 이어지는 전체 흐름">',
+        '<defs><marker id="map-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#879cb3"/></marker></defs>',
+        '<text class="focus-label" x="24" y="28">지금 보는 부분 · ' + html.escape(focus) + '</text>',
+    ]
+    for step, d, x, y, label in wires:
+        # The conversation link is replaced by a visible gap on the second page.
+        if step == 1 and level == 2:
+            continue
+        chunks.append(f'<g data-step="{step}"><path class="wire" marker-end="url(#map-arrow)" d="{d}"/><text class="wire-label" x="{x}" y="{y}">{label}</text></g>')
+    if level == 2:
+        chunks.append('<g class="gap" data-step="2"><path d="M204 303H226M250 303H272" fill="none" stroke="#ffad9f" stroke-width="3" stroke-dasharray="5 4"/><circle cx="238" cy="303" r="17" fill="#132130" stroke="#ffad9f"/><text class="wire-label" x="238" y="383">공백</text></g>')
+    for step, cls, x, y, width, label, sub in nodes:
+        chunks.append(f'<g class="node {cls}" data-step="{step}"><rect x="{x}" y="{y}" width="{width}" height="98" rx="9"/><text x="{x+width/2}" y="{y+40}">{label}</text><text class="sub" x="{x+width/2}" y="{y+72}">{sub}</text></g>')
+    chunks.append('</svg>')
+    svg = ''.join(chunks)
     def mark(m: re.Match) -> str:
         tag = m.group(0)
         step = int(m.group(1))
@@ -185,7 +225,66 @@ def uniq_ids(svg: str, prefix: str) -> str:
         svg = svg.replace(f'id="{i}"', f'id="{prefix}{i}"')
         svg = svg.replace(f"url(#{i})", f"url(#{prefix}{i})")
         svg = svg.replace(f'href="#{i}"', f'href="#{prefix}{i}"')
-    return svg
+    root = ET.fromstring(svg)
+    marker = next(root.iter('marker'), None)
+    if marker is None:
+        defs = ET.SubElement(root, 'defs')
+        marker = ET.SubElement(defs, 'marker', {'id':prefix+'arrow','markerWidth':'8','markerHeight':'8','refX':'7','refY':'4','orient':'auto'})
+        ET.SubElement(marker,'path',{'d':'M0 0L8 4L0 8z','fill':'#879cb3'})
+    # Inherited lecture CSS still contains url(#arrow). Bind every SVG's wires
+    # to its own namespaced marker rather than to a document-wide identifier.
+    root.set('style', root.get('style','')+f';--dk-arrow:url(#{marker.get("id")})')
+    return ET.tostring(root, encoding='unicode')
+
+
+def readable_labels(svg: str) -> str:
+    """Wrap long node labels at spaces instead of shrinking Korean letters.
+
+    Coordinates, connections and text are preserved. Only a box's text block is
+    recentered when its labels require two lines at the presentation font size.
+    """
+    root = ET.fromstring(svg)
+    labels = list(root.iter('text'))
+    for t in labels:
+        declared = t.get('font-size')
+        if declared and float(declared) < 18:
+            t.set('class', (t.get('class', '') + ' dk-svg-note').strip())
+
+    def units(value: str) -> float:
+        return sum(1 if ord(c) > 0x2E80 else (.34 if c.isspace() else .62) for c in value)
+
+    for rect in root.iter('rect'):
+        x, y, w, h = (float(rect.get(k, '0')) for k in ('x', 'y', 'width', 'height'))
+        inside = [t for t in labels if x < float(t.get('x', '-1')) < x+w
+                  and y < float(t.get('y', '-1')) < y+h and t.text]
+        if not inside:
+            continue
+        inside.sort(key=lambda t: float(t.get('y', '0')))
+        blocks = []
+        changed = False
+        for t in inside:
+            size = 18 if set(t.get('class', '').split()) & {'small', 'sub', 'dk-svg-note'} else 22
+            value = t.text or ''
+            rows = [value]
+            words = value.split()
+            if units(value) * size > w-20 and len(words) > 1:
+                split = min(range(1, len(words)), key=lambda k: max(units(' '.join(words[:k])), units(' '.join(words[k:]))))
+                rows = [' '.join(words[:split]), ' '.join(words[split:])]
+                changed = True
+            blocks.append((t, size, rows))
+        if not changed:
+            continue
+        total_height = sum(size*1.16*len(rows) for _, size, rows in blocks)
+        cursor = y+(h-total_height)/2
+        for t, size, rows in blocks:
+            t.text = None
+            baseline = cursor+size*.85
+            t.set('y', f'{baseline:.1f}')
+            for j, row in enumerate(rows):
+                child = ET.SubElement(t, 'tspan', {'x':t.get('x','0'), 'y':f'{baseline+j*size*1.16:.1f}'})
+                child.text = row
+            cursor += size*1.16*len(rows)
+    return ET.tostring(root, encoding='unicode')
 
 
 def parse(source: str, number: str) -> tuple[str, list[dict]]:
@@ -202,7 +301,7 @@ def parse(source: str, number: str) -> tuple[str, list[dict]]:
         eyebrow = text(re.sub(r"\d+\s*/\s*\d+", "", head))
         body = strip_containers(sec, ("whole-map", "whole-flow", "overall-flow"))
         body = re.sub(r"<header.*?</header>", "", body, flags=re.S)
-        rail = inner(body, r"<nav[^>]*>(.*?)</nav>") or ""
+        rail = inner(body, r'<nav[^>]*class="[^"]*\bquestion-rail\b[^"]*"[^>]*>(.*?)</nav>') or inner(body, r"<nav[^>]*>(.*?)</nav>") or ""
         body = re.sub(r"<nav.*?</nav>", "", body, flags=re.S)
         prev = inner(rail, r"←[^<]*</b>\s*(?:<br>)?(.*?)</(?:span|a)>")
         nxt = inner(rail, r"→[^<]*</b>\s*(?:<br>)?(.*?)</(?:span|a)>")
@@ -214,7 +313,7 @@ def parse(source: str, number: str) -> tuple[str, list[dict]]:
         else:
             svg, wrap = pick_diagram(body)
             if svg:
-                svg = relayout_rows(light_layers(svg, idx))
+                svg = readable_labels(relayout_rows(light_layers(svg, idx)))
         caption = inner(body, r"<figcaption[^>]*>(.*?)</figcaption>") or inner(body, r'<p class="diagram-caption"[^>]*>(.*?)</p>')
         body_wo_svg = SVG_RE.sub("", body)
         copy = re.sub(r"<h[12].*?</h[12]>", "", body_wo_svg, count=1, flags=re.S)
@@ -225,7 +324,7 @@ def parse(source: str, number: str) -> tuple[str, list[dict]]:
             {
                 "eyebrow": eyebrow,
                 "title": title,
-                "paras": paras[:3],
+                "paras": paras,
                 "svg": uniq_ids(svg, f"s{idx}-") if svg else None,
                 "wrap": wrap,
                 "caption": text(caption) if caption else "",
@@ -237,6 +336,14 @@ def parse(source: str, number: str) -> tuple[str, list[dict]]:
     return style, slides
 
 
+def wrap_prose(fragment: str) -> str:
+    """Allow stage sequences to wrap after arrows without splitting their names."""
+    return "".join(
+        part if part.startswith("<") else part.replace("→", "→<wbr>")
+        for part in re.split(r"(<[^>]+>)", fragment)
+    )
+
+
 def render(number: str, name: str, style: str, slides: list[dict]) -> str:
     total = len(slides)
     idx_num = [n for _, n, _ in LECTURES]
@@ -246,7 +353,7 @@ def render(number: str, name: str, style: str, slides: list[dict]) -> str:
     parts = []
     for i, s in enumerate(slides, 1):
         cover = i == 1
-        paras = "".join(f'<p class="dk-p">{p}</p>' for p in s["paras"])
+        paras = "".join(f'<p class="dk-p">{wrap_prose(p)}</p>' for p in s["paras"])
         art = ""
         if cover and s["img"]:
             art = f'<img class="dk-art" src="{s["img"][0]}" alt="{s["img"][1]}">'
@@ -257,14 +364,18 @@ def render(number: str, name: str, style: str, slides: list[dict]) -> str:
             chain = [c for c in s["wrap"].split("|") if c]
             open_w = "".join(f'<div class="dk-wrap {c}">' for c in chain)
             close_w = "</div>" * len(chain)
-            diagram = f'<figure class="dk-diagram">{open_w}{s["svg"]}{close_w}{cap}</figure>'
+            diagram = f'<figure class="dk-diagram"><p class="dk-pan-hint">도해를 좌우로 밀어 전체 흐름을 보세요.</p>{open_w}{s["svg"]}{close_w}{cap}</figure>'
         nxt = ""
         if s["next"] and len(text(s["next"])) > 2:
-            nxt = f'<p class="dk-next"><b>다음 질문</b>{text(s["next"])}</p>'
+            if i == total and next_lec:
+                nxt = f'<p class="dk-next"><b>다음 질문 · 강의 {next_lec[1]}</b><a href="{next_lec[0]}">{html.escape(text(s["next"]))}</a></p>'
+            else:
+                nxt = f'<p class="dk-next"><b>다음 질문</b>{html.escape(text(s["next"]))}</p>'
         elif i == total and next_lec:
             nxt = f'<p class="dk-next"><b>다음 강의</b><a href="{next_lec[0]}">강의 {next_lec[1]} · {next_lec[2]} →</a></p>'
         elif i == total:
             nxt = '<p class="dk-next"><b>마지막 장</b><a href="../index.html">강의 목록으로 →</a></p>'
+        previous = f'<p class="dk-prev"><b>이어받은 질문</b>{html.escape(text(s["prev"]))}</p>' if s['prev'] else '<p class="dk-prev"><b>강의의 출발점</b>전체 흐름에서 현재 구간을 살펴봅니다.</p>'
         layout = "dk-cover" if cover else ("dk-main" if diagram else "dk-text")
         parts.append(
             f'<article class="dk-slide {layout}" id="s{i}" data-index="{i}" aria-label="{i} / {total}">'
@@ -272,7 +383,7 @@ def render(number: str, name: str, style: str, slides: list[dict]) -> str:
             f'<span class="dk-count">{i:02d} / {total:02d}</span></header>'
             f'<h2 class="dk-title">{s["title"]}</h2>'
             f'<div class="dk-body">{diagram}<div class="dk-copy">{paras}{art}</div></div>'
-            f'<footer class="dk-foot">{nxt}</footer></article>'
+            f'<footer class="dk-foot">{previous}{nxt}</footer></article>'
         )
     lec_links = "".join(
         f'<a href="{f}"{CURRENT if n == number else ""}>{n}</a>' for f, n, _ in LECTURES
@@ -284,14 +395,14 @@ def render(number: str, name: str, style: str, slides: list[dict]) -> str:
 <link rel="stylesheet" href="../assets/design-system.css">
 <style>{style}</style>
 <link rel="stylesheet" href="../assets/deck.css">
-</head><body class="dk">
+</head><body class="dk dk-course-{number}">
 <div class="dk-viewport"><main class="dk-stage" id="deck" aria-label="강의 {number} · {html.escape(name)}">
 <div class="dk-brand"><a href="../index.html">p-hermes</a><span>강의 {number} · {html.escape(name)}</span></div>
 {''.join(parts)}
 <div class="dk-progress"><span></span></div>
 </main></div>
-<nav class="dk-controls" aria-label="슬라이드 이동">{prev_link}<span class="dk-lecs">{lec_links}</span>
-<button type="button" data-go="-1" aria-label="이전 슬라이드">←</button><button type="button" data-go="1" aria-label="다음 슬라이드">→</button>
+<nav class="dk-controls" aria-label="슬라이드 이동"><a class="dk-home" href="../index.html">강의 목록</a>{prev_link}<span class="dk-lecs">{lec_links}</span>
+<button type="button" data-go="-1" aria-label="이전 슬라이드">←</button><span class="dk-live-count" aria-live="polite" aria-atomic="true"></span><button type="button" data-go="1" aria-label="다음 슬라이드">→</button>
 <button type="button" data-fs aria-label="전체 화면 (F)">⛶</button></nav>
 <script src="../assets/deck.js"></script>
 </body></html>
@@ -300,11 +411,12 @@ def render(number: str, name: str, style: str, slides: list[dict]) -> str:
 
 def build(source_dir: Path, out_dir: Path) -> list[Path]:
     written = []
+    missing = [fname for fname, _, _ in LECTURES if not (source_dir / fname).is_file()]
+    if missing:
+        raise FileNotFoundError('필수 강의 원고 누락: ' + ', '.join(missing))
     out_dir.mkdir(parents=True, exist_ok=True)
     for fname, number, name in LECTURES:
         src = source_dir / fname
-        if not src.exists():
-            continue
         style, slides = parse(src.read_text(encoding="utf-8"), number)
         out = out_dir / fname
         out.write_text(render(number, name, style, slides), encoding="utf-8")
@@ -316,6 +428,6 @@ if __name__ == "__main__":
     import sys
 
     root = Path(__file__).resolve().parents[1]
-    for p in build(root / "preview/site/lectures", root / "docs/preview/lectures"):
+    for p in build(root / "site/lectures", root / "docs/lectures"):
         print(p)
     sys.exit(0)

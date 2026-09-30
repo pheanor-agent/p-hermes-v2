@@ -1,0 +1,22 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>examples/integration-check/src/__main__.py</title><link rel="stylesheet" href="../../../../assets/design-system.css"><body><main><p><a href="../../../../code/index.html">코드 목록</a> · <a href="../../../../downloads/examples/integration-check/src/__main__.py">원본 내려받기</a></p><h1>examples/integration-check/src/__main__.py</h1><pre><code>from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+
+from .integration_check import run
+
+
+def main() -&gt; int:
+    parser = argparse.ArgumentParser(description=&quot;합성 입력 기반 통합 계약 점검&quot;)
+    parser.add_argument(&quot;--fixture&quot;, default=&quot;fixtures/pass&quot;, help=&quot;fixture 디렉터리&quot;)
+    parser.add_argument(&quot;--output&quot;, default=&quot;build/integration-check&quot;, help=&quot;임시 산출물 디렉터리&quot;)
+    args = parser.parse_args()
+    result = run(Path(args.fixture), Path(args.output))
+    print(json.dumps(result, ensure_ascii=False))
+    return 0 if result[&quot;status&quot;] == &quot;done&quot; else 1
+
+
+if __name__ == &quot;__main__&quot;:
+    raise SystemExit(main())
+</code></pre></main></body></html>

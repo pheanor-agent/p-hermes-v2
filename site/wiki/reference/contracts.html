@@ -1,0 +1,39 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="p-hermes 공개 문서"><title>파일 handoff 계약 · p-hermes</title><link rel="stylesheet" href="../../assets/design-system.css"></head><body><a class="skip" href="#main">본문으로 건너뛰기</a><header class="topbar"><a href="../../index.html">p-hermes</a><span>파일 handoff 계약</span></header><main id="main"><section class="hero"><p class="eyebrow">p-hermes 공개 문서</p><h1>파일 handoff 계약</h1><p class="lead">지휘 에이전트와 작업 에이전트의 흐름을 이해하고 확인하기 위한 문서입니다.</p><p></p></section><article class="chapter rendered-doc"><h1>파일 handoff 계약</h1>
+<h2>전체 흐름 속 위치</h2>
+<p>계약은 지휘 에이전트(오케스트레이터)의 요청과 작업 에이전트(워커)의 응답을 식별자·상태·산출물로 연결합니다.</p>
+<p><svg class="flow-svg" role="img" aria-label="전체 흐름 도해" viewBox="0 0 300 408" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#ffd17d"/></marker></defs><path d="M150 64 V83" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><path d="M150 144 V163" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><path d="M150 224 V243" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><rect x="8" y="8" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="43" fill="#edf2fa" font-size="15" text-anchor="middle">계약 검증</text><rect x="8" y="88" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="123" fill="#edf2fa" font-size="15" text-anchor="middle">작업 에이전트</text><rect x="8" y="168" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="203" fill="#edf2fa" font-size="15" text-anchor="middle">응답·산출물</text><rect x="8" y="248" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="283" fill="#edf2fa" font-size="15" text-anchor="middle">read-back</text><rect x="8" y="328" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="363" fill="#edf2fa" font-size="15" text-anchor="middle">요청</text></svg></p>
+<p>이 실습은 로컬 교육용 계약입니다. 모든 에이전트 제품이 파일이나 필드를 자동 지원한다고 가정하지 않습니다.</p>
+<h2>요청</h2>
+<p>필수 JSON 필드: <code>request_id</code>(불변 시도 식별자), <code>goal_id</code>(목표 식별자), <code>intent_revision</code>(양의 정수), <code>inputs</code>(허용 루트 아래 상대 경로 배열), <code>acceptance</code>(완료 조건), <code>policy</code>(제약 메타데이터 객체). 요청을 바꾸면 새 <code>request_id</code>를 사용합니다. <code>policy</code> 기재만으로 운영체제 접근제어가 생기지 않습니다.</p>
+<h2>응답</h2>
+<p>필수 필드: <code>request_id</code>, <code>goal_id</code>, <code>intent_revision</code>, <code>status</code>, <code>request_sha256</code>, <code>artifacts</code>. 선택 필드: <code>result</code>, <code>error</code>. 응답 식별자가 수집 대상과 다르거나 상태가 terminal enum 밖이면 거부합니다.</p>
+<table>
+<thead>
+<tr>
+<th>상태</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>done</code></td>
+<td>해당 시도 완료 조건을 충족</td>
+</tr>
+<tr>
+<td><code>partial</code></td>
+<td>산출물을 보존했지만 완료 조건 미충족</td>
+</tr>
+<tr>
+<td><code>failed</code></td>
+<td>보존된 산출물 없이 수행 실패</td>
+</tr>
+<tr>
+<td><code>blocked</code></td>
+<td>입력 검증 또는 정책 경계에서 수행 중단</td>
+</tr>
+</tbody>
+</table>
+<h2>흐름</h2>
+<p><svg class="flow-svg" role="img" aria-label="전체 흐름 도해" viewBox="0 0 300 808" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#ffd17d"/></marker></defs><path d="M150 64 V83" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><path d="M150 144 V163" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><text x="163" y="153" fill="#ffd17d" font-size="12">거부</text><path d="M150 144 V243" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><text x="163" y="193" fill="#ffd17d" font-size="12">통과</text><path d="M150 304 V323" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><path d="M150 384 V403" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><text x="163" y="393" fill="#ffd17d" font-size="12">완료</text><path d="M150 384 V483" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><text x="163" y="433" fill="#ffd17d" font-size="12">산출 보존 후 미완료</text><path d="M150 384 V563" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><text x="163" y="473" fill="#ffd17d" font-size="12">산출 없이 실패</text><path d="M150 224 V643" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><path d="M150 464 V643" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><path d="M150 544 V643" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><path d="M150 624 V643" stroke="#ffd17d" stroke-width="2" marker-end="url(#arrow)"/><rect x="8" y="8" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="43" fill="#edf2fa" font-size="15" text-anchor="middle">불변 inbox 파일</text><rect x="8" y="88" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="123" fill="#edf2fa" font-size="15" text-anchor="middle">검증</text><rect x="8" y="168" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="203" fill="#edf2fa" font-size="15" text-anchor="middle">blocked 응답</text><rect x="8" y="248" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="283" fill="#edf2fa" font-size="15" text-anchor="middle">작업 에이전트 수행</text><rect x="8" y="328" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="363" fill="#edf2fa" font-size="15" text-anchor="middle">결과</text><rect x="8" y="408" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="443" fill="#edf2fa" font-size="15" text-anchor="middle">done</text><rect x="8" y="488" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="523" fill="#edf2fa" font-size="15" text-anchor="middle">partial</text><rect x="8" y="568" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="603" fill="#edf2fa" font-size="15" text-anchor="middle">failed</text><rect x="8" y="648" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="683" fill="#edf2fa" font-size="15" text-anchor="middle">식별자·상태·산출물 read-back</text><rect x="8" y="728" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="763" fill="#edf2fa" font-size="15" text-anchor="middle">요청 작성</text></svg></p>
+<p>원 요청의 보관·이동은 호출자 책임입니다. 입력 경계는 canonical 경로를 검사하지만 실제 프로세스 권한, 파일시스템 권한, 동시 처리 claim/lease까지 대신하지 않습니다. 파일 원자적 기록 역시 큐 잠금 프로토콜이 아닙니다. 이 예제는 표준 라이브러리와 임시 폴더만 사용하며 외부 네트워크·GPU·자격증명을 사용하지 않습니다.</p>
+<p>근거 코드: <a href="../../code/examples/portable-worker/src/orchestrator.py.html">요청 발행</a>, <a href="../../code/examples/portable-worker/src/worker.py.html">요청 처리와 경로 제한</a>, <a href="../../code/examples/portable-worker/src/filesystem_transport.py.html">원자적 파일 기록</a>, <a href="../../code/examples/portable-worker/tests/test_contracts.py.html">계약 테스트</a>.</p></article></main><footer class="footer"><span>p-hermes · p-hermes 공개 자료</span><a href="../../index.html">목차</a></footer></body></html>

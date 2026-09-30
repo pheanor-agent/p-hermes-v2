@@ -22,7 +22,24 @@ def slug(text: str, used: set[str]) -> str:
     return name
 
 
+def namespace_svg_ids(page: str) -> str:
+    """Keep inline wiki diagrams independent when they share marker names."""
+    index = 0
+    def replace_svg(match: re.Match) -> str:
+        nonlocal index
+        index += 1
+        svg = match.group(0)
+        for ident in set(re.findall(r'\bid="([^"]+)"', svg)):
+            new = f'wiki-svg-{index}-{ident}'
+            svg = svg.replace(f'id="{ident}"', f'id="{new}"')
+            svg = svg.replace(f'url(#{ident})', f'url(#{new})')
+            svg = svg.replace(f'href="#{ident}"', f'href="#{new}"')
+        return svg
+    return re.sub(r'<svg\b.*?</svg>', replace_svg, page, flags=re.S)
+
+
 def transform(page: str, depth: int) -> str:
+    page = namespace_svg_ids(page)
     prefix = "../" * depth
     if "wiki.css" not in page:
         page = page.replace("</head>", f'<link rel="stylesheet" href="{prefix}assets/wiki.css"></head>', 1)
@@ -64,5 +81,5 @@ def build(wiki_dir: Path) -> list[Path]:
 
 if __name__ == "__main__":
     root = Path(__file__).resolve().parents[1]
-    for p in build(root / "docs/preview/wiki"):
+    for p in build(root / "docs/wiki"):
         print(p)
