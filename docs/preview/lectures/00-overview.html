@@ -1,13 +1,8 @@
 <!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="사람의 요청에서 결과 보고까지, 에이전트 시스템의 전체 흐름을 이어서 살펴봅니다.">
-  <title>00 · 전체 동작 흐름</title>
-  <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="../assets/design-system.css">
-  <style>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>00 · 전체 그림</title><link rel="icon" href="data:,">
+<link rel="stylesheet" href="../assets/design-system.css">
+<style>
     :root{--flow-bg:#101824;--flow-panel:#192536;--flow-line:#43536a;--flow-ink:#edf2fa;--flow-muted:#b7c3d3;--flow-mint:#74e0c0;--flow-blue:#9bc2ff;--flow-amber:#ffd17d;--flow-coral:#ff9c8f}
     html{scroll-snap-type:y mandatory;scroll-padding-top:49px}
     body{background:var(--flow-bg)}
@@ -36,95 +31,159 @@
     @media(max-width:390px){.slide{padding:.8rem .75rem}.slide-body{gap:.65rem}.diagram-frame{max-width:390px}.copy h1,.copy h2{font-size:1.48rem}.copy .explain{font-size:15px}.question-rail{gap:.5rem;font-size:11px}}
     @media(prefers-reduced-motion:reduce){.diagram-frame [data-step],.diagram-frame .focus-label{transition:none!important}}
   </style>
-</head>
-<body class="lecture">
-  <a class="skip" href="#main">본문으로 건너뛰기</a>
-  <header class="deck-head"><a href="../index.html">p-hermes 미리보기</a><span>강의 00 · 전체 동작 흐름</span></header>
-  <main id="main">
-    <section class="slide" id="slide-1" data-slide="1" aria-labelledby="title-1" data-focus="사람과 언어 모델">
-      <header class="slide-head"><p class="eyebrow">전체 흐름 · 시작</p><span class="slide-count">01 / 08</span></header>
-      <div class="slide-body">
-        <div class="diagram-frame" id="shared-diagram"><svg viewBox="0 0 760 500" role="img" aria-labelledby="diagram-title diagram-desc"><title id="diagram-title">사람의 요청에서 결과 보고까지 이어지는 기준 도해</title><desc id="diagram-desc">한 개의 흐름도에 사람, 언어 모델, 지휘와 작업 에이전트, 작업 흐름, 지식 참조, 산출 파이프라인, 검증, 결과 보고가 배치되어 있습니다. 현재 장에서 해당하는 요소만 강조됩니다.</desc><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#61738a"/></marker></defs>
-          <g class="wire-group" data-step="1"><path class="wire" d="M228 246H328"/><text class="wire-label" x="278" y="198">대화 맥락</text></g>
-          <g class="wire-group" data-step="3"><path class="wire" d="M430 210V140"/><text class="wire-label" x="488" y="176">목표·범위</text></g>
-          <g class="wire-group" data-step="2"><path d="M228 246H268M296 246H328" fill="none" stroke="#ff9c8f" stroke-width="4" stroke-dasharray="5 5"/><circle cx="282" cy="246" r="20" fill="#101824" stroke="#ff9c8f" stroke-width="2"/><text class="wire-label" x="282" y="302" fill="#ff9c8f">공백</text></g>
-          <g class="wire-group" data-step="4"><path class="wire" d="M328 92H228"/><text class="wire-label" x="278" y="140">위임</text><path class="wire" d="M228 72H328"/><text class="wire-label" x="278" y="164">응답</text></g>
-          <g class="wire-group" data-step="5"><path class="wire" d="M480 122H560"/><text class="wire-label" x="620" y="94">순서·경계</text></g>
-          <g class="wire-group" data-step="6"><path class="wire" d="M625 184V218"/><text class="wire-label" x="679" y="207">근거</text></g>
-          <g class="wire-group" data-step="7"><path class="wire" d="M625 288V326"/><text class="wire-label" x="686" y="313">구성</text></g>
-          <g class="wire-group" data-step="8"><path class="wire" d="M625 398V430"/><text class="wire-label" x="684" y="421">대조</text><path class="wire" d="M560 454H480"/><text class="wire-label" x="520" y="480">결과 보고</text></g>
-          <g class="node person" data-step="1"><rect x="48" y="210" width="180" height="72" rx="16"/><text x="138" y="239">사람</text><text class="sub" x="138" y="263">요청 · 완료 조건</text></g>
-          <g class="node model" data-step="1"><rect x="328" y="210" width="204" height="72" rx="16"/><text x="430" y="239">언어 모델</text><text class="sub" x="430" y="263">맥락으로 응답 생성</text></g>
-          <g class="node orchestrator" data-step="3"><rect x="328" y="64" width="204" height="76" rx="16"/><text x="430" y="94">지휘 에이전트</text><text class="sub" x="430" y="119">목표 · 범위 · 위임</text></g>
-          <g class="node worker" data-step="4"><rect x="48" y="42" width="180" height="76" rx="16"/><text x="138" y="73">작업 에이전트</text><text class="sub" x="138" y="98">맡은 범위 처리</text></g>
-          <g class="node workflow" data-step="5"><rect x="560" y="108" width="130" height="76" rx="16"/><text x="625" y="138">작업 흐름</text><text class="sub" x="625" y="162">단계 · 전이</text></g>
-          <g class="node knowledge" data-step="6"><rect x="560" y="218" width="130" height="70" rx="16"/><text x="625" y="247">지식 참조</text><text class="sub" x="625" y="271">원문 · 근거</text></g>
-          <g class="node pipeline" data-step="7"><rect x="560" y="326" width="130" height="72" rx="16"/><text x="625" y="355">산출 파이프라인</text><text class="sub" x="625" y="380">구성 → 결과물</text></g>
-          <g class="node verify" data-step="8"><rect x="560" y="430" width="130" height="48" rx="14"/><text x="625" y="460">검증</text></g><g class="node report" data-step="8"><rect x="328" y="430" width="152" height="48" rx="14"/><text x="404" y="460">결과 보고</text></g>
-          <text class="focus-label" id="focus-label" x="380" y="28">지금 보는 부분</text>
-        </svg></div><div class="diagram-slot" aria-hidden="true"></div>
-        <div class="copy"><h1 id="title-1">시작은 사람과 언어 모델의 대화입니다</h1><p class="explain">사람이 요청을 건네면 언어 모델은 주어진 대화 맥락을 바탕으로 응답을 만듭니다. 이것이 전체 동작 흐름의 출발점입니다.</p></div>
-      </div>
-      <nav class="question-rail" aria-label="앞뒤 질문"><span class="prev"><b>← 앞 질문</b><br>사람과 언어 모델만 있을 때, 무엇을 할 수 있을까?</span><span class="bridge">기준 도해 · 현재 단계 강조</span><a class="next" href="#slide-2"><b>다음 질문 →</b><br>대화가 길어지고 끊기면 무엇이 사라질까?</a></nav>
-    </section>
-    <section class="slide" id="slide-2" data-slide="2" aria-labelledby="title-2" data-focus="맥락 공백">
-      <header class="slide-head"><p class="eyebrow">전체 흐름 · 끊김</p><span class="slide-count">02 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-2">긴 작업에서는 맥락이 끊길 수 있습니다</h2><p class="explain">대화에만 의존하면 장기 작업의 진행 상태와 다음 행동을 안정적으로 이어가기 어렵습니다. 도구를 사용할 때도, 말로 설명한 결과와 실제 결과는 다를 수 있습니다.</p><img class="editorial-illustration" src="../assets/illustrations/forgetting.webp" alt="끊어진 맥락을 다시 잇는 삽화"><p class="hint">기준 도해에서는 대화선이 멈춘 자리에 공백을 표시합니다.</p></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-1"><b>← 앞 질문</b><br>대화가 길어지고 끊기면 무엇이 사라질까?</a><span class="bridge">맥락의 한계</span><a class="next" href="#slide-3"><b>다음 질문 →</b><br>사라진 맥락 대신 무엇이 목표와 다음 행동을 붙들까?</a></nav>
-    </section>
-    <section class="slide" id="slide-3" data-slide="3" aria-labelledby="title-3" data-focus="지휘 에이전트">
-      <header class="slide-head"><p class="eyebrow">전체 흐름 · 조정</p><span class="slide-count">03 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-3">지휘 에이전트가 목표와 범위를 붙듭니다</h2><p class="explain">지휘 에이전트(오케스트레이터)는 요청의 목표와 완료 조건을 살피고, 어디까지 할지 경계를 정합니다. 필요한 일을 나누어 맡기고 다음 단계를 조정합니다.</p><img class="editorial-illustration" src="../assets/illustrations/handoff.webp" alt="지휘 에이전트가 작업을 맡기는 삽화"></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-2"><b>← 앞 질문</b><br>사라진 맥락 대신 무엇이 목표와 다음 행동을 붙들까?</a><span class="bridge">목표 · 범위 · 위임</span><a class="next" href="#slide-4"><b>다음 질문 →</b><br>지휘가 정한 범위를 실제로 맡아 처리하는 역할은 무엇일까?</a></nav>
-    </section>
-    <section class="slide" id="slide-4" data-slide="4" aria-labelledby="title-4" data-focus="작업 에이전트와 분리 이유">
-      <header class="slide-head"><p class="eyebrow">전체 흐름 · 역할 분담</p><span class="slide-count">04 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-4">작업 에이전트가 맡은 범위를 처리합니다</h2><p class="explain">작업 에이전트(워커)는 전달받은 목표와 경계 안에서 맡은 일을 수행하고 결과를 돌려줍니다.</p><img class="editorial-illustration" src="../assets/illustrations/handoff.webp" alt="작업을 수행해 결과를 돌려주는 삽화"><p class="hint"><strong>왜 둘로 나눌까요?</strong> 판단 쪽은 실행 세부에 계속 맥락을 쓰지 않고 목표·경계를 지킵니다. 실행 결과는 다른 쪽이 독립적으로 확인해, 수행과 확인이 한 판단에 섞이지 않게 합니다.</p></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-3"><b>← 앞 질문</b><br>지휘가 정한 범위를 실제로 맡아 처리하는 역할은 무엇일까?</a><span class="bridge">위임 → 수행 → 응답</span><a class="next" href="#slide-5"><b>다음 질문 →</b><br>여러 단계의 일을 어떤 순서와 경계로 연결할까?</a></nav>
-    </section>
-    <section class="slide" id="slide-5" data-slide="5" aria-labelledby="title-5" data-focus="작업 흐름">
-      <header class="slide-head"><p class="eyebrow">전체 흐름 · 순서</p><span class="slide-count">05 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-5">작업 흐름이 단계와 경계를 정합니다</h2><p class="explain">작업 흐름은 조사·설계·승인·실행·검증처럼 일이 거치는 단계와 단계 사이의 전이를 정합니다. 승인처럼 멈춰 확인해야 하는 경계도 흐름에 포함됩니다.</p><img class="editorial-illustration" src="../assets/illustrations/workflow.webp" alt="작업 흐름의 단계와 경계를 나타내는 삽화"></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-4"><b>← 앞 질문</b><br>여러 단계의 일을 어떤 순서와 경계로 연결할까?</a><span class="bridge">단계 · 전이 · 경계</span><a class="next" href="#slide-6"><b>다음 질문 →</b><br>각 단계에서 필요한 근거는 어디서 찾을까?</a></nav>
-    </section>
-    <section class="slide" id="slide-6" data-slide="6" aria-labelledby="title-6" data-focus="지식 참조">
-      <header class="slide-head"><p class="eyebrow">전체 흐름 · 근거</p><span class="slide-count">06 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-6">지식 참조가 필요한 근거를 보탭니다</h2><p class="explain">작업 흐름의 각 단계는 목적에 맞는 원문과 근거를 찾아 사용할 수 있습니다. 지식은 전체 흐름 안에서 필요한 맥락을 제공하는 역할입니다.</p><img class="editorial-illustration" src="../assets/illustrations/knowledge.webp" alt="필요한 원문과 근거를 찾는 삽화"><p class="hint">이 장에서는 지식의 위치와 역할만 표시합니다. 세부 저장소나 복구 상태는 다루지 않습니다.</p></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-5"><b>← 앞 질문</b><br>각 단계에서 필요한 근거는 어디서 찾을까?</a><span class="bridge">필요한 단계에 근거 제공</span><a class="next" href="#slide-7"><b>다음 질문 →</b><br>작업의 결과는 어떤 경로로 만들어지고 남을까?</a></nav>
-    </section>
-    <section class="slide" id="slide-7" data-slide="7" aria-labelledby="title-7" data-focus="산출 파이프라인">
-      <header class="slide-head"><p class="eyebrow">전체 흐름 · 산출</p><span class="slide-count">07 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-7">산출 파이프라인이 결과물을 만듭니다</h2><p class="explain">요청에 맞는 구성을 선택하고 입력을 처리해 결과물로 변환합니다. 결과는 다음 단계에서 실제로 확인할 수 있도록 남습니다.</p><img class="editorial-illustration" src="../assets/illustrations/image-pipeline.webp" alt="구성에서 결과물까지 이어지는 파이프라인 삽화"></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-6"><b>← 앞 질문</b><br>작업의 결과는 어떤 경로로 만들어지고 남을까?</a><span class="bridge">구성 → 결과물</span><a class="next" href="#slide-8"><b>다음 질문 →</b><br>결과가 생겼다는 보고만으로 요청을 충족했다고 볼 수 있을까?</a></nav>
-    </section>
-    <section class="slide" id="slide-8" data-slide="8" aria-labelledby="title-8" data-focus="검증과 결과 보고">
-      <header class="slide-head"><p class="eyebrow">전체 흐름 · 확인</p><span class="slide-count">08 / 08</span></header><div class="slide-body"><div class="diagram-frame"></div><div class="copy"><h2 id="title-8">검증이 결과물과 완료 조건을 대조합니다</h2><p class="explain">검증은 보고된 상태를 실제 산출물과 요청의 완료 조건에 맞춰 확인합니다. 확인된 결과를 지휘 에이전트에 돌려주면 전체 흐름이 닫히고 다음 단계로 이어집니다.</p><img class="editorial-illustration" src="../assets/illustrations/verify.webp" alt="검증 결과를 확인하는 삽화"><p class="hint">요청 → 지휘 → 작업 → 작업 흐름 → 지식 참조 → 산출 파이프라인 → 검증 → 결과 보고</p><nav class="lecture-nav"><a class="next" href="01-orchestrator-worker.html">다음 강의: 지휘와 작업 에이전트 사이의 약속 →</a></nav></div></div><nav class="question-rail" aria-label="앞뒤 질문"><a class="prev" href="#slide-7"><b>← 앞 질문</b><br>결과가 생겼다는 보고만으로 요청을 충족했다고 볼 수 있을까?</a><span class="bridge">대조 → 확인 → 보고</span><span class="next"><b>다음 질문 →</b><br>지휘가 일을 맡기는 구간은 어떤 약속으로 이어질까?</span></nav>
-    </section>
-  </main>
-  <nav class="deck-controls" aria-label="슬라이드 이동"><button type="button" id="prev" aria-label="이전 장">↑</button><button type="button" id="next" aria-label="다음 장">↓</button></nav>
-  <script>
-    (()=>{
-      const slides=[...document.querySelectorAll('.slide')];
-      const diagram=document.querySelector('#shared-diagram svg');
-      function activate(index){
-        const level=Number(slides[index].dataset.slide);
-        diagram.querySelectorAll('[data-step]').forEach(el=>{const n=Number(el.dataset.step);el.classList.toggle('revealed',n<=level);el.classList.toggle('current',n===level);});
-        const label=diagram.querySelector('.focus-label');
-        if(label){label.textContent=`지금 보는 부분 · ${slides[index].dataset.focus}`;label.classList.add('show');}
-      }
-      window.__diagramBboxQA=()=>{
-        const svg=document.querySelector('#shared-diagram svg');
-        const texts=[...svg.querySelectorAll('text')];
-        const box=e=>{const b=e.getBBox();return{x:b.x,y:b.y,w:b.width,h:b.height}};
-        const hit=(a,b,pad=0)=>a.x<b.x+b.w+pad&&a.x+a.w+pad>b.x&&a.y<b.y+b.h+pad&&a.y+a.h+pad>b.y;
-        const textOverlaps=[];
-        for(let i=0;i<texts.length;i++)for(let j=i+1;j<texts.length;j++)if(hit(box(texts[i]),box(texts[j]),1))textOverlaps.push([texts[i].textContent,texts[j].textContent]);
-        const shapeOverlaps=[];
-        for(const label of svg.querySelectorAll('.wire-label')){
-          const lb=box(label);
-          for(const rect of svg.querySelectorAll('rect,circle'))if(!label.parentElement.contains(rect)&&hit(lb,box(rect),1))shapeOverlaps.push({label:label.textContent,shape:rect.tagName});
-          for(const path of svg.querySelectorAll('path.wire')){
-            const len=path.getTotalLength(),steps=Math.max(2,Math.ceil(len/2));
-            for(let i=0;i<=steps;i++){const p=path.getPointAtLength(len*i/steps);if(p.x>=lb.x-5&&p.x<=lb.x+lb.w+5&&p.y>=lb.y-5&&p.y<=lb.y+lb.h+5){shapeOverlaps.push({label:label.textContent,shape:'wire'});break;}}
-          }
-        }
-        return {textOverlaps,shapeOverlaps,labelCount:svg.querySelectorAll('.wire-label').length};
-      };
-      const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>.55)activate(slides.indexOf(e.target));}),{threshold:[.55,.8]});
-      slides.forEach(s=>observer.observe(s));
-      const move=delta=>{const i=slides.findIndex(s=>s.getBoundingClientRect().top>=-2);const current=i<0?slides.length-1:i;slides[Math.max(0,Math.min(slides.length-1,current+delta))].scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});};
-      document.querySelector('#prev').addEventListener('click',()=>move(-1));document.querySelector('#next').addEventListener('click',()=>move(1));
-      addEventListener('keydown',e=>{if(['ArrowDown','PageDown'].includes(e.key)){e.preventDefault();move(1);}if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();move(-1);}});
-      activate(0);
-    })();
-  </script>
-</body>
-</html>
+<link rel="stylesheet" href="../assets/deck.css">
+</head><body class="dk">
+<div class="dk-viewport"><main class="dk-stage" id="deck" aria-label="강의 00 · 전체 그림">
+<div class="dk-brand"><a href="../index.html">p-hermes</a><span>강의 00 · 전체 그림</span></div>
+<article class="dk-slide dk-cover" id="s1" data-index="1" aria-label="1 / 8"><header class="dk-head"><span class="dk-eyebrow">전체 흐름 · 시작</span><span class="dk-count">01 / 08</span></header><h2 class="dk-title">시작은 사람과 언어 모델의 대화입니다</h2><div class="dk-body"><figure class="dk-diagram"><div class="dk-wrap diagram-frame"><svg viewBox="0 0 760 500" role="img" aria-labelledby="diagram-title diagram-desc"><title id="s1-diagram-title">사람의 요청에서 결과 보고까지 이어지는 기준 도해</title><desc id="s1-diagram-desc">한 개의 흐름도에 사람, 언어 모델, 지휘와 작업 에이전트, 작업 흐름, 지식 참조, 산출 파이프라인, 검증, 결과 보고가 배치되어 있습니다. 현재 장에서 해당하는 요소만 강조됩니다.</desc><defs><marker id="s1-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#61738a"/></marker></defs>
+          <g class="revealed current wire-group" data-step="1"><path class="wire" d="M228 246H328"/><text class="wire-label" x="278" y="198">대화 맥락</text></g>
+          <g class=" wire-group" data-step="3"><path class="wire" d="M430 210V140"/><text class="wire-label" x="488" y="176">목표·범위</text></g>
+          <g class=" wire-group" data-step="2"><path d="M228 246H268M296 246H328" fill="none" stroke="#ff9c8f" stroke-width="4" stroke-dasharray="5 5"/><circle cx="282" cy="246" r="20" fill="#101824" stroke="#ff9c8f" stroke-width="2"/><text class="wire-label" x="282" y="302" fill="#ff9c8f">공백</text></g>
+          <g class=" wire-group" data-step="4"><path class="wire" d="M328 92H228"/><text class="wire-label" x="278" y="140">위임</text><path class="wire" d="M228 72H328"/><text class="wire-label" x="278" y="164">응답</text></g>
+          <g class=" wire-group" data-step="5"><path class="wire" d="M480 122H560"/><text class="wire-label" x="620" y="94">순서·경계</text></g>
+          <g class=" wire-group" data-step="6"><path class="wire" d="M625 184V218"/><text class="wire-label" x="679" y="207">근거</text></g>
+          <g class=" wire-group" data-step="7"><path class="wire" d="M625 288V326"/><text class="wire-label" x="686" y="313">구성</text></g>
+          <g class=" wire-group" data-step="8"><path class="wire" d="M625 398V430"/><text class="wire-label" x="684" y="421">대조</text><path class="wire" d="M560 454H480"/><text class="wire-label" x="520" y="480">결과 보고</text></g>
+          <g class="revealed current node person" data-step="1"><rect x="48" y="210" width="180" height="72" rx="16"/><text x="138" y="239">사람</text><text class="sub" x="138" y="263">요청 · 완료 조건</text></g>
+          <g class="revealed current node model" data-step="1"><rect x="328" y="210" width="204" height="72" rx="16"/><text x="430" y="239">언어 모델</text><text class="sub" x="430" y="263">맥락으로 응답 생성</text></g>
+          <g class=" node orchestrator" data-step="3"><rect x="328" y="64" width="204" height="76" rx="16"/><text x="430" y="94">지휘 에이전트</text><text class="sub" x="430" y="119">목표 · 범위 · 위임</text></g>
+          <g class=" node worker" data-step="4"><rect x="48" y="42" width="180" height="76" rx="16"/><text x="138" y="73">작업 에이전트</text><text class="sub" x="138" y="98">맡은 범위 처리</text></g>
+          <g class=" node workflow" data-step="5"><rect x="560" y="108" width="130" height="76" rx="16"/><text x="625" y="138">작업 흐름</text><text class="sub" x="625" y="162">단계 · 전이</text></g>
+          <g class=" node knowledge" data-step="6"><rect x="560" y="218" width="130" height="70" rx="16"/><text x="625" y="247">지식 참조</text><text class="sub" x="625" y="271">원문 · 근거</text></g>
+          <g class=" node pipeline" data-step="7"><rect x="560" y="326" width="130" height="72" rx="16"/><text x="625" y="355">산출 파이프라인</text><text class="sub" x="625" y="380">구성 → 결과물</text></g>
+          <g class=" node verify" data-step="8"><rect x="560" y="430" width="130" height="48" rx="14"/><text x="625" y="460">검증</text></g><g class=" node report" data-step="8"><rect x="328" y="430" width="152" height="48" rx="14"/><text x="404" y="460">결과 보고</text></g>
+          <text class="focus-label show" id="s1-focus-label" x="380" y="28">지금 보는 부분 · 사람과 언어 모델</text>
+        </svg></div></figure><div class="dk-copy"><p class="dk-p">사람이 요청을 건네면 언어 모델은 주어진 대화 맥락을 바탕으로 응답을 만듭니다. 이것이 전체 동작 흐름의 출발점입니다.</p></div></div><footer class="dk-foot"><p class="dk-next"><b>다음 질문</b>대화가 길어지고 끊기면 무엇이 사라질까?</p></footer></article><article class="dk-slide dk-main" id="s2" data-index="2" aria-label="2 / 8"><header class="dk-head"><span class="dk-eyebrow">전체 흐름 · 끊김</span><span class="dk-count">02 / 08</span></header><h2 class="dk-title">긴 작업에서는 맥락이 끊길 수 있습니다</h2><div class="dk-body"><figure class="dk-diagram"><div class="dk-wrap diagram-frame"><svg viewBox="0 0 760 500" role="img" aria-labelledby="diagram-title diagram-desc"><title id="s2-diagram-title">사람의 요청에서 결과 보고까지 이어지는 기준 도해</title><desc id="s2-diagram-desc">한 개의 흐름도에 사람, 언어 모델, 지휘와 작업 에이전트, 작업 흐름, 지식 참조, 산출 파이프라인, 검증, 결과 보고가 배치되어 있습니다. 현재 장에서 해당하는 요소만 강조됩니다.</desc><defs><marker id="s2-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#61738a"/></marker></defs>
+          <g class="revealed  wire-group" data-step="1"><path class="wire" d="M228 246H328"/><text class="wire-label" x="278" y="198">대화 맥락</text></g>
+          <g class=" wire-group" data-step="3"><path class="wire" d="M430 210V140"/><text class="wire-label" x="488" y="176">목표·범위</text></g>
+          <g class="revealed current wire-group" data-step="2"><path d="M228 246H268M296 246H328" fill="none" stroke="#ff9c8f" stroke-width="4" stroke-dasharray="5 5"/><circle cx="282" cy="246" r="20" fill="#101824" stroke="#ff9c8f" stroke-width="2"/><text class="wire-label" x="282" y="302" fill="#ff9c8f">공백</text></g>
+          <g class=" wire-group" data-step="4"><path class="wire" d="M328 92H228"/><text class="wire-label" x="278" y="140">위임</text><path class="wire" d="M228 72H328"/><text class="wire-label" x="278" y="164">응답</text></g>
+          <g class=" wire-group" data-step="5"><path class="wire" d="M480 122H560"/><text class="wire-label" x="620" y="94">순서·경계</text></g>
+          <g class=" wire-group" data-step="6"><path class="wire" d="M625 184V218"/><text class="wire-label" x="679" y="207">근거</text></g>
+          <g class=" wire-group" data-step="7"><path class="wire" d="M625 288V326"/><text class="wire-label" x="686" y="313">구성</text></g>
+          <g class=" wire-group" data-step="8"><path class="wire" d="M625 398V430"/><text class="wire-label" x="684" y="421">대조</text><path class="wire" d="M560 454H480"/><text class="wire-label" x="520" y="480">결과 보고</text></g>
+          <g class="revealed  node person" data-step="1"><rect x="48" y="210" width="180" height="72" rx="16"/><text x="138" y="239">사람</text><text class="sub" x="138" y="263">요청 · 완료 조건</text></g>
+          <g class="revealed  node model" data-step="1"><rect x="328" y="210" width="204" height="72" rx="16"/><text x="430" y="239">언어 모델</text><text class="sub" x="430" y="263">맥락으로 응답 생성</text></g>
+          <g class=" node orchestrator" data-step="3"><rect x="328" y="64" width="204" height="76" rx="16"/><text x="430" y="94">지휘 에이전트</text><text class="sub" x="430" y="119">목표 · 범위 · 위임</text></g>
+          <g class=" node worker" data-step="4"><rect x="48" y="42" width="180" height="76" rx="16"/><text x="138" y="73">작업 에이전트</text><text class="sub" x="138" y="98">맡은 범위 처리</text></g>
+          <g class=" node workflow" data-step="5"><rect x="560" y="108" width="130" height="76" rx="16"/><text x="625" y="138">작업 흐름</text><text class="sub" x="625" y="162">단계 · 전이</text></g>
+          <g class=" node knowledge" data-step="6"><rect x="560" y="218" width="130" height="70" rx="16"/><text x="625" y="247">지식 참조</text><text class="sub" x="625" y="271">원문 · 근거</text></g>
+          <g class=" node pipeline" data-step="7"><rect x="560" y="326" width="130" height="72" rx="16"/><text x="625" y="355">산출 파이프라인</text><text class="sub" x="625" y="380">구성 → 결과물</text></g>
+          <g class=" node verify" data-step="8"><rect x="560" y="430" width="130" height="48" rx="14"/><text x="625" y="460">검증</text></g><g class=" node report" data-step="8"><rect x="328" y="430" width="152" height="48" rx="14"/><text x="404" y="460">결과 보고</text></g>
+          <text class="focus-label show" id="s2-focus-label" x="380" y="28">지금 보는 부분 · 맥락 공백</text>
+        </svg></div></figure><div class="dk-copy"><p class="dk-p">대화에만 의존하면 장기 작업의 진행 상태와 다음 행동을 안정적으로 이어가기 어렵습니다. 도구를 사용할 때도, 말로 설명한 결과와 실제 결과는 다를 수 있습니다.</p><p class="dk-p">기준 도해에서는 대화선이 멈춘 자리에 공백을 표시합니다.</p></div></div><footer class="dk-foot"><p class="dk-next"><b>다음 질문</b>사라진 맥락 대신 무엇이 목표와 다음 행동을 붙들까?</p></footer></article><article class="dk-slide dk-main" id="s3" data-index="3" aria-label="3 / 8"><header class="dk-head"><span class="dk-eyebrow">전체 흐름 · 조정</span><span class="dk-count">03 / 08</span></header><h2 class="dk-title">지휘 에이전트가 목표와 범위를 붙듭니다</h2><div class="dk-body"><figure class="dk-diagram"><div class="dk-wrap diagram-frame"><svg viewBox="0 0 760 500" role="img" aria-labelledby="diagram-title diagram-desc"><title id="s3-diagram-title">사람의 요청에서 결과 보고까지 이어지는 기준 도해</title><desc id="s3-diagram-desc">한 개의 흐름도에 사람, 언어 모델, 지휘와 작업 에이전트, 작업 흐름, 지식 참조, 산출 파이프라인, 검증, 결과 보고가 배치되어 있습니다. 현재 장에서 해당하는 요소만 강조됩니다.</desc><defs><marker id="s3-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#61738a"/></marker></defs>
+          <g class="revealed  wire-group" data-step="1"><path class="wire" d="M228 246H328"/><text class="wire-label" x="278" y="198">대화 맥락</text></g>
+          <g class="revealed current wire-group" data-step="3"><path class="wire" d="M430 210V140"/><text class="wire-label" x="488" y="176">목표·범위</text></g>
+          <g class="revealed  wire-group" data-step="2"><path d="M228 246H268M296 246H328" fill="none" stroke="#ff9c8f" stroke-width="4" stroke-dasharray="5 5"/><circle cx="282" cy="246" r="20" fill="#101824" stroke="#ff9c8f" stroke-width="2"/><text class="wire-label" x="282" y="302" fill="#ff9c8f">공백</text></g>
+          <g class=" wire-group" data-step="4"><path class="wire" d="M328 92H228"/><text class="wire-label" x="278" y="140">위임</text><path class="wire" d="M228 72H328"/><text class="wire-label" x="278" y="164">응답</text></g>
+          <g class=" wire-group" data-step="5"><path class="wire" d="M480 122H560"/><text class="wire-label" x="620" y="94">순서·경계</text></g>
+          <g class=" wire-group" data-step="6"><path class="wire" d="M625 184V218"/><text class="wire-label" x="679" y="207">근거</text></g>
+          <g class=" wire-group" data-step="7"><path class="wire" d="M625 288V326"/><text class="wire-label" x="686" y="313">구성</text></g>
+          <g class=" wire-group" data-step="8"><path class="wire" d="M625 398V430"/><text class="wire-label" x="684" y="421">대조</text><path class="wire" d="M560 454H480"/><text class="wire-label" x="520" y="480">결과 보고</text></g>
+          <g class="revealed  node person" data-step="1"><rect x="48" y="210" width="180" height="72" rx="16"/><text x="138" y="239">사람</text><text class="sub" x="138" y="263">요청 · 완료 조건</text></g>
+          <g class="revealed  node model" data-step="1"><rect x="328" y="210" width="204" height="72" rx="16"/><text x="430" y="239">언어 모델</text><text class="sub" x="430" y="263">맥락으로 응답 생성</text></g>
+          <g class="revealed current node orchestrator" data-step="3"><rect x="328" y="64" width="204" height="76" rx="16"/><text x="430" y="94">지휘 에이전트</text><text class="sub" x="430" y="119">목표 · 범위 · 위임</text></g>
+          <g class=" node worker" data-step="4"><rect x="48" y="42" width="180" height="76" rx="16"/><text x="138" y="73">작업 에이전트</text><text class="sub" x="138" y="98">맡은 범위 처리</text></g>
+          <g class=" node workflow" data-step="5"><rect x="560" y="108" width="130" height="76" rx="16"/><text x="625" y="138">작업 흐름</text><text class="sub" x="625" y="162">단계 · 전이</text></g>
+          <g class=" node knowledge" data-step="6"><rect x="560" y="218" width="130" height="70" rx="16"/><text x="625" y="247">지식 참조</text><text class="sub" x="625" y="271">원문 · 근거</text></g>
+          <g class=" node pipeline" data-step="7"><rect x="560" y="326" width="130" height="72" rx="16"/><text x="625" y="355">산출 파이프라인</text><text class="sub" x="625" y="380">구성 → 결과물</text></g>
+          <g class=" node verify" data-step="8"><rect x="560" y="430" width="130" height="48" rx="14"/><text x="625" y="460">검증</text></g><g class=" node report" data-step="8"><rect x="328" y="430" width="152" height="48" rx="14"/><text x="404" y="460">결과 보고</text></g>
+          <text class="focus-label show" id="s3-focus-label" x="380" y="28">지금 보는 부분 · 지휘 에이전트</text>
+        </svg></div></figure><div class="dk-copy"><p class="dk-p">지휘 에이전트(오케스트레이터)는 요청의 목표와 완료 조건을 살피고, 어디까지 할지 경계를 정합니다. 필요한 일을 나누어 맡기고 다음 단계를 조정합니다.</p></div></div><footer class="dk-foot"><p class="dk-next"><b>다음 질문</b>지휘가 정한 범위를 실제로 맡아 처리하는 역할은 무엇일까?</p></footer></article><article class="dk-slide dk-main" id="s4" data-index="4" aria-label="4 / 8"><header class="dk-head"><span class="dk-eyebrow">전체 흐름 · 역할 분담</span><span class="dk-count">04 / 08</span></header><h2 class="dk-title">작업 에이전트가 맡은 범위를 처리합니다</h2><div class="dk-body"><figure class="dk-diagram"><div class="dk-wrap diagram-frame"><svg viewBox="0 0 760 500" role="img" aria-labelledby="diagram-title diagram-desc"><title id="s4-diagram-title">사람의 요청에서 결과 보고까지 이어지는 기준 도해</title><desc id="s4-diagram-desc">한 개의 흐름도에 사람, 언어 모델, 지휘와 작업 에이전트, 작업 흐름, 지식 참조, 산출 파이프라인, 검증, 결과 보고가 배치되어 있습니다. 현재 장에서 해당하는 요소만 강조됩니다.</desc><defs><marker id="s4-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#61738a"/></marker></defs>
+          <g class="revealed  wire-group" data-step="1"><path class="wire" d="M228 246H328"/><text class="wire-label" x="278" y="198">대화 맥락</text></g>
+          <g class="revealed  wire-group" data-step="3"><path class="wire" d="M430 210V140"/><text class="wire-label" x="488" y="176">목표·범위</text></g>
+          <g class="revealed  wire-group" data-step="2"><path d="M228 246H268M296 246H328" fill="none" stroke="#ff9c8f" stroke-width="4" stroke-dasharray="5 5"/><circle cx="282" cy="246" r="20" fill="#101824" stroke="#ff9c8f" stroke-width="2"/><text class="wire-label" x="282" y="302" fill="#ff9c8f">공백</text></g>
+          <g class="revealed current wire-group" data-step="4"><path class="wire" d="M328 92H228"/><text class="wire-label" x="278" y="140">위임</text><path class="wire" d="M228 72H328"/><text class="wire-label" x="278" y="164">응답</text></g>
+          <g class=" wire-group" data-step="5"><path class="wire" d="M480 122H560"/><text class="wire-label" x="620" y="94">순서·경계</text></g>
+          <g class=" wire-group" data-step="6"><path class="wire" d="M625 184V218"/><text class="wire-label" x="679" y="207">근거</text></g>
+          <g class=" wire-group" data-step="7"><path class="wire" d="M625 288V326"/><text class="wire-label" x="686" y="313">구성</text></g>
+          <g class=" wire-group" data-step="8"><path class="wire" d="M625 398V430"/><text class="wire-label" x="684" y="421">대조</text><path class="wire" d="M560 454H480"/><text class="wire-label" x="520" y="480">결과 보고</text></g>
+          <g class="revealed  node person" data-step="1"><rect x="48" y="210" width="180" height="72" rx="16"/><text x="138" y="239">사람</text><text class="sub" x="138" y="263">요청 · 완료 조건</text></g>
+          <g class="revealed  node model" data-step="1"><rect x="328" y="210" width="204" height="72" rx="16"/><text x="430" y="239">언어 모델</text><text class="sub" x="430" y="263">맥락으로 응답 생성</text></g>
+          <g class="revealed  node orchestrator" data-step="3"><rect x="328" y="64" width="204" height="76" rx="16"/><text x="430" y="94">지휘 에이전트</text><text class="sub" x="430" y="119">목표 · 범위 · 위임</text></g>
+          <g class="revealed current node worker" data-step="4"><rect x="48" y="42" width="180" height="76" rx="16"/><text x="138" y="73">작업 에이전트</text><text class="sub" x="138" y="98">맡은 범위 처리</text></g>
+          <g class=" node workflow" data-step="5"><rect x="560" y="108" width="130" height="76" rx="16"/><text x="625" y="138">작업 흐름</text><text class="sub" x="625" y="162">단계 · 전이</text></g>
+          <g class=" node knowledge" data-step="6"><rect x="560" y="218" width="130" height="70" rx="16"/><text x="625" y="247">지식 참조</text><text class="sub" x="625" y="271">원문 · 근거</text></g>
+          <g class=" node pipeline" data-step="7"><rect x="560" y="326" width="130" height="72" rx="16"/><text x="625" y="355">산출 파이프라인</text><text class="sub" x="625" y="380">구성 → 결과물</text></g>
+          <g class=" node verify" data-step="8"><rect x="560" y="430" width="130" height="48" rx="14"/><text x="625" y="460">검증</text></g><g class=" node report" data-step="8"><rect x="328" y="430" width="152" height="48" rx="14"/><text x="404" y="460">결과 보고</text></g>
+          <text class="focus-label show" id="s4-focus-label" x="380" y="28">지금 보는 부분 · 작업 에이전트와 분리 이유</text>
+        </svg></div></figure><div class="dk-copy"><p class="dk-p">작업 에이전트(워커)는 전달받은 목표와 경계 안에서 맡은 일을 수행하고 결과를 돌려줍니다.</p><p class="dk-p"><strong>왜 둘로 나눌까요?</strong> 판단 쪽은 실행 세부에 계속 맥락을 쓰지 않고 목표·경계를 지킵니다. 실행 결과는 다른 쪽이 독립적으로 확인해, 수행과 확인이 한 판단에 섞이지 않게 합니다.</p></div></div><footer class="dk-foot"><p class="dk-next"><b>다음 질문</b>여러 단계의 일을 어떤 순서와 경계로 연결할까?</p></footer></article><article class="dk-slide dk-main" id="s5" data-index="5" aria-label="5 / 8"><header class="dk-head"><span class="dk-eyebrow">전체 흐름 · 순서</span><span class="dk-count">05 / 08</span></header><h2 class="dk-title">작업 흐름이 단계와 경계를 정합니다</h2><div class="dk-body"><figure class="dk-diagram"><div class="dk-wrap diagram-frame"><svg viewBox="0 0 760 500" role="img" aria-labelledby="diagram-title diagram-desc"><title id="s5-diagram-title">사람의 요청에서 결과 보고까지 이어지는 기준 도해</title><desc id="s5-diagram-desc">한 개의 흐름도에 사람, 언어 모델, 지휘와 작업 에이전트, 작업 흐름, 지식 참조, 산출 파이프라인, 검증, 결과 보고가 배치되어 있습니다. 현재 장에서 해당하는 요소만 강조됩니다.</desc><defs><marker id="s5-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#61738a"/></marker></defs>
+          <g class="revealed  wire-group" data-step="1"><path class="wire" d="M228 246H328"/><text class="wire-label" x="278" y="198">대화 맥락</text></g>
+          <g class="revealed  wire-group" data-step="3"><path class="wire" d="M430 210V140"/><text class="wire-label" x="488" y="176">목표·범위</text></g>
+          <g class="revealed  wire-group" data-step="2"><path d="M228 246H268M296 246H328" fill="none" stroke="#ff9c8f" stroke-width="4" stroke-dasharray="5 5"/><circle cx="282" cy="246" r="20" fill="#101824" stroke="#ff9c8f" stroke-width="2"/><text class="wire-label" x="282" y="302" fill="#ff9c8f">공백</text></g>
+          <g class="revealed  wire-group" data-step="4"><path class="wire" d="M328 92H228"/><text class="wire-label" x="278" y="140">위임</text><path class="wire" d="M228 72H328"/><text class="wire-label" x="278" y="164">응답</text></g>
+          <g class="revealed current wire-group" data-step="5"><path class="wire" d="M480 122H560"/><text class="wire-label" x="620" y="94">순서·경계</text></g>
+          <g class=" wire-group" data-step="6"><path class="wire" d="M625 184V218"/><text class="wire-label" x="679" y="207">근거</text></g>
+          <g class=" wire-group" data-step="7"><path class="wire" d="M625 288V326"/><text class="wire-label" x="686" y="313">구성</text></g>
+          <g class=" wire-group" data-step="8"><path class="wire" d="M625 398V430"/><text class="wire-label" x="684" y="421">대조</text><path class="wire" d="M560 454H480"/><text class="wire-label" x="520" y="480">결과 보고</text></g>
+          <g class="revealed  node person" data-step="1"><rect x="48" y="210" width="180" height="72" rx="16"/><text x="138" y="239">사람</text><text class="sub" x="138" y="263">요청 · 완료 조건</text></g>
+          <g class="revealed  node model" data-step="1"><rect x="328" y="210" width="204" height="72" rx="16"/><text x="430" y="239">언어 모델</text><text class="sub" x="430" y="263">맥락으로 응답 생성</text></g>
+          <g class="revealed  node orchestrator" data-step="3"><rect x="328" y="64" width="204" height="76" rx="16"/><text x="430" y="94">지휘 에이전트</text><text class="sub" x="430" y="119">목표 · 범위 · 위임</text></g>
+          <g class="revealed  node worker" data-step="4"><rect x="48" y="42" width="180" height="76" rx="16"/><text x="138" y="73">작업 에이전트</text><text class="sub" x="138" y="98">맡은 범위 처리</text></g>
+          <g class="revealed current node workflow" data-step="5"><rect x="560" y="108" width="130" height="76" rx="16"/><text x="625" y="138">작업 흐름</text><text class="sub" x="625" y="162">단계 · 전이</text></g>
+          <g class=" node knowledge" data-step="6"><rect x="560" y="218" width="130" height="70" rx="16"/><text x="625" y="247">지식 참조</text><text class="sub" x="625" y="271">원문 · 근거</text></g>
+          <g class=" node pipeline" data-step="7"><rect x="560" y="326" width="130" height="72" rx="16"/><text x="625" y="355">산출 파이프라인</text><text class="sub" x="625" y="380">구성 → 결과물</text></g>
+          <g class=" node verify" data-step="8"><rect x="560" y="430" width="130" height="48" rx="14"/><text x="625" y="460">검증</text></g><g class=" node report" data-step="8"><rect x="328" y="430" width="152" height="48" rx="14"/><text x="404" y="460">결과 보고</text></g>
+          <text class="focus-label show" id="s5-focus-label" x="380" y="28">지금 보는 부분 · 작업 흐름</text>
+        </svg></div></figure><div class="dk-copy"><p class="dk-p">작업 흐름은 조사·설계·승인·실행·검증처럼 일이 거치는 단계와 단계 사이의 전이를 정합니다. 승인처럼 멈춰 확인해야 하는 경계도 흐름에 포함됩니다.</p></div></div><footer class="dk-foot"><p class="dk-next"><b>다음 질문</b>각 단계에서 필요한 근거는 어디서 찾을까?</p></footer></article><article class="dk-slide dk-main" id="s6" data-index="6" aria-label="6 / 8"><header class="dk-head"><span class="dk-eyebrow">전체 흐름 · 근거</span><span class="dk-count">06 / 08</span></header><h2 class="dk-title">지식 참조가 필요한 근거를 보탭니다</h2><div class="dk-body"><figure class="dk-diagram"><div class="dk-wrap diagram-frame"><svg viewBox="0 0 760 500" role="img" aria-labelledby="diagram-title diagram-desc"><title id="s6-diagram-title">사람의 요청에서 결과 보고까지 이어지는 기준 도해</title><desc id="s6-diagram-desc">한 개의 흐름도에 사람, 언어 모델, 지휘와 작업 에이전트, 작업 흐름, 지식 참조, 산출 파이프라인, 검증, 결과 보고가 배치되어 있습니다. 현재 장에서 해당하는 요소만 강조됩니다.</desc><defs><marker id="s6-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#61738a"/></marker></defs>
+          <g class="revealed  wire-group" data-step="1"><path class="wire" d="M228 246H328"/><text class="wire-label" x="278" y="198">대화 맥락</text></g>
+          <g class="revealed  wire-group" data-step="3"><path class="wire" d="M430 210V140"/><text class="wire-label" x="488" y="176">목표·범위</text></g>
+          <g class="revealed  wire-group" data-step="2"><path d="M228 246H268M296 246H328" fill="none" stroke="#ff9c8f" stroke-width="4" stroke-dasharray="5 5"/><circle cx="282" cy="246" r="20" fill="#101824" stroke="#ff9c8f" stroke-width="2"/><text class="wire-label" x="282" y="302" fill="#ff9c8f">공백</text></g>
+          <g class="revealed  wire-group" data-step="4"><path class="wire" d="M328 92H228"/><text class="wire-label" x="278" y="140">위임</text><path class="wire" d="M228 72H328"/><text class="wire-label" x="278" y="164">응답</text></g>
+          <g class="revealed  wire-group" data-step="5"><path class="wire" d="M480 122H560"/><text class="wire-label" x="620" y="94">순서·경계</text></g>
+          <g class="revealed current wire-group" data-step="6"><path class="wire" d="M625 184V218"/><text class="wire-label" x="679" y="207">근거</text></g>
+          <g class=" wire-group" data-step="7"><path class="wire" d="M625 288V326"/><text class="wire-label" x="686" y="313">구성</text></g>
+          <g class=" wire-group" data-step="8"><path class="wire" d="M625 398V430"/><text class="wire-label" x="684" y="421">대조</text><path class="wire" d="M560 454H480"/><text class="wire-label" x="520" y="480">결과 보고</text></g>
+          <g class="revealed  node person" data-step="1"><rect x="48" y="210" width="180" height="72" rx="16"/><text x="138" y="239">사람</text><text class="sub" x="138" y="263">요청 · 완료 조건</text></g>
+          <g class="revealed  node model" data-step="1"><rect x="328" y="210" width="204" height="72" rx="16"/><text x="430" y="239">언어 모델</text><text class="sub" x="430" y="263">맥락으로 응답 생성</text></g>
+          <g class="revealed  node orchestrator" data-step="3"><rect x="328" y="64" width="204" height="76" rx="16"/><text x="430" y="94">지휘 에이전트</text><text class="sub" x="430" y="119">목표 · 범위 · 위임</text></g>
+          <g class="revealed  node worker" data-step="4"><rect x="48" y="42" width="180" height="76" rx="16"/><text x="138" y="73">작업 에이전트</text><text class="sub" x="138" y="98">맡은 범위 처리</text></g>
+          <g class="revealed  node workflow" data-step="5"><rect x="560" y="108" width="130" height="76" rx="16"/><text x="625" y="138">작업 흐름</text><text class="sub" x="625" y="162">단계 · 전이</text></g>
+          <g class="revealed current node knowledge" data-step="6"><rect x="560" y="218" width="130" height="70" rx="16"/><text x="625" y="247">지식 참조</text><text class="sub" x="625" y="271">원문 · 근거</text></g>
+          <g class=" node pipeline" data-step="7"><rect x="560" y="326" width="130" height="72" rx="16"/><text x="625" y="355">산출 파이프라인</text><text class="sub" x="625" y="380">구성 → 결과물</text></g>
+          <g class=" node verify" data-step="8"><rect x="560" y="430" width="130" height="48" rx="14"/><text x="625" y="460">검증</text></g><g class=" node report" data-step="8"><rect x="328" y="430" width="152" height="48" rx="14"/><text x="404" y="460">결과 보고</text></g>
+          <text class="focus-label show" id="s6-focus-label" x="380" y="28">지금 보는 부분 · 지식 참조</text>
+        </svg></div></figure><div class="dk-copy"><p class="dk-p">작업 흐름의 각 단계는 목적에 맞는 원문과 근거를 찾아 사용할 수 있습니다. 지식은 전체 흐름 안에서 필요한 맥락을 제공하는 역할입니다.</p><p class="dk-p">이 장에서는 지식의 위치와 역할만 표시합니다. 세부 저장소나 복구 상태는 다루지 않습니다.</p></div></div><footer class="dk-foot"><p class="dk-next"><b>다음 질문</b>작업의 결과는 어떤 경로로 만들어지고 남을까?</p></footer></article><article class="dk-slide dk-main" id="s7" data-index="7" aria-label="7 / 8"><header class="dk-head"><span class="dk-eyebrow">전체 흐름 · 산출</span><span class="dk-count">07 / 08</span></header><h2 class="dk-title">산출 파이프라인이 결과물을 만듭니다</h2><div class="dk-body"><figure class="dk-diagram"><div class="dk-wrap diagram-frame"><svg viewBox="0 0 760 500" role="img" aria-labelledby="diagram-title diagram-desc"><title id="s7-diagram-title">사람의 요청에서 결과 보고까지 이어지는 기준 도해</title><desc id="s7-diagram-desc">한 개의 흐름도에 사람, 언어 모델, 지휘와 작업 에이전트, 작업 흐름, 지식 참조, 산출 파이프라인, 검증, 결과 보고가 배치되어 있습니다. 현재 장에서 해당하는 요소만 강조됩니다.</desc><defs><marker id="s7-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#61738a"/></marker></defs>
+          <g class="revealed  wire-group" data-step="1"><path class="wire" d="M228 246H328"/><text class="wire-label" x="278" y="198">대화 맥락</text></g>
+          <g class="revealed  wire-group" data-step="3"><path class="wire" d="M430 210V140"/><text class="wire-label" x="488" y="176">목표·범위</text></g>
+          <g class="revealed  wire-group" data-step="2"><path d="M228 246H268M296 246H328" fill="none" stroke="#ff9c8f" stroke-width="4" stroke-dasharray="5 5"/><circle cx="282" cy="246" r="20" fill="#101824" stroke="#ff9c8f" stroke-width="2"/><text class="wire-label" x="282" y="302" fill="#ff9c8f">공백</text></g>
+          <g class="revealed  wire-group" data-step="4"><path class="wire" d="M328 92H228"/><text class="wire-label" x="278" y="140">위임</text><path class="wire" d="M228 72H328"/><text class="wire-label" x="278" y="164">응답</text></g>
+          <g class="revealed  wire-group" data-step="5"><path class="wire" d="M480 122H560"/><text class="wire-label" x="620" y="94">순서·경계</text></g>
+          <g class="revealed  wire-group" data-step="6"><path class="wire" d="M625 184V218"/><text class="wire-label" x="679" y="207">근거</text></g>
+          <g class="revealed current wire-group" data-step="7"><path class="wire" d="M625 288V326"/><text class="wire-label" x="686" y="313">구성</text></g>
+          <g class=" wire-group" data-step="8"><path class="wire" d="M625 398V430"/><text class="wire-label" x="684" y="421">대조</text><path class="wire" d="M560 454H480"/><text class="wire-label" x="520" y="480">결과 보고</text></g>
+          <g class="revealed  node person" data-step="1"><rect x="48" y="210" width="180" height="72" rx="16"/><text x="138" y="239">사람</text><text class="sub" x="138" y="263">요청 · 완료 조건</text></g>
+          <g class="revealed  node model" data-step="1"><rect x="328" y="210" width="204" height="72" rx="16"/><text x="430" y="239">언어 모델</text><text class="sub" x="430" y="263">맥락으로 응답 생성</text></g>
+          <g class="revealed  node orchestrator" data-step="3"><rect x="328" y="64" width="204" height="76" rx="16"/><text x="430" y="94">지휘 에이전트</text><text class="sub" x="430" y="119">목표 · 범위 · 위임</text></g>
+          <g class="revealed  node worker" data-step="4"><rect x="48" y="42" width="180" height="76" rx="16"/><text x="138" y="73">작업 에이전트</text><text class="sub" x="138" y="98">맡은 범위 처리</text></g>
+          <g class="revealed  node workflow" data-step="5"><rect x="560" y="108" width="130" height="76" rx="16"/><text x="625" y="138">작업 흐름</text><text class="sub" x="625" y="162">단계 · 전이</text></g>
+          <g class="revealed  node knowledge" data-step="6"><rect x="560" y="218" width="130" height="70" rx="16"/><text x="625" y="247">지식 참조</text><text class="sub" x="625" y="271">원문 · 근거</text></g>
+          <g class="revealed current node pipeline" data-step="7"><rect x="560" y="326" width="130" height="72" rx="16"/><text x="625" y="355">산출 파이프라인</text><text class="sub" x="625" y="380">구성 → 결과물</text></g>
+          <g class=" node verify" data-step="8"><rect x="560" y="430" width="130" height="48" rx="14"/><text x="625" y="460">검증</text></g><g class=" node report" data-step="8"><rect x="328" y="430" width="152" height="48" rx="14"/><text x="404" y="460">결과 보고</text></g>
+          <text class="focus-label show" id="s7-focus-label" x="380" y="28">지금 보는 부분 · 산출 파이프라인</text>
+        </svg></div></figure><div class="dk-copy"><p class="dk-p">요청에 맞는 구성을 선택하고 입력을 처리해 결과물로 변환합니다. 결과는 다음 단계에서 실제로 확인할 수 있도록 남습니다.</p></div></div><footer class="dk-foot"><p class="dk-next"><b>다음 질문</b>결과가 생겼다는 보고만으로 요청을 충족했다고 볼 수 있을까?</p></footer></article><article class="dk-slide dk-main" id="s8" data-index="8" aria-label="8 / 8"><header class="dk-head"><span class="dk-eyebrow">전체 흐름 · 확인</span><span class="dk-count">08 / 08</span></header><h2 class="dk-title">검증이 결과물과 완료 조건을 대조합니다</h2><div class="dk-body"><figure class="dk-diagram"><div class="dk-wrap diagram-frame"><svg viewBox="0 0 760 500" role="img" aria-labelledby="diagram-title diagram-desc"><title id="s8-diagram-title">사람의 요청에서 결과 보고까지 이어지는 기준 도해</title><desc id="s8-diagram-desc">한 개의 흐름도에 사람, 언어 모델, 지휘와 작업 에이전트, 작업 흐름, 지식 참조, 산출 파이프라인, 검증, 결과 보고가 배치되어 있습니다. 현재 장에서 해당하는 요소만 강조됩니다.</desc><defs><marker id="s8-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#61738a"/></marker></defs>
+          <g class="revealed  wire-group" data-step="1"><path class="wire" d="M228 246H328"/><text class="wire-label" x="278" y="198">대화 맥락</text></g>
+          <g class="revealed  wire-group" data-step="3"><path class="wire" d="M430 210V140"/><text class="wire-label" x="488" y="176">목표·범위</text></g>
+          <g class="revealed  wire-group" data-step="2"><path d="M228 246H268M296 246H328" fill="none" stroke="#ff9c8f" stroke-width="4" stroke-dasharray="5 5"/><circle cx="282" cy="246" r="20" fill="#101824" stroke="#ff9c8f" stroke-width="2"/><text class="wire-label" x="282" y="302" fill="#ff9c8f">공백</text></g>
+          <g class="revealed  wire-group" data-step="4"><path class="wire" d="M328 92H228"/><text class="wire-label" x="278" y="140">위임</text><path class="wire" d="M228 72H328"/><text class="wire-label" x="278" y="164">응답</text></g>
+          <g class="revealed  wire-group" data-step="5"><path class="wire" d="M480 122H560"/><text class="wire-label" x="620" y="94">순서·경계</text></g>
+          <g class="revealed  wire-group" data-step="6"><path class="wire" d="M625 184V218"/><text class="wire-label" x="679" y="207">근거</text></g>
+          <g class="revealed  wire-group" data-step="7"><path class="wire" d="M625 288V326"/><text class="wire-label" x="686" y="313">구성</text></g>
+          <g class="revealed current wire-group" data-step="8"><path class="wire" d="M625 398V430"/><text class="wire-label" x="684" y="421">대조</text><path class="wire" d="M560 454H480"/><text class="wire-label" x="520" y="480">결과 보고</text></g>
+          <g class="revealed  node person" data-step="1"><rect x="48" y="210" width="180" height="72" rx="16"/><text x="138" y="239">사람</text><text class="sub" x="138" y="263">요청 · 완료 조건</text></g>
+          <g class="revealed  node model" data-step="1"><rect x="328" y="210" width="204" height="72" rx="16"/><text x="430" y="239">언어 모델</text><text class="sub" x="430" y="263">맥락으로 응답 생성</text></g>
+          <g class="revealed  node orchestrator" data-step="3"><rect x="328" y="64" width="204" height="76" rx="16"/><text x="430" y="94">지휘 에이전트</text><text class="sub" x="430" y="119">목표 · 범위 · 위임</text></g>
+          <g class="revealed  node worker" data-step="4"><rect x="48" y="42" width="180" height="76" rx="16"/><text x="138" y="73">작업 에이전트</text><text class="sub" x="138" y="98">맡은 범위 처리</text></g>
+          <g class="revealed  node workflow" data-step="5"><rect x="560" y="108" width="130" height="76" rx="16"/><text x="625" y="138">작업 흐름</text><text class="sub" x="625" y="162">단계 · 전이</text></g>
+          <g class="revealed  node knowledge" data-step="6"><rect x="560" y="218" width="130" height="70" rx="16"/><text x="625" y="247">지식 참조</text><text class="sub" x="625" y="271">원문 · 근거</text></g>
+          <g class="revealed  node pipeline" data-step="7"><rect x="560" y="326" width="130" height="72" rx="16"/><text x="625" y="355">산출 파이프라인</text><text class="sub" x="625" y="380">구성 → 결과물</text></g>
+          <g class="revealed current node verify" data-step="8"><rect x="560" y="430" width="130" height="48" rx="14"/><text x="625" y="460">검증</text></g><g class="revealed current node report" data-step="8"><rect x="328" y="430" width="152" height="48" rx="14"/><text x="404" y="460">결과 보고</text></g>
+          <text class="focus-label show" id="s8-focus-label" x="380" y="28">지금 보는 부분 · 검증과 결과 보고</text>
+        </svg></div></figure><div class="dk-copy"><p class="dk-p">검증은 보고된 상태를 실제 산출물과 요청의 완료 조건에 맞춰 확인합니다. 확인된 결과를 지휘 에이전트에 돌려주면 전체 흐름이 닫히고 다음 단계로 이어집니다.</p><p class="dk-p">요청 → 지휘 → 작업 → 작업 흐름 → 지식 참조 → 산출 파이프라인 → 검증 → 결과 보고</p></div></div><footer class="dk-foot"><p class="dk-next"><b>다음 강의</b><a href="01-orchestrator-worker.html">강의 01 · 지휘 에이전트와 작업 에이전트 →</a></p></footer></article>
+<div class="dk-progress"><span></span></div>
+</main></div>
+<nav class="dk-controls" aria-label="슬라이드 이동"><span class="dk-lecs"><a href="00-overview.html" aria-current="page">00</a><a href="01-orchestrator-worker.html">01</a><a href="02-workflow.html">02</a><a href="03-knowledge.html">03</a><a href="04-image-pipeline.html">04</a><a href="05-integration.html">05</a></span>
+<button type="button" data-go="-1" aria-label="이전 슬라이드">←</button><button type="button" data-go="1" aria-label="다음 슬라이드">→</button>
+<button type="button" data-fs aria-label="전체 화면 (F)">⛶</button></nav>
+<script src="../assets/deck.js"></script>
+</body></html>

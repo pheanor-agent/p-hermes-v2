@@ -13,6 +13,18 @@ SOURCE = ROOT / "preview"
 OUT = ROOT / "docs" / "preview"
 
 ALLOWED = {
+    "site/lectures/03-knowledge.html",
+    "site/assets/deck.css",
+    "site/assets/deck.js",
+    "site/wiki/knowledge-context.html",
+    "examples/knowledge-context-check/PROMPT.md",
+    "examples/knowledge-context-check/README.md",
+    "examples/knowledge-context-check/fixtures/invalid-request.json",
+    "examples/knowledge-context-check/fixtures/lessons.json",
+    "examples/knowledge-context-check/fixtures/no-match-request.json",
+    "examples/knowledge-context-check/fixtures/request.json",
+    "examples/knowledge-context-check/src/knowledge_check.py",
+    "examples/knowledge-context-check/tests/test_knowledge_check.py",
     "site/lectures/00-overview.html",
     "site/lectures/01-orchestrator-worker.html",
     "site/lectures/02-workflow.html",
@@ -315,6 +327,7 @@ def main() -> int:
         ("강의 00 · 전체 그림", "lectures/00-overview.html", "에이전트 시스템의 전체 흐름과 결과 확인을 살펴봅니다."),
         ("강의 01 · 지휘 에이전트와 작업 에이전트", "lectures/01-orchestrator-worker.html", "계획·위임 역할과 맡은 작업을 수행하는 역할을 구분합니다."),
         ("강의 02 · 작업 흐름", "lectures/02-workflow.html", "단계 계약과 검증을 전체 흐름 안에서 살펴봅니다."),
+        ("강의 03 · 지식 참조", "lectures/03-knowledge.html", "작업에 필요한 근거를 찾아 확인하고 교훈을 기록으로 되돌립니다."),
         ("강의 04 · 이미지 생성 파이프라인", "lectures/04-image-pipeline.html", "카탈로그·프롬프트·어댑터·검증의 흐름을 살펴봅니다."),
         ("강의 05 · 통합", "lectures/05-integration.html", "네 축을 요청부터 검증된 결과 보고까지 연결합니다."),
         ("왜 파일 handoff가 필요한가", "articles/why-file-handoffs.html", "요청과 결과를 파일로 주고받는 이유를 설명합니다."),
@@ -324,6 +337,7 @@ def main() -> int:
         ("작업 흐름 참조", "wiki/reference/workflow.html", "현재 단계 계약, 검사, 활성 범위를 찾아봅니다."),
         ("용어", "wiki/reference/terms.html", "문서에서 사용하는 핵심 용어를 확인합니다."),
         ("이미지 생성 파이프라인 참조", "wiki/image-pipeline.html", "예제의 공개 계약과 확인 절차를 찾아봅니다."),
+        ("지식 참조와 context pack", "wiki/knowledge-context.html", "검색 후보·원문 확인·출처 상태를 찾아봅니다."),
         ("통합 연결 계약", "wiki/integration.html", "요청·단계·지식·산출·검증의 연결 계약을 찾아봅니다."),
         ("portable worker 실행", "examples/portable-worker/README.html", "합성 fixture로 portable worker를 실행합니다."),
         ("작업 프롬프트", "examples/portable-worker/PROMPT.html", "예제에 사용할 안전한 작업 지시를 확인합니다."),
@@ -334,8 +348,8 @@ def main() -> int:
         ("예제 코드·소스와 테스트", "code/index.html", "예제 구현과 테스트를 읽고 원본 파일을 내려받습니다."),
     ]
 
-    sections = [("강의", cards[:5]), ("해설", cards[5:6]), ("위키", cards[6:13]), ("예제", cards[13:19]), ("예제 코드", cards[19:])]
-    body = '<p class="tag">사용자 리뷰용</p><h1>p-hermes 재정비 파일럿 미리보기(리뷰용)</h1><p class="muted">처음 방문하면 강의 00부터 순서대로 시작합니다. 이어지는 각 강의는 앞선 질문을 받아 전체 흐름을 완성합니다.</p><section id="learning-start"><h2>처음 시작하는 학습 경로 · 강의 00~05</h2><ol><li><a href="lectures/00-overview.html">강의 00 · 전체 흐름</a></li><li><a href="lectures/01-orchestrator-worker.html">강의 01 · 지휘·작업 에이전트</a></li><li><a href="lectures/02-workflow.html">강의 02 · 작업 흐름</a></li><li><a href="lectures/03-knowledge.html">강의 03 · 지식 참조 (P4 통합 대기)</a></li><li><a href="lectures/04-image-pipeline.html">강의 04 · 이미지 생성</a></li><li><a href="lectures/05-integration.html">강의 05 · 통합</a></li></ol></section>'
+    sections = [("강의", cards[:6]), ("해설", cards[6:7]), ("위키", cards[7:15]), ("예제", cards[15:21]), ("예제 코드", cards[21:])]
+    body = '<p class="tag">사용자 리뷰용</p><h1>p-hermes 재정비 파일럿 미리보기(리뷰용)</h1><p class="muted">처음 방문하면 강의 00부터 순서대로 시작합니다. 강의는 발표 화면으로 열리며 ←/→ 또는 스페이스로 넘기고 F로 전체 화면을 켭니다. 이어지는 각 강의는 앞선 질문을 받아 전체 흐름을 완성합니다.</p><section id="learning-start"><h2>처음 시작하는 학습 경로 · 강의 00~05</h2><ol><li><a href="lectures/00-overview.html">강의 00 · 전체 흐름</a></li><li><a href="lectures/01-orchestrator-worker.html">강의 01 · 지휘·작업 에이전트</a></li><li><a href="lectures/02-workflow.html">강의 02 · 작업 흐름</a></li><li><a href="lectures/03-knowledge.html">강의 03 · 지식 참조</a></li><li><a href="lectures/04-image-pipeline.html">강의 04 · 이미지 생성</a></li><li><a href="lectures/05-integration.html">강의 05 · 통합</a></li></ol></section>'
     for heading, entries in sections:
         body += f'<section><h2>{heading}</h2><ul>' + "".join(f'<li><a href="{href}">{label}</a> — {desc}</li>' for label, href, desc in entries) + '</ul></section>'
     body += '<p>예제 코드는 HTML escape를 적용한 보기 화면과 원본 다운로드 링크를 함께 제공합니다. 입력은 합성 fixture이며 실서비스 연동은 하지 않습니다.</p>'
@@ -352,10 +366,11 @@ def main() -> int:
             else:
                 shutil.copyfile(SOURCE / rel, dest)
     # Example README and agent prompt are rendered from the reviewed Markdown sources.
-    for name in ("README", "PROMPT"):
-        source = SOURCE / f"examples/image-pipeline/{name}.md"
-        rendered = page(f"이미지 파이프라인 · {name}", render_markdown(source.read_text(encoding="utf-8")), 2)
-        target = OUT / f"examples/image-pipeline/{name}.html"
+    for slug, label in (("image-pipeline", "이미지 파이프라인"), ("knowledge-context-check", "요청 근거 확인")):
+      for name in ("README", "PROMPT"):
+        source = SOURCE / f"examples/{slug}/{name}.md"
+        rendered = page(f"{label} · {name}", render_markdown(source.read_text(encoding="utf-8")), 2)
+        target = OUT / f"examples/{slug}/{name}.html"
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(rendered, encoding="utf-8", newline="\n")
     shutil.copyfile(SOURCE / "site/assets/publish-design-system.css", OUT / "assets/design-system.css")
@@ -383,6 +398,12 @@ def main() -> int:
         rows.append(f'<li><a href="{html_rel.as_posix().removeprefix("code/")}">{escape(source_rel.as_posix())}</a> · <a href="../{download_rel.as_posix()}">원본 다운로드</a></li>')
     code_body = '<p><a href="../index.html">← 미리보기 목차</a></p><h1>코드·예제·테스트</h1><p>화면은 HTML escape를 적용한 보기용입니다. 다운로드 파일도 같은 allowlist에서 생성됩니다.</p><ul>' + "".join(rows) + "</ul>"
     (OUT / "code/index.html").write_text(page("코드·예제·테스트", code_body, 1), encoding="utf-8", newline="\n")
+    # 모든 강의를 같은 16:9 발표 틀로 다시 조립한다(tools/deckify.py).
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import deckify
+    deckify.build(SOURCE / "site/lectures", OUT / "lectures")
+    for name in ("deck.css", "deck.js"):
+        shutil.copyfile(SOURCE / "site/assets" / name, OUT / "assets" / name)
     print(f"built preview: {len(ALLOWED)} source files, {len(items)} code files -> docs/preview")
     return 0
 
