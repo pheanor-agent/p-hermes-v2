@@ -27,8 +27,9 @@
     nextButton.disabled = current === slides.length - 1;
     if (last !== current) viewport.scrollTop = 0;
     if (window.__motion && (last !== current || !slides[current].__entered)) {
+      if (last !== current) window.__motion.leave(slides[last]);
       slides[current].__entered = true;
-      window.__motion.enter(slides[current], current < last);
+      window.__motion.enter(slides[current]);
     }
     if (push) history.replaceState(null, '', '#' + (current + 1));
   }
@@ -43,11 +44,8 @@
     else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
   }
 
-  // Step through in-slide builds before moving to another slide.
-  function go(dir) {
-    if (window.__motion && window.__motion.step(slides[current], dir)) return;
-    show(current + dir);
-  }
+  // Builds and demos play by themselves; navigation always moves whole slides.
+  function go(dir) { show(current + dir); }
 
   document.addEventListener('keydown', e => {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
@@ -70,7 +68,7 @@
   let x0 = null;
   let y0 = null;
   viewport.addEventListener('touchstart', e => {
-    x0 = e.target.closest('.dk-diagram,.sim,a,button') ? null : e.touches[0].clientX;
+    x0 = e.target.closest('a,button') ? null : e.touches[0].clientX;
     y0 = e.touches[0].clientY;
   }, { passive: true });
   viewport.addEventListener('touchend', e => {
@@ -81,7 +79,7 @@
     x0 = null;
   });
   viewport.addEventListener('click', e => {
-    if (e.target.closest('a,button,.dk-diagram,.dk-scene,.sim,.dk-copy,.dk-foot')) return;
+    if (e.target.closest('a,button')) return;
     const r = viewport.getBoundingClientRect();
     go(e.clientX > r.left + r.width / 2 ? 1 : -1);
   });

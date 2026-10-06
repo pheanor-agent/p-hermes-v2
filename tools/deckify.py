@@ -74,10 +74,38 @@ def parse(source: str, number: str) -> list[dict]:
             "sim": sim.group(0) if sim else "",
             "paras": [(c or "", p.strip()) for c, p in paras],
             "next": nxt.group(1).strip() if nxt else "",
+            "kicker": attr(attrs, "data-kicker"),
+            "gap": attr(attrs, "data-build-gap"),
         })
     if not slides:
         raise ValueError(f"강의 {number}: 슬라이드 없음")
     return slides
+
+
+def ambient(seed: int) -> str:
+    """Deterministic drifting particles behind cover and interlude slides."""
+    dots = []
+    for k in range(26):
+        x = (seed * 37 + k * 211) % 1600
+        y = (seed * 53 + k * 137) % 900
+        r = 2 + (k * 7 + seed) % 4
+        dx = ((k * 29) % 70) - 35
+        dy = ((k * 41) % 80) - 40
+        t = 10 + (k * 3) % 12
+        dots.append(f'<circle cx="{x}" cy="{y}" r="{r}" style="--x:{dx}px;--y:{dy}px;--t:{t}s;--dl:-{k % 9}s"/>')
+    lines = "".join(f'<path d="M{-50 + k * 420} 900C{200 + k * 420} {600 - k * 40} {300 + k * 380} {300 + k * 30} {700 + k * 300} -20"/>' for k in range(4))
+    return f'<svg class="dk-ambient" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">{lines}{"".join(dots)}</svg>'
+
+
+def words(title: str) -> str:
+    """Split a title into word spans for kinetic typography.
+
+    Splitting happens only at real spaces, so a highlighted <em> phrase stays glued
+    to the Korean particle that follows it (no stray space before "가", "라고"...).
+    """
+    protected = re.sub(r"<em>(.*?)</em>", lambda m: "<em>" + m.group(1).replace(" ", "\u00a0") + "</em>", title)
+    return " ".join(f'<span class="w" style="--i:{i}">{w.replace(chr(160), " ")}</span>'
+                    for i, w in enumerate(protected.split(" ")) if w)
 
 
 def figure(scene: str) -> str:
@@ -97,9 +125,20 @@ def render(number: str, name: str, slides: list[dict]) -> str:
             f'<p class="dk-p{" mo-hint" if "hint" in c else ""}">{p}</p>' for c, p in s["paras"]
         )
         stage = figure(s["scene"]) if s["scene"] else s["sim"]
-        layout = {"cover": "dk-cover", "sim": "dk-sim", "text": "dk-text"}.get(s["kind"], "dk-main")
-        if not stage and layout != "dk-cover":
+        layout = {"cover": "dk-cover", "sim": "dk-sim", "text": "dk-text", "interlude": "dk-interlude",
+                  "concept": "dk-main dk-concept"}.get(s["kind"], "dk-main")
+        if not stage and layout not in ("dk-cover", "dk-interlude"):
             layout = "dk-text"
+        gap = f' data-build-gap="{s["gap"]}"' if s["gap"] else ""
+        if layout == "dk-interlude":
+            sub = "".join(f'<p class="dk-sub">{p}</p>' for _, p in s["paras"])
+            parts.append(
+                f'<article class="dk-slide dk-interlude" id="s{i}" data-index="{i}" aria-label="{i} / {total}">{ambient(i + int(number) * 7)}'
+                f'<div class="dk-rings" aria-hidden="true"><i></i><i></i><i></i></div>'
+                f'<div class="dk-inner"><p class="dk-kicker">{html.escape(s["kicker"] or s["eyebrow"])}</p>'
+                f'<h2 class="dk-title dk-big">{words(s["title"])}</h2>{sub}</div></article>'
+            )
+            continue
         if s["next"]:
             if i == total and next_lec:
                 nxt = f'<p class="dk-next"><b>다음 질문 · 강의 {next_lec[1]}</b><a href="{next_lec[0]}">{s["next"]}</a></p>'
@@ -111,11 +150,13 @@ def render(number: str, name: str, slides: list[dict]) -> str:
             nxt = '<p class="dk-next"><b>마지막 장</b><a href="../index.html">강의 목록으로 →</a></p>'
         else:
             nxt = ""
-        before = slides[i - 2]["next"] if i > 1 else ""
+        prev_q = [x for x in slides[: i - 1] if x["kind"] != "interlude"]
+        before = prev_q[-1]["next"] if prev_q else ""
         previous = (f'<p class="dk-prev"><b>이어받은 질문</b>{before}</p>' if before
                     else '<p class="dk-prev"><b>강의의 출발점</b>전체 흐름에서 지금 볼 구간을 정합니다.</p>')
         parts.append(
-            f'<article class="dk-slide {layout}" id="s{i}" data-index="{i}" aria-label="{i} / {total}">'
+            f'<article class="dk-slide {layout}" id="s{i}" data-index="{i}" aria-label="{i} / {total}"{gap}>'
+            + (ambient(i + int(number) * 7) if layout == "dk-cover" else "") +
             f'<header class="dk-head"><span class="dk-eyebrow">{html.escape(s["eyebrow"])}</span>'
             f'<span class="dk-count">{i:02d} / {total:02d}</span></header>'
             f'<h2 class="dk-title">{s["title"]}</h2>'

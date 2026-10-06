@@ -10,7 +10,7 @@ body.dk{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif
 #deck .dk-head{display:flex;justify-content:space-between;align-items:center;margin:0;padding:0;border:0;background:none;position:static}
 #deck .dk-eyebrow{color:#82dec6;font-size:21px;font-weight:700;letter-spacing:.03em}
 #deck .dk-count{color:#b6c4d5;font-size:21px;font-variant-numeric:tabular-nums}
-#deck .dk-title{margin:0;padding:0;font-size:52px;line-height:1.25;font-weight:750;color:#f4f7fb;letter-spacing:-.025em;max-width:1440px;text-wrap:balance;word-break:keep-all;overflow-wrap:normal}
+#deck .dk-title{margin:0;padding:0;font-size:52px;line-height:1.34;font-weight:750;color:#f4f7fb;letter-spacing:-.025em;max-width:1440px;text-wrap:balance;word-break:keep-all;overflow-wrap:normal}
 #deck .dk-body{display:grid;grid-template-columns:minmax(0,1fr) 450px;gap:40px;align-items:center;min-height:0}
 #deck .dk-text .dk-body{grid-template-columns:1fr}
 #deck .dk-diagram{margin:0;padding:14px 18px;height:100%;max-height:570px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;min-height:0;background:#132130;border:1px solid #304357;border-radius:8px}
@@ -72,28 +72,5 @@ body.dk{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif
 :fullscreen .dk-viewport,body.dk.is-fs .dk-viewport{inset:0}
 body.dk.is-fs .dk-controls{opacity:0;transition:opacity .2s}
 body.dk.is-fs .dk-controls:hover,body.dk.is-fs .dk-controls:focus-within{opacity:1}
-/* A reading-sized portrait layout: slides remain discrete, tall slides can scroll. */
-@media (orientation:portrait) and (max-width:760px){
- html,body.dk{height:100%;overflow:hidden!important}
- .dk-viewport{overflow-y:auto;overscroll-behavior:contain}
- .dk-stage{position:relative!important;left:auto;top:auto;transform:none!important;width:100%;height:auto;min-height:100%;overflow:visible}
- .dk-brand{position:relative;left:auto;right:auto;top:auto;padding:20px 22px 0;gap:12px;font-size:12px}
- #deck .dk-slide{position:relative;inset:auto;padding:22px 22px 32px;min-height:calc(100svh - 102px);row-gap:20px}
- #deck .dk-eyebrow,#deck .dk-count{font-size:12px}
- #deck .dk-title{font-size:28px;line-height:1.3;max-width:none}
- #deck .dk-body{grid-template-columns:1fr;grid-template-rows:auto auto;gap:22px;align-content:start}
- #deck .dk-diagram{display:block;height:auto;min-height:220px;max-height:none;max-width:100%;padding:12px;overflow-x:auto}
- #deck .dk-diagram svg{width:700px!important;max-height:none!important;height:auto!important;flex:none}
- #deck .dk-pan-hint{display:block;position:sticky;left:0;width:260px;font-size:12px;line-height:1.5;color:#b7c5d6;margin:0 0 12px}
- #deck .dk-caption{font-size:13px;margin-top:10px}
- #deck .dk-copy{padding:0 0 0 14px;gap:14px}
- #deck .dk-p{font-size:18px;line-height:1.65}
- #deck .dk-p+.dk-p{font-size:15px}
- #deck .dk-art{max-height:150px;width:100%}
- #deck .dk-foot{grid-template-columns:1fr;gap:16px;min-height:0;padding-top:16px}
- #deck .dk-prev,#deck .dk-next{font-size:15px}
- #deck .dk-prev b,#deck .dk-next b{font-size:11px}
- #deck .dk-progress{left:22px;right:22px}
- .dk-controls .dk-lecs,.dk-controls .dk-lec{display:none}
-}
+/* Every screen shows the whole 16:9 slide scaled to fit: no scrolling, no reflow. */
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
