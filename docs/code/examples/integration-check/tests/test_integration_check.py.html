@@ -23,6 +23,8 @@ class IntegrationCheckTests(unittest.TestCase):
             self.assertEqual(result[&quot;request_id&quot;], &quot;synthetic-integration-002&quot;)
             self.assertEqual(result[&quot;status&quot;], &quot;partial&quot;)
             self.assertIn(&quot;context.source_verified&quot;, result[&quot;missing_conditions&quot;])
+            self.assertIn(&quot;job.verification.verification.md&quot;, result[&quot;missing_conditions&quot;])
+            self.assertIn(&quot;job.approval.evidence&quot;, result[&quot;missing_conditions&quot;])
             self.assertTrue((Path(tmp) / result[&quot;artifact&quot;]).is_file())
             saved = json.loads((Path(tmp) / &quot;response.json&quot;).read_text(encoding=&quot;utf-8&quot;))
             self.assertEqual(saved, result)

@@ -1,7 +1,0 @@
-{
-  "schema": "synthetic-image-catalog/v1",
-  "entries": [
-    {"name": "soft-diagram", "style": "선명한 평면 도해", "aspect_ratio": "16:9"},
-    {"name": "square-study", "style": "단순한 도형 연구", "aspect_ratio": "1:1"}
-  ]
-}

@@ -1,5 +1,0 @@
-{
-  "catalog_id": "synthetic-image-v1",
-  "runtime": "fake",
-  "adapter": "local-marker"
-}

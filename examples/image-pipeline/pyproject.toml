@@ -1,9 +1,0 @@
-[project]
-name = "p-hermes-image-pipeline-example"
-version = "0.1.0"
-description = "합성 입력으로 이미지 생성 데이터 계약을 확인하는 오프라인 예제"
-requires-python = ">=3.11"
-dependencies = []
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]

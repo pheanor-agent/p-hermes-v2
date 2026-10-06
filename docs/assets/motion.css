@@ -1,0 +1,163 @@
+/* Motion vocabulary + simulator panels for the p-hermes deck (loaded after deck.css). */
+:root{--mo-mint:#82dec6;--mo-amber:#ffcf86;--mo-coral:#ff9f8f;--mo-blue:#9bc2ff;--mo-line:#879cb3;--mo-panel:#132130;--mo-edge:#304357}
+
+/* ----- scene figure (authored SVG) ----- */
+#deck .dk-scene{margin:0;padding:18px 22px;height:100%;max-height:590px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;min-height:0;background:radial-gradient(120% 90% at 30% 20%,#17283b 0,#132130 55%,#101c29 100%);border:1px solid var(--mo-edge);border-radius:12px;position:relative;overflow:hidden}
+#deck .dk-scene svg{display:block;width:100%;height:100%;max-height:540px;flex:1 1 auto;overflow:visible}
+#deck .dk-scene .dk-caption{margin:10px 0 0}
+#deck .dk-scene svg text{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif;fill:#edf2fa;font-size:25px;font-weight:650;text-anchor:middle;dominant-baseline:middle}
+#deck .dk-scene svg text.sub{font-size:19px;font-weight:450;fill:#b9c7d8}
+#deck .dk-scene svg text.lbl{font-size:19px;font-weight:600;fill:#c3d0e0;paint-order:stroke;stroke:#132130;stroke-width:6px}
+#deck .dk-scene svg text.warn{fill:var(--mo-coral)}
+#deck .dk-scene svg text.ok{fill:var(--mo-mint)}
+#deck .dk-scene svg text.left{text-anchor:start}
+#deck .dk-scene svg .box{fill:#1b2b3d;stroke:#6c839d;stroke-width:2}
+#deck .dk-scene svg .box.hot{fill:#173a39;stroke:var(--mo-mint);stroke-width:2.5}
+#deck .dk-scene svg .box.amber{fill:#3a2f1c;stroke:var(--mo-amber)}
+#deck .dk-scene svg .box.coral{fill:#3a2224;stroke:var(--mo-coral)}
+#deck .dk-scene svg .box.ghost{fill:none;stroke:#4a5f77;stroke-dasharray:6 6}
+#deck .dk-scene svg .wire{fill:none;stroke:var(--mo-line);stroke-width:3;marker-end:url(#mo-arrow)}
+#deck .dk-scene svg .wire.mint{stroke:var(--mo-mint);marker-end:url(#mo-arrow-mint)}
+#deck .dk-scene svg .wire.coral{stroke:var(--mo-coral);marker-end:url(#mo-arrow-coral)}
+#deck .dk-scene svg .wire.bare{marker-end:none}
+
+/* draw-in: give paths pathLength="1" and class mo-draw */
+#deck .dk-slide.mo-play .mo-draw{stroke-dasharray:1;stroke-dashoffset:1;animation:mo-draw 1s cubic-bezier(.3,.7,.3,1) forwards;animation-delay:calc(var(--d,0) * 140ms + 200ms)}
+@keyframes mo-draw{to{stroke-dashoffset:0}}
+/* marching dashes for continuous flows */
+#deck .mo-flow{stroke-dasharray:10 8;animation:mo-march 1.2s linear infinite}
+#deck .mo-flow.slow{animation-duration:2.4s}
+@keyframes mo-march{to{stroke-dashoffset:-36}}
+/* pop-in for nodes, staggered with --d */
+#deck .dk-slide.mo-play .mo-pop{opacity:0;transform-box:fill-box;transform-origin:center;animation:mo-pop .55s cubic-bezier(.2,.9,.3,1.25) forwards;animation-delay:calc(var(--d,0) * 140ms)}
+@keyframes mo-pop{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:none}}
+#deck .dk-slide.mo-play .mo-rise{opacity:0;animation:mo-rise .6s ease-out forwards;animation-delay:calc(var(--d,0) * 120ms)}
+@keyframes mo-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* pulsing halo behind the focused node */
+#deck .mo-pulse{fill:none;stroke:var(--mo-mint);stroke-width:3;transform-box:fill-box;transform-origin:center;animation:mo-pulse 2.2s ease-out infinite}
+#deck .mo-pulse.coral{stroke:var(--mo-coral)}
+#deck .mo-pulse.amber{stroke:var(--mo-amber)}
+@keyframes mo-pulse{0%{opacity:.85;transform:scale(1)}100%{opacity:0;transform:scale(1.28)}}
+/* packets travelling along a path (positioned by motion.js) */
+#deck .mo-pkt{fill:var(--mo-mint);filter:drop-shadow(0 0 6px rgba(130,222,198,.9))}
+#deck .mo-pkt.amber{fill:var(--mo-amber);filter:drop-shadow(0 0 6px rgba(255,207,134,.9))}
+#deck .mo-pkt.coral{fill:var(--mo-coral);filter:drop-shadow(0 0 6px rgba(255,159,143,.9))}
+#deck .mo-pkt.blue{fill:var(--mo-blue);filter:drop-shadow(0 0 6px rgba(155,194,255,.9))}
+/* stamp / shake for blocked states */
+#deck .dk-slide.mo-play .mo-shake{animation:mo-shake .5s ease-in-out 1.2s 2}
+@keyframes mo-shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+#deck .mo-blink{animation:mo-blink 1.6s ease-in-out infinite}
+@keyframes mo-blink{50%{opacity:.35}}
+/* step builds: [data-build=n] hidden until the n-th press */
+#deck [data-build]{opacity:0;transition:opacity .45s ease,transform .45s ease;transform:translateY(8px)}
+#deck svg [data-build]{transform:none}
+#deck [data-build].built{opacity:1;transform:none}
+#deck [data-build-on]{transition:opacity .3s}
+#deck .mo-dots{display:flex;gap:7px;margin-left:auto;margin-right:22px}
+#deck .mo-dots i{width:10px;height:10px;border-radius:50%;background:#2b3d52;transition:background .3s}
+#deck .mo-dots i.on{background:var(--mo-mint)}
+#deck .dk-count{min-width:100px;text-align:right}
+#deck .dk-p.mo-hint{font-size:19px!important;color:#93a6bb!important}
+
+/* ----- cover hero ----- */
+#deck .dk-cover .dk-title{font-size:64px;line-height:1.18}
+#deck .dk-cover .dk-title em{font-style:normal;background:linear-gradient(90deg,#82dec6,#9bc2ff 55%,#ffcf86);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ----- simulator panel (books.euiyun.com style) ----- */
+#deck .dk-sim .dk-body{grid-template-columns:minmax(0,1fr) 330px;gap:28px}
+#deck .dk-sim .dk-p{font-size:24px}
+#deck .dk-sim .dk-p+.dk-p{font-size:20px}
+#deck .sim{display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;height:100%;max-height:620px;min-height:0;background:#0f1a27;border:1px solid var(--mo-edge);border-radius:14px;overflow:hidden;font-size:18px}
+#deck .sim-head{display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid #26384b;background:#132130}
+#deck .sim-tag{font:700 13px ui-monospace,monospace;letter-spacing:.18em;color:#b7a6ff;border:1px solid #7d6bd6;border-radius:999px;padding:3px 11px}
+#deck .sim-head b{font-size:20px;color:#f4f7fb}
+#deck .sim-body{display:grid;grid-template-columns:minmax(0,1fr) 280px;min-height:0}
+#deck .sim-view{padding:14px 18px;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:10px;justify-content:center}
+#deck .sim-ctrl{border-left:1px solid #26384b;padding:14px 16px;display:flex;flex-direction:column;gap:14px;overflow:auto;background:#111d2b}
+#deck .sim-group{display:flex;flex-wrap:wrap;gap:8px}
+#deck .sim-label{width:100%;font-size:15px;color:#9fb0c4;font-weight:650}
+#deck .sim-btn,#deck .sim-toggle,#deck .sim-seg button{font:600 16px system-ui,sans-serif;color:#dfe8f3;background:#1a2a3c;border:1px solid #3c516a;border-radius:9px;padding:8px 13px;cursor:pointer;transition:background .2s,border-color .2s,transform .1s}
+#deck .sim-btn:active,#deck .sim-toggle:active{transform:scale(.97)}
+#deck .sim-btn.primary{background:#5b4ed1;border-color:#7d6bd6;color:#fff}
+#deck .sim-btn:hover,#deck .sim-toggle:hover,#deck .sim-seg button:hover{border-color:var(--mo-mint)}
+#deck .sim-toggle[aria-pressed=true]{background:#173a39;border-color:var(--mo-mint);color:#fff}
+#deck .sim-toggle[aria-pressed=true]::before{content:"✓ "}
+#deck .sim-seg{display:flex;flex-wrap:wrap;gap:4px;background:#16243a;border-radius:10px;padding:4px}
+#deck .sim-seg button{border:0;background:none;padding:7px 11px}
+#deck .sim-seg button[aria-checked=true]{background:#e9eef7;color:#3b2fb0}
+#deck .sim-metrics{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #26384b}
+#deck .sim-metric{padding:10px 16px;border-right:1px solid #26384b;min-width:0}
+#deck .sim-metric:last-child{border-right:0}
+#deck .sim-metric span{display:block;font-size:14px;color:#9fb0c4}
+#deck .sim-metric strong{display:block;font:700 20px ui-monospace,"SF Mono",monospace;color:#f4f7fb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#deck .sim-try{margin:0;padding:9px 18px;font-size:15px;line-height:1.55;color:#aebdd0;background:#152234;border-top:1px solid #26384b}
+#deck .sim-svg{width:100%;height:auto;max-height:330px;flex:0 0 auto}
+#deck .sim p{max-width:none}
+#deck .sim-svg text{font:600 18px system-ui,sans-serif;fill:#edf2fa;text-anchor:middle}
+#deck .sim-rail{stroke:#3a4f66;stroke-width:6;stroke-linecap:round;fill:none}
+#deck .sim-node circle{fill:#1b2b3d;stroke:#6c839d;stroke-width:3;transition:fill .3s,stroke .3s}
+#deck .sim-node.done circle{fill:#173a39;stroke:var(--mo-mint)}
+#deck .sim-node.now circle{stroke-width:5}
+#deck .sim-node text.f{font:500 15px ui-monospace,monospace;fill:#b9c7d8}
+#deck .sim-token{fill:var(--mo-amber);filter:drop-shadow(0 0 8px rgba(255,207,134,.9));transition:transform .6s cubic-bezier(.3,.8,.3,1),cx .5s,cy .5s}
+#deck .sim-token.idle{opacity:.4}
+#deck .sim-barrier{opacity:0;transition:opacity .3s,transform .4s}
+#deck .sim-barrier.on{opacity:1;animation:mo-shake .4s 2}
+#deck .sim-barrier rect{fill:var(--mo-coral)}
+#deck .sim-barrier text{fill:var(--mo-coral)!important;font-size:16px!important}
+#deck .sim-log{margin:0;padding:8px 8px 8px 30px;max-height:150px;overflow:auto;font:15px/1.6 ui-monospace,monospace;color:#c6d3e2;background:#0b1520;border-radius:8px}
+#deck .sim-log li.bad{color:var(--mo-coral)}
+#deck .sim-flow{display:flex;flex-direction:column;gap:10px}
+#deck .sim-q{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:8px 14px;border:1px solid #2f4258;border-radius:10px;background:#152234;opacity:.55;transition:all .3s}
+#deck .sim-q b{font-size:20px}
+#deck .sim-q span{grid-column:1;font-size:15px;color:#9fb0c4}
+#deck .sim-q em{grid-row:1/3;grid-column:2;align-self:center;font-style:normal;font-weight:700;color:#c3d0e0}
+#deck .sim-q.pass{opacity:.85}
+#deck .sim-q.hit{opacity:1;border-color:var(--mo-amber);box-shadow:0 0 0 3px rgba(255,207,134,.15)}
+#deck .sim-verdict{font-size:26px;font-weight:800;text-align:center;padding:10px;border-radius:12px;background:#173a39;color:#fff;transition:background .3s}
+#deck .sim-verdict[data-kind=stop]{background:#4a2326}
+#deck .sim-verdict[data-kind=worker]{background:#2c2a5a}
+#deck .sim-card{padding:18px 22px;border-radius:12px;border:1px solid #3c516a;background:#152234;display:flex;flex-direction:column;gap:10px}
+#deck .sim-card[data-kind=ok]{border-color:var(--mo-mint)}
+#deck .sim-card[data-kind=warn]{border-color:var(--mo-amber)}
+#deck .sim-card[data-kind=stop]{border-color:var(--mo-coral)}
+#deck .sim-card p{margin:0;font-size:22px;opacity:0;animation:mo-rise .4s ease-out forwards;animation-delay:calc(var(--d,0) * 110ms)}
+#deck .sim-shelves{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;flex:1;min-height:0}
+#deck .sim-bin{border:1px solid #2f4258;border-radius:10px;background:#152234;padding:8px;display:flex;flex-direction:column;gap:4px;min-height:0;overflow:hidden}
+#deck .sim-bin b{font-size:15px;color:var(--mo-mint);word-break:break-all}
+#deck .sim-bin>span{font-size:13px;color:#9fb0c4}
+#deck .sim-bin.flash{animation:mo-flash .7s}
+@keyframes mo-flash{0%{background:#285a52}100%{background:#152234}}
+#deck .sim-bin-items{display:flex;flex-direction:column;gap:4px;overflow:auto}
+#deck .sim-chip{font-size:13px;line-height:1.35;padding:5px 7px;border-radius:7px;background:#1e3048;border:1px solid #3c516a}
+#deck .sim-chip.ok{border-color:var(--mo-mint)}
+#deck .sim-chip.moved{border-color:var(--mo-coral)}
+#deck .sim-cards{min-height:60px;display:flex;justify-content:center}
+#deck .sim-cards .sim-chip{font-size:20px;padding:12px 18px;background:#2a2550;border-color:#7d6bd6;animation:mo-pop .45s cubic-bezier(.2,.9,.3,1.25)}
+#deck .sim-current{margin:0;font-size:17px;color:#dfe8f3;line-height:1.5}
+#deck .sim-svg .lane{stroke:#26384b;stroke-width:2;stroke-dasharray:4 6}
+#deck .sim-svg .lane-l{text-anchor:start;font-size:17px;fill:#c3d0e0;dominant-baseline:middle}
+#deck .sim-trail{fill:none;stroke:var(--mo-mint);stroke-width:3;stroke-linejoin:round}
+#deck .sim-mark{fill:var(--mo-mint)}
+#deck .sim-mark.bad{fill:var(--mo-coral)}
+#deck .sim-svg.life{max-height:250px}
+#deck .sim-say{margin:0;font-size:21px;line-height:1.4;min-height:58px;color:#f4f7fb}
+
+@media (orientation:portrait) and (max-width:760px){
+ #deck .dk-scene{display:block;height:auto;max-height:none;overflow-x:auto;padding:12px}
+ #deck .dk-scene::before{content:"도해를 좌우로 밀어 전체를 보세요";display:block;position:sticky;left:0;font-size:12px;color:#93a6bb;margin-bottom:6px}
+ #deck .dk-scene svg{width:640px;max-height:none;height:auto}
+ #deck .dk-cover .dk-title{font-size:32px}
+ #deck .dk-sim .dk-body{grid-template-columns:1fr}
+ #deck .sim{max-height:none}
+ #deck .sim-body{grid-template-columns:1fr}
+ #deck .sim-ctrl{border-left:0;border-top:1px solid #26384b}
+ #deck .sim-metrics{grid-template-columns:1fr}
+ #deck .sim-shelves{grid-template-columns:repeat(2,1fr)}
+ #deck .mo-dots{display:none}
+}
+@media(prefers-reduced-motion:reduce){#deck [data-build]{transition:none}#deck .mo-draw{stroke-dashoffset:0!important}#deck .mo-pop,#deck .mo-rise{opacity:1!important}}
+#deck .sim-metric[data-kind]{transition:background .3s}
+#deck .sim-metric[data-kind=manager]{background:#173a39}
+#deck .sim-metric[data-kind=worker]{background:#2c2a5a}
+#deck .sim-metric[data-kind=stop]{background:#4a2326}

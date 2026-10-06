@@ -26,6 +26,10 @@
     previousButton.disabled = current === 0;
     nextButton.disabled = current === slides.length - 1;
     if (last !== current) viewport.scrollTop = 0;
+    if (window.__motion && (last !== current || !slides[current].__entered)) {
+      slides[current].__entered = true;
+      window.__motion.enter(slides[current], current < last);
+    }
     if (push) history.replaceState(null, '', '#' + (current + 1));
   }
 
@@ -39,18 +43,24 @@
     else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
   }
 
+  // Step through in-slide builds before moving to another slide.
+  function go(dir) {
+    if (window.__motion && window.__motion.step(slides[current], dir)) return;
+    show(current + dir);
+  }
+
   document.addEventListener('keydown', e => {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     // Space/Enter keep their native activation behavior on navigation controls.
     if (e.target.closest('input,textarea,select,[contenteditable="true"]')) return;
     if (e.target.closest('a,button') && [' ', 'Enter'].includes(e.key)) return;
-    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); show(current + 1); }
-    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); show(current - 1); }
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); go(1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); go(-1); }
     else if (e.key === 'Home') show(0);
     else if (e.key === 'End') show(slides.length - 1);
     else if (e.key === 'f' || e.key === 'F') toggleFs();
   });
-  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => show(current + Number(b.dataset.go))));
+  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => go(Number(b.dataset.go))));
   document.querySelector('[data-fs]').addEventListener('click', toggleFs);
   document.addEventListener('fullscreenchange', () => {
     document.body.classList.toggle('is-fs', !!document.fullscreenElement);
@@ -60,25 +70,26 @@
   let x0 = null;
   let y0 = null;
   viewport.addEventListener('touchstart', e => {
-    x0 = e.target.closest('.dk-diagram,a,button') ? null : e.touches[0].clientX;
+    x0 = e.target.closest('.dk-diagram,.sim,a,button') ? null : e.touches[0].clientX;
     y0 = e.touches[0].clientY;
   }, { passive: true });
   viewport.addEventListener('touchend', e => {
     if (x0 === null) return;
     const dx = e.changedTouches[0].clientX - x0;
     const dy = e.changedTouches[0].clientY - y0;
-    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) show(current + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) go(dx < 0 ? 1 : -1);
     x0 = null;
   });
   viewport.addEventListener('click', e => {
-    if (e.target.closest('a,button,.dk-diagram,.dk-copy,.dk-foot')) return;
+    if (e.target.closest('a,button,.dk-diagram,.dk-scene,.sim,.dk-copy,.dk-foot')) return;
     const r = viewport.getBoundingClientRect();
-    show(current + (e.clientX > r.left + r.width / 2 ? 1 : -1));
+    go(e.clientX > r.left + r.width / 2 ? 1 : -1);
   });
 
   window.addEventListener('resize', fit);
   window.addEventListener('hashchange', () => show(fromHash(), false));
+  if (window.__motion) window.__motion.init();
   fit();
   show(fromHash(), false);
-  window.__deck = { show, count: slides.length, get current() { return current; } };
+  window.__deck = { show, go, count: slides.length, get current() { return current; } };
 })();

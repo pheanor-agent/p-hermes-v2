@@ -1,0 +1,6 @@
+{
+  "tier": "light",
+  "stages": ["request", "execution", "verification", "done"],
+  "approval": {"approved_by": "synthetic-user", "evidence": ""},
+  "files": ["request.md", "approval.md", "execution.md", "result.md"]
+}

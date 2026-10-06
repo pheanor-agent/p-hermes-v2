@@ -16,7 +16,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs"
 HOME = ROOT / "site" / "index.html"
-EXAMPLE_NAMES = ("portable-worker", "image-pipeline", "knowledge-context-check", "integration-check")
+EXAMPLE_NAMES = ("portable-worker", "knowledge-context-check", "integration-check")
 
 CACHE_SUFFIXES = {".pyc", ".pyo", ".pyd"}
 
@@ -138,7 +138,6 @@ def _build() -> None:
         elif d == "examples":
             links = [(f"{name}/README.html", label) for name, label in (
                 ("portable-worker", "파일로 요청과 응답 연결하기"),
-                ("image-pipeline", "이미지 파이프라인 구성 확인하기"),
                 ("knowledge-context-check", "지식 후보의 출처와 상태 확인하기"),
                 ("integration-check", "요청부터 결과까지 통합 흐름 확인하기"),
             )]
@@ -147,7 +146,7 @@ def _build() -> None:
     articles = sorted((ROOT / "site" / "articles").glob("*.html"))
     (OUT / "articles" / "index.html").write_text(page("읽을거리", [(p.name, p.stem) for p in articles]), encoding="utf-8", newline="\n")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
-    # Bundle the four offline examples with the portable reference package.
+    # Bundle the three offline examples with the portable reference package.
     archive = OUT / "downloads" / "examples.zip"
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         def add_deterministic(path: Path, arcname: Path) -> None:
@@ -203,7 +202,7 @@ def _build() -> None:
         prefix='../' * len(rel.parts)
         text=text.replace('../../assets/',prefix+'assets/').replace('../../index.html',prefix+'index.html')
         authored.write_text(text,encoding='utf-8',newline='\n')
-    # Compile the six authored lecture sources with the retained deckify renderer.
+    # Compile the five authored lecture sources with the retained deckify renderer.
     import sys
     sys.path.insert(0, str(ROOT / 'tools'))
     import deckify

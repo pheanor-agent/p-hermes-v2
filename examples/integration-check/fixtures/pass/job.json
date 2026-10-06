@@ -1,0 +1,6 @@
+{
+  "tier": "light",
+  "stages": ["request", "execution", "verification", "done"],
+  "approval": {"approved_by": "synthetic-user", "evidence": "합성 승인 문장"},
+  "files": ["request.md", "approval.md", "execution.md", "verification.md", "result.md"]
+}

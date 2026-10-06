@@ -140,21 +140,22 @@ def main() -> int:
 
     source_counts: list[int] = []
     rail_count = 0
-    expected_counts = [8, 8, 9, 9, 8, 10]
+    expected_counts = [7, 9, 8, 7, 6]
+    EXPECTED_TOTAL = sum(expected_counts)
     for (filename, number, _), expected_count in zip(deckify.LECTURES, expected_counts):
         source = ROOT / "site" / "lectures" / filename
         if not source.is_file():
             errors.append(f"missing lecture source: {filename}")
             continue
-        _, slides = deckify.parse(source.read_text(encoding="utf-8"), number)
+        slides = deckify.parse(source.read_text(encoding="utf-8"), number)
         source_counts.append(len(slides))
-        rail_count += sum(bool(slide.get("prev")) and bool(slide.get("next")) for slide in slides)
+        rail_count += sum(bool(slides[k - 1]["next"]) and bool(slides[k]["next"]) for k in range(1, len(slides)))
         if len(slides) != expected_count:
             errors.append(f"lecture slide count mismatch: {filename}")
         if any(not slide.get("title") for slide in slides):
             errors.append(f"lecture slide title missing: {filename}")
-    if sum(source_counts) != 52:
-        errors.append(f"source lecture total is {sum(source_counts)}, expected 52")
+    if sum(source_counts) != EXPECTED_TOTAL:
+        errors.append(f"source lecture total is {sum(source_counts)}, expected {EXPECTED_TOTAL}")
 
     generated_counts: list[int] = []
     for filename, _, _ in deckify.LECTURES:
@@ -168,8 +169,8 @@ def main() -> int:
         generated_counts.append(count)
         if count == 0:
             errors.append(f"generated lecture has no slides: {filename}")
-    if sum(generated_counts) != 52:
-        errors.append(f"generated lecture total is {sum(generated_counts)}, expected 52")
+    if sum(generated_counts) != EXPECTED_TOTAL:
+        errors.append(f"generated lecture total is {sum(generated_counts)}, expected {EXPECTED_TOTAL}")
 
     text_count, zip_member_count = scan_public_tree(errors)
     if errors:
