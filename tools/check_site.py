@@ -98,8 +98,41 @@ def scan_public_tree(errors: list[str]) -> tuple[int, int]:
     return scanned_text, scanned_zip_members
 
 
+def check_content_alignment(errors: list[str]) -> None:
+    """Check public scope and operational contract markers without freezing prose."""
+    classes = ("permanent_deletion", "external_publication", "credential_security", "policy_amendment")
+    required = {
+        "index.html": ("Hermes 엔진", "로컬 운영", "wiki/reference/contracts.html#scope"),
+        "lectures/00-overview.html": ("세션 기록", "로컬 운영"),
+        "lectures/04-integration.html": ("참조 구현",),
+        "wiki/knowledge-context.html": ("write-lesson.py", "--id", "--body-file", "validation_status: candidate", "contracts.html#scope"),
+        "wiki/reference/workflow.html": classes + ("simple", "JOB", "contracts.html#scope"),
+        "wiki/reference/terms.html": classes + ("request_id", "status", "contracts.html#scope"),
+        "wiki/reference/contracts.html": ('id="scope"', "Hermes 엔진", "JSON", "Markdown", "intent_revision", "request_sha256", "hermes-agent.nousresearch.com"),
+    }
+    forbidden = {
+        "lectures/00-overview.html": ("Hermes의 모든 약속은",),
+        "lectures/04-integration.html": ("원본 코드", "원본 구현과 테스트는"),
+        "wiki/knowledge-context.html": ("index.md</code>에 한 행을 추가합니다",),
+    }
+    for relative, markers in required.items():
+        for tree in (ROOT / "site", DOCS):
+            path = tree / relative
+            if not path.is_file():
+                errors.append(f"content contract page missing: {relative}")
+                continue
+            content = path.read_text(encoding="utf-8")
+            for marker in markers:
+                if marker not in content:
+                    errors.append(f"content contract marker missing in {path.name}: {marker}")
+            for marker in forbidden.get(relative, ()):
+                if marker in content:
+                    errors.append(f"obsolete content contract in {path.name}: {marker}")
+
+
 def main() -> int:
     errors: list[str] = []
+    check_content_alignment(errors)
     source_home = ROOT / "site" / "index.html"
     published_home = DOCS / "index.html"
     if not source_home.is_file() or not published_home.is_file():

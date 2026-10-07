@@ -1,6 +1,6 @@
 # p-hermes — 공개 학습 자료
 
-p-hermes는 에이전트 시스템을 세 층으로 설명하는 한국어 강의와 참조 위키입니다. 강의는 에이전트, 누구에게나 같은 작업 흐름 궤도, 모든 동작의 바탕인 지식을 전체 그림에서 통합까지 연결합니다. 사이트는 개념과 참조 정보에 집중하고, 원본 구현·테스트·교육용 합성 자료는 [GitHub 저장소](https://github.com/pheanor-agent/p-hermes-v2)에서 확인합니다.
+p-hermes는 Hermes 엔진 위에 더한 로컬 운영 체계를 에이전트·작업 흐름·지식의 세 층으로 설명하는 한국어 강의와 참조 위키입니다. 강의는 에이전트, 누구에게나 같은 작업 흐름 궤도, 모든 동작의 바탕인 지식을 전체 그림에서 통합까지 연결합니다. 사이트는 개념과 참조 정보에 집중하고, 원본 구현·테스트·교육용 합성 자료는 [GitHub 저장소](https://github.com/pheanor-agent/p-hermes-v2)에서 확인합니다.
 
 ## 공개 사이트
 
@@ -9,6 +9,8 @@ p-hermes는 에이전트 시스템을 세 층으로 설명하는 한국어 강�
 - `site/lectures/` — 다섯 강의의 원고
 - `site/wiki/` — 계약·용어·작업 흐름·지식 참조 원고
 - `site/assets/` — 스타일·글꼴·강의 플레이어
+
+엔진·로컬 운영 확장·공개 참조 구현의 범위와 공개 JSON/실제 Markdown 계약 차이는 [요청·응답 위키](https://pheanor-agent.github.io/p-hermes-v2/wiki/reference/contracts.html#scope)에서 확인합니다. 공개 명령 예시는 로컬 확장의 좌표이며 일반 Hermes 설치에 포함된 명령이 아닙니다.
 
 ## 저장소 자료
 
