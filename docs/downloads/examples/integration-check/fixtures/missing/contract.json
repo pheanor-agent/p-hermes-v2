@@ -1,4 +1,0 @@
-{
-  "stages": ["request", "contract", "context", "execution", "verification", "response"],
-  "satisfied_conditions": ["contract_checked"]
-}

@@ -1,1 +1,0 @@
-Synthetic training fixture: summarize the request and return a terminal status. No external side effects are authorized.

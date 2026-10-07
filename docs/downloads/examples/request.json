@@ -1,8 +1,0 @@
-{
-  "acceptance": "worker returns a terminal response linked to this attempt",
-  "goal_id": "goal-42",
-  "inputs": ["inputs/brief.txt"],
-  "intent_revision": 1,
-  "policy": {"allowed_root": "examples"},
-  "request_id": "attempt-001"
-}

@@ -107,6 +107,14 @@ def main() -> int:
     elif source_home.read_bytes() != published_home.read_bytes():
         errors.append("site/index.html and docs/index.html are not byte-identical")
 
+    forbidden_paths = (
+        "examples", "code", "downloads", "articles", "vendor",
+        "wiki/examples", "wiki/environment",
+    )
+    for relative in forbidden_paths:
+        if (DOCS / relative).exists():
+            errors.append(f"retired public page tree remains: {relative}")
+
     html_paths = sorted(DOCS.rglob("*.html"))
     pages: dict[Path, Page] = {}
     for path in html_paths:

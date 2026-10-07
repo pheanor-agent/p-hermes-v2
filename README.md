@@ -1,64 +1,37 @@
 # p-hermes — 공개 학습 자료
 
-p-hermes는 Hermes의 2026년 10월 운영 방식 — 지휘 에이전트(매니저)와 작업 에이전트(워커)의 역할, light JOB 작업 흐름, 지식 분류와 순환, 검증 — 를 한국어 강의·위키·오프라인 예제로 설명합니다. 강의는 16:9 발표 덱이며, 각 강의 초반의 개념 설명, 움직이는 도해(선 그리기·흐르는 패킷·자동 순차 등장), 분위기 전환 장면, 자동 재생 데모 5개로 구성됩니다. 조작 없이 화면 하나에 모두 표시됩니다. 공개 사이트는 `docs/`에서 제공하며 디자인 원고와 발표 자산은 `site/`에 보존됩니다.
+p-hermes는 에이전트 시스템을 세 층으로 설명하는 한국어 강의와 참조 위키입니다. 강의는 에이전트, 누구에게나 같은 작업 흐름 궤도, 모든 동작의 바탕인 지식을 전체 그림에서 통합까지 연결합니다. 사이트는 개념과 참조 정보에 집중하고, 원본 구현·테스트·교육용 합성 자료는 [GitHub 저장소](https://github.com/pheanor-agent/p-hermes-v2)에서 확인합니다.
 
-## 시작하기
+## 공개 사이트
 
-Python 3.11 이상이 필요합니다. 외부 서비스, GPU, API key 없이 예제를 실행할 수 있습니다.
+- `docs/` — GitHub Pages 배포 산출물
+- `site/index.html` — 홈 원본
+- `site/lectures/` — 다섯 강의의 원고
+- `site/wiki/` — 계약·용어·작업 흐름·지식 참조 원고
+- `site/assets/` — 스타일·글꼴·강의 플레이어
+
+## 저장소 자료
+
+- `reference/` — 파일 handoff 공개 참조 구현
+- `tests/` — 참조 구현의 계약 테스트
+- `examples/` — 합성 입력을 사용하는 독립 교육 자료
+- `content/`, `publication/` — 공개 설명 원고와 범위 메모
+
+저장소 자료는 사이트 페이지에 복제하지 않습니다. 공개 구현은 전체 Hermes 운영 시스템을 설치하거나 복제하지 않으며, 예제의 결과를 실제 운영 결과로 해석해서는 안 됩니다.
+
+## 빌드와 검사
+
+Python 3.11 이상이 필요합니다. 외부 서비스, GPU, API key는 사용하지 않습니다.
 
 ```sh
 make test
 make build
 make check
+make verify
 ```
 
-사이트를 로컬에서 확인하려면:
-
-```sh
-python3 -B -m http.server 8765 --bind 127.0.0.1 --directory docs
-```
-
-브라우저에서 `http://127.0.0.1:8765/`를 엽니다. 공개 홈의 단일 정본은 `site/index.html`이며 빌드는 이를 `docs/index.html`에 바이트 그대로 복사합니다.
-
-## 자료 탐색
-
-- `docs/lectures/` — 다섯 강의(54장)와 강의 목차
-- `docs/wiki/` — 8개 참조 페이지와 검색 목차
-- `docs/examples/` — 세 오프라인 예제 가이드
-- `docs/code/` — 소스 열람 페이지
-- `docs/downloads/` — 원본 코드·fixture·테스트와 `examples.zip`
-
-세 예제는 portable-worker(공개 reference + 계약 테스트), knowledge-context-check, integration-check입니다. 예제 입력은 합성 fixture이며 이 저장소는 전체 Hermes 운영 시스템을 설치·복제하지 않습니다.
-
-## 강의 원고와 모션
-
-강의 원고는 `site/lectures/NN-*.html`의 `<section class="slide">` 목록입니다. 한 section이 한 장이며 `<h2>` 제목, `<figure class="scene">` 도해(SVG) 또는 `<div data-sim="…">` 자동 재생 데모, 본문 `<p>`, 다음 장으로 넘기는 `<p class="next">` 질문을 가집니다. 도해의 움직임은 클래스로 선언합니다: `mo-draw`(선 그리기), `mo-pop`·`mo-rise`(차례 등장, `--d`로 지연), `mo-flow`(흐르는 점선), `mo-pulse`(강조 맥동), `<circle class="mo-pkt" data-path="경로id">`(경로를 따라 이동하는 점), `data-build="n"`(n번째 순서로 자동 등장, 간격은 `data-build-gap`), `data-kind="concept|interlude"`(개념 설명·분위기 전환 장면). `prefers-reduced-motion`에서는 움직임을 끕니다.
-
-## 정본과 빌드
-
-```text
-content/       공개 설명 원고
-site/          디자이너 원본 HTML/CSS/JS/SVG와 정적 자산
-examples/      세 개의 독립 offline 예제 및 fixture
-reference/     portable-worker 공개 참조 구현
-tests/         portable-worker 계약 테스트
-publication/   공개 범위 메모
-tools/         deckify, wikify, build_site, check_site
-site/assets/   deck.css·deck.js(발표 틀), motion.css·motion.js(모션·자동 재생 데모)
-docs/          재현 가능한 공개 사이트 산출물
-```
-
-`tools/build_site.py`는 root-level source를 읽어 검증 후 `docs/`를 반복 생성합니다. `tools/check_site.py`는 5강 54장, 실제 질문 레일, 공개 HTML의 local href/src/fragment(같은 페이지 fragment 포함), 공개 배포 트리의 텍스트 자산·전체 경로 및 ZIP member 경로/텍스트 내용에 알려진 private path/credential 패턴이 있는지 검사합니다. 바이너리 자산의 내용은 텍스트로 디코딩하지 않습니다. 검사는 알려진 패턴을 찾는 보조 통제이며 공개 적합성을 보증하지 않습니다.
-
-```sh
-make test       # 세 오프라인 예제의 계약·성공·실패 테스트
-make build      # docs/ 재생성
-make check      # 사이트 검사
-make verify     # test + build + check + git diff --check
-```
-
-예제별 테스트는 `make example NAME=portable-worker|knowledge-context-check|integration-check`로 실행합니다. 문서와 예제는 합성 입력만 사용합니다. 운영 로그·사용자 대화·인증정보를 공개 입력으로 추가하지 않습니다.
+`make build`는 `site/`의 원고를 검증 가능한 후보 디렉터리에 빌드한 뒤 `docs/`에 반영합니다. `make check`는 공개 페이지의 내부 링크·강의 구성·민감정보 패턴을 검사합니다. 알려진 패턴 검사는 공개 적합성 전체를 보증하지 않습니다. 사이트를 로컬에서 확인하려면 빌드 후 `python3 -B -m http.server 8765 --bind 127.0.0.1 --directory docs`를 실행합니다.
 
 ## 공개 범위와 권리
 
-`LICENSE`, `PRIVACY.md`, `THIRD_PARTY_NOTICES.md`의 공개·라이선스 조건을 확인하세요. 검사는 알려진 private path/credential 패턴을 찾는 보조 통제이며 임의 입력의 공개 적합성을 보증하지 않습니다. 외부 게시나 원격 Git 변경은 이 로컬 빌드에 포함되지 않습니다.
+`LICENSE`, `PRIVACY.md`, `THIRD_PARTY_NOTICES.md`의 공개·라이선스 조건을 확인하세요. 외부 게시나 원격 Git 변경은 로컬 빌드에 포함되지 않습니다.
