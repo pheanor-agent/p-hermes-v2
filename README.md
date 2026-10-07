@@ -1,6 +1,6 @@
 # p-hermes — 공개 학습 자료
 
-p-hermes는 Hermes의 2026년 10월 운영 방식 — 지휘 에이전트(매니저)와 작업 에이전트(워커)의 역할, light JOB 작업 흐름, 지식 분류와 순환, 검증·감사 — 를 한국어 강의·위키·오프라인 예제로 설명합니다. 강의는 16:9 발표 덱이며, 각 강의 초반의 개념 설명, 움직이는 도해(선 그리기·흐르는 패킷·자동 순차 등장), 분위기 전환 장면, 자동 재생 데모 5개로 구성됩니다. 조작 없이 화면 하나에 모두 표시됩니다. 공개 사이트는 `docs/`에서 제공하며 디자인 원고와 발표 자산은 `site/`에 보존됩니다.
+p-hermes는 Hermes의 2026년 10월 운영 방식 — 지휘 에이전트(매니저)와 작업 에이전트(워커)의 역할, light JOB 작업 흐름, 지식 분류와 순환, 검증 — 를 한국어 강의·위키·오프라인 예제로 설명합니다. 강의는 16:9 발표 덱이며, 각 강의 초반의 개념 설명, 움직이는 도해(선 그리기·흐르는 패킷·자동 순차 등장), 분위기 전환 장면, 자동 재생 데모 5개로 구성됩니다. 조작 없이 화면 하나에 모두 표시됩니다. 공개 사이트는 `docs/`에서 제공하며 디자인 원고와 발표 자산은 `site/`에 보존됩니다.
 
 ## 시작하기
 
@@ -22,7 +22,7 @@ python3 -B -m http.server 8765 --bind 127.0.0.1 --directory docs
 
 ## 자료 탐색
 
-- `docs/lectures/` — 다섯 강의(55장)와 강의 목차
+- `docs/lectures/` — 다섯 강의(54장)와 강의 목차
 - `docs/wiki/` — 8개 참조 페이지와 검색 목차
 - `docs/examples/` — 세 오프라인 예제 가이드
 - `docs/code/` — 소스 열람 페이지
@@ -48,7 +48,7 @@ site/assets/   deck.css·deck.js(발표 틀), motion.css·motion.js(모션·자�
 docs/          재현 가능한 공개 사이트 산출물
 ```
 
-`tools/build_site.py`는 root-level source를 읽어 검증 후 `docs/`를 반복 생성합니다. `tools/check_site.py`는 5강 55장, 실제 질문 레일, 공개 HTML의 local href/src/fragment(같은 페이지 fragment 포함), 공개 배포 트리의 텍스트 자산·전체 경로 및 ZIP member 경로/텍스트 내용에 알려진 private path/credential 패턴이 있는지 검사합니다. 바이너리 자산의 내용은 텍스트로 디코딩하지 않습니다. 검사는 알려진 패턴을 찾는 보조 통제이며 공개 적합성을 보증하지 않습니다.
+`tools/build_site.py`는 root-level source를 읽어 검증 후 `docs/`를 반복 생성합니다. `tools/check_site.py`는 5강 54장, 실제 질문 레일, 공개 HTML의 local href/src/fragment(같은 페이지 fragment 포함), 공개 배포 트리의 텍스트 자산·전체 경로 및 ZIP member 경로/텍스트 내용에 알려진 private path/credential 패턴이 있는지 검사합니다. 바이너리 자산의 내용은 텍스트로 디코딩하지 않습니다. 검사는 알려진 패턴을 찾는 보조 통제이며 공개 적합성을 보증하지 않습니다.
 
 ```sh
 make test       # 세 오프라인 예제의 계약·성공·실패 테스트
