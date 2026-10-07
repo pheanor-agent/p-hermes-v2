@@ -22,7 +22,7 @@ python3 -B -m http.server 8765 --bind 127.0.0.1 --directory docs
 
 ## 자료 탐색
 
-- `docs/lectures/` — 다섯 강의(52장)와 강의 목차
+- `docs/lectures/` — 다섯 강의(55장)와 강의 목차
 - `docs/wiki/` — 8개 참조 페이지와 검색 목차
 - `docs/examples/` — 세 오프라인 예제 가이드
 - `docs/code/` — 소스 열람 페이지
@@ -48,7 +48,7 @@ site/assets/   deck.css·deck.js(발표 틀), motion.css·motion.js(모션·자�
 docs/          재현 가능한 공개 사이트 산출물
 ```
 
-`tools/build_site.py`는 root-level source를 읽어 검증 후 `docs/`를 반복 생성합니다. `tools/check_site.py`는 5강 52장, 실제 질문 레일, 공개 HTML의 local href/src/fragment(같은 페이지 fragment 포함), 공개 배포 트리의 텍스트 자산·전체 경로 및 ZIP member 경로/텍스트 내용에 알려진 private path/credential 패턴이 있는지 검사합니다. 바이너리 자산의 내용은 텍스트로 디코딩하지 않습니다. 검사는 알려진 패턴을 찾는 보조 통제이며 공개 적합성을 보증하지 않습니다.
+`tools/build_site.py`는 root-level source를 읽어 검증 후 `docs/`를 반복 생성합니다. `tools/check_site.py`는 5강 55장, 실제 질문 레일, 공개 HTML의 local href/src/fragment(같은 페이지 fragment 포함), 공개 배포 트리의 텍스트 자산·전체 경로 및 ZIP member 경로/텍스트 내용에 알려진 private path/credential 패턴이 있는지 검사합니다. 바이너리 자산의 내용은 텍스트로 디코딩하지 않습니다. 검사는 알려진 패턴을 찾는 보조 통제이며 공개 적합성을 보증하지 않습니다.
 
 ```sh
 make test       # 세 오프라인 예제의 계약·성공·실패 테스트

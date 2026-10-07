@@ -140,7 +140,7 @@ def main() -> int:
 
     source_counts: list[int] = []
     rail_count = 0
-    expected_counts = [10, 12, 11, 10, 9]
+    expected_counts = [11, 12, 12, 11, 9]
     EXPECTED_TOTAL = sum(expected_counts)
     for (filename, number, _), expected_count in zip(deckify.LECTURES, expected_counts):
         source = ROOT / "site" / "lectures" / filename

@@ -183,3 +183,56 @@
 
 @media(prefers-reduced-motion:reduce){#deck [data-build]{transition:none}#deck .mo-draw{stroke-dashoffset:0!important}#deck .mo-pop,#deck .mo-rise,#deck .dk-interlude .w,#deck .dk-interlude .dk-sub{opacity:1!important;transform:none!important}#deck::before{animation:none}}
 #deck .dk-cover .dk-scene svg{max-height:430px}
+
+/* ===== typography & reading flow (2026-10-07) =====
+   Eye path: eyebrow → title → key sentence (left) → animated diagram (right) → next question. */
+@font-face{font-family:"Pretendard";src:url("fonts/pretendard-subset.woff2") format("woff2-variations"),url("fonts/pretendard-subset.woff2") format("woff2");font-weight:100 900;font-display:swap}
+body.dk,body.dk *{font-family:"Pretendard",system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif!important}
+#deck .dk-scene svg text,#deck .sim-svg text{font-family:"Pretendard",system-ui,sans-serif!important}
+#deck code,#deck .sim-files span,#deck .sim-node text.f{font-family:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace!important}
+#deck .dk-slide{padding:78px 72px 36px;row-gap:18px}
+#deck .dk-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:17px;font-weight:700;letter-spacing:.06em;color:#0f1a27;background:#82dec6;border-radius:999px;padding:5px 14px}
+#deck .dk-concept .dk-eyebrow{background:#ffcf86}
+#deck .dk-concept .dk-eyebrow::before{content:"개념";color:#0f1a27;opacity:.7}
+#deck .dk-count{font-size:17px;color:#7f93a9;letter-spacing:.08em}
+#deck .dk-title{font-size:54px;font-weight:800;line-height:1.3;letter-spacing:-.035em;color:#f6f8fc;max-width:1456px}
+#deck .dk-cover .dk-title{font-size:66px;line-height:1.24}
+#deck .dk-body{grid-template-columns:430px minmax(0,1fr);gap:48px;align-items:center}
+#deck .dk-cover .dk-body,body:not(.dk-course-00) #deck .dk-cover .dk-body{grid-template-columns:430px minmax(0,1fr)}
+#deck .dk-sim .dk-body{grid-template-columns:380px minmax(0,1fr);gap:40px}
+#deck .dk-text .dk-body{grid-template-columns:minmax(0,900px)}
+#deck .dk-copy{border-left:0;padding:0;gap:22px;align-self:center}
+#deck .dk-p{font-size:22px;line-height:1.62;color:#b9c7d8;font-weight:400;letter-spacing:-.01em}
+#deck .dk-copy .dk-p:first-child{font-size:29px;line-height:1.5;color:#f4f7fb;font-weight:600;letter-spacing:-.02em;position:relative;padding-top:22px}
+#deck .dk-copy .dk-p:first-child::before{content:"";position:absolute;left:0;top:0;width:44px;height:5px;border-radius:3px;background:linear-gradient(90deg,#82dec6,#9bc2ff)}
+#deck .dk-concept .dk-copy .dk-p:first-child::before{background:linear-gradient(90deg,#ffcf86,#ff9f8f)}
+#deck .dk-p+.dk-p{font-size:22px;color:#b9c7d8}
+#deck .dk-sim .dk-copy .dk-p:first-child{font-size:25px}
+#deck .dk-sim .dk-p+.dk-p{font-size:20px}
+#deck .dk-p b{color:#ffffff;font-weight:700}
+#deck .dk-p code{font-size:.86em;color:#ffcf86;background:rgba(255,207,134,.08);padding:1px 6px;border-radius:5px}
+#deck .dk-scene{border-radius:18px;border-color:#2b4058;box-shadow:0 18px 50px rgba(0,0,0,.28)}
+#deck .dk-foot{grid-template-columns:1fr 1.2fr;min-height:58px;padding-top:14px;border-top:1px solid #2a3c52}
+#deck .dk-prev{font-size:18px;color:#8296ac}
+#deck .dk-prev b,#deck .dk-next b{font-size:14px;letter-spacing:.08em}
+#deck .dk-next{font-size:23px;color:#eef3fa;font-weight:600;justify-self:end;text-align:right}
+#deck .dk-next::after{content:" →";display:inline-block;color:#82dec6;margin-left:6px}
+#deck .dk-slide.is-active .dk-next::after{animation:mo-nudge 1.4s ease-in-out 3s infinite}
+@keyframes mo-nudge{0%,100%{transform:none}50%{transform:translateX(8px)}}
+/* reading order: text first, then the diagram, the next question last */
+#deck .dk-slide.is-active .dk-copy .dk-p:first-child{animation:mo-in-up .6s ease-out .2s both}
+#deck .dk-slide.is-active .dk-copy .dk-p:nth-child(2){animation-delay:.55s}
+#deck .dk-slide.is-active .dk-copy .dk-p:nth-child(3){animation-delay:.8s}
+#deck .dk-slide.is-active .dk-body>figure,#deck .dk-slide.is-active .dk-body>.sim{animation:mo-in-up .7s cubic-bezier(.2,.8,.2,1) .45s both}
+#deck .dk-slide.is-active .dk-body{animation:none}
+#deck .dk-slide.mo-play .mo-draw{animation-delay:calc(var(--d,0) * 140ms + 700ms)}
+#deck .dk-slide.mo-play .mo-pop{animation-delay:calc(var(--d,0) * 120ms + 500ms)}
+#deck .dk-slide.is-active .dk-prev{animation:mo-fade .6s ease-out .3s both}
+#deck .dk-slide.is-active .dk-next{animation:mo-in-left .6s ease-out 2.2s both}
+#deck .dk-slide.is-active .dk-foot{animation:none}
+#deck .dk-interlude .dk-big{font-size:88px;font-weight:800;letter-spacing:-.04em}
+#deck .dk-interlude .dk-sub{font-size:30px;font-weight:500;color:#c6d3e3}
+#deck .dk-interlude .dk-kicker{font-size:20px;font-weight:700;letter-spacing:.34em}
+#deck .sim-head b{font-weight:700}
+#deck .sim-say{font-weight:500}
+#deck .dk-next{padding-right:16px}

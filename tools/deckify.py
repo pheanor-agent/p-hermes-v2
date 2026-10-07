@@ -160,7 +160,7 @@ def render(number: str, name: str, slides: list[dict]) -> str:
             f'<header class="dk-head"><span class="dk-eyebrow">{html.escape(s["eyebrow"])}</span>'
             f'<span class="dk-count">{i:02d} / {total:02d}</span></header>'
             f'<h2 class="dk-title">{s["title"]}</h2>'
-            f'<div class="dk-body">{stage}<div class="dk-copy">{paras}</div></div>'
+            f'<div class="dk-body"><div class="dk-copy">{paras}</div>{stage}</div>'
             f'<footer class="dk-foot">{previous}{nxt}</footer></article>'
         )
     lec_links = "".join(f'<a href="{f}"{CURRENT if n == number else ""}>{n}</a>' for f, n, _ in LECTURES)
@@ -168,6 +168,7 @@ def render(number: str, name: str, slides: list[dict]) -> str:
     return f"""<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{number} · {html.escape(name)}</title><link rel="icon" href="data:,">
+<link rel="preload" href="../assets/fonts/pretendard-subset.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/design-system.css">
 <link rel="stylesheet" href="../assets/deck.css">
 <link rel="stylesheet" href="../assets/motion.css">
@@ -180,7 +181,7 @@ def render(number: str, name: str, slides: list[dict]) -> str:
 </main></div>
 <nav class="dk-controls" aria-label="슬라이드 이동"><a class="dk-home" href="../index.html">강의 목록</a>{prev_link}<span class="dk-lecs">{lec_links}</span>
 <button type="button" data-go="-1" aria-label="이전 (단계 또는 슬라이드)">←</button><span class="dk-live-count" aria-live="polite" aria-atomic="true"></span><button type="button" data-go="1" aria-label="다음 (단계 또는 슬라이드)">→</button>
-<button type="button" data-fs aria-label="전체 화면 (F)">⛶</button></nav>
+<button type="button" data-fs aria-label="전체 화면 (F)"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 6V1h5M12 1h5v5M17 12v5h-5M6 17H1v-5"/></svg></button></nav>
 <script src="../assets/motion.js"></script>
 <script src="../assets/deck.js"></script>
 </body></html>
