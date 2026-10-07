@@ -144,11 +144,11 @@
   function simVerdict(root) {
     const { view, metrics, say } = panel(root, '응답이 돌아왔을 때 — 판정과 복구');
     const cases = [
-      ['done · 대조 완료', ['응답서 status: done', '핵심 수치 1개를 원천과 대조 ✓', '시각 산출은 직접 보고 판정'], '완료', '사용자에게 결과 보고', 'ok'],
-      ['done · 대조 전', ['응답서 status: done', '아직 원천과 대조하지 않음', '보고 문장만으로 완료 처리하지 않음'], '확인 전', '원천과 직접 대조', 'warn'],
-      ['partial', ['원 목표는 그대로', '+ 직전 실패 원인 1줄', '+ 바꾼 점 1줄 + 남은 항목', '새 조건·게이트는 덧붙이지 않음'], '이어가기', '새 request_id로 1건', 'warn'],
-      ['시간 초과', ['만든 산출물은 보존', '같은 크기로 재시도하지 않음', '시간을 늘리거나 작게 나눔'], '크기 조정', '나눠서 다시 요청', 'warn'],
-      ['blocked', ['실제 승인이 필요한 부분만', '선택형 질문 1개로 묻고', '나머지는 계속 진행'], '승인 확인', '사용자에게 질문 1개', 'stop'],
+      ['완료 · 대조 완료', ['응답서: 완료', '핵심 수치 1개를 원천과 대조 ✓', '시각 산출은 직접 보고 판정'], '완료', '사용자에게 결과 보고', 'ok'],
+      ['완료 · 대조 전', ['응답서: 완료', '아직 원천과 대조하지 않음', '보고 문장만으로 완료 처리하지 않음'], '확인 전', '원천과 직접 대조', 'warn'],
+      ['일부 완료', ['원 목표는 그대로', '직전 실패 원인을 적음', '바꾼 점과 남은 항목을 기록', '새 조건·게이트는 덧붙이지 않음'], '이어가기', '새 요청 ID로 1건', 'warn'],
+      ['시간 부족', ['만든 산출물은 보존', '같은 크기로 재시도하지 않음', '시간을 늘리거나 작게 나눔'], '크기 조정', '나눠서 다시 요청', 'warn'],
+      ['진행 보류', ['실제 승인이 필요한 부분만', '선택형 질문 1개로 묻고', '나머지는 계속 진행'], '승인 확인', '사용자에게 질문 1개', 'stop'],
       ['같은 사유 2회', ['같은 요청을 반복하지 않음', '원인을 한 번 진단', '원인 · 조치 · 상태를 기록'], '멈춤', '진단 후 보고', 'stop'],
     ];
     const tab = el('div', { class: 'sim-tabs' });
@@ -172,11 +172,11 @@
     };
   }
 
-  /* ---------- 02: light JOB 게이트 ---------- */
+  /* ---------- 02: JOB 게이트 ---------- */
   function simGate(root) {
-    const { view, metrics, say } = panel(root, 'light JOB 게이트 — 파일이 빠지면 멈춘다');
-    const stages = [['요청', 'request.md'], ['실행', 'approval.md · execution.md'], ['검증', 'verification.md'], ['완료', 'result.md']];
-    const svg = svgEl('svg', { viewBox: '0 0 820 220', class: 'sim-svg gate', role: 'img', 'aria-label': 'light JOB 네 단계와 게이트' });
+    const { view, metrics, say } = panel(root, 'JOB 단계 확인 — 기록이 없으면 멈춤');
+    const stages = [['요청', '요청 기록'], ['실행', '승인 · 실행 기록'], ['검증', '검증 기록'], ['완료', '결과 기록']];
+    const svg = svgEl('svg', { viewBox: '0 0 820 220', class: 'sim-svg gate', role: 'img', 'aria-label': 'JOB 네 단계와 게이트' });
     const X = k => 90 + k * 213;
     svg.append(svgEl('path', { d: 'M90 118H729', class: 'sim-rail' }));
     const token = svgEl('circle', { r: 12, cx: 90, cy: 54, class: 'sim-token' });
@@ -191,34 +191,34 @@
     barrier.style.transform = 'translateX(200px)';
     svg.append(barrier);
     const files = el('div', { class: 'sim-files' });
-    const names = ['request.md', 'approval.md', 'execution.md', 'verification.md', 'result.md'];
+    const names = ['요청 기록', '승인 기록', '실행 기록', '검증 기록', '결과 기록'];
     const chips = Object.fromEntries(names.map(n => { const c = el('span', {}, n); files.append(c); return [n, c]; }));
     view.append(svg, files);
     const mRun = metric(metrics, '실행'), mStage = metric(metrics, '현재 단계'), mJudge = metric(metrics, '게이트 판정');
-    const need = k => (k === 1 ? ['approval.md', 'execution.md'] : [names[k + 1]]);
+    const need = k => (k === 1 ? ['승인 기록', '실행 기록'] : [names[k + 1]]);
     return slide => {
       let run = 0;
       const cycle = () => {
-        const missing = run % 2 ? 'verification.md' : null;
+        const missing = run % 2 ? '검증 기록' : null;
         names.forEach(n => chips[n].className = n === missing ? 'missing' : 'ok');
         nodes.forEach(n => n.setAttribute('class', 'sim-node'));
         nodes[0].setAttribute('class', 'sim-node done');
         token.style.transform = 'translateX(0px)'; barrier.classList.remove('on');
         setText(mRun, missing ? '② 파일 누락' : '① 파일 모두 있음');
         mStage.textContent = '요청'; mJudge.textContent = '대기';
-        say.textContent = missing ? '이번에는 verification.md가 빠진 상태로 진행합니다.' : '필수 파일이 모두 있는 JOB이 단계를 통과합니다.';
+        say.textContent = missing ? '이번에는 검증 기록이 빠진 채 진행합니다.' : '필요한 기록이 갖춰진 JOB이 단계를 통과합니다.';
         let t = 1000;
         [1, 2, 3].forEach(k => {
           const lack = need(k).filter(f => f === missing);
           if (lack.length) {
             later(slide, t, () => {
               barrier.style.transform = `translateX(${X(k) - 106}px)`; barrier.classList.add('on');
-              setText(mJudge, '차단'); say.textContent = `${stages[k][0]} 단계로 못 넘어갑니다 — ${lack[0]}가 없습니다.`;
+              setText(mJudge, '차단'); say.textContent = `${stages[k][0]} 단계로 못 넘어갑니다 — ${lack[0]}이(가) 없습니다.`;
             });
             t += 2000;
             later(slide, t, () => {
               chips[missing].className = 'ok added'; barrier.classList.remove('on');
-              say.textContent = `${lack[0]}를 채우면 그 자리부터 이어집니다.`;
+              say.textContent = `${lack[0]}을 채우면 그 자리부터 이어집니다.`;
             });
             t += 1300;
           }
@@ -230,7 +230,7 @@
           });
           t += 1200;
         });
-        later(slide, t + 300, () => { setText(mJudge, 'JOB 종결'); say.textContent = '네 단계를 모두 통과해 JOB이 종결됩니다.'; });
+        later(slide, t + 300, () => { setText(mJudge, '완료'); say.textContent = '네 단계를 모두 통과해 작업이 마무리됩니다.'; });
         run++;
         later(slide, t + 2700, cycle);
       };
@@ -241,11 +241,11 @@
   /* ---------- 03: 어디에 적을까 ---------- */
   function simShelf(root) {
     const { view, metrics, say } = panel(root, '이 정보는 어디에 적을까');
-    const shelves = [['skill', '스킬', '반복되는 절차'], ['lesson', 'lessons', '사건 · 교훈'], ['canon', '실물 정본', '현재 사실'],
-                     ['memory', 'MEMORY', '사용자 선호'], ['policy', 'POLICY', '역할 · 권한 · 금지']];
-    const items = [['요청서를 등록하는 명령 순서', 'skill', '“어떻게”는 절차라서 스킬에 둡니다.'],
+    const shelves = [['skill', '스킬', '다시 쓸 절차'], ['lesson', '교훈', '사건 · 배운 점'], ['canon', '원본 자료', '현재 사실'],
+                     ['memory', '사용자 선호', '원하는 방식'], ['policy', '운영 원칙', '역할 · 권한 · 금지']];
+    const items = [['요청을 등록하는 순서', 'skill', '“어떻게”는 절차라서 스킬에 둡니다.'],
                    ['시간 초과 뒤에도 산출이 남아 있었다', 'lesson', '“무슨 일이 왜”는 사건이라서 교훈에 둡니다.'],
-                   ['지금 활성화된 단계 정의', 'canon', '“지금 무엇이”는 실물 파일에서 직접 읽습니다.'],
+                   ['현재 적용 중인 단계 정의', 'canon', '“지금 무엇이”는 원본 자료에서 직접 읽습니다.'],
                    ['확인 질문 없이 추천안으로 진행', 'memory', '사용자가 원하는 방식은 선호로 둡니다.'],
                    ['외부 게시는 사용자 승인 필요', 'policy', '권한과 금지는 규칙에 둡니다.'],
                    ['검사는 통과했지만 화면이 깨졌다', 'lesson', '실패 사례는 교훈으로 남깁니다.']];
@@ -279,41 +279,41 @@
 
   /* ---------- 04: 요청 하나의 일생 ---------- */
   function simLifecycle(root) {
-    const { view, metrics, say } = panel(root, '요청 하나의 일생');
+    const { view, metrics, say } = panel(root, '요청부터 결과 보고까지');
     const base = [
-      ['사용자', '요청: 사이트를 최신 내용으로 갱신'], ['지휘', '직접/위임 판단 → light JOB · 승인 원문 기록'], ['지휘', 'context pack으로 관련 교훈 확인'],
-      ['지휘', '요청서: 목표 / 완성 기준 / 참조 / 금지'], ['디스패처', '등록 → 작업 에이전트 실행'], ['작업', '요청서대로 끝까지 수행 · 산출 기록'],
-      ['작업', '응답서: 같은 request_id · status: done'], ['지휘', '핵심 수치 1개를 원천과 대조'], ['게이트', '요청 → 실행 → 검증 → 완료'],
-      ['지식', 'result.md · 교훈 후보 → 매일 요약'], ['사용자', '결과 · 남은 것 · 교훈 보고'],
+      ['사용자', '요청: 사이트를 최신 내용으로 갱신'], ['지휘', '직접/위임 판단 → JOB으로 기록 · 승인 근거 확인'], ['지휘', '관련 교훈과 결정을 먼저 확인'],
+      ['지휘', '요청서: 목표 / 완성 기준 / 참조 / 금지'], ['자동 실행기', '요청 등록 → 작업 에이전트 실행'], ['작업', '요청서대로 수행 · 산출 기록'],
+      ['작업', '응답서: 같은 요청 ID · 상태: 완료'], ['지휘', '핵심 수치 1개를 원천과 대조'], ['게이트', '요청 → 실행 → 검증 → 완료'],
+      ['지식', '결과와 교훈 후보 → 매일 요약'], ['사용자', '결과 · 남은 것 · 교훈 보고'],
     ];
     const failSeq = base.slice(0, 6).concat([
-      ['작업', '시간 초과 — 산출은 보존, status: partial'], ['지휘', '이어가기: 원인 + 바꾼 점 + 남은 항목'],
-      ['디스패처', '새 request_id · 시간 한 단계 늘림'], ['작업', '남은 항목 수행 → status: done'],
+      ['작업', '시간 초과 — 산출은 보존, 일부 완료'], ['지휘', '이어가기: 원인 + 바꾼 점 + 남은 항목'],
+      ['자동 실행기', '새 요청 ID · 시간을 한 단계 늘림'], ['작업', '남은 항목 수행 → 완료'],
     ], base.slice(7));
-    const lanes = ['사용자', '지휘', '디스패처', '작업', '게이트', '지식'];
+    const lanes = ['사용자', '지휘', '자동 실행기', '작업', '게이트', '지식'];
     const svg = svgEl('svg', { viewBox: '0 0 900 262', class: 'sim-svg life', role: 'img', 'aria-label': '요청 처리 타임라인' });
     lanes.forEach((l, k) => { svg.append(svgEl('text', { x: 8, y: 18 + k * 45, class: 'lane-l' }, l)); svg.append(svgEl('path', { d: `M96 ${18 + k * 45}H890`, class: 'lane' })); });
     const trail = svgEl('path', { class: 'sim-trail', d: '' });
     const dot = svgEl('circle', { r: 11, class: 'sim-token', cx: -30, cy: -30 });
     svg.append(trail, dot);
     view.append(svg);
-    const mRun = metric(metrics, '재생'), mWho = metric(metrics, '지금 누가'), mState = metric(metrics, 'status');
+    const mRun = metric(metrics, '재생'), mWho = metric(metrics, '지금 누가'), mState = metric(metrics, '상태');
     return slide => {
       let run = 0;
       const cycle = () => {
         const seq = run % 2 ? failSeq : base;
         $$('.sim-mark', svg).forEach(m => m.remove());
         trail.setAttribute('d', ''); const pts = [];
-        setText(mRun, run % 2 ? '② 시간 초과' : '① 정상 흐름'); mState.textContent = '준비';
+        setText(mRun, run % 2 ? '② 시간 부족' : '① 정상 흐름'); mState.textContent = '준비';
         seq.forEach(([who, what], k) => later(slide, 600 + k * 950, () => {
           const x = 116 + k * (760 / (seq.length - 1)), y = 18 + lanes.indexOf(who) * 45;
           pts.push([x, y]);
           trail.setAttribute('d', pts.map((p, j) => (j ? 'L' : 'M') + p[0].toFixed(0) + ' ' + p[1]).join(''));
-          svg.insertBefore(svgEl('circle', { cx: x, cy: y, r: 6, class: 'sim-mark' + (what.includes('partial') ? ' bad' : '') }), dot);
+          svg.insertBefore(svgEl('circle', { cx: x, cy: y, r: 6, class: 'sim-mark' + (what.includes('일부 완료') ? ' bad' : '') }), dot);
           dot.setAttribute('cx', x); dot.setAttribute('cy', y);
           say.textContent = `${k + 1}. ${who} — ${what}`;
           setText(mWho, who);
-          if (what.includes('partial')) setText(mState, 'partial'); else if (what.includes('done')) setText(mState, 'done'); else if (k === 5) setText(mState, '수행 중');
+          if (what.includes('일부 완료')) setText(mState, '일부 완료'); else if (what.includes('완료')) setText(mState, '완료'); else if (k === 5) setText(mState, '수행 중');
         }));
         run++;
         later(slide, 600 + seq.length * 950 + 2200, cycle);
