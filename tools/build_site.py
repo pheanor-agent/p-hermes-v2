@@ -4,6 +4,7 @@ from __future__ import annotations
 from html import escape
 from pathlib import Path
 import hashlib
+import re
 import os
 import shutil
 import subprocess
@@ -15,20 +16,36 @@ OUT = ROOT / "docs"
 HOME = ROOT / "site" / "index.html"
 
 
-def page(title: str, links: list[tuple[str, str]], depth: int = 1) -> str:
-    items = "\n".join(
-        f'<li><a href="{escape(href, quote=True)}">{escape(label)}</a></li>'
-        for href, label in links
-    )
+WIKI_NOTES = {
+    "integration.html": ("강의 04 참조", "요청과 결과를 식별자·상태·산출물로 다시 대조하는 방법"),
+    "knowledge-context.html": ("강의 03 참조", "무엇을 어디에 남기고, 언제 어떤 지식을 읽는지"),
+    "reference/contracts.html": ("강의 01 참조", "요청서와 응답서의 칸, 종결 상태, 공개 범위의 차이"),
+    "reference/terms.html": ("용어", "역할·단계·상태 이름을 한 표로 맞춰 읽기"),
+    "reference/workflow.html": ("강의 02 참조", "처리 경로, JOB 단계 계약, 승인 기록과 복구 규칙"),
+}
+
+
+def page(title: str, lead: str, cards: list[tuple[str, str, str, str]], depth: int = 1) -> str:
+    """Render a lecture/wiki index with the landing page's own style and card grid."""
     prefix = "../" * depth
+    style = re.search(r"<style>(.*?)</style>", HOME.read_text(encoding="utf-8"), re.S).group(1)
+    style = style.replace('url("assets/', f'url("{prefix}assets/')
+    items = "\n".join(
+        f'<a class="course" href="{escape(href, quote=True)}"><span class="number">{escape(tag)}</span>'
+        f'<h3>{escape(label)}</h3><p>{escape(note)}</p><span class="open">열기 →</span></a>'
+        for href, tag, label, note in cards
+    )
     return (
         '<!doctype html><html lang="ko"><head><meta charset="utf-8">'
-        '<meta name="viewport" content="width=device-width,initial-scale=1">'
-        f'<title>{escape(title)}</title><link rel="stylesheet" href="{prefix}assets/design-system.css">'
-        '</head><body><header class="topbar"><a href="'
-        f'{prefix}index.html">p-hermes</a></header><main><section class="hero">'
-        f'<h1>{escape(title)}</h1><nav aria-label="목차"><ul>{items}</ul></nav>'
-        '</section></main></body></html>'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">'
+        f'<title>{escape(title)} · p-hermes</title><link rel="icon" href="data:,"><style>{style}</style></head><body>'
+        f'<header class="top"><a class="brand" href="{prefix}index.html">p-hermes</a><nav aria-label="주 메뉴">'
+        f'<a href="{prefix}lectures/index.html">강의</a><a href="{prefix}wiki/index.html">위키</a>'
+        '<a href="https://github.com/pheanor-agent/p-hermes-v2">저장소 ↗</a></nav></header>'
+        f'<main class="main"><div class="heading"><h2>{escape(title)}</h2><p>{escape(lead)}</p></div>'
+        f'<nav class="courses" aria-label="{escape(title)}">{items}</nav></main>'
+        f'<footer class="footer"><span>p-hermes · 에이전트 시스템을 이해하는 강의와 참조</span>'
+        f'<nav aria-label="홈"><a href="{prefix}index.html">홈으로 →</a></nav></footer></body></html>'
     )
 
 
@@ -80,24 +97,28 @@ def _build() -> None:
     for name in ("examples", "environment"):
         shutil.rmtree(OUT / "wiki" / name, ignore_errors=True)
 
-    for directory, title in (("lectures", "강의 목차"), ("wiki", "위키 목차")):
-        source_dir = ROOT / "site" / directory
-        files = sorted(p for p in source_dir.rglob("*.html") if p.name != "index.html")
-        links: list[tuple[str, str]] = []
-        if directory == "lectures":
-            sys.path.insert(0, str(ROOT / "tools"))
-            import deckify
-            links = [(filename, f"{number} · {name}") for filename, number, name in deckify.LECTURES]
-        else:
-            import re
-            for source in files:
-                text = source.read_text(encoding="utf-8")
-                heading = re.search(r"<h1[^>]*>(.*?)</h1>", text, re.S)
-                label = re.sub(r"<[^>]+>", "", heading.group(1)).strip() if heading else source.stem
-                links.append((source.relative_to(source_dir).as_posix(), label))
+    # Indexes reuse the landing page: lecture cards come from its course grid, wiki cards from page headings.
+    home = HOME.read_text(encoding="utf-8")
+    plain = lambda s: re.sub(r"<[^>]+>", "", s).strip()
+    lecture_cards = [
+        (href.removeprefix("lectures/"), plain(tag), plain(label), plain(note))
+        for href, tag, label, note in re.findall(
+            r'<a class="course" href="([^"]+)"><span class="number">(.*?)</span><h3>(.*?)</h3><p>(.*?)</p>', home)
+    ]
+    wiki_dir = ROOT / "site" / "wiki"
+    wiki_cards = []
+    for source in sorted(p for p in wiki_dir.rglob("*.html") if p.name != "index.html"):
+        rel = source.relative_to(wiki_dir).as_posix()
+        heading = re.search(r"<h1[^>]*>(.*?)</h1>", source.read_text(encoding="utf-8"), re.S)
+        tag, note = WIKI_NOTES.get(rel, ("위키", ""))
+        wiki_cards.append((rel, tag, plain(heading.group(1)) if heading else source.stem, note))
+    for directory, title, lead, cards in (
+        ("lectures", "강의 목차", "전체 그림에서 시작해 역할, 작업 흐름, 지식, 통합 순서로 읽습니다.", lecture_cards),
+        ("wiki", "위키 목차", "강의에서 본 개념의 세부 계약·경로·용어를 찾아봅니다.", wiki_cards),
+    ):
         index = OUT / directory / "index.html"
         index.parent.mkdir(parents=True, exist_ok=True)
-        index.write_text(page(title, links), encoding="utf-8", newline="\n")
+        index.write_text(page(title, lead, cards), encoding="utf-8", newline="\n")
 
     sys.path.insert(0, str(ROOT / "tools"))
     import deckify

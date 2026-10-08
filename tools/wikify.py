@@ -73,6 +73,8 @@ def transform(page: str, depth: int) -> str:
 def build(wiki_dir: Path) -> list[Path]:
     written = []
     for path in sorted(wiki_dir.rglob("*.html")):
+        if path == wiki_dir / "index.html":
+            continue  # the wiki index shares the landing page style (build_site.page)
         depth = len(path.relative_to(wiki_dir.parent).parts) - 1
         path.write_text(transform(path.read_text(encoding="utf-8"), depth), encoding="utf-8", newline="\n")
         written.append(path)

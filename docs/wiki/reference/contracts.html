@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="요청서와 응답서에서 확인할 핵심 약속"><title>요청·응답 계약 · p-hermes 위키</title><link rel="stylesheet" href="../../assets/design-system.css"><link rel="stylesheet" href="../../assets/wiki.css"></head>
-<body class="wiki-doc"><header class="topbar"><a href="../../index.html">← p-hermes</a><span>위키 · 요청·응답 계약</span></header>
+<body class="wiki-doc"><header class="topbar"><a href="../../index.html">← p-hermes</a><span>위키 · 요청·응답</span></header>
 <main id="main"><div class="wiki-layout"><nav class="wiki-toc" aria-label="이 문서의 목차"><p>목차</p><ol><li><a href="#요청에서-확인할-것">요청에서 확인할 것</a></li><li><a href="#응답에서-확인할-것">응답에서 확인할 것</a></li><li><a href="#종결-상태">종결 상태</a></li><li><a href="#scope">Hermes 엔진·로컬 운영 확장·p-hermes</a></li><li><a href="#공개-json-문서-handoff-로컬-job-운영의-차이">공개 JSON, 문서 handoff, 로컬 JOB 운영의 차이</a></li><li><a href="#공개-구현">공개 구현</a></li></ol></nav><article class="wiki-body"><p><strong>찾아 쓰는 참조.</strong> 개념의 흐름은 <a href="../../lectures/01-orchestrator-worker.html">강의 01</a>과 <a href="../../lectures/04-integration.html">강의 04</a>에서 봅니다.</p>
 <h1>요청서와 응답서의 약속</h1>
 <p>요청서에는 목표, 완료 기준, 참조 경로와 금지 범위를 적어 작업의 경계를 분명히 합니다. 응답서는 같은 요청 식별자와 실제 상태를 돌려주고, 산출물과 남은 항목을 밝혀야 합니다. 이 연결 덕분에 결과를 원 요청과 짝지어 다시 확인할 수 있습니다.</p>
