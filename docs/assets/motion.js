@@ -1,5 +1,6 @@
-/* p-hermes motion layer: authored steps are manual, playback is opt-in.
-   Entrance builds settle once; questions pause playback. Reduced motion is static. */
+/* p-hermes motion layer: line draw-in, packets travelling along wires, timed builds
+   and self-playing demonstrations. Nothing needs viewer input; everything starts when
+   a slide becomes active and stops when it leaves. Respects reduced motion. */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -17,16 +18,42 @@
     if (text !== undefined) n.textContent = text;
     return n;
   };
-  // Reduced motion keeps meaningful pauses; it must not race through prose.
   const SPEED = 1;
 
   /* ---------- per-slide timers: cleared whenever the slide is left ---------- */
-  function later(slide, ms, fn) {
-    const gen = slide.__gen;
-    const id = setTimeout(() => { if (slide.__gen === gen && slide.classList.contains('is-active')) fn(); }, ms * SPEED);
-    (slide.__timers = slide.__timers || []).push(id);
+  function armTimer(slide, item) {
+    item.due = performance.now() + item.remaining;
+    item.id = setTimeout(() => {
+      slide.__timers = (slide.__timers || []).filter(t => t !== item);
+      if (slide.__gen === item.gen && slide.classList.contains('is-active') && !slide.__paused) item.fn();
+    }, item.remaining);
   }
-  function clearTimers(slide) { (slide.__timers || []).forEach(clearTimeout); slide.__timers = []; slide.__gen = (slide.__gen || 0) + 1; }
+  function later(slide, ms, fn) {
+    const item = { fn, gen: slide.__gen, remaining: ms * SPEED, id: null };
+    (slide.__timers = slide.__timers || []).push(item);
+    if (!slide.__paused) armTimer(slide, item);
+  }
+  function clearTimers(slide) {
+    (slide.__timers || []).forEach(item => clearTimeout(item.id));
+    slide.__timers = []; slide.__gen = (slide.__gen || 0) + 1;
+  }
+  function pause(slide) {
+    if (reduce) return;
+    const now = performance.now();
+    slide.__paused = !slide.__paused;
+    slide.classList.toggle('mo-paused', slide.__paused);
+    $('#deck').classList.toggle('mo-paused', slide.__paused);
+    if (slide.__paused) {
+      slide.__pausedAt = now;
+      (slide.__timers || []).forEach(item => { clearTimeout(item.id); item.remaining = Math.max(0, item.due - now); });
+    } else {
+      slide.__t0 += now - slide.__pausedAt;
+      (slide.__timers || []).forEach(item => armTimer(slide, item));
+    }
+    const button = $('[data-motion-pause]');
+    button.textContent = slide.__paused ? '계속 재생' : '일시정지';
+    button.setAttribute('aria-pressed', String(slide.__paused));
+  }
 
   /* ---------- packets: <circle class="mo-pkt" data-path="id" data-dur="2.4" data-delay="0"> ---------- */
   const packets = [];
@@ -37,12 +64,12 @@
       const path = svg && svg.querySelector('#' + CSS.escape(p.dataset.path));
       if (!path) return;
       p.__bound = true;
-      packets.push({ p, path, slide, len: path.getTotalLength(), dur: +p.dataset.dur || 2.4, delay: +p.dataset.delay || 0, loop: p.dataset.loop === 'yes' });
+      packets.push({ p, path, slide, len: path.getTotalLength(), dur: +p.dataset.dur || 2.4, delay: +p.dataset.delay || 0, loop: p.dataset.loop !== 'no' });
     });
   }
   function tick(now) {
     for (const k of packets) {
-      if (!k.slide.classList.contains('is-active')) continue;
+      if (!k.slide.classList.contains('is-active') || k.slide.__paused) continue;
       if (k.p.closest('[data-build]:not(.built)')) { k.p.style.opacity = 0; continue; }
       let t = (now - (k.slide.__t0 || now)) / 1000 - k.delay;
       if (t < 0) { k.p.style.opacity = 0; continue; }
@@ -63,132 +90,22 @@
   }
   function enter(slide) {
     clearTimers(slide);
-    $$('[data-lesson-flow]', slide).forEach(resetLesson);
-    $$('details.lesson-answer, details.case-check', slide).forEach(answer => { answer.open = false; });
+    slide.__paused = false; slide.classList.remove('mo-paused'); $('#deck').classList.remove('mo-paused');
+    const button = $('[data-motion-pause]');
+    if (button) { button.textContent = '일시정지'; button.setAttribute('aria-pressed', 'false'); }
+    $$('[data-quiz-question]', slide).forEach(n => n.hidden = false);
+    $$('[data-quiz-answer]', slide).forEach(n => n.hidden = true);
+    $$('[data-quiz-reveal]', slide).forEach(n => { n.textContent = '답 보기'; n.setAttribute('aria-expanded', 'false'); });
     slide.__t0 = performance.now();
     bindPackets(slide);
+    setBuild(slide, reduce ? builds(slide) : 0);
     const total = builds(slide);
     const gap = +(slide.dataset.buildGap || 1500);
-    setBuild(slide, reduce ? total : 0);
     if (!reduce) for (let n = 1; n <= total; n++) later(slide, 1300 + (n - 1) * gap, () => setBuild(slide, n));
     slide.classList.remove('mo-play'); void slide.offsetWidth; slide.classList.add('mo-play');
-    // Simulations are opt-in: authored semantic flows are manual by default.
+    if (!reduce) $$('[data-sim]', slide).forEach(s => s.__sim && s.__sim(slide));
   }
-  function leave(slide) {
-    clearTimers(slide);
-    $$('[data-lesson-flow]', slide).forEach(clearLessonTimer);
-  }
-
-  /* ---------- authored semantic lesson steps ---------- */
-  function clearLessonTimer(flow) {
-    if (flow.__lessonTimer) clearInterval(flow.__lessonTimer);
-    flow.__lessonTimer = null;
-    const auto = $('[data-auto]', flow);
-    if (auto) { auto.textContent = '자동 재생'; auto.setAttribute('aria-pressed', 'false'); }
-  }
-  function resetLesson(flow) {
-    clearLessonTimer(flow);
-    $$('details.lesson-answer, details.case-check', flow).forEach(answer => { answer.open = false; });
-    flow.__lessonIndex = 0;
-    const beats = $$('[data-title]', flow);
-    beats.forEach((beat, i) => {
-      beat.classList.toggle('is-current', i === 0);
-      beat.setAttribute('aria-current', i === 0 ? 'step' : 'false');
-    });
-    const label = $('[data-step-count]', flow);
-    if (label) label.textContent = flow.dataset.actGroups ? '막 1 / 4' : `1 / ${beats.length}`;
-    const caption = $('.lesson-caption', flow);
-    if (caption && beats[0]) caption.textContent = `${beats[0].dataset.title} · ${beats[0].dataset.focus}: ${beats[0].querySelector('span')?.textContent || beats[0].textContent.trim()}`;
-    const list = $('.lesson-beats', flow);
-    if (list) list.scrollTop = 0;
-    updateStepButtons(flow, beats.length);
-  }
-  function updateStepButtons(flow, total) {
-    const prev = $('[data-step="-1"]', flow), next = $('[data-step="1"]', flow);
-    if (prev) prev.disabled = flow.__lessonIndex === 0;
-    if (next) next.disabled = flow.__lessonIndex === total - 1;
-    const auto = $('[data-auto]', flow);
-    if (auto) auto.disabled = reduce || flow.__lessonIndex === total - 1 ||
-      Boolean($$('[data-title]', flow)[flow.__lessonIndex]?.hasAttribute('data-question'));
-  }
-  function ensureBeatVisible(flow, beat) {
-    const list = $('.lesson-beats', flow);
-    if (!list || !flow.closest('.dk-slide')?.classList.contains('is-active')) return;
-    if (matchMedia('(max-width: 760px)').matches) {
-      const viewport = $('.dk-viewport'), actions = $('.lesson-actions', flow);
-      if (!viewport) return;
-      const vr = viewport.getBoundingClientRect();
-      const ar = actions?.getBoundingClientRect();
-      const safeTop = Math.max(vr.top, ar?.bottom ?? vr.top) + 8;
-      const safeBottom = vr.bottom - 8;
-      const br = beat.getBoundingClientRect();
-      if (br.bottom > safeBottom) viewport.scrollTop += br.bottom - safeBottom;
-      else if (br.top < safeTop) viewport.scrollTop -= safeTop - br.top;
-      return;
-    }
-    if (list.scrollHeight <= list.clientHeight + 1) return;
-    // Scroll only the evidence pane on desktop; never hide earlier evidence.
-    const r = list.getBoundingClientRect(), b = beat.getBoundingClientRect();
-    const scale = r.height / list.clientHeight || 1;
-    if (b.bottom > r.bottom) list.scrollTop += (b.bottom - r.bottom) / scale + 8;
-    if (b.top < r.top) list.scrollTop -= (r.top - b.top) / scale + 8;
-  }
-  function step(flow, direction, keepPlayback = false) {
-    const beats = $$('[data-title]', flow);
-    if (!beats.length) return false;
-    const next = flow.__lessonIndex + direction;
-    if (next < 0 || next >= beats.length) { clearLessonTimer(flow); return false; }
-    if (!keepPlayback) clearLessonTimer(flow);
-    flow.__lessonIndex = next;
-    beats.forEach((beat, i) => {
-      beat.classList.toggle('is-current', i === next);
-      beat.setAttribute('aria-current', i === next ? 'step' : 'false');
-    });
-    const label = $('[data-step-count]', flow);
-    if (label) label.textContent = flow.dataset.actGroups ? `막 ${next + 1} / ${beats.length}` : `${next + 1} / ${beats.length}`;
-    const beat = beats[next];
-    updateStepButtons(flow, beats.length);
-    if (beat.hasAttribute('data-question') || next === beats.length - 1) clearLessonTimer(flow);
-    const caption = $('.lesson-caption', flow);
-    if (caption) caption.textContent = `${beat.dataset.title} · ${beat.dataset.focus}: ${beat.querySelector('span')?.textContent || beat.textContent.trim()}`;
-    // The caption can wrap and reflow the mobile page. Measure the active card
-    // only after that text is committed, or the same click can leave it covered.
-    ensureBeatVisible(flow, beat);
-    return true;
-  }
-  function initLessons() {
-    $$('[data-lesson-flow]').forEach(flow => {
-      const beats = $('.lesson-beats', flow);
-      const actions = $('.lesson-actions', flow), caption = $('.lesson-caption', flow);
-      if (beats && actions && caption) { flow.insertBefore(actions, beats); flow.insertBefore(caption, beats); }
-      resetLesson(flow);
-      flow.querySelectorAll('details').forEach(disclosure => {
-        disclosure.addEventListener('toggle', () => {
-          requestAnimationFrame(() => {
-            const current = $$('[data-title]', flow)[flow.__lessonIndex];
-            if (current) ensureBeatVisible(flow, current);
-          });
-        });
-      });
-      flow.addEventListener('click', e => {
-        const button = e.target.closest('button');
-        if (!button) return;
-        if (button.hasAttribute('data-step')) step(flow, Number(button.dataset.step));
-        if (button.hasAttribute('data-restart')) { resetLesson(flow); $('[data-title]', flow)?.focus?.(); }
-        if (button.hasAttribute('data-auto')) {
-          if (reduce) return;
-          if (flow.__lessonTimer) { clearLessonTimer(flow); return; }
-          const current = $$('[data-title]', flow)[flow.__lessonIndex];
-          if (current?.hasAttribute('data-question')) return;
-          button.textContent = '일시정지'; button.setAttribute('aria-pressed', 'true');
-          flow.__lessonTimer = setInterval(() => {
-            if (!step(flow, 1, true)) clearLessonTimer(flow);
-          }, 5000);
-        }
-      });
-      if (reduce) { const auto = $('[data-auto]', flow); if (auto) auto.disabled = true; }
-    });
-  }
+  function leave(slide) { clearTimers(slide); slide.__paused = false; slide.classList.remove('mo-paused'); $('#deck').classList.remove('mo-paused'); }
 
   /* ---------- self-playing demo scaffolding ---------- */
   function panel(root, title) {
@@ -202,6 +119,21 @@
     root.append(head, view, metrics, say);
     return { view, metrics, say };
   }
+  function scenarioChoices(root, choices, initial) {
+    root.__scenario = initial;
+    const group = el('div', { class: 'sim-scenarios' });
+    choices.forEach(([key, label]) => {
+      const button = el('button', { type: 'button', 'data-scenario': key, 'aria-pressed': String(key === initial) }, label);
+      button.addEventListener('click', () => {
+        root.__scenario = key;
+        $$('button', group).forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+        const slide = root.closest('.dk-slide');
+        if (slide.classList.contains('is-active')) enter(slide);
+      });
+      group.append(button);
+    });
+    $('.sim-head', root).append(group);
+  }
   function metric(metrics, label) {
     const box = el('div', { class: 'sim-metric' });
     const v = el('strong', {}, '–');
@@ -214,7 +146,7 @@
 
   /* ---------- 01: 직접 할까, 맡길까 ---------- */
   function simDelegate(root) {
-    const { view, metrics, say } = panel(root, '직접 할까, 맡길까 — 네 가지 경우');
+    const { view, metrics, say } = panel(root, '직접 할까, 맡길까 — 네 사례 순환');
     const cases = [
       { name: '설정 파일 한 줄 수정', tags: ['짧음', '되돌릴 수 있음'], ans: [0, 0, 0], who: '매니저 에이전트가 직접', why: '읽기·작은 수정', rec: '백업 + 원장 한 줄', kind: 'manager' },
       { name: '수백 개 파일 일괄 변환', tags: ['오래 걸림', '산출 큼'], ans: [0, 1, 0], who: '작업 에이전트에 위임', why: '긴 실행·큰 산출', rec: '요청서 · 응답서', kind: 'worker' },
@@ -238,10 +170,12 @@
         c.tags.forEach(t => card.append(el('i', {}, t)));
         flash(card);
         rows.forEach(r => { r.className = 'sim-q'; r.querySelector('em').textContent = ''; });
+        rows[0].classList.add('is-active');
         [mWho, mWhy, mRec].forEach(m => { m.textContent = '…'; m.parentNode.removeAttribute('data-kind'); });
         say.textContent = '질문을 위에서부터 차례로 확인합니다.';
         c.ans.forEach((a, k) => later(slide, 700 + k * 800, () => {
-          rows[k].classList.add(a ? 'hit' : 'pass');
+          rows.forEach(row => row.classList.remove('is-active'));
+          rows[k].classList.add('is-active', a ? 'hit' : 'pass');
           rows[k].querySelector('em').textContent = a ? '예' : '아니오';
         }));
         later(slide, 700 + c.ans.length * 800 + 200, () => {
@@ -258,7 +192,7 @@
 
   /* ---------- 01: 응답 판정 ---------- */
   function simVerdict(root) {
-    const { view, metrics, say } = panel(root, '응답이 돌아왔을 때 — 판정과 복구');
+    const { view, metrics, say } = panel(root, '응답 판정 — 여섯 사례 순환');
     const cases = [
       ['완료 · 대조 완료', ['응답서: 완료', '핵심 수치 1개를 원천과 대조 ✓', '시각 산출은 직접 보고 판정'], '완료', '사용자에게 결과 보고', 'ok'],
       ['완료 · 대조 전', ['응답서: 완료', '아직 원천과 대조하지 않음', '보고 문장만으로 완료 처리하지 않음'], '확인 전', '원천과 직접 대조', 'warn'],
@@ -290,7 +224,8 @@
 
   /* ---------- 02: JOB 게이트 ---------- */
   function simGate(root) {
-    const { view, metrics, say } = panel(root, 'JOB 단계 확인 — 기록이 없으면 멈춤');
+    const { view, metrics, say } = panel(root, '게이트 확인 — 두 경우를 선택');
+    scenarioChoices(root, [['complete','기록 있음'],['missing','기록 누락']], 'complete');
     const stages = [['요청', '요청 기록'], ['실행', '승인 · 실행 기록'], ['검증', '검증 기록'], ['완료', '결과 기록']];
     const svg = svgEl('svg', { viewBox: '0 0 820 220', class: 'sim-svg gate', role: 'img', 'aria-label': 'JOB 네 단계와 게이트' });
     const X = k => 90 + k * 213;
@@ -309,16 +244,19 @@
     const files = el('div', { class: 'sim-files' });
     const names = ['요청 기록', '승인 기록', '실행 기록', '검증 기록', '결과 기록'];
     const chips = Object.fromEntries(names.map(n => { const c = el('span', {}, n); files.append(c); return [n, c]; }));
-    view.append(svg, files);
+    const compact = el('div', { class: 'sim-mobile-gates' });
+    stages.forEach(([name], i) => compact.append(el('div', { class: 'gate-state', 'data-stage': String(i) }, name)));
+    view.append(svg, compact, files);
     const mRun = metric(metrics, '실행'), mStage = metric(metrics, '현재 단계'), mJudge = metric(metrics, '게이트 판정');
     const need = k => (k === 1 ? ['승인 기록', '실행 기록'] : [names[k + 1]]);
     return slide => {
       let run = 0;
       const cycle = () => {
-        const missing = run % 2 ? '검증 기록' : null;
+        const missing = root.__scenario === 'missing' ? '검증 기록' : null;
         names.forEach(n => chips[n].className = n === missing ? 'missing' : 'ok');
         nodes.forEach(n => n.setAttribute('class', 'sim-node'));
         nodes[0].setAttribute('class', 'sim-node done');
+        $$('[data-stage]', compact).forEach(n => n.classList.toggle('is-current', n.dataset.stage === '0'));
         token.style.transform = 'translateX(0px)'; barrier.classList.remove('on');
         setText(mRun, missing ? '② 파일 누락' : '① 파일 모두 있음');
         mStage.textContent = '요청'; mJudge.textContent = '대기';
@@ -341,8 +279,9 @@
           later(slide, t, () => {
             token.style.transform = `translateX(${X(k) - 90}px)`;
             nodes[k].setAttribute('class', 'sim-node done');
+            $$('[data-stage]', compact).forEach(n => n.classList.toggle('is-current', n.dataset.stage === String(k)));
             setText(mStage, stages[k][0]); setText(mJudge, '통과');
-            if (!lack.length) say.textContent = `${stages[k][0]} 통과 — 게이트가 ${need(k).join(', ')}를 읽었습니다.`;
+            if (!lack.length) say.textContent = `${stages[k][0]} 통과 — 게이트가 ${need(k).join(', ')}을 읽었습니다.`;
           });
           t += 1200;
         });
@@ -356,15 +295,15 @@
 
   /* ---------- 03: 어디에 적을까 ---------- */
   function simShelf(root) {
-    const { view, metrics, say } = panel(root, '이 정보는 어디에 적을까');
-    const shelves = [['skill', '스킬', '다시 쓸 절차'], ['lesson', '교훈', '사건 · 배운 점'], ['canon', '원본 자료', '현재 사실'],
+    const { view, metrics, say } = panel(root, '정보 분류 — 여섯 사례 순환');
+    const shelves = [['skill', '스킬', '다시 쓸 절차'], ['lesson', '교훈 후보', '원인 · 변경 · 확인'], ['canon', '원본 자료', '현재 사실'],
                      ['memory', '사용자 선호', '원하는 방식'], ['policy', '운영 원칙', '역할 · 권한 · 금지']];
     const items = [['요청을 등록하는 순서', 'skill', '“어떻게”는 절차라서 스킬에 둡니다.'],
-                   ['시간 초과 뒤에도 산출이 남아 있었다', 'lesson', '“무슨 일이 왜”는 사건이라서 교훈에 둡니다.'],
+                   ['시간 초과 뒤에도 산출이 남아 있었다', 'lesson', '사건 기록은 원인·해결을 확인할 교훈 후보입니다.'],
                    ['현재 적용 중인 단계 정의', 'canon', '“지금 무엇이”는 원본 자료에서 직접 읽습니다.'],
                    ['확인 질문 없이 추천안으로 진행', 'memory', '사용자가 원하는 방식은 선호로 둡니다.'],
                    ['외부 게시는 사용자 승인 필요', 'policy', '권한과 금지는 규칙에 둡니다.'],
-                   ['검사는 통과했지만 화면이 깨졌다', 'lesson', '실패 사례는 교훈으로 남깁니다.']];
+                   ['검사는 통과했지만 화면이 깨졌다', 'lesson', '실패 원인과 해결을 확인해 교훈 후보로 남깁니다.']];
     const stage = el('div', { class: 'sim-chipstage' });
     const board = el('div', { class: 'sim-shelves' });
     const bins = {};
@@ -375,8 +314,10 @@
     return slide => {
       let i = 0;
       const run = () => {
-        if (i % items.length === 0) $$('.sim-bin-items', board).forEach(b => b.innerHTML = '');
+        $$('.sim-bin-items', board).forEach(b => b.innerHTML = '');
+        Object.values(bins).forEach(b => b.classList.remove('is-target'));
         const [text, to, why] = items[i % items.length];
+        bins[to].classList.add('is-target');
         stage.innerHTML = '';
         const chip = el('div', { class: 'sim-chip fly' }, text); stage.append(chip);
         mTo.textContent = '…'; mQ.textContent = '…'; mN.textContent = `${i % items.length + 1} / ${items.length}`;
@@ -395,11 +336,12 @@
 
   /* ---------- 04: 요청 하나의 일생 ---------- */
   function simLifecycle(root) {
-    const { view, metrics, say } = panel(root, '요청부터 결과 보고까지');
+    const { view, metrics, say } = panel(root, '문의 회고 — 요청부터 결과 보고까지');
+    scenarioChoices(root, [['normal','정상'],['time','시간 부족']], 'normal');
     const base = [
-      ['사용자', '요청: 사이트를 최신 내용으로 갱신'], ['매니저', '직접/위임 판단 → JOB으로 기록 · 승인 근거 확인'], ['매니저', '관련 교훈과 결정을 먼저 확인'],
-      ['매니저', '요청서: 목표 / 완성 기준 / 참조 / 금지'], ['자동 실행기', '요청 등록 → 작업 에이전트 실행'], ['작업', '요청서대로 수행 · 산출 기록'],
-      ['작업', '응답서: 같은 요청 ID · 상태: 완료'], ['매니저', '핵심 수치 1개를 원천과 대조'], ['게이트', '요청 → 실행 → 검증 → 완료'],
+      ['사용자', '요청: 문의 원자료로 회고 초안 작성'], ['매니저', '직접/위임 판단 → JOB으로 기록 · 승인 근거 확인'], ['매니저', '관련 교훈과 결정을 먼저 확인'],
+      ['매니저', '약속: 원자료 집계·계산·대조, 주장 3개 근거'], ['자동 실행기', '요청 등록 → 작업 에이전트 실행'], ['작업', '산출: 초안·집계.csv, 배송40/전체200'],
+      ['작업', '응답서: 같은 요청 ID · 상태: 완료'], ['매니저', '보고20% ↔ 원자료40÷200=20% 대조'], ['게이트', '요청 → 실행 → 검증 → 완료'],
       ['지식', '결과와 교훈 후보 → 매일 요약'], ['사용자', '결과 · 남은 것 · 교훈 보고'],
     ];
     const failSeq = base.slice(0, 6).concat([
@@ -412,16 +354,18 @@
     const trail = svgEl('path', { class: 'sim-trail', d: '' });
     const dot = svgEl('circle', { r: 11, class: 'sim-token', cx: -30, cy: -30 });
     svg.append(trail, dot);
-    view.append(svg);
+    const actors = el('div', { class: 'sim-mobile-actors' });
+    lanes.forEach(who => actors.append(el('div', { class: 'life-actor', 'data-actor': who }, who)));
+    view.append(svg, actors);
     const mRun = metric(metrics, '재생'), mWho = metric(metrics, '지금 누가'), mState = metric(metrics, '상태');
     return slide => {
       let run = 0;
       const cycle = () => {
-        const seq = run % 2 ? failSeq : base;
+        const seq = root.__scenario === 'time' ? failSeq : base;
         $$('.sim-mark', svg).forEach(m => m.remove());
         trail.setAttribute('d', ''); const pts = [];
-        setText(mRun, run % 2 ? '② 시간 부족' : '① 정상 흐름'); mState.textContent = '준비';
-        seq.forEach(([who, what], k) => later(slide, 600 + k * 950, () => {
+        setText(mRun, root.__scenario === 'time' ? '시간 부족' : '정상 흐름'); mState.textContent = '준비';
+        seq.forEach(([who, what], k) => later(slide, 600 + k * 2300, () => {
           const x = 116 + k * (760 / (seq.length - 1)), y = 18 + lanes.indexOf(who) * 45;
           pts.push([x, y]);
           trail.setAttribute('d', pts.map((p, j) => (j ? 'L' : 'M') + p[0].toFixed(0) + ' ' + p[1]).join(''));
@@ -429,10 +373,11 @@
           dot.setAttribute('cx', x); dot.setAttribute('cy', y);
           say.textContent = `${k + 1}. ${who} — ${what}`;
           setText(mWho, who);
+          $$('[data-actor]', actors).forEach(node => node.classList.toggle('is-current', node.dataset.actor === who));
           if (what.includes('일부 완료')) setText(mState, '일부 완료'); else if (what.includes('완료')) setText(mState, '완료'); else if (k === 5) setText(mState, '수행 중');
         }));
         run++;
-        later(slide, 600 + seq.length * 950 + 2200, cycle);
+        later(slide, 600 + seq.length * 2300 + 3500, cycle);
       };
       cycle();
     };
@@ -440,9 +385,21 @@
 
   const SIMS = { delegate: simDelegate, verdict: simVerdict, gate: simGate, shelf: simShelf, lifecycle: simLifecycle };
   function init() {
-    initLessons();
     $$('[data-sim]').forEach(root => { const f = SIMS[root.dataset.sim]; if (f) root.__sim = f(root); });
+    const pauseButton = $('[data-motion-pause]');
+    pauseButton.disabled = reduce;
+    if (reduce) pauseButton.textContent = '정적 보기';
+    pauseButton.addEventListener('click', () => pause($('.dk-slide.is-active')));
+    $('[data-motion-restart]').addEventListener('click', () => enter($('.dk-slide.is-active')));
+    $$('[data-quiz-reveal]').forEach(button => button.addEventListener('click', () => {
+      const root = button.closest('.transfer-exercise');
+      const show = $('[data-quiz-answer]', root).hidden;
+      $('[data-quiz-question]', root).hidden = show;
+      $('[data-quiz-answer]', root).hidden = !show;
+      button.textContent = show ? '문제로 돌아가기' : '답 보기';
+      button.setAttribute('aria-expanded', String(show));
+    }));
     if (!reduce) requestAnimationFrame(tick);
   }
-  window.__motion = { init, enter, leave, builds, step };
+  window.__motion = { init, enter, leave, builds };
 })();

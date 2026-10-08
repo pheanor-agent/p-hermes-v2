@@ -68,6 +68,7 @@ def parse(source: str, number: str) -> list[dict]:
             rest = rest.replace(nxt.group(0), "", 1)
         paras = re.findall(r'<p(\s+class="[^"]*")?>(.*?)</p>', rest, re.S)
         slides.append({
+            "key": attr(attrs, "data-slide-key"),
             "eyebrow": attr(attrs, "data-eyebrow"),
             "kind": attr(attrs, "data-kind") or ("main" if scene or sim else "text"),
             "title": title.group(1).strip(),
@@ -111,17 +112,20 @@ def words(title: str) -> str:
 
 
 def figure(scene: str) -> str:
-    out = re.sub(r'<figure class="scene(?=[\s"])', '<figure class="dk-scene', scene, count=1)
-    # Keep relationship graphics legible on a phone without shrinking all labels.
-    if 'lesson-scene' not in scene and 'recall-scene' not in scene:
-        out = re.sub(
-            r'(<svg\b[^>]*>.*?</svg>)',
-            r'<div class="scene-diagram" data-diagram tabindex="0" role="region" aria-label="관계 그림">\1</div>'
-            '<p class="diagram-hint">그림은 가로로 밀어 읽을 수 있습니다.</p>',
-            out, count=1, flags=re.S,
-        )
-    # Preserve the authored element targeted by the scene stylesheet.
-    return out
+    return re.sub(r'<figure class="scene(?=[\s"])', '<figure class="dk-scene', scene, count=1)
+
+
+def sim_static(sim: str) -> str:
+    name = attr(re.search(r'<div\b([^>]*)>', sim).group(1), "data-sim")
+    examples = {
+        "delegate": ("위임 판단의 예", ["수백 개 파일 일괄 변환", "긴 실행·큰 산출 → 작업자에 위임", "매니저는 목표와 결과 판정을 맡음"]),
+        "verdict": ("완료 보고를 대조한 예", ["보고: 배송 문의 25%", "원자료: 전체 200건·배송 40건", "40÷200=20% → 보고 수정"]),
+        "gate": ("기록 누락을 보완한 예", ["검증 기록 누락 → 단계 전이 정지", "실제로 대조하고 검증 기록 보완", "필수 기록 확인 → 다음 단계"]),
+        "shelf": ("사건을 분류한 예", ["검사는 통과했지만 화면이 깨짐", "사건 기록 → 교훈 후보", "원인·수정·확인을 더해 검토"]),
+        "lifecycle": ("문의 회고가 완료된 예", ["약속: 원자료 집계·대조", "산출: 집계.csv·회고 초안", "전체200·배송40 → 20% 대조", "확인한 결과와 남은 일 보고"]),
+    }
+    title, lines = examples[name]
+    return '<div class="sim-static"><div class="example-doc result"><h3>' + html.escape(title) + '</h3>' + ''.join('<p>'+html.escape(line)+'</p>' for line in lines) + '</div></div>'
 
 
 def static_reading(name: str, slides: list[dict]) -> str:
@@ -129,14 +133,18 @@ def static_reading(name: str, slides: list[dict]) -> str:
     sections = []
     for i, slide in enumerate(slides, 1):
         copy = "".join(f"<p>{p}</p>" for _, p in slide["paras"])
-        # Keep documents, ordered steps and native answer disclosures.
+        # Keep evidence and reveal exercise answers in the linear no-JS path.
         scene = re.sub(r'<svg\b[^>]*>.*?</svg>', '', slide['scene'], flags=re.S)
         scene = re.sub(r'<div class="lesson-actions">.*?</div>', '', scene, flags=re.S)
         scene = re.sub(r'<div class="lesson-caption"[^>]*>.*?</div>', '', scene, flags=re.S)
         scene = re.sub(r'\s(?:id|aria-live|data-lesson-flow|data-act-groups)(?:="[^"]*")?', '', scene)
+        scene = scene.replace("data-quiz-answer hidden", "data-quiz-answer")
+        scene = re.sub(r'<button\b[^>]*>.*?</button>', "", scene, flags=re.S)
         labels = re.findall(r'<text\b[^>]*>(.*?)</text>', slide['scene'], re.S)
         if labels and 'recall-scene' not in slide['scene'] and 'lesson-flow' not in slide['scene']:
             scene += '<p class="static-evidence">그림의 관계: ' + ' · '.join(text(x) for x in labels) + '</p>'
+        if slide["sim"]:
+            scene += sim_static(slide["sim"])
         next_q = f'<p><b>다음 질문:</b> {slide["next"]}</p>' if slide["next"] else ""
         sections.append(f'<section><h2>{i:02d}. {slide["title"]}</h2>{copy}{scene}{next_q}</section>')
     return '<noscript><main class="dk-static"><h1>' + html.escape(name) + ' · 정적 읽기</h1>' + "".join(sections) + '</main></noscript>'
@@ -153,7 +161,7 @@ def render(number: str, name: str, slides: list[dict]) -> str:
         paras = "".join(
             f'<p class="dk-p{" mo-hint" if "hint" in c else ""}">{p}</p>' for c, p in s["paras"]
         )
-        stage = figure(s["scene"]) if s["scene"] else s["sim"]
+        stage = figure(s["scene"]) if s["scene"] else (s["sim"] + sim_static(s["sim"]) if s["sim"] else "")
         layout = {"cover": "dk-cover", "sim": "dk-sim", "text": "dk-text", "interlude": "dk-interlude",
                   "concept": "dk-main dk-concept"}.get(s["kind"], "dk-main")
         if not stage and layout not in ("dk-cover", "dk-interlude"):
@@ -164,7 +172,7 @@ def render(number: str, name: str, slides: list[dict]) -> str:
         if layout == "dk-interlude":
             sub = "".join(f'<p class="dk-sub">{p}</p>' for _, p in s["paras"])
             parts.append(
-                f'<article class="dk-slide dk-interlude" id="s{i}" data-index="{i}" aria-label="{i} / {total}">{ambient(i + int(number) * 7)}'
+                f'<article class="dk-slide dk-interlude" id="s{i}" data-index="{i}" data-slide-key="{html.escape(s["key"], quote=True)}" aria-label="{i} / {total}">{ambient(i + int(number) * 7)}'
                 f'<div class="dk-rings" aria-hidden="true"><i></i><i></i><i></i></div>'
                 f'<div class="dk-inner"><p class="dk-kicker">{html.escape(s["kicker"] or s["eyebrow"])}</p>'
                 f'<h2 class="dk-title dk-big">{words(s["title"])}</h2>{sub}</div></article>'
@@ -186,7 +194,7 @@ def render(number: str, name: str, slides: list[dict]) -> str:
         previous = (f'<p class="dk-prev"><b>이어받은 질문</b>{before}</p>' if before
                     else '<p class="dk-prev"><b>강의의 출발점</b>전체 흐름에서 지금 볼 구간을 정합니다.</p>')
         parts.append(
-            f'<article class="dk-slide {layout}" id="s{i}" data-index="{i}" aria-label="{i} / {total}"{gap}>'
+            f'<article class="dk-slide {layout}" id="s{i}" data-index="{i}" data-slide-key="{html.escape(s["key"], quote=True)}" aria-label="{i} / {total}"{gap}>'
             + (ambient(i + int(number) * 7) if layout == "dk-cover" else "") +
             f'<header class="dk-head"><span class="dk-eyebrow">{html.escape(s["eyebrow"])}</span>'
             f'<span class="dk-count">{i:02d} / {total:02d}</span></header>'
@@ -213,6 +221,7 @@ def render(number: str, name: str, slides: list[dict]) -> str:
 </main></div>
 <nav class="dk-controls" aria-label="슬라이드 이동"><a class="dk-home" href="../index.html">강의 목록</a>{prev_link}<span class="dk-lecs">{lec_links}</span>
 <button type="button" data-go="-1" aria-label="이전 장">←</button><span class="dk-live-count" aria-live="polite" aria-atomic="true"></span><button type="button" data-go="1" aria-label="다음 장">→</button>
+<button type="button" data-motion-pause aria-pressed="false">일시정지</button><button type="button" data-motion-restart>다시 재생</button>
 <button type="button" data-fs aria-label="전체 화면 (F)"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 6V1h5M12 1h5v5M17 12v5h-5M6 17H1v-5"/></svg></button></nav>
 {static_reading(name, slides)}
 <script src="../assets/motion.js"></script>
@@ -238,6 +247,16 @@ def build(source_dir: Path, out_dir: Path) -> list[Path]:
         out = out_dir / fname
         out.write_text(render(number, name, slides), encoding="utf-8")
         written.append(out)
+    mapping = ["stablekey,oldkey,newnumber,title,reason"]
+    for fname, number, _ in LECTURES:
+        slides = parse((source_dir / fname).read_text(encoding="utf-8"), number)
+        for i, slide in enumerate(slides, 1):
+            key = slide["key"] or f"{number}-{i:02d}"
+            title = text(slide["title"]).replace('"', '""')
+            is_new = "example-" in key
+            reason = "신규 실물·비교 근거를 앞뒤 질문 흐름에 맞게 분리" if is_new else "원형 페이지 key를 유지하고 정확성 수정만 반영"
+            mapping.append(f'{key},{"" if is_new else key},{number}-{i:02d},"{title}","{reason}"')
+    (out_dir.parent / "lecture-slide-mapping.csv").write_text("\n".join(mapping) + "\n", encoding="utf-8")
     for old, target in RETIRED.items():
         out = out_dir / old
         out.write_text(redirect(target), encoding="utf-8")

@@ -181,9 +181,7 @@ def main() -> int:
 
     source_counts: list[int] = []
     rail_count = 0
-    expected_counts = [11, 12, 12, 11, 8]
-    EXPECTED_TOTAL = sum(expected_counts)
-    for (filename, number, _), expected_count in zip(deckify.LECTURES, expected_counts):
+    for filename, number, _ in deckify.LECTURES:
         source = ROOT / "site" / "lectures" / filename
         if not source.is_file():
             errors.append(f"missing lecture source: {filename}")
@@ -191,12 +189,12 @@ def main() -> int:
         slides = deckify.parse(source.read_text(encoding="utf-8"), number)
         source_counts.append(len(slides))
         rail_count += sum(bool(slides[k - 1]["next"]) and bool(slides[k]["next"]) for k in range(1, len(slides)))
-        if len(slides) != expected_count:
-            errors.append(f"lecture slide count mismatch: {filename}")
         if any(not slide.get("title") for slide in slides):
             errors.append(f"lecture slide title missing: {filename}")
-    if sum(source_counts) != EXPECTED_TOTAL:
-        errors.append(f"source lecture total is {sum(source_counts)}, expected {EXPECTED_TOTAL}")
+        keys = [slide.get("key") for slide in slides]
+        if not all(keys) or len(keys) != len(set(keys)):
+            errors.append(f"lecture stable slide keys missing or duplicated: {filename}")
+    expected_total = sum(source_counts)
 
     generated_counts: list[int] = []
     for filename, _, _ in deckify.LECTURES:
@@ -210,8 +208,13 @@ def main() -> int:
         generated_counts.append(count)
         if count == 0:
             errors.append(f"generated lecture has no slides: {filename}")
-    if sum(generated_counts) != EXPECTED_TOTAL:
-        errors.append(f"generated lecture total is {sum(generated_counts)}, expected {EXPECTED_TOTAL}")
+    if generated_counts != source_counts:
+        errors.append(f"generated/source lecture counts differ: {generated_counts} vs {source_counts}")
+    mapping = DOCS / "lecture-slide-mapping.csv"
+    if not mapping.is_file():
+        errors.append("missing generated lecture slide mapping")
+    elif len(mapping.read_text(encoding="utf-8").splitlines()) != expected_total + 1:
+        errors.append("lecture slide mapping row count does not match authored/generated slides")
 
     text_count, zip_member_count = scan_public_tree(errors)
     if errors:
@@ -223,6 +226,8 @@ def main() -> int:
         "source_lecture_slides": source_counts,
         "generated_lecture_slides": generated_counts,
         "total_slides": sum(source_counts),
+        "stable_slide_keys": "PASS",
+        "mapping_rows": expected_total,
         "actual_question_rails": rail_count,
         "local_href_src_fragments": "checked (including same-page fragments)",
         "public_text_assets_scanned": text_count,

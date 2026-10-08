@@ -1,83 +1,55 @@
+"""Lecture continuity contracts: original pages stay distinct from added evidence."""
 from pathlib import Path
+import re
 import sys
 import unittest
-
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'tools'))
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'tools'))
 import deckify
 
-
 class LectureFlowTests(unittest.TestCase):
-    def test_all_five_sources_keep_the_established_54_slide_map(self):
-        counts = deckify.slide_counts(ROOT / 'site' / 'lectures')
-        self.assertEqual(list(counts.values()), [11, 12, 12, 11, 8])
-        self.assertEqual(sum(counts.values()), 54)
+    def sources(self):
+        for fn,num,title in deckify.LECTURES:
+            yield fn,num,title,deckify.parse((ROOT/'site/lectures'/fn).read_text(),num)
 
-    def test_semantic_stories_render_without_losing_their_static_text(self):
-        total_flows = 0
-        expected = {
-            '00-overview.html': 1,
-            '01-orchestrator-worker.html': 4,
-            '02-workflow.html': 2,
-            '03-knowledge.html': 2,
-            '04-integration.html': 2,
-        }
-        for filename, number, title in deckify.LECTURES:
-            slides = deckify.parse((ROOT / 'site' / 'lectures' / filename).read_text(), number)
-            rendered = deckify.render(number, title, slides)
-            flows = rendered.count('data-lesson-flow')
-            self.assertEqual(flows, expected.get(filename, 0), filename)
-            total_flows += flows
-            self.assertIn('data-step="1"', rendered) if flows else None
-            self.assertIn('<details class="lesson-answer"><summary>', rendered) if flows else None
-            self.assertIn('</summary><p>', rendered) if flows else None
-        self.assertEqual(total_flows, 11)
+    def test_original_pages_survive_and_evidence_pages_follow_their_concept(self):
+        original_counts={'00':11,'01':12,'02':12,'03':11,'04':8}
+        predecessors={'00-example-input':'00-02','00-example-handoff':'00-04',
+                      '01-example-contract':'01-03','01-example-request':'01-07','01-example-response':'01-10',
+                      '02-example-transition':'02-02','02-example-records':'02-06','02-example-quality':'02-08',
+                      '03-example-rule':'03-02','03-example-source':'03-06','03-example-lesson':'03-08','03-example-current':'03-11',
+                      '04-example-proof':'04-02','04-example-transfer':'04-05'}
+        total=0
+        for fn,num,_,slides in self.sources():
+            keys=[s['key'] for s in slides]
+            self.assertEqual(len(keys),len(set(keys)),fn)
+            originals=[k for k in keys if '-example-' not in k]
+            self.assertEqual(originals,[f'{num}-{i:02d}' for i in range(1,original_counts[num]+1)])
+            for key in keys:
+                if key in predecessors:self.assertEqual(keys[keys.index(key)-1],predecessors[key],key)
+            self.assertNotIn('lesson-flow',(ROOT/'site/lectures'/fn).read_text())
+            total+=len(slides)
+        self.assertEqual(total,54+len(predecessors))
 
-    def test_player_owns_step_keys_and_honors_reduced_motion(self):
-        deck = (ROOT / 'site' / 'assets' / 'deck.js').read_text()
-        motion = (ROOT / 'site' / 'assets' / 'motion.js').read_text()
-        self.assertIn("window.__motion.step(flow, 1)", deck)
-        self.assertIn("e.target.closest('a,button,summary,details,[data-lesson-flow],[data-diagram]')", deck)
-        self.assertIn('if (reduce) { const auto', motion)
-        self.assertIn('step(flow, 1, true)', motion)
-        self.assertIn('$$(\'[data-lesson-flow]\', slide).forEach(clearLessonTimer)', motion)
-        self.assertNotIn('const SPEED = reduce ? 0.15 : 1', motion)
+    def test_automatic_examples_are_preserved_and_render_as_examples(self):
+        kinds=[]
+        for _,num,title,slides in self.sources():
+            rendered=deckify.render(num,title,slides)
+            self.assertEqual(rendered.count('class="dk-slide '),len(slides))
+            for s in slides:
+                if s['sim']:
+                    kinds.append(deckify.attr(s['sim'],'data-sim'))
+                    self.assertEqual(s['kind'],'sim')
+                    self.assertIn('sim-static',rendered)
+        self.assertCountEqual(kinds,['delegate','verdict','gate','shelf','lifecycle'])
 
-    def test_priority_document_pairs_are_distinct_and_integrated_recall_is_hidden_until_revealed(self):
-        sources = ROOT / 'site' / 'lectures'
-        targets = {
-            '00-overview.html': {'00-02','00-03','00-04','00-07','00-08','00-11'},
-            '01-orchestrator-worker.html': {'01-03','01-09','01-10'},
-            '02-workflow.html': {'02-06','02-07'},
-            '03-knowledge.html': {'03-02','03-03','03-06','03-07','03-08','03-10'},
-            '04-integration.html': {'04-02','04-06'},
-        }
-        import re
-        for filename, ids in targets.items():
-            source = (sources / filename).read_text()
-            sections = re.findall(r'<section class="slide"[^>]*>.*?</section>', source, re.S)
-            for sid in ids:
-                number, index = sid.split('-')
-                section = sections[int(index)-1]
-                pair = re.search(r'<div class="case-pair"[^>]*>(.*?)</div>\s*<figcaption>', section, re.S)
-                self.assertIsNotNone(pair, sid)
-                values = re.findall(r'<div class="case-doc"><b>.*?</b><span>(.*?)</span></div>', pair.group(1), re.S)
-                self.assertEqual(len(values), 2, sid)
-                self.assertNotEqual(values[0].strip(), values[1].strip(), sid)
+    def test_added_slides_maintain_question_continuity(self):
+        for fn,_,_,slides in self.sources():
+            for i,s in enumerate(slides):
+                if '-example-' in s['key']:
+                    self.assertTrue(s['next'],s['key'])
+                    if slides[i-1]['kind']!='interlude':self.assertTrue(slides[i-1]['next'],s['key'])
+                    self.assertNotEqual(slides[i-1]['next'],s['next'],s['key'])
+                    self.assertTrue(s['scene'],fn)
 
-        integration = (sources / '04-integration.html').read_text()
-        sections = re.findall(r'<section class="slide"[^>]*>.*?</section>', integration, re.S)
-        self.assertIn('role-map', sections[2])
-        self.assertIn('게이트', sections[2])
-        self.assertIn('지식', sections[2])
-        recall = sections[7]
-        self.assertIn('recall-blank', recall)
-        answer = recall.index('답 공개 · 관계 지도 보기')
-        answer_map = recall.index('recall-answer-map')
-        self.assertLess(answer, answer_map)
-        details_open = recall.index('<details class="lesson-answer recall-answer">')
-        self.assertLess(details_open, answer_map)
-
-
-if __name__ == '__main__':
-    unittest.main()
+if __name__=='__main__':unittest.main()

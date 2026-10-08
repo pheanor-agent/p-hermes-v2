@@ -32,10 +32,13 @@
       slides[current].__entered = true;
       window.__motion.enter(slides[current]);
     }
-    if (push) history.replaceState(null, '', '#' + (current + 1));
+    if (push) history.replaceState(null, '', '#' + (slides[current].dataset.slideKey || current + 1));
   }
 
   function fromHash() {
+    const key = decodeURIComponent(location.hash.slice(1));
+    const keyed = slides.findIndex(s => s.dataset.slideKey === key);
+    if (keyed >= 0) return keyed;
     const n = parseInt(location.hash.replace(/^#s?/, ''), 10);
     return Number.isFinite(n) ? n - 1 : 0;
   }
@@ -45,7 +48,7 @@
     else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
   }
 
-  // Whole-deck navigation always changes slides; only in-scene controls/keys step beats.
+  // Navigation always changes slides; native example controls retain their behavior.
   function go(dir) { show(current + dir); }
 
   document.addEventListener('keydown', e => {
@@ -54,9 +57,6 @@
     if (e.target.closest('input,textarea,select,[contenteditable="true"]')) return;
     if (e.target.closest('[data-diagram]')) return;
     if (e.target.closest('a,button,summary,details') && [' ', 'Enter'].includes(e.key)) return;
-    const flow = e.target.closest('[data-lesson-flow]');
-    if (flow && ['ArrowRight', 'PageDown'].includes(e.key)) { e.preventDefault(); window.__motion.step(flow, 1); return; }
-    if (flow && ['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); window.__motion.step(flow, -1); return; }
     if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); go(1); }
     else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); go(-1); }
     else if (e.key === 'Home') show(0);

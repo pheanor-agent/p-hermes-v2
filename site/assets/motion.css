@@ -3,7 +3,7 @@
 
 /* ----- scene figure (authored SVG) ----- */
 #deck .dk-scene{margin:0;padding:18px 22px;height:100%;max-height:590px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;min-height:0;background:radial-gradient(120% 90% at 30% 20%,#17283b 0,#132130 55%,#101c29 100%);border:1px solid var(--mo-edge);border-radius:12px;position:relative;overflow:hidden}
-#deck .dk-scene svg{display:block;width:100%;height:auto;min-height:0;max-height:540px;flex:1 1 0;overflow:visible}
+#deck .dk-scene svg{display:block;width:100%;height:100%;max-height:540px;flex:1 1 auto;overflow:visible}
 #deck .dk-scene .dk-caption{margin:10px 0 0}
 #deck .dk-scene svg text{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif;fill:#edf2fa;font-size:25px;font-weight:650;text-anchor:middle;dominant-baseline:middle}
 #deck .dk-scene svg text.sub{font-size:19px;font-weight:450;fill:#b9c7d8}
@@ -25,8 +25,8 @@
 #deck .dk-slide.mo-play .mo-draw{stroke-dasharray:1;stroke-dashoffset:1;animation:mo-draw 1s cubic-bezier(.3,.7,.3,1) forwards;animation-delay:calc(var(--d,0) * 140ms + 200ms)}
 @keyframes mo-draw{to{stroke-dashoffset:0}}
 /* marching dashes for continuous flows */
-#deck .mo-flow{stroke-dasharray:10 8}
-#deck .mo-flow.slow{stroke-dasharray:6 8}
+#deck .mo-flow{stroke-dasharray:10 8;animation:mo-march 1.2s linear infinite}
+#deck .mo-flow.slow{animation-duration:2.4s}
 @keyframes mo-march{to{stroke-dashoffset:-36}}
 /* pop-in for nodes, staggered with --d */
 #deck .dk-slide.mo-play .mo-pop{opacity:0;transform-box:fill-box;transform-origin:center;animation:mo-pop .55s cubic-bezier(.2,.9,.3,1.25) forwards;animation-delay:calc(var(--d,0) * 140ms)}
@@ -34,7 +34,7 @@
 #deck .dk-slide.mo-play .mo-rise{opacity:0;animation:mo-rise .6s ease-out forwards;animation-delay:calc(var(--d,0) * 120ms)}
 @keyframes mo-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 /* pulsing halo behind the focused node */
-#deck .mo-pulse{fill:none;stroke:var(--mo-mint);stroke-width:3;opacity:.5;transform-box:fill-box;transform-origin:center}
+#deck .mo-pulse{fill:none;stroke:var(--mo-mint);stroke-width:3;transform-box:fill-box;transform-origin:center;animation:mo-pulse 2.2s ease-out infinite}
 #deck .mo-pulse.coral{stroke:var(--mo-coral)}
 #deck .mo-pulse.amber{stroke:var(--mo-amber)}
 @keyframes mo-pulse{0%{opacity:.85;transform:scale(1)}100%{opacity:0;transform:scale(1.28)}}
@@ -46,7 +46,7 @@
 /* stamp / shake for blocked states */
 #deck .dk-slide.mo-play .mo-shake{animation:mo-shake .5s ease-in-out 1.2s 2}
 @keyframes mo-shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-#deck .mo-blink{opacity:.8}
+#deck .mo-blink{animation:mo-blink 1.6s ease-in-out infinite}
 @keyframes mo-blink{50%{opacity:.35}}
 /* step builds: [data-build=n] hidden until the n-th press */
 #deck [data-build]{opacity:0;transition:opacity .45s ease,transform .45s ease;transform:translateY(8px)}
@@ -73,16 +73,16 @@
 @keyframes mo-fade{from{opacity:0}to{opacity:1}}
 
 /* ----- ambient background: slow drifting glow on the stage ----- */
-#deck::before{content:"";position:absolute;inset:-20%;background:radial-gradient(35% 30% at 20% 30%,rgba(130,222,198,.07),transparent 70%),radial-gradient(30% 28% at 80% 70%,rgba(155,194,255,.07),transparent 70%),radial-gradient(25% 25% at 60% 20%,rgba(255,207,134,.05),transparent 70%);pointer-events:none}
+#deck::before{content:"";position:absolute;inset:-20%;background:radial-gradient(35% 30% at 20% 30%,rgba(130,222,198,.07),transparent 70%),radial-gradient(30% 28% at 80% 70%,rgba(155,194,255,.07),transparent 70%),radial-gradient(25% 25% at 60% 20%,rgba(255,207,134,.05),transparent 70%);animation:mo-drift 26s ease-in-out infinite alternate;pointer-events:none}
 @keyframes mo-drift{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(4%,-3%) rotate(4deg)}100%{transform:translate(-3%,3%) rotate(-3deg)}}
 #deck .dk-slide{z-index:1}
 
 /* ----- floating particles for cover / interlude slides (inserted by deckify) ----- */
 #deck .dk-ambient{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
-#deck .dk-ambient circle{fill:#82dec6;opacity:.18}
+#deck .dk-ambient circle{fill:#82dec6;opacity:.35;animation:mo-float var(--t,14s) ease-in-out infinite alternate;animation-delay:var(--dl,0s)}
 #deck .dk-ambient circle:nth-child(3n){fill:#9bc2ff}
 #deck .dk-ambient circle:nth-child(5n){fill:#ffcf86}
-#deck .dk-ambient path{fill:none;stroke:#82dec6;stroke-opacity:.12;stroke-width:1.5;stroke-dasharray:6 10}
+#deck .dk-ambient path{fill:none;stroke:#82dec6;stroke-opacity:.12;stroke-width:1.5;stroke-dasharray:6 10;animation:mo-march 3s linear infinite}
 @keyframes mo-float{from{transform:translate(0,0)}to{transform:translate(var(--x,30px),var(--y,-40px))}}
 
 /* ----- interlude: one big statement to switch the mood ----- */
@@ -97,8 +97,9 @@
 #deck .dk-interlude .dk-sub{margin:34px auto 0;max-width:1000px;font-size:30px;line-height:1.55;color:#bdcbdc;opacity:0;animation:mo-fade 1s ease-out 1.6s forwards}
 @keyframes mo-word{to{opacity:1;transform:none}}
 #deck .dk-interlude .dk-rings{position:absolute;left:50%;top:50%;width:0;height:0;z-index:0}
-#deck .dk-interlude .dk-rings i{position:absolute;left:0;top:0;border:2px solid rgba(130,222,198,.25);border-radius:50%;transform:translate(-50%,-50%)}
-#deck .dk-interlude .dk-rings{display:none}
+#deck .dk-interlude .dk-rings i{position:absolute;left:0;top:0;border:2px solid rgba(130,222,198,.25);border-radius:50%;transform:translate(-50%,-50%);animation:mo-ring 6s ease-out infinite}
+#deck .dk-interlude .dk-rings i:nth-child(2){animation-delay:2s}
+#deck .dk-interlude .dk-rings i:nth-child(3){animation-delay:4s}
 @keyframes mo-ring{from{width:120px;height:120px;opacity:.9}to{width:1500px;height:1500px;opacity:0}}
 
 /* ----- self-playing demo panel ----- */
@@ -180,40 +181,8 @@
 /* ----- concept slides: plain-language definitions ----- */
 #deck .dk-concept .dk-eyebrow::before{content:"개념 · ";color:#ffcf86}
 
-@media(prefers-reduced-motion:reduce){#deck [data-build]{transition:none}#deck .mo-draw{stroke-dashoffset:0!important}#deck .mo-pop,#deck .mo-rise,#deck .dk-interlude .w,#deck .dk-interlude .dk-sub{opacity:1!important;transform:none!important}#deck .mo-flow,#deck .mo-pulse,#deck .mo-blink,#deck .dk-ambient circle,#deck .dk-ambient path,#deck .dk-interlude .dk-rings i{animation:none!important}#deck::before{animation:none}}
+@media(prefers-reduced-motion:reduce){#deck [data-build]{transition:none}#deck .mo-draw{stroke-dashoffset:0!important}#deck .mo-pop,#deck .mo-rise,#deck .dk-interlude .w,#deck .dk-interlude .dk-sub{opacity:1!important;transform:none!important}#deck::before{animation:none}}
 #deck .dk-cover .dk-scene svg{max-height:430px}
-.dk-course-00 #s1 .scene-diagram{display:none}
-.dk-course-00 #s1 .diagram-hint{display:none}
-.dk-course-00 #s1 .cover-route{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:12px;margin:22px 0;padding:20px;border:1px solid #405168;border-radius:12px;background:#152234}
-.dk-course-00 #s1 .cover-route span{display:flex;flex-direction:column;gap:6px;text-align:center}
-.dk-course-00 #s1 .cover-route b{font-size:24px;color:#82dec6}
-.dk-course-00 #s1 .cover-route small{font-size:15px;color:#c3d0e0}
-.dk-course-00 #s1 .cover-route i{font-size:28px;color:#ffcf86}
-@media(max-width:760px){.dk-course-00 #s1 .cover-route{gap:5px;margin:8px 0;padding:10px}.dk-course-00 #s1 .cover-route b{font-size:18px}.dk-course-00 #s1 .cover-route small{font-size:12px}.dk-course-00 #s1 .cover-route i{font-size:18px}}
-
-/* Authored, non-JS-readable semantic steps with opt-in playback. */
-#deck .dk-scene.lesson-scene{padding:24px;overflow:auto;justify-content:flex-start}
-#deck .lesson-flow{display:flex;flex-direction:column;gap:10px;width:100%;height:100%;min-height:0;color:#edf2fa}
-#deck .lesson-beats{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;overflow:auto;flex:1;min-height:0}
-#deck .lesson-beats li{display:grid;grid-template-columns:150px 1fr;gap:7px 16px;padding:13px 16px;border:1px solid #405168;border-radius:10px;background:#152234;line-height:1.35}
-#deck .lesson-beats li::before{content:attr(data-title);grid-row:1/3;color:#ffcf86;font-weight:700;font-size:19px}
-#deck .lesson-beats li b{font-size:21px;color:#f5f7fb}
-#deck .lesson-beats li span{font-size:17px;color:#bbc9da}
-#deck .lesson-beats li.is-current{border-color:#82dec6;background:#173a39;box-shadow:0 0 0 2px rgba(130,222,198,.16)}
-#deck .lesson-beats li.is-current::before{content:"지금 확인 · " attr(data-title);color:#82dec6}
-#deck .lesson-beats li>details{grid-column:2;margin:2px 0 0;padding:5px 8px;font-size:16px}
-#deck .lesson-beats li>details summary{color:#ffcf86;cursor:pointer}
-#deck .lesson-beats li>details p{font-size:16px;line-height:1.45;margin:6px 0}
-#deck .lesson-caption{flex:0 0 auto;min-height:0;padding:10px 14px;border-left:3px solid #82dec6;background:#101b29;font-size:18px;line-height:1.4;color:#edf2fa}
-#deck .lesson-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:0 0 auto}
-#deck .lesson-actions button{min-height:42px;padding:7px 13px;border:1px solid #52677e;border-radius:7px;background:#1b2b3d;color:#edf2fa;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer}
-#deck .lesson-actions button:hover,#deck .lesson-actions button:focus-visible{border-color:#82dec6;outline:2px solid #82dec6;outline-offset:2px}
-#deck .lesson-actions button:disabled{opacity:.48;cursor:not-allowed}
-#deck .lesson-actions [data-step-count]{margin-left:auto;color:#c3d0e0;font-size:16px;font-variant-numeric:tabular-nums}
-#deck .lesson-answer{flex:0 0 auto;border-top:1px solid #405168;padding-top:8px;color:#c3d0e0;font-size:16px;max-height:150px;overflow:auto}
-#deck .lesson-answer summary{cursor:pointer;color:#ffcf86;font-weight:650}
-#deck .lesson-answer p{margin:8px 0 0;line-height:1.45}
-@media(prefers-reduced-motion:reduce){#deck .lesson-beats li{transition:none!important}}
 
 /* ===== typography & reading flow (2026-10-07) =====
    Eye path: eyebrow → title → key sentence (left) → animated diagram (right) → next question. */
@@ -248,7 +217,7 @@ body.dk,body.dk *{font-family:"Pretendard",system-ui,-apple-system,"Segoe UI","N
 #deck .dk-prev b,#deck .dk-next b{font-size:14px;letter-spacing:.08em}
 #deck .dk-next{font-size:23px;color:#eef3fa;font-weight:600;justify-self:end;text-align:right}
 #deck .dk-next::after{content:" →";display:inline-block;color:#82dec6;margin-left:6px}
-#deck .dk-slide.is-active .dk-next::after{animation:mo-nudge 1.4s ease-in-out 3s 1}
+#deck .dk-slide.is-active .dk-next::after{animation:mo-nudge 1.4s ease-in-out 3s infinite}
 @keyframes mo-nudge{0%,100%{transform:none}50%{transform:translateX(8px)}}
 /* reading order: text first, then the diagram, the next question last */
 #deck .dk-slide.is-active .dk-copy .dk-p:first-child{animation:mo-in-up .6s ease-out .2s both}
@@ -276,154 +245,188 @@ body.dk,body.dk *{font-family:"Pretendard",system-ui,-apple-system,"Segoe UI","N
 #deck .dk-wide .dk-scene svg{max-height:none}
 @media(max-width:760px){#deck .dk-wide .dk-copy{flex-direction:column;gap:16px}}
 
-/* Portrait/mobile: reflow the lecture instead of shrinking a 16:9 canvas. */
+/* New evidence pages use the original two-column lecture frame. */
+#deck .mobile-relationship,#deck .sim-static{display:none}
+#deck .example-scene{justify-content:center;gap:18px}
+#deck .example-pair{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
+#deck .example-doc{padding:24px 26px;border:1px solid #40566e;background:#17283b;border-radius:14px;min-width:0}
+#deck .example-doc h3,#deck .rule-document h3{font-size:24px;line-height:1.35;color:#82dec6;margin:0 0 20px}
+#deck .example-doc p{font-size:27px;line-height:1.55;color:#edf2fa;margin:12px 0;word-break:keep-all}
+#deck .example-doc.result{border-color:#82dec6;background:#173633}
+#deck .example-doc.warning{border-color:#ffcf86;background:#302b25}
+#deck .example-note{font-size:18px;line-height:1.45;color:#a9bdd1;margin:0}
+#deck .request-document{border:1px solid #3f566e;border-radius:14px;overflow:hidden;background:#152638}
+#deck .request-document>div{display:grid;grid-template-columns:145px 1fr;gap:24px;padding:22px 26px;border-bottom:1px solid #30465c;font-size:25px;line-height:1.5}
+#deck .request-document>div:last-child{border:0}
+#deck .request-document b{color:#82dec6}
+#deck .state-change{display:flex;align-items:center;justify-content:center;gap:30px}
+#deck .state-change>div{border:2px solid #82dec6;border-radius:14px;padding:34px;display:grid;gap:16px;min-width:200px;text-align:center;background:#173633;font-size:32px}
+#deck .state-change small{display:block;font-size:20px;color:#adc1d4}
+#deck .relation-arrow{font-size:46px;text-align:center;color:#82dec6}
+#deck .transition-condition{border-top:1px solid #40566e;padding:25px;text-align:center;font-size:25px;color:#ffcf86}
+#deck .transition-condition p{margin:10px 0 0;color:#edf2fa}
+#deck .rule-document{padding:26px;border:1px solid #82dec6;border-radius:14px;background:#173633}
+#deck .rule-document p{font-size:29px;line-height:1.5;margin:0}
+#deck .rule-application{display:flex;align-items:center;justify-content:space-around;gap:16px;font-size:27px;padding:20px;border:1px solid #40566e;border-radius:12px}
+#deck .rule-application strong{color:#82dec6}
+#deck .lesson-chain{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#deck .lesson-chain .example-doc{padding:18px 22px}
+#deck .lesson-chain .example-doc h3{margin-bottom:8px;font-size:22px}
+#deck .lesson-chain .example-doc p{font-size:25px;margin:0}
+#deck .transfer-exercise{display:grid;gap:20px}
+#deck [data-quiz-reveal]{justify-self:start;padding:10px 22px;border:1px solid #82dec6;color:#edf2fa;background:#173633;border-radius:8px;font:600 21px inherit;cursor:pointer}
+#deck [hidden]{display:none!important}
+#deck.mo-paused *,#deck.mo-paused::before,#deck.mo-paused::after,#deck.mo-paused *::before,#deck.mo-paused *::after{animation-play-state:paused!important}
+#deck .sim-head{flex-wrap:wrap}
+#deck .sim-scenarios{display:flex;gap:7px;margin-left:auto}
+#deck .sim-scenarios button{font:600 14px inherit;padding:5px 10px;color:#edf2fa;background:#1b2b3d;border:1px solid #52677e;border-radius:6px;cursor:pointer}
+#deck .sim-scenarios button[aria-pressed=true]{border-color:#82dec6;background:#173633}
+#deck .sim-say{white-space:normal;text-overflow:clip;overflow:visible;min-height:64px}
+#deck .sim-metric strong{white-space:normal;overflow:visible;text-overflow:clip;font-size:19px;line-height:1.3}
+.dk-controls [data-motion-pause],.dk-controls [data-motion-restart]{font-size:15px;padding:5px 12px;min-width:0}
 @media(max-width:760px){
-  .dk-viewport{inset:0 0 58px;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch}
-  .dk-stage{position:relative!important;left:auto;top:auto;width:100%;height:auto;min-height:100%;max-width:none;overflow:visible;transform:none!important;background:#101b29}
-  .dk-brand{position:relative;left:auto;right:auto;top:auto;margin:10px 18px 6px;gap:8px;align-items:center;font-size:12px;line-height:1.35}
-  #deck .dk-slide,#deck .dk-slide.is-active{position:relative;inset:auto;width:100%;height:auto;min-height:calc(100dvh - 58px);padding:20px 18px 64px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box;overflow:visible}
-  #deck .dk-slide:not(.is-active){display:none}
-  #deck .dk-head{flex:0 0 auto}
-  #deck .dk-eyebrow{font-size:13px;padding:5px 10px}
-  #deck .dk-count{font-size:13px;min-width:auto}
-  #deck .dk-title,#deck .dk-cover .dk-title{font-size:clamp(27px,7vw,36px);line-height:1.3;max-width:none}
-  #deck .dk-body,#deck .dk-cover .dk-body,#deck .dk-sim .dk-body,#deck .dk-wide .dk-body{display:flex;flex-direction:column;align-items:stretch;gap:18px;width:100%;height:auto;min-height:0}
-  #deck .dk-copy,#deck .dk-wide .dk-copy{width:100%;padding:0;gap:12px;order:0}
-  #deck .dk-p,#deck .dk-p+.dk-p,#deck .dk-copy .dk-p:first-child,#deck .dk-wide .dk-p,#deck .dk-wide .dk-p+.dk-p{font-size:17px;line-height:1.5;padding-top:0;flex:auto}
-  #deck .dk-copy .dk-p:first-child::before{display:none}
-  #deck .dk-scene,#deck .dk-diagram,#deck .sim{width:100%;height:auto;max-height:none;min-height:0;box-sizing:border-box;order:1;padding:14px}
-  #deck .dk-scene svg,#deck .dk-diagram svg{width:100%;height:auto;max-height:40vh;flex:none}
-  #deck .dk-scene.lesson-scene{min-height:0;max-height:none;overflow:visible;padding:12px}
-  #deck .lesson-flow{height:auto;min-height:0;gap:10px}
-  #deck .lesson-beats{overflow:visible;gap:8px;flex:none}
-  #deck .lesson-beats li{grid-template-columns:1fr;gap:5px;padding:10px 11px}
-  #deck .lesson-beats li::before{grid-row:auto;font-size:14px}
-  #deck .lesson-beats li b{font-size:16px}
-  #deck .lesson-beats li span{font-size:14px}
-  #deck .lesson-caption{font-size:14px;min-height:0;padding:9px 10px}
-  #deck .lesson-actions{gap:6px}
-  #deck .lesson-actions button{min-height:40px;padding:6px 9px;font-size:13px}
-  #deck .lesson-actions [data-step-count]{font-size:13px}
-  #deck .lesson-answer{font-size:14px}
-  #deck .dk-foot{display:flex;flex-direction:column;gap:12px;min-height:0;padding-top:12px;margin-top:auto}
-  #deck .dk-prev,#deck .dk-next{font-size:15px;justify-self:auto;text-align:left}
-  #deck .dk-next{padding-right:0}
-  #deck .dk-prev b,#deck .dk-next b{font-size:12px}
-  #deck .dk-progress{left:18px;right:18px}
-  .dk-controls{height:58px;gap:8px;justify-content:center}
-  .dk-controls .dk-home,.dk-controls .dk-lec,.dk-controls .dk-lecs{display:none}
-  .dk-controls button{min-width:42px;height:40px}
-  .dk-controls .dk-live-count{min-width:50px}
+ .dk-viewport{inset:0 0 56px;overflow:hidden}
+ .dk-stage{width:100%!important;height:100%!important;left:0!important;top:0!important;transform:none!important;position:relative!important}
+ .dk-brand{display:none}
+ #deck .dk-slide{padding:16px 18px 12px;gap:12px;grid-template-rows:auto auto minmax(0,1fr) auto}
+ #deck .dk-eyebrow{font-size:12px;padding:4px 9px;letter-spacing:0}
+ #deck .dk-count{font-size:12px;min-width:0}
+ #deck .dk-title,#deck .dk-cover .dk-title{font-size:25px;line-height:1.3;max-width:none}
+ #deck .dk-body,#deck .dk-cover .dk-body,#deck .dk-sim .dk-body,#deck .dk-wide .dk-body{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:12px;align-items:stretch}
+ #deck .dk-copy,#deck .dk-wide .dk-copy{padding:0;gap:8px;flex-direction:column;align-self:start}
+ #deck .dk-copy .dk-p,#deck .dk-copy .dk-p:first-child,#deck .dk-copy .dk-p+.dk-p,#deck .dk-wide .dk-p{font-size:15px;line-height:1.45;padding:0;color:#c3d1df}
+ #deck .dk-copy .dk-p:first-child{font-size:17px;color:#f4f7fb}
+ #deck .dk-copy .dk-p:first-child::before{display:none}
+ #deck .dk-scene{height:100%;max-height:none;padding:12px;justify-content:center;gap:10px;border-radius:12px}
+ #deck .dk-scene>.mobile-relationship{display:flex;flex-direction:column;gap:12px;justify-content:center;min-height:0}
+ #deck .dk-scene:has(>.mobile-relationship)>svg{display:none}
+ #deck .relation-node{position:relative;padding:12px 14px;border:1px solid #526a80;border-radius:10px;background:#1b2e40;text-align:center;font-size:17px;line-height:1.35;color:#edf2fa}
+ #deck .relation-node+.relation-node::before{content:'↓';position:absolute;left:calc(50% - 7px);top:-17px;color:#82dec6;font-size:16px;animation:mo-blink 2.4s infinite}
+ #deck .dk-foot{grid-template-columns:1fr;gap:0;min-height:0;padding-top:8px}
+ #deck .dk-prev{display:none}
+ #deck .dk-next{font-size:14px;line-height:1.4;justify-self:start;text-align:left}
+ #deck .dk-next b{font-size:10px;margin-bottom:2px}
+ #deck .dk-next::after{display:none}
+ #deck .dk-progress{left:18px;right:18px}
+ #deck .dk-interlude.is-active{padding:30px;grid-template-rows:1fr;place-items:center}
+ #deck .dk-interlude .dk-big{font-size:34px;line-height:1.4}
+ #deck .dk-interlude .dk-sub{font-size:20px;margin-top:24px;line-height:1.55}
+ #deck .dk-interlude .dk-kicker{font-size:13px;letter-spacing:.1em;margin-bottom:18px}
+ #deck .example-pair{grid-template-columns:1fr;gap:10px}
+ #deck .example-doc{padding:12px 15px;border-radius:10px}
+ #deck .example-doc h3,#deck .rule-document h3{font-size:16px;margin:0 0 7px}
+ #deck .example-doc p{font-size:17px;line-height:1.4;margin:4px 0}
+ #deck .example-note{font-size:12px;line-height:1.4}
+ #deck .request-document>div{grid-template-columns:65px 1fr;gap:10px;padding:12px 10px;font-size:15px;line-height:1.45}
+ #deck .state-change{gap:12px}
+ #deck .state-change>div{min-width:0;padding:18px 14px;font-size:24px;gap:10px}
+ #deck .state-change small{font-size:13px}
+ #deck .relation-arrow{font-size:30px}
+ #deck .transition-condition{padding:12px 0;font-size:17px}
+ #deck .rule-document{padding:18px}
+ #deck .rule-document p{font-size:18px;line-height:1.5}
+ #deck .rule-application{font-size:16px;padding:12px;gap:8px}
+ #deck .lesson-chain{grid-template-columns:1fr 1fr;gap:8px}
+ #deck .lesson-chain .example-doc{padding:11px}
+ #deck .lesson-chain .example-doc h3{font-size:14px;margin-bottom:6px}
+ #deck .lesson-chain .example-doc p{font-size:16px}
+ #deck .transfer-exercise{gap:12px}
+ #deck [data-quiz-reveal]{font-size:16px;padding:8px 14px}
+ #deck .sim{height:100%;max-height:none;min-height:0;grid-template-rows:auto minmax(0,1fr) auto auto}
+ #deck .sim-head{padding:8px 10px;gap:6px}
+ #deck .sim-head b{font-size:15px}
+ #deck .sim-tag{font-size:10px;padding:2px 6px}
+ #deck .sim-live{font-size:11px}
+ #deck .sim-scenarios{width:100%;margin:0;justify-content:center}
+ #deck .sim-scenarios button{font-size:12px}
+ #deck .sim-view{padding:10px;gap:10px}
+ #deck .sim-case{padding:8px;gap:5px}
+ #deck .sim-case b{font-size:17px}
+ #deck .sim-case i{font-size:11px;padding:3px 6px}
+ #deck .sim-q{padding:7px;gap:0 5px}
+ #deck .sim-q b{font-size:13px}
+ #deck .sim-q span{font-size:11px}
+ #deck .sim-q em{font-size:16px}
+ #deck .sim-metric{padding:7px}
+ #deck .sim-metric span{font-size:11px}
+ #deck .sim-metric strong{font-size:13px}
+ #deck .sim-say{font-size:15px;padding:10px;min-height:58px;line-height:1.35}
+ #deck .sim-card{padding:10px;gap:8px}
+ #deck .sim-card p{font-size:16px}
+ #deck .sim-tabs{gap:4px}
+ #deck .sim-tabs span{font-size:11px;padding:4px 6px}
+ #deck .sim-bin{display:none}
+ #deck .sim-bin.is-target{display:flex;grid-column:1/-1;min-height:60px;padding:10px;font-size:16px}
+ #deck .sim-shelves{grid-template-columns:1fr;min-height:60px}
+ #deck .sim-chipstage{min-height:65px}
+ #deck .sim-chip{font-size:15px}
+ #deck .sim-bin b{font-size:17px}
+ #deck .sim-bin span{font-size:13px}
+ #deck .sim-static{font-size:17px;line-height:1.5}
+ .dk-controls{height:56px;padding:0 8px;gap:6px}
+ .dk-controls .dk-lecs,.dk-controls .dk-lec,.dk-controls [data-fs]{display:none}
+ .dk-controls .dk-home{font-size:12px;margin-right:0}
+ .dk-controls .dk-live-count{font-size:12px;min-width:38px}
+ .dk-controls button{height:34px;min-width:30px;padding:0 7px;font-size:16px}
+ .dk-controls [data-motion-pause],.dk-controls [data-motion-restart]{font-size:11px;padding:0 6px}
+}
+@media(prefers-reduced-motion:reduce){
+ #deck [data-sim]{display:none}
+ #deck .sim-static{display:flex;align-items:center;justify-content:center;padding:24px;border:1px solid #40566e;border-radius:12px;background:#172638;font-size:24px;line-height:1.6}
+ #deck .relation-node::before,#deck .mo-flow,#deck .mo-pulse,#deck .mo-blink{animation:none}
 }
 
-/* Every authored slide carries a readable evidence caption and an explicit
-   understanding check; paired cards make the source/result relationship visible. */
-#deck .dk-scene>figcaption{flex:0 0 auto;margin:8px 4px 0;padding:9px 12px;border-left:3px solid #82dec6;background:#101b29;color:#e0e9f4;font-size:16px;line-height:1.4;overflow-wrap:anywhere}
-#deck .dk-scene>figcaption b{color:#ffcf86}
-#deck .case-pair{display:grid;grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr);gap:10px;align-items:stretch;flex:0 0 auto;margin:10px 0 0;color:#edf2fa}
-#deck .case-doc{display:flex;flex-direction:column;gap:6px;min-width:0;padding:10px 12px;border:1px solid #50677e;border-radius:8px;background:#172638;font-size:15px;line-height:1.35;overflow-wrap:anywhere}
-#deck .case-doc:first-child{border-color:#ffcf86}
-#deck .case-doc:last-child{border-color:#82dec6}
-#deck .case-doc b{font-size:13px;letter-spacing:.04em;color:#b6c4d5}
-#deck .case-doc span{color:#f4f7fb}
-#deck .case-link{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#82dec6;font-size:28px;font-weight:800;text-align:center}
-#deck .case-link small{font-size:11px;line-height:1.2;color:#b9c7d8}
-#deck .case-check{flex:0 0 auto;max-height:110px;overflow:auto;margin-top:8px;padding:8px 10px;border:1px solid #405168;border-radius:8px;background:#101b29;color:#c3d0e0;font-size:14px;line-height:1.4}
-#deck .case-check summary{cursor:pointer;color:#ffcf86;font-weight:650}
-#deck .case-check p{margin:6px 0 0}
-#deck .dk-scene .integration-map{flex:0 0 auto;height:120px;max-height:120px;background:#101b29;border:1px solid #304357;border-radius:10px}
-#deck .integration-scene .lesson-beats{gap:6px}
-#deck .integration-scene .lesson-beats li{padding:8px 12px;grid-template-columns:170px 1fr}
-#deck .dk-scene.lesson-scene>.lesson-flow{height:auto;flex:1 1 auto;min-height:0}
-#deck .recall-prompt{display:flex;flex-direction:column;gap:6px;margin:0 0 8px;padding:14px 16px;border-left:4px solid #ffcf86;background:#101b29;font-size:17px;line-height:1.45}
-#deck .recall-prompt b{color:#ffcf86}
-#deck .recall-blank{flex:0 0 auto;height:190px;max-height:190px;border:1px dashed #52677e;border-radius:10px;background:#132130}
-#deck .recall-answer{flex:0 0 auto;max-height:none;overflow:visible}
-#deck .recall-answer-map{display:grid;width:100%;height:auto;max-height:none;margin-top:12px}
-#deck .recall-scene:has(.recall-answer[open]) .recall-blank{display:none}
-#deck .dk-scene.recall-scene{overflow-y:auto}
-#deck .dk-scene .recall-blank text{font-size:19px;text-anchor:start}
-#deck .dk-scene .recall-blank>text:last-child{text-anchor:middle;font-size:16px}
-#deck .recall-mobile{display:none}
+/* Final screen-review corrections: semantic relationships and compact hero width. */
+#deck .mobile-info,#deck .sim-mobile-actors{display:none}
+#deck .dk-scene svg text.lbl{fill:#bdcddd}
+#deck .dk-scene svg text.lbl.warn{fill:#ff9f8f}
 @media(max-width:760px){
- #deck .dk-scene>figcaption{font-size:14px}
- #deck .case-pair{grid-template-columns:minmax(0,1fr);gap:6px}
- #deck .case-link{font-size:19px;line-height:1}
- #deck .case-link small{display:inline;margin-left:5px}
- #deck .case-doc{font-size:14px;padding:8px 10px}
- #deck .case-check{max-height:none;font-size:13px}
- #deck .dk-scene .integration-map{height:100px;max-height:100px}
- #deck .integration-scene .lesson-beats li{grid-template-columns:1fr}
- #deck .recall-blank{height:auto;max-height:none}
- #deck .recall-scene:has(.recall-answer[open]) .recall-blank{height:auto;max-height:110px}
- #deck .recall-answer-map{max-height:none}
- #deck .recall-scene .recall-mobile{display:grid;grid-template-columns:1fr;gap:8px;height:auto;max-height:none;padding:12px;border-style:solid}
- #deck .recall-mobile p{margin:0;padding:10px 12px;border:1px solid #405168;border-radius:8px;background:#172638;color:#edf2fa;font-size:15px;line-height:1.4}
- #deck .recall-mobile p b{color:#82dec6}
- #deck .recall-scene>svg.recall-blank{display:none}
+ body.dk #deck .dk-slide .dk-body{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr)!important}
+ #deck .relation-parts .relation-node::before{display:none}
+ #deck .relation-parts{gap:8px!important}
+ #deck .relation-alternatives{display:grid!important;grid-template-columns:1fr 1fr}
+ #deck .desktop-info{display:none}
+ #deck .mobile-info{display:block;font-size:13px;line-height:1.45;color:#b9cddd;margin:0}
+ #deck .sim-mobile-actors{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:8px}
+ #deck .life-actor{font-size:17px;line-height:1.35;padding:12px 6px;border:1px solid #526a80;border-radius:9px;text-align:center;position:relative;color:#b5c6d5;background:#172638}
+ #deck .life-actor.is-current{color:#edf2fa;border-color:#82dec6;background:#173633;font-weight:700}
+ #deck .life-actor.is-current::after{content:'';position:absolute;inset:-3px;border:2px solid #82dec6;border-radius:11px;animation:mo-focus-glow 2s ease-in-out infinite;pointer-events:none}
+ #deck .sim-svg.life{display:none}
 }
-
-/* Script-disabled users get the whole lesson as a linear, readable document. */
-.dk-static{display:block!important;max-width:1040px;margin:0 auto;padding:28px 22px 90px;background:#101b29;color:#edf2fa;font:18px/1.6 system-ui,sans-serif}
-.dk-static h1{font-size:2rem;line-height:1.25}
-.dk-static section{padding:20px 0;border-top:1px solid #405168}
-.dk-static h2{font-size:1.45rem;color:#82dec6}
-.dk-static p{margin:.6em 0;color:#d5dfeb}
-.dk-static .static-evidence{padding:10px 14px;border-left:3px solid #ffcf86;background:#172638}
-.dk-static details{margin-top:10px;padding:10px 14px;border:1px solid #405168;border-radius:8px}
-.dk-static summary{cursor:pointer;color:#ffcf86;font-weight:700}
-
-/* Real document excerpts: the relationship is carried by readable rows. */
-#deck .scene-diagram{display:flex;flex:1 1 0;min-height:0;min-width:0;width:100%}
-#deck .scene-diagram svg{flex:1 1 auto;width:100%;height:100%;min-height:0}
-#deck .diagram-hint{display:none}
-#deck .lesson-beats li{padding:10px 14px;gap:5px 14px}
-@media(min-width:761px){.dk-viewport{overflow:clip}}
-#deck .scene-diagram:focus-visible{outline:2px solid #82dec6;outline-offset:2px}
-#deck .procedure-scene{justify-content:flex-start;overflow:auto}
-.procedure-evidence{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 12px;font-size:16px;line-height:1.5;color:#ffcf86}
-.procedure-evidence span{flex:1;padding:8px 12px;border:1px solid #826638;border-radius:8px;background:#302a1e}
-.procedure-comparison{width:100%;border-collapse:separate;border-spacing:8px;font-size:20px;line-height:1.5}
-.procedure-comparison th{font-size:18px;color:#ffcf86;text-align:left;padding:6px 10px}
-.procedure-comparison td{padding:12px 14px;background:#172638;border:1px solid #50677e;border-radius:8px;vertical-align:top;width:46%}
-.procedure-comparison td:last-child{border-color:#82dec6;background:#173a39}
-.procedure-comparison .procedure-link{width:8%;border:0;background:none;padding:6px;text-align:center;color:#82dec6;font-weight:700}
-.role-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;flex:0 0 auto;font-size:16px;line-height:1.4}
-.role-map>div{padding:8px 10px;border:1px solid #50677e;border-radius:8px;background:#152234;min-width:0}
-.role-map b,.role-map span{display:block}
-.role-map b{color:#82dec6;margin-bottom:3px}
-.role-map .role-context{grid-column:1/-1;border-color:#826638;color:#ffcf86;font-size:15px}
-#deck .integration-scene .lesson-beats{flex:0 0 auto;min-height:0;max-height:190px}
-#deck .lesson-scene:has(.role-map)>.lesson-flow{flex:0 0 auto;height:auto;min-height:0}
-.dk-static figure{margin:16px 0}
-.dk-static .lesson-beats{padding-left:22px}
-.dk-static .lesson-beats li{margin:14px 0}
-.dk-static .lesson-beats li>b,.dk-static .lesson-beats li>span{display:block}
-.dk-static .case-pair{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center}
-.dk-static .case-doc{padding:12px;border:1px solid #50677e}
-.dk-static .case-doc b,.dk-static .case-doc span{display:block}
-.dk-static .case-link{color:#82dec6}
-.dk-static figcaption{margin:12px 0;padding:10px;border-left:3px solid #82dec6}
+@keyframes mo-focus-glow{0%,100%{opacity:.2}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){#deck .life-actor::after{animation:none}}
+#deck .sim-mobile-gates{display:none}
 @media(max-width:760px){
- #deck::before{inset:0}
- #deck .scene-diagram{display:block;flex:none;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;max-width:100%;border-bottom:1px solid #405168}
- #deck .scene-diagram svg{display:block;width:900px;min-width:900px;height:auto;max-height:none;max-width:none}
- #deck .dk-cover .scene-diagram svg{max-height:none}
- #deck .diagram-hint{display:block;font-size:13px;line-height:1.4;color:#ffcf86;margin:8px 0 0}
- #deck .dk-sim .dk-copy .dk-p:first-child{font-size:17px;line-height:1.5}
- #deck .lesson-actions{position:sticky;top:0;background:#132130;z-index:3;padding:6px 0}
- #deck .lesson-beats li>details{grid-column:1;font-size:14px}
- #deck .lesson-beats li>details p{font-size:14px}
- #deck .lesson-answer{max-height:none}
- #deck .integration-scene .lesson-beats{max-height:none}
- #deck .dk-scene .recall-blank{flex:0 0 auto;min-height:110px}
- .role-map{grid-template-columns:1fr;font-size:15px}
- .role-map .role-context{grid-column:1}
- .procedure-evidence{font-size:14px;flex-direction:column}
- .procedure-comparison{font-size:15px;border-spacing:4px}
- .procedure-comparison th{font-size:14px;padding:5px}
- .procedure-comparison td{padding:9px 7px;word-break:normal}
- .procedure-comparison .procedure-link{font-size:15px;padding:2px}
- .dk-static{font-size:17px;padding:20px 18px 60px}
- .dk-static .case-pair{grid-template-columns:1fr}
+ #deck .sim-flow .sim-q{display:none}
+ #deck .sim-flow .sim-q.is-active{display:grid}
+ #deck .sim-tabs span:not(.on){display:none}
+ #deck .sim-tabs span.on{font-size:14px;padding:5px 8px}
+ #deck .sim-chipstage{min-height:0}
+ #deck .sim-chipstage:has(.gone){display:none}
+ #deck .sim-bin.is-target{min-height:0;padding:8px}
+ #deck .sim-svg.gate{display:none}
+ #deck .sim-mobile-gates{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ #deck .gate-state{font-size:17px;line-height:1.25;padding:12px;border:1px solid #526a80;border-radius:9px;text-align:center;background:#172638}
+ #deck .gate-state.is-current{color:#edf2fa;border-color:#82dec6;background:#173633;font-weight:700}
+ #deck .sim-files{gap:4px}
+ #deck .sim-files span{font-size:11px;padding:3px 5px}
+ #deck .sim-mobile-actors{gap:8px;padding:6px}
+ #deck .life-actor{font-size:15px;padding:7px 4px}
+}
+@media(max-width:760px) and (max-height:750px){
+ #deck .dk-slide{padding:12px 16px 10px;gap:8px}
+ #deck .dk-body,#deck .dk-sim .dk-body,#deck .dk-wide .dk-body{gap:8px}
+ #deck .dk-title,#deck .dk-cover .dk-title{font-size:23px}
+ #deck .dk-scene{padding:10px}
+ #deck .relation-node{padding:9px 12px;font-size:16px}
+}
+@media(max-width:760px){
+ #deck .dk-sim .dk-copy .dk-p:first-child{font-size:17px;line-height:1.45;padding:0}
+}
+@media(max-width:760px){
+ #deck [data-sim=verdict] .sim-view{padding:8px;gap:8px}
+ #deck [data-sim=verdict] .sim-card{flex:0 1 auto;min-height:0;padding:7px;gap:5px;justify-content:flex-start}
+ #deck [data-sim=verdict] .sim-card p{font-size:15px;line-height:1.35}
+ #deck [data-sim=verdict] .sim-tabs span.on{line-height:1.35}
+ #deck .gate-state{padding:10px}
 }
