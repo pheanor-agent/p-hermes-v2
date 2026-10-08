@@ -1,6 +1,5 @@
-/* p-hermes motion layer: line draw-in, packets travelling along wires, timed builds
-   and self-playing demonstrations. Nothing needs viewer input; everything starts when
-   a slide becomes active and stops when it leaves. Respects reduced motion. */
+/* p-hermes motion layer: authored steps are manual, playback is opt-in.
+   Entrance builds settle once; questions pause playback. Reduced motion is static. */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -18,7 +17,8 @@
     if (text !== undefined) n.textContent = text;
     return n;
   };
-  const SPEED = reduce ? 0.15 : 1;
+  // Reduced motion keeps meaningful pauses; it must not race through prose.
+  const SPEED = 1;
 
   /* ---------- per-slide timers: cleared whenever the slide is left ---------- */
   function later(slide, ms, fn) {
@@ -37,7 +37,7 @@
       const path = svg && svg.querySelector('#' + CSS.escape(p.dataset.path));
       if (!path) return;
       p.__bound = true;
-      packets.push({ p, path, slide, len: path.getTotalLength(), dur: +p.dataset.dur || 2.4, delay: +p.dataset.delay || 0, loop: p.dataset.loop !== 'no' });
+      packets.push({ p, path, slide, len: path.getTotalLength(), dur: +p.dataset.dur || 2.4, delay: +p.dataset.delay || 0, loop: p.dataset.loop === 'yes' });
     });
   }
   function tick(now) {
@@ -63,16 +63,132 @@
   }
   function enter(slide) {
     clearTimers(slide);
+    $$('[data-lesson-flow]', slide).forEach(resetLesson);
+    $$('details.lesson-answer, details.case-check', slide).forEach(answer => { answer.open = false; });
     slide.__t0 = performance.now();
     bindPackets(slide);
-    setBuild(slide, 0);
     const total = builds(slide);
     const gap = +(slide.dataset.buildGap || 1500);
-    for (let n = 1; n <= total; n++) later(slide, 1300 + (n - 1) * gap, () => setBuild(slide, n));
+    setBuild(slide, reduce ? total : 0);
+    if (!reduce) for (let n = 1; n <= total; n++) later(slide, 1300 + (n - 1) * gap, () => setBuild(slide, n));
     slide.classList.remove('mo-play'); void slide.offsetWidth; slide.classList.add('mo-play');
-    $$('[data-sim]', slide).forEach(s => s.__sim && s.__sim(slide));
+    // Simulations are opt-in: authored semantic flows are manual by default.
   }
-  function leave(slide) { clearTimers(slide); }
+  function leave(slide) {
+    clearTimers(slide);
+    $$('[data-lesson-flow]', slide).forEach(clearLessonTimer);
+  }
+
+  /* ---------- authored semantic lesson steps ---------- */
+  function clearLessonTimer(flow) {
+    if (flow.__lessonTimer) clearInterval(flow.__lessonTimer);
+    flow.__lessonTimer = null;
+    const auto = $('[data-auto]', flow);
+    if (auto) { auto.textContent = '자동 재생'; auto.setAttribute('aria-pressed', 'false'); }
+  }
+  function resetLesson(flow) {
+    clearLessonTimer(flow);
+    $$('details.lesson-answer, details.case-check', flow).forEach(answer => { answer.open = false; });
+    flow.__lessonIndex = 0;
+    const beats = $$('[data-title]', flow);
+    beats.forEach((beat, i) => {
+      beat.classList.toggle('is-current', i === 0);
+      beat.setAttribute('aria-current', i === 0 ? 'step' : 'false');
+    });
+    const label = $('[data-step-count]', flow);
+    if (label) label.textContent = flow.dataset.actGroups ? '막 1 / 4' : `1 / ${beats.length}`;
+    const caption = $('.lesson-caption', flow);
+    if (caption && beats[0]) caption.textContent = `${beats[0].dataset.title} · ${beats[0].dataset.focus}: ${beats[0].querySelector('span')?.textContent || beats[0].textContent.trim()}`;
+    const list = $('.lesson-beats', flow);
+    if (list) list.scrollTop = 0;
+    updateStepButtons(flow, beats.length);
+  }
+  function updateStepButtons(flow, total) {
+    const prev = $('[data-step="-1"]', flow), next = $('[data-step="1"]', flow);
+    if (prev) prev.disabled = flow.__lessonIndex === 0;
+    if (next) next.disabled = flow.__lessonIndex === total - 1;
+    const auto = $('[data-auto]', flow);
+    if (auto) auto.disabled = reduce || flow.__lessonIndex === total - 1 ||
+      Boolean($$('[data-title]', flow)[flow.__lessonIndex]?.hasAttribute('data-question'));
+  }
+  function ensureBeatVisible(flow, beat) {
+    const list = $('.lesson-beats', flow);
+    if (!list || !flow.closest('.dk-slide')?.classList.contains('is-active')) return;
+    if (matchMedia('(max-width: 760px)').matches) {
+      const viewport = $('.dk-viewport'), actions = $('.lesson-actions', flow);
+      if (!viewport) return;
+      const vr = viewport.getBoundingClientRect();
+      const ar = actions?.getBoundingClientRect();
+      const safeTop = Math.max(vr.top, ar?.bottom ?? vr.top) + 8;
+      const safeBottom = vr.bottom - 8;
+      const br = beat.getBoundingClientRect();
+      if (br.bottom > safeBottom) viewport.scrollTop += br.bottom - safeBottom;
+      else if (br.top < safeTop) viewport.scrollTop -= safeTop - br.top;
+      return;
+    }
+    if (list.scrollHeight <= list.clientHeight + 1) return;
+    // Scroll only the evidence pane on desktop; never hide earlier evidence.
+    const r = list.getBoundingClientRect(), b = beat.getBoundingClientRect();
+    const scale = r.height / list.clientHeight || 1;
+    if (b.bottom > r.bottom) list.scrollTop += (b.bottom - r.bottom) / scale + 8;
+    if (b.top < r.top) list.scrollTop -= (r.top - b.top) / scale + 8;
+  }
+  function step(flow, direction, keepPlayback = false) {
+    const beats = $$('[data-title]', flow);
+    if (!beats.length) return false;
+    const next = flow.__lessonIndex + direction;
+    if (next < 0 || next >= beats.length) { clearLessonTimer(flow); return false; }
+    if (!keepPlayback) clearLessonTimer(flow);
+    flow.__lessonIndex = next;
+    beats.forEach((beat, i) => {
+      beat.classList.toggle('is-current', i === next);
+      beat.setAttribute('aria-current', i === next ? 'step' : 'false');
+    });
+    const label = $('[data-step-count]', flow);
+    if (label) label.textContent = flow.dataset.actGroups ? `막 ${next + 1} / ${beats.length}` : `${next + 1} / ${beats.length}`;
+    const beat = beats[next];
+    updateStepButtons(flow, beats.length);
+    if (beat.hasAttribute('data-question') || next === beats.length - 1) clearLessonTimer(flow);
+    const caption = $('.lesson-caption', flow);
+    if (caption) caption.textContent = `${beat.dataset.title} · ${beat.dataset.focus}: ${beat.querySelector('span')?.textContent || beat.textContent.trim()}`;
+    // The caption can wrap and reflow the mobile page. Measure the active card
+    // only after that text is committed, or the same click can leave it covered.
+    ensureBeatVisible(flow, beat);
+    return true;
+  }
+  function initLessons() {
+    $$('[data-lesson-flow]').forEach(flow => {
+      const beats = $('.lesson-beats', flow);
+      const actions = $('.lesson-actions', flow), caption = $('.lesson-caption', flow);
+      if (beats && actions && caption) { flow.insertBefore(actions, beats); flow.insertBefore(caption, beats); }
+      resetLesson(flow);
+      flow.querySelectorAll('details').forEach(disclosure => {
+        disclosure.addEventListener('toggle', () => {
+          requestAnimationFrame(() => {
+            const current = $$('[data-title]', flow)[flow.__lessonIndex];
+            if (current) ensureBeatVisible(flow, current);
+          });
+        });
+      });
+      flow.addEventListener('click', e => {
+        const button = e.target.closest('button');
+        if (!button) return;
+        if (button.hasAttribute('data-step')) step(flow, Number(button.dataset.step));
+        if (button.hasAttribute('data-restart')) { resetLesson(flow); $('[data-title]', flow)?.focus?.(); }
+        if (button.hasAttribute('data-auto')) {
+          if (reduce) return;
+          if (flow.__lessonTimer) { clearLessonTimer(flow); return; }
+          const current = $$('[data-title]', flow)[flow.__lessonIndex];
+          if (current?.hasAttribute('data-question')) return;
+          button.textContent = '일시정지'; button.setAttribute('aria-pressed', 'true');
+          flow.__lessonTimer = setInterval(() => {
+            if (!step(flow, 1, true)) clearLessonTimer(flow);
+          }, 5000);
+        }
+      });
+      if (reduce) { const auto = $('[data-auto]', flow); if (auto) auto.disabled = true; }
+    });
+  }
 
   /* ---------- self-playing demo scaffolding ---------- */
   function panel(root, title) {
@@ -324,8 +440,9 @@
 
   const SIMS = { delegate: simDelegate, verdict: simVerdict, gate: simGate, shelf: simShelf, lifecycle: simLifecycle };
   function init() {
+    initLessons();
     $$('[data-sim]').forEach(root => { const f = SIMS[root.dataset.sim]; if (f) root.__sim = f(root); });
     if (!reduce) requestAnimationFrame(tick);
   }
-  window.__motion = { init, enter, leave, builds };
+  window.__motion = { init, enter, leave, builds, step };
 })();

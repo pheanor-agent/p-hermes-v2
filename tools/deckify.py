@@ -57,7 +57,7 @@ def parse(source: str, number: str) -> list[dict]:
         title = re.search(r"<h2[^>]*>(.*?)</h2>", body, re.S)
         if not title:
             raise ValueError(f"강의 {number} {idx}장: h2 제목 없음")
-        scene = re.search(r'<figure class="scene"[^>]*>.*?</figure>', body, re.S)
+        scene = re.search(r'<figure class="scene(?:\s+[^\"]*)?"[^>]*>.*?</figure>', body, re.S)
         sim = re.search(r'<div data-sim="[^"]+"[^>]*></div>', body)
         rest = body
         for m in (title, scene, sim):
@@ -111,8 +111,35 @@ def words(title: str) -> str:
 
 
 def figure(scene: str) -> str:
-    out = scene.replace('<figure class="scene"', '<figure class="dk-scene"', 1)
-    return re.sub(r"<figcaption>(.*?)</figcaption>", r'<p class="dk-caption">\1</p>', out, flags=re.S)
+    out = re.sub(r'<figure class="scene(?=[\s"])', '<figure class="dk-scene', scene, count=1)
+    # Keep relationship graphics legible on a phone without shrinking all labels.
+    if 'lesson-scene' not in scene and 'recall-scene' not in scene:
+        out = re.sub(
+            r'(<svg\b[^>]*>.*?</svg>)',
+            r'<div class="scene-diagram" data-diagram tabindex="0" role="region" aria-label="관계 그림">\1</div>'
+            '<p class="diagram-hint">그림은 가로로 밀어 읽을 수 있습니다.</p>',
+            out, count=1, flags=re.S,
+        )
+    # Preserve the authored element targeted by the scene stylesheet.
+    return out
+
+
+def static_reading(name: str, slides: list[dict]) -> str:
+    """Linear no-JS reading path retaining authored explanations and checks."""
+    sections = []
+    for i, slide in enumerate(slides, 1):
+        copy = "".join(f"<p>{p}</p>" for _, p in slide["paras"])
+        # Keep documents, ordered steps and native answer disclosures.
+        scene = re.sub(r'<svg\b[^>]*>.*?</svg>', '', slide['scene'], flags=re.S)
+        scene = re.sub(r'<div class="lesson-actions">.*?</div>', '', scene, flags=re.S)
+        scene = re.sub(r'<div class="lesson-caption"[^>]*>.*?</div>', '', scene, flags=re.S)
+        scene = re.sub(r'\s(?:id|aria-live|data-lesson-flow|data-act-groups)(?:="[^"]*")?', '', scene)
+        labels = re.findall(r'<text\b[^>]*>(.*?)</text>', slide['scene'], re.S)
+        if labels and 'recall-scene' not in slide['scene'] and 'lesson-flow' not in slide['scene']:
+            scene += '<p class="static-evidence">그림의 관계: ' + ' · '.join(text(x) for x in labels) + '</p>'
+        next_q = f'<p><b>다음 질문:</b> {slide["next"]}</p>' if slide["next"] else ""
+        sections.append(f'<section><h2>{i:02d}. {slide["title"]}</h2>{copy}{scene}{next_q}</section>')
+    return '<noscript><main class="dk-static"><h1>' + html.escape(name) + ' · 정적 읽기</h1>' + "".join(sections) + '</main></noscript>'
 
 
 def render(number: str, name: str, slides: list[dict]) -> str:
@@ -176,6 +203,7 @@ def render(number: str, name: str, slides: list[dict]) -> str:
 <link rel="stylesheet" href="../assets/design-system.css">
 <link rel="stylesheet" href="../assets/deck.css">
 <link rel="stylesheet" href="../assets/motion.css">
+<noscript><style>html,body.dk{{height:auto!important;overflow:auto!important}}.dk-viewport,.dk-controls{{display:none!important}}</style></noscript>
 </head><body class="dk dk-course-{number}">
 {SHARED_DEFS}
 <div class="dk-viewport"><main class="dk-stage" id="deck" aria-label="강의 {number} · {html.escape(name)}">
@@ -184,8 +212,9 @@ def render(number: str, name: str, slides: list[dict]) -> str:
 <div class="dk-progress"><span></span></div>
 </main></div>
 <nav class="dk-controls" aria-label="슬라이드 이동"><a class="dk-home" href="../index.html">강의 목록</a>{prev_link}<span class="dk-lecs">{lec_links}</span>
-<button type="button" data-go="-1" aria-label="이전 (단계 또는 슬라이드)">←</button><span class="dk-live-count" aria-live="polite" aria-atomic="true"></span><button type="button" data-go="1" aria-label="다음 (단계 또는 슬라이드)">→</button>
+<button type="button" data-go="-1" aria-label="이전 장">←</button><span class="dk-live-count" aria-live="polite" aria-atomic="true"></span><button type="button" data-go="1" aria-label="다음 장">→</button>
 <button type="button" data-fs aria-label="전체 화면 (F)"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 6V1h5M12 1h5v5M17 12v5h-5M6 17H1v-5"/></svg></button></nav>
+{static_reading(name, slides)}
 <script src="../assets/motion.js"></script>
 <script src="../assets/deck.js"></script>
 </body></html>

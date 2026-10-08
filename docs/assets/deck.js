@@ -20,6 +20,7 @@
     slides.forEach((s, k) => {
       s.classList.toggle('is-active', k === current);
       s.setAttribute('aria-hidden', String(k !== current));
+      s.inert = k !== current;
     });
     bar.style.width = ((current + 1) / slides.length * 100) + '%';
     if (liveCount) liveCount.textContent = `${current + 1} / ${slides.length}`;
@@ -44,14 +45,18 @@
     else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
   }
 
-  // Builds and demos play by themselves; navigation always moves whole slides.
+  // Whole-deck navigation always changes slides; only in-scene controls/keys step beats.
   function go(dir) { show(current + dir); }
 
   document.addEventListener('keydown', e => {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     // Space/Enter keep their native activation behavior on navigation controls.
     if (e.target.closest('input,textarea,select,[contenteditable="true"]')) return;
-    if (e.target.closest('a,button') && [' ', 'Enter'].includes(e.key)) return;
+    if (e.target.closest('[data-diagram]')) return;
+    if (e.target.closest('a,button,summary,details') && [' ', 'Enter'].includes(e.key)) return;
+    const flow = e.target.closest('[data-lesson-flow]');
+    if (flow && ['ArrowRight', 'PageDown'].includes(e.key)) { e.preventDefault(); window.__motion.step(flow, 1); return; }
+    if (flow && ['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); window.__motion.step(flow, -1); return; }
     if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); go(1); }
     else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); go(-1); }
     else if (e.key === 'Home') show(0);
@@ -68,7 +73,7 @@
   let x0 = null;
   let y0 = null;
   viewport.addEventListener('touchstart', e => {
-    x0 = e.target.closest('a,button') ? null : e.touches[0].clientX;
+    x0 = e.target.closest('a,button,summary,details,[data-lesson-flow],[data-diagram]') ? null : e.touches[0].clientX;
     y0 = e.touches[0].clientY;
   }, { passive: true });
   viewport.addEventListener('touchend', e => {
@@ -79,7 +84,7 @@
     x0 = null;
   });
   viewport.addEventListener('click', e => {
-    if (e.target.closest('a,button')) return;
+    if (e.target.closest('a,button,summary,details,[data-lesson-flow],[data-diagram]')) return;
     const r = viewport.getBoundingClientRect();
     go(e.clientX > r.left + r.width / 2 ? 1 : -1);
   });
