@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="p-hermes 공개 문서"><title>용어 참조 · p-hermes</title><link rel="stylesheet" href="../../assets/design-system.css"><link rel="stylesheet" href="../../assets/wiki.css"></head><body class="wiki-doc"><a class="skip" href="#main">본문으로 건너뛰기</a><header class="topbar"><a href="../../index.html">← p-hermes</a><span>위키 · 용어</span></header><main id="main"><div class="wiki-layout wiki-single"><article class="wiki-body"><article class="chapter rendered-doc"><p><strong>찾아 쓰는 참조.</strong> 강의와 위키에 나오는 역할·단계·상태 이름을 한 표로 맞춰 읽습니다.</p><h1>용어 참조</h1>
 <p>이 페이지의 경로·명령은 사용자 로컬 운영 확장의 좌표입니다. 일반 Hermes 설치나 p-hermes 저장소 복제만으로 제공되지 않습니다. <a href="contracts.html#scope">구성별 범위와 출처 →</a></p><h2 id="전체-흐름-속-위치">전체 흐름 속 위치</h2>
-<p>지휘 에이전트(매니저)가 요청을 정하고 작업 에이전트(워커)가 수행한 뒤, 작업 흐름의 검증 단계에서 결과를 확인합니다. 지휘 에이전트가 보낸 요청은 기본적으로 JOB 없이 바로 처리(<code>simple</code>)되지만, 사용자 직접 승인이 필요한 네 범주는 이 기본값과 상관없이 승인 원문이 있어야 합니다.</p>
-<p><svg class="flow-svg" role="img" aria-label="전체 흐름 도해" viewBox="0 0 300 328" xmlns="http://www.w3.org/2000/svg"><defs><marker id="wiki-svg-1-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#ffd17d"/></marker></defs><path d="M150 64 V83" stroke="#ffd17d" stroke-width="2" marker-end="url(#wiki-svg-1-arrow)"/><path d="M150 144 V163" stroke="#ffd17d" stroke-width="2" marker-end="url(#wiki-svg-1-arrow)"/><rect x="8" y="8" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="43" fill="#edf2fa" font-size="15" text-anchor="middle">지휘 에이전트 · 요청서</text><rect x="8" y="88" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="123" fill="#edf2fa" font-size="15" text-anchor="middle">작업 에이전트 · 수행</text><rect x="8" y="168" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="203" fill="#edf2fa" font-size="15" text-anchor="middle">응답서 · 산출물</text><rect x="8" y="248" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="283" fill="#edf2fa" font-size="15" text-anchor="middle">지휘 에이전트 · 검증</text></svg></p>
+<p>매니저 에이전트가 요청을 정하고 작업 에이전트(워커)가 수행한 뒤, 작업 흐름의 검증 단계에서 결과를 확인합니다. 매니저 에이전트가 보낸 요청은 기본적으로 JOB 없이 바로 처리(<code>simple</code>)되지만, 사용자 직접 승인이 필요한 네 범주는 이 기본값과 상관없이 승인 원문이 있어야 합니다.</p>
+<p><svg class="flow-svg" role="img" aria-label="전체 흐름 도해" viewBox="0 0 300 328" xmlns="http://www.w3.org/2000/svg"><defs><marker id="wiki-svg-1-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#ffd17d"/></marker></defs><path d="M150 64 V83" stroke="#ffd17d" stroke-width="2" marker-end="url(#wiki-svg-1-arrow)"/><path d="M150 144 V163" stroke="#ffd17d" stroke-width="2" marker-end="url(#wiki-svg-1-arrow)"/><rect x="8" y="8" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="43" fill="#edf2fa" font-size="15" text-anchor="middle">매니저 에이전트 · 요청서</text><rect x="8" y="88" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="123" fill="#edf2fa" font-size="15" text-anchor="middle">작업 에이전트 · 수행</text><rect x="8" y="168" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="203" fill="#edf2fa" font-size="15" text-anchor="middle">응답서 · 산출물</text><rect x="8" y="248" width="284" height="56" rx="12" fill="#192536" stroke="#74e0c0"/><text x="150" y="283" fill="#edf2fa" font-size="15" text-anchor="middle">매니저 에이전트 · 검증</text></svg></p>
 <p>이 표는 문서에서 역할 이름과 단계 이름을 일관되게 읽기 위한 대응표입니다.</p>
 <table>
 <thead>
@@ -13,8 +13,8 @@
 </thead>
 <tbody>
 <tr>
-<td>지휘 에이전트</td>
-<td>매니저; 오케스트레이터. <code>POLICY.md</code>가 규칙 정본</td>
+<td>매니저 에이전트</td>
+<td>매니저; 오케스트레이터; 이전 표기 “지휘 에이전트”. <code>POLICY.md</code>가 규칙 정본</td>
 <td>목표·완료 조건·경계를 정하고, 직접 할 일과 맡길 일을 나누며, 결과를 원천과 대조해 확인하는 역할. 판단·설계·시각 결과는 직접 하고 실행량만 위임</td>
 </tr>
 <tr>
@@ -64,4 +64,4 @@
 </tr>
 </tbody>
 </table>
-<p>JOB의 <code>request</code>·<code>execution</code>·<code>verification</code>·<code>done</code>은 JOB 흐름의 단계입니다. 응답서의 <code>status</code>는 <code>done</code>·<code>partial</code>·<code>failed</code>·<code>blocked</code> 중 하나로 요청 시도의 결과를 나타냅니다. 코드 식별자, 파일명, 경로, 명령과 API 필드는 원래 표기를 그대로 유지합니다. “지휘 에이전트 / 작업 에이전트”는 역할명이며, <code>orchestrator</code>·<code>worker</code> 같은 코드 이름을 바꾸지 않습니다.</p></article></article></div></main><footer class="footer"><span>p-hermes · p-hermes 공개 자료</span><a href="../../index.html">목차</a></footer></body></html>
+<p>JOB의 <code>request</code>·<code>execution</code>·<code>verification</code>·<code>done</code>은 JOB 흐름의 단계입니다. 응답서의 <code>status</code>는 <code>done</code>·<code>partial</code>·<code>failed</code>·<code>blocked</code> 중 하나로 요청 시도의 결과를 나타냅니다. 코드 식별자, 파일명, 경로, 명령과 API 필드는 원래 표기를 그대로 유지합니다. “매니저 에이전트 / 작업 에이전트”는 역할명이며, <code>orchestrator</code>·<code>worker</code> 같은 코드 이름을 바꾸지 않습니다.</p></article></article></div></main><footer class="footer"><span>p-hermes · p-hermes 공개 자료</span><a href="../../index.html">목차</a></footer></body></html>

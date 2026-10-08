@@ -5,7 +5,8 @@ Lecture sources live in ``site/lectures/NN-*.html`` as a list of
 blocks. Each slide has one ``<h2>`` title, an optional authored scene
 (``<figure class="scene">`` with an SVG) or simulator (``<div data-sim="..">``),
 body paragraphs and an optional ``<p class="next">`` question that hands over to
-the following slide. Motion (draw-in, packets, builds) is declared in the SVG
+the following slide. ``data-layout="wide"`` puts the copy above a full-width scene
+for wide strip diagrams. Motion (draw-in, packets, builds) is declared in the SVG
 with ``mo-*`` classes and run by ``assets/motion.js``.
 """
 from __future__ import annotations
@@ -16,7 +17,7 @@ from pathlib import Path
 
 LECTURES = [
     ("00-overview.html", "00", "전체 그림"),
-    ("01-orchestrator-worker.html", "01", "지휘 에이전트와 작업 에이전트"),
+    ("01-orchestrator-worker.html", "01", "매니저 에이전트와 작업 에이전트"),
     ("02-workflow.html", "02", "작업 흐름"),
     ("03-knowledge.html", "03", "지식"),
     ("04-integration.html", "04", "통합"),
@@ -76,6 +77,7 @@ def parse(source: str, number: str) -> list[dict]:
             "next": nxt.group(1).strip() if nxt else "",
             "kicker": attr(attrs, "data-kicker"),
             "gap": attr(attrs, "data-build-gap"),
+            "wide": attr(attrs, "data-layout") == "wide",
         })
     if not slides:
         raise ValueError(f"강의 {number}: 슬라이드 없음")
@@ -129,6 +131,8 @@ def render(number: str, name: str, slides: list[dict]) -> str:
                   "concept": "dk-main dk-concept"}.get(s["kind"], "dk-main")
         if not stage and layout not in ("dk-cover", "dk-interlude"):
             layout = "dk-text"
+        if s["wide"] and s["scene"]:
+            layout += " dk-wide"  # wide strip diagram: copy on top, scene across the full width
         gap = f' data-build-gap="{s["gap"]}"' if s["gap"] else ""
         if layout == "dk-interlude":
             sub = "".join(f'<p class="dk-sub">{p}</p>' for _, p in s["paras"])

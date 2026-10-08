@@ -236,3 +236,11 @@ body.dk,body.dk *{font-family:"Pretendard",system-ui,-apple-system,"Segoe UI","N
 #deck .sim-head b{font-weight:700}
 #deck .sim-say{font-weight:500}
 #deck .dk-next{padding-right:16px}
+/* wide strip diagrams: copy runs across the top, the scene takes the full width below */
+#deck .dk-wide .dk-body{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:22px;align-items:stretch}
+#deck .dk-wide .dk-copy{flex-direction:row;align-items:flex-start;gap:48px;padding:2px 0 2px 28px}
+#deck .dk-wide .dk-p{flex:1.25 1 0;font-size:27px}
+#deck .dk-wide .dk-p+.dk-p{flex:1 1 0;font-size:22px}
+#deck .dk-wide .dk-scene{max-height:none;padding:14px 28px}
+#deck .dk-wide .dk-scene svg{max-height:none}
+@media(max-width:760px){#deck .dk-wide .dk-copy{flex-direction:column;gap:16px}}
