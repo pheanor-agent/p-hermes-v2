@@ -17,7 +17,7 @@ from pathlib import Path
 
 LECTURES = [
     ("00-overview.html", "00", "전체 그림"),
-    ("01-orchestrator-worker.html", "01", "매니저 에이전트와 작업 에이전트"),
+    ("01-orchestrator-worker.html", "01", "매니저와 워커"),
     ("02-workflow.html", "02", "작업 흐름"),
     ("03-knowledge.html", "03", "지식"),
     ("04-integration.html", "04", "통합"),
