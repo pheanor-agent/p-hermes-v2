@@ -200,7 +200,7 @@ def scene(p: str, body: str, label: str, on_map=("mgr", "wkr", "lanes", "user"),
 # ---------------------------------------------------------------- the canonical whole-system map (1000 x 900)
 # Top band (y 0-345) is exactly the lecture 01 skeleton; lecture scenes are crops/zooms of this map.
 # Region keys for focus: user, mgr, wkr, u2m, direct, lane_top, lane_bot, doc, reg, runner, clf,
-# entry, rail, gates, job, know, all.
+# entry, rail, gates, job, know, kconn, kloop, k_rule, k_mem, k_skill, k_lesson, k_real, all.
 MAP_W, MAP_H = 1000, 900
 
 
@@ -222,23 +222,30 @@ def full_map(p: str, focus: set[str], labels=True) -> str:
     out.append(g('<path class="lead" d="M310 492V514M490 492V514M670 492V514M850 492V514"/>'
                  + '<rect class="card" x="260" y="514" width="640" height="48" rx="10"/>'
                  + t(580, 538, "JOB 폴더 — 요청 원문 · 승인 · 결정 · 실행 · 검증 · 결과 · 원본", "t-sm", 15), dim=not on("job")))
-    # one connector between the whole knowledge block and everything above it
-    kc = ('<rect x="40" y="590" width="920" height="40" rx="20" fill="#1e2a3a" stroke="#4a5f77" stroke-width="1.6"/>'
-          + (t(500, 611, "⇅  지식 전체 ↔ 에이전트와 작업 흐름 전체 — 필요한 지식을 읽고, 결과와 교훈을 남긴다", "t-sm", 15) if labels else ""))
-    out.append(g(kc, dim=not (on("know") or on("kconn"))))
-    # finer keys light one knowledge card (k_rule ... k_real) or the daily strip (kloop); "know" lights all
-    cards = [("k_rule", 50, "규칙", "운영 원칙"), ("k_mem", 236, "기억", "사용자 선호"), ("k_skill", 422, "스킬", "절차"),
-             ("k_lesson", 608, "교훈", "사건·해결"), ("k_real", 794, "실물", "현재 파일")]
-    any_k = on("know") or on("kloop") or any(on(k) for k, *_ in cards)
-    out.append(g('<rect x="20" y="640" width="960" height="236" rx="18" fill="#141f33" stroke="#3a4a66" stroke-width="2"/>'
-                 + (t(966, 860, "지식", "t-tag c-amber", anchor="end") if labels else ""), dim=not any_k))
-    for k, x, h, s_ in cards:
-        out.append(g(f'<rect class="card know" x="{x}" y="690" width="156" height="80" rx="12"/>' + t(x + 78, 718, h, "", 20)
-                     + t(x + 78, 748, s_, "t-sm", 14), dim=not (on("know") or on(k))))
-    strip = '<rect x="50" y="792" width="900" height="44" rx="10" fill="#2b2a1e" fill-opacity=".45" stroke="#e8d9a8" stroke-width="2.4" stroke-dasharray="8 5"/>'
-    if labels:
-        strip += t(500, 815, "매일 — 수집 → 가공·색인 → 야간 대조 → 점검", "t-sm", 15)
-    out.append(g(strip, dim=not (on("know") or on("kloop"))))
+    # Knowledge is shown as an operational cycle; categories remain a compact legend.
+    any_k = on("know") or on("kconn") or on("kloop") or any(on(k) for k in ("k_rule", "k_mem", "k_skill", "k_lesson", "k_real"))
+    out.append(g('<rect x="20" y="590" width="960" height="286" rx="18" fill="#141f33" stroke="#3a4a66" stroke-width="2"/>', dim=not any_k))
+    check = ('<rect x="235" y="604" width="530" height="38" rx="18" fill="#2b2a1e" stroke="#e8d9a8" stroke-width="1.8" stroke-dasharray="7 4"/>'
+             + (t(500, 623, "정기 점검 — 찾을 수 있나 · 지금도 맞나 · 실제로 쓰이나", "t-sm", 14) if labels else ""))
+    out.append(g(check, dim=not (on("know") or on("kloop"))))
+    nodes = [(40, 688, 150, "일함", "실제 작업"), (220, 688, 160, "남기기", "쓰기"),
+             (410, 688, 160, "쌓임·색인", "정리되어 쌓임"), (600, 688, 160, "다음 일에 읽힘", "원칙 / 자료 / 검색"),
+             (790, 688, 170, "확인", "원문·현재 상태")]
+    arrows = '<defs><marker id="' + p + '-karr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#82dec6"/></marker></defs>'
+    for x1, x2 in ((192, 214), (382, 404), (572, 594), (762, 784)):
+        arrows += f'<path d="M{x1} 718H{x2}" fill="none" stroke="#82dec6" stroke-width="2.4" marker-end="url(#{p}-karr)"/>'
+    arrows += f'<path d="M875 755V782H115V755" fill="none" stroke="#82dec6" stroke-width="2.4" marker-end="url(#{p}-karr)"/>'
+    out.append(g(arrows, dim=not (on("know") or on("kconn") or on("k_rule") or on("k_mem") or on("k_skill") or on("k_lesson") or on("k_real"))))
+    for x, y, w, title, sub in nodes:
+        keys = {"일함": ("k_rule", "k_mem", "k_skill", "k_lesson", "k_real"),
+                "남기기": ("k_lesson",), "쌓임·색인": ("kloop", "k_lesson", "k_rule", "k_skill"),
+                "다음 일에 읽힘": ("k_rule", "k_mem", "k_skill", "k_lesson"), "확인": ("k_real",)}[title]
+        active = on("know") or any(on(k) for k in keys)
+        out.append(g(f'<rect class="chip" x="{x}" y="688" width="{w}" height="68" rx="12"/>'
+                     + (t(x + w / 2, 712, title, "", 17) + t(x + w / 2, 738, sub, "t-sm", 12) if labels else ""), dim=not active))
+    legend = ('<rect x="90" y="816" width="820" height="38" rx="9" fill="#1e2a3a" stroke="#4a5f77" stroke-width="1.3"/>'
+              + (t(500, 835, "기록의 종류: 규칙 · 기억 · 스킬 · 교훈 · 실물  (세부 분류는 강의 03-04)", "t-sm", 13) if labels else ""))
+    out.append(g(legend, dim=not any_k))
     return "".join(out)
 
 
