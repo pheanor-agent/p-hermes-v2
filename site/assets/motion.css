@@ -430,3 +430,20 @@ body.dk,body.dk *{font-family:"Pretendard",system-ui,-apple-system,"Segoe UI","N
  #deck [data-sim=verdict] .sim-tabs span.on{line-height:1.35}
  #deck .gate-state{padding:10px}
 }
+
+/* ----- map reveal and two-way scenes (lecture rework) ----- */
+/* unveil: a veil rect over part of a map fades out, layer by layer (--d orders them) */
+#deck .mo-unveil{fill:#132130}
+#deck .dk-slide.mo-play .mo-unveil{animation:mo-unveil .9s ease-out forwards;animation-delay:calc(var(--d,0) * 900ms + 400ms)}
+@keyframes mo-unveil{to{opacity:0}}
+/* alternate: two scenarios on the same skeleton crossfade in a 14 s loop */
+#deck .mo-alt-b{opacity:0}
+#deck .dk-slide.mo-play .mo-alt-a{animation:mo-alt-a 14s ease-in-out infinite}
+#deck .dk-slide.mo-play .mo-alt-b{animation:mo-alt-b 14s ease-in-out infinite}
+@keyframes mo-alt-a{0%,45%{opacity:1}50%,95%{opacity:0}100%{opacity:1}}
+@keyframes mo-alt-b{0%,45%{opacity:0}50%,95%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){#deck .mo-unveil{display:none}#deck .dk-slide .mo-alt-a,#deck .dk-slide .mo-alt-b{animation:none}}
+/* grow: a bar fills from the left */
+#deck .mo-grow{transform-box:fill-box;transform-origin:left center}
+#deck .dk-slide.mo-play .mo-grow{animation:mo-grow 1.8s cubic-bezier(.3,.7,.3,1) .4s both}
+@keyframes mo-grow{from{transform:scaleX(0)}to{transform:none}}

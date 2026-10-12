@@ -118,9 +118,9 @@ def figure(scene: str) -> str:
 def sim_static(sim: str) -> str:
     name = attr(re.search(r'<div\b([^>]*)>', sim).group(1), "data-sim")
     examples = {
-        "delegate": ("위임 판단의 예", ["수백 개 파일 일괄 변환", "긴 실행·큰 산출 → 작업자에 위임", "매니저는 목표와 결과 판정을 맡음"]),
+        "delegate": ("위임 판단의 예", ["수백 개 파일 일괄 변환", "긴 실행·큰 산출 → 워커에게 맡김", "매니저는 목표와 결과 판정을 맡음"]),
         "verdict": ("완료 보고를 대조한 예", ["보고: 배송 문의 25%", "원자료: 전체 200건·배송 40건", "40÷200=20% → 보고 수정"]),
-        "gate": ("기록 누락을 보완한 예", ["검증 기록 누락 → 단계 전이 정지", "실제로 대조하고 검증 기록 보완", "필수 기록 확인 → 다음 단계"]),
+        "gate": ("기록 누락을 보완한 예", ["검증 기록 누락 → 단계 전이 정지", "실제로 대조하고 검증 기록 보완", "필수 기록 확인 → 다음 단계", "기록이 있어도 값은 원자료와 따로 대조"]),
         "shelf": ("사건을 분류한 예", ["검사는 통과했지만 화면이 깨짐", "사건 기록 → 교훈 후보", "원인·수정·확인을 더해 검토"]),
         "lifecycle": ("문의 회고가 완료된 예", ["약속: 원자료 집계·대조", "산출: 집계.csv·회고 초안", "전체200·배송40 → 20% 대조", "확인한 결과와 남은 일 보고"]),
     }
@@ -141,7 +141,8 @@ def static_reading(name: str, slides: list[dict]) -> str:
         scene = scene.replace("data-quiz-answer hidden", "data-quiz-answer")
         scene = re.sub(r'<button\b[^>]*>.*?</button>', "", scene, flags=re.S)
         labels = re.findall(r'<text\b[^>]*>(.*?)</text>', slide['scene'], re.S)
-        if labels and 'recall-scene' not in slide['scene'] and 'lesson-flow' not in slide['scene']:
+        # Map scenes carry an authored mobile relation list; dumping every map label would only add noise.
+        if labels and 'recall-scene' not in slide['scene'] and 'lesson-flow' not in slide['scene'] and 'scene mapped' not in slide['scene']:
             scene += '<p class="static-evidence">그림의 관계: ' + ' · '.join(text(x) for x in labels) + '</p>'
         if slide["sim"]:
             scene += sim_static(slide["sim"])

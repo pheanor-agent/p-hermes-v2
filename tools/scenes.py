@@ -113,14 +113,19 @@ def g(content: str, dim=False, build=None, cls="") -> str:
 
 # ---------------------------------------------------------------- the whole-system map
 # Region keys: user, mgr, wkr, lanes, rail, know.
+_MINI = [0]
+
+
 def mini_map(on: set[str], x=826, y=4, scale=0.165) -> str:
+    _MINI[0] += 1
+    mp = f"mm{_MINI[0]}"  # ids must stay unique across all scenes of a lecture page
     alias = {"lanes": {"lane_top", "lane_bot"}}
     focus = set()
     for k in on:
         focus |= alias.get(k, {k})
     return (f'<g class="mini-full" transform="translate({x} {y}) scale({scale})" aria-hidden="true">'
             f'<rect x="0" y="0" width="1000" height="900" rx="30" fill="#0f1a27" stroke="#304357" stroke-width="6"/>'
-            f'{full_map("mm", focus, labels=False)}</g>')
+            f'{full_map(mp, focus, labels=False)}</g>')
 
 
 # ---------------------------------------------------------------- lecture 01 skeleton
@@ -191,7 +196,7 @@ def skeleton(p: str, focus: set[str], packets: tuple = (), labels=True, detail=F
     return "".join(out)
 
 
-def scene(p: str, body: str, label: str, on_map=("mgr", "wkr", "lanes", "user"), mobile="", caption="", mini=True) -> str:
+def scene(p: str, body: str, label: str, on_map=("mgr", "wkr", "lanes", "user"), mobile="", caption="", mini=False) -> str:
     cap = f'<figcaption class="dk-caption">{escape(caption)}</figcaption>' if caption else ""
     return (f'<figure class="scene mapped"><svg viewBox="0 0 1000 540" role="img" aria-label="{escape(label)}">'
             f'{defs(p)}{body}{mini_map(set(on_map)) if mini else ""}</svg>{mobile}{cap}</figure>')

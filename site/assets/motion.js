@@ -148,9 +148,9 @@
   function simDelegate(root) {
     const { view, metrics, say } = panel(root, '직접 할까, 맡길까 — 네 사례 순환');
     const cases = [
-      { name: '설정 파일 한 줄 수정', tags: ['짧음', '되돌릴 수 있음'], ans: [0, 0, 0], who: '매니저 에이전트가 직접', why: '읽기·작은 수정', rec: '백업 + 원장 한 줄', kind: 'manager' },
-      { name: '수백 개 파일 일괄 변환', tags: ['오래 걸림', '산출 큼'], ans: [0, 1, 0], who: '작업 에이전트에 위임', why: '긴 실행·큰 산출', rec: '요청서 · 응답서', kind: 'worker' },
-      { name: '강의 자료 새 디자인', tags: ['오래 걸림', '품질 판단'], ans: [0, 1, 1], who: '판단은 매니저 · 실행은 작업', why: '품질을 좌우하는 판단', rec: 'JOB + 요청서', kind: 'worker' },
+      { name: '설정 파일 한 줄 수정', tags: ['짧음', '되돌릴 수 있음'], ans: [0, 0, 0], who: '매니저가 직접', why: '읽기·작은 수정', rec: '백업 + 변경 기록 한 줄', kind: 'manager' },
+      { name: '수백 개 파일 일괄 변환', tags: ['오래 걸림', '산출 큼'], ans: [0, 1, 0], who: '워커에게 맡김', why: '긴 실행·큰 산출', rec: '요청서 · 응답서', kind: 'worker' },
+      { name: '강의 자료 새 디자인', tags: ['오래 걸림', '품질 판단'], ans: [0, 1, 1], who: '판단은 매니저 · 실행은 워커', why: '품질을 좌우하는 판단', rec: 'JOB + 요청서', kind: 'worker' },
       { name: '공개 사이트에 게시', tags: ['외부 게시'], ans: [1], who: '사용자 승인 후 진행', why: '되돌릴 수 없는 범주', rec: '승인 원문 기록', kind: 'stop' },
     ];
     const qs = [['되돌릴 수 없는 4개 범주인가?', '영구 삭제 · 외부 게시 · 자격증명 · 규칙 개정'],
@@ -224,8 +224,8 @@
 
   /* ---------- 02: JOB 게이트 ---------- */
   function simGate(root) {
-    const { view, metrics, say } = panel(root, '게이트 확인 — 두 경우를 선택');
-    scenarioChoices(root, [['complete','기록 있음'],['missing','기록 누락']], 'complete');
+    const { view, metrics, say } = panel(root, '게이트 확인 — 세 경우를 선택');
+    scenarioChoices(root, [['complete','기록 있음'],['missing','기록 누락'],['wrong','기록은 있지만 계산이 틀림']], 'complete');
     const stages = [['요청', '요청 기록'], ['실행', '승인 · 실행 기록'], ['검증', '검증 기록'], ['완료', '결과 기록']];
     const svg = svgEl('svg', { viewBox: '0 0 820 220', class: 'sim-svg gate', role: 'img', 'aria-label': 'JOB 네 단계와 게이트' });
     const X = k => 90 + k * 213;
@@ -258,9 +258,10 @@
         nodes[0].setAttribute('class', 'sim-node done');
         $$('[data-stage]', compact).forEach(n => n.classList.toggle('is-current', n.dataset.stage === '0'));
         token.style.transform = 'translateX(0px)'; barrier.classList.remove('on');
-        setText(mRun, missing ? '② 파일 누락' : '① 파일 모두 있음');
+        const wrong = root.__scenario === 'wrong';
+        setText(mRun, missing ? '② 기록 누락' : wrong ? '③ 계산 틀림' : '① 기록 모두 있음');
         mStage.textContent = '요청'; mJudge.textContent = '대기';
-        say.textContent = missing ? '이번에는 검증 기록이 빠진 채 진행합니다.' : '필요한 기록이 갖춰진 JOB이 단계를 통과합니다.';
+        say.textContent = missing ? '이번에는 검증 기록이 빠진 채 진행합니다.' : wrong ? '기록은 모두 있지만, 보고 값 25%는 원자료로 계산하면 20%입니다.' : '필요한 기록이 갖춰진 JOB이 단계를 통과합니다.';
         let t = 1000;
         [1, 2, 3].forEach(k => {
           const lack = need(k).filter(f => f === missing);
@@ -285,7 +286,10 @@
           });
           t += 1200;
         });
-        later(slide, t + 300, () => { setText(mJudge, '완료'); say.textContent = '네 단계를 모두 통과해 작업이 마무리됩니다.'; });
+        later(slide, t + 300, () => {
+          if (wrong) { setText(mJudge, '내용 확인 필요'); say.textContent = '게이트는 기록이 있는지를 봅니다. 값이 맞는지는 검증 단계에서 원자료와 대조해 바로잡습니다.'; }
+          else { setText(mJudge, '완료'); say.textContent = '네 단계를 모두 통과해 작업이 마무리됩니다.'; }
+        });
         run++;
         later(slide, t + 2700, cycle);
       };
@@ -340,7 +344,7 @@
     scenarioChoices(root, [['normal','정상'],['time','시간 부족']], 'normal');
     const base = [
       ['사용자', '요청: 문의 원자료로 회고 초안 작성'], ['매니저', '직접/위임 판단 → JOB으로 기록 · 승인 근거 확인'], ['매니저', '관련 교훈과 결정을 먼저 확인'],
-      ['매니저', '약속: 원자료 집계·계산·대조, 주장 3개 근거'], ['자동 실행기', '요청 등록 → 작업 에이전트 실행'], ['작업', '산출: 초안·집계.csv, 배송40/전체200'],
+      ['매니저', '약속: 원자료 집계·계산·대조, 주장 3개 근거'], ['자동 실행기', '요청 등록 → 워커 실행'], ['작업', '산출: 초안·집계.csv, 배송40/전체200'],
       ['작업', '응답서: 같은 요청 ID · 상태: 완료'], ['매니저', '보고20% ↔ 원자료40÷200=20% 대조'], ['게이트', '요청 → 실행 → 검증 → 완료'],
       ['지식', '결과와 교훈 후보 → 매일 요약'], ['사용자', '결과 · 남은 것 · 교훈 보고'],
     ];
