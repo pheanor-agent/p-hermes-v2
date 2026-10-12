@@ -228,18 +228,18 @@ def full_map(p: str, focus: set[str], labels=True) -> str:
     check = ('<rect x="235" y="604" width="530" height="38" rx="18" fill="#2b2a1e" stroke="#e8d9a8" stroke-width="1.8" stroke-dasharray="7 4"/>'
              + (t(500, 623, "정기 점검 — 찾을 수 있나 · 지금도 맞나 · 실제로 쓰이나", "t-sm", 14) if labels else ""))
     out.append(g(check, dim=not (on("know") or on("kloop"))))
-    nodes = [(40, 688, 150, "일함", "실제 작업"), (220, 688, 160, "남기기", "쓰기"),
-             (410, 688, 160, "쌓임·색인", "정리되어 쌓임"), (600, 688, 160, "다음 일에 읽힘", "원칙 / 자료 / 검색"),
-             (790, 688, 170, "확인", "원문·현재 상태")]
+    nodes = [(40, 688, 150, "작업", "일을 하는 중"), (220, 688, 160, "기록", "남겨 둠"),
+             (410, 688, 160, "축적", "쌓이고 찾기 쉽게 정리"), (600, 688, 160, "활용", "원칙 · 자료 · 검색"),
+             (790, 688, 170, "확인", "원문 · 지금 상태")]
     arrows = '<defs><marker id="' + p + '-karr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#82dec6"/></marker></defs>'
     for x1, x2 in ((192, 214), (382, 404), (572, 594), (762, 784)):
         arrows += f'<path d="M{x1} 718H{x2}" fill="none" stroke="#82dec6" stroke-width="2.4" marker-end="url(#{p}-karr)"/>'
     arrows += f'<path d="M875 755V782H115V755" fill="none" stroke="#82dec6" stroke-width="2.4" marker-end="url(#{p}-karr)"/>'
     out.append(g(arrows, dim=not (on("know") or on("kconn") or on("k_rule") or on("k_mem") or on("k_skill") or on("k_lesson") or on("k_real"))))
     for x, y, w, title, sub in nodes:
-        keys = {"일함": ("k_rule", "k_mem", "k_skill", "k_lesson", "k_real"),
-                "남기기": ("k_lesson",), "쌓임·색인": ("kloop", "k_lesson", "k_rule", "k_skill"),
-                "다음 일에 읽힘": ("k_rule", "k_mem", "k_skill", "k_lesson"), "확인": ("k_real",)}[title]
+        keys = {"작업": ("k_rule", "k_mem", "k_skill", "k_lesson", "k_real"),
+                "기록": ("k_lesson",), "축적": ("kloop", "k_lesson", "k_rule", "k_skill"),
+                "활용": ("k_rule", "k_mem", "k_skill", "k_lesson"), "확인": ("k_real",)}[title]
         active = on("know") or any(on(k) for k in keys)
         out.append(g(f'<rect class="chip" x="{x}" y="688" width="{w}" height="68" rx="12"/>'
                      + (t(x + w / 2, 712, title, "", 17) + t(x + w / 2, 738, sub, "t-sm", 12) if labels else ""), dim=not active))
