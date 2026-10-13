@@ -85,21 +85,6 @@ def parse(source: str, number: str) -> list[dict]:
     return slides
 
 
-def ambient(seed: int) -> str:
-    """Deterministic drifting particles behind cover and interlude slides."""
-    dots = []
-    for k in range(26):
-        x = (seed * 37 + k * 211) % 1600
-        y = (seed * 53 + k * 137) % 900
-        r = 2 + (k * 7 + seed) % 4
-        dx = ((k * 29) % 70) - 35
-        dy = ((k * 41) % 80) - 40
-        t = 10 + (k * 3) % 12
-        dots.append(f'<circle cx="{x}" cy="{y}" r="{r}" style="--x:{dx}px;--y:{dy}px;--t:{t}s;--dl:-{k % 9}s"/>')
-    lines = "".join(f'<path d="M{-50 + k * 420} 900C{200 + k * 420} {600 - k * 40} {300 + k * 380} {300 + k * 30} {700 + k * 300} -20"/>' for k in range(4))
-    return f'<svg class="dk-ambient" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">{lines}{"".join(dots)}</svg>'
-
-
 def words(title: str) -> str:
     """Split a title into word spans for kinetic typography.
 
@@ -173,8 +158,7 @@ def render(number: str, name: str, slides: list[dict]) -> str:
         if layout == "dk-interlude":
             sub = "".join(f'<p class="dk-sub">{p}</p>' for _, p in s["paras"])
             parts.append(
-                f'<article class="dk-slide dk-interlude" id="s{i}" data-index="{i}" data-slide-key="{html.escape(s["key"], quote=True)}" aria-label="{i} / {total}">{ambient(i + int(number) * 7)}'
-                f'<div class="dk-rings" aria-hidden="true"><i></i><i></i><i></i></div>'
+                f'<article class="dk-slide dk-interlude" id="s{i}" data-index="{i}" data-slide-key="{html.escape(s["key"], quote=True)}" aria-label="{i} / {total}">'
                 f'<div class="dk-inner"><p class="dk-kicker">{html.escape(s["kicker"] or s["eyebrow"])}</p>'
                 f'<h2 class="dk-title dk-big">{words(s["title"])}</h2>{sub}</div></article>'
             )
@@ -196,7 +180,7 @@ def render(number: str, name: str, slides: list[dict]) -> str:
                     else '<p class="dk-prev"><b>강의의 출발점</b>전체 흐름에서 지금 볼 구간을 정합니다.</p>')
         parts.append(
             f'<article class="dk-slide {layout}" id="s{i}" data-index="{i}" data-slide-key="{html.escape(s["key"], quote=True)}" aria-label="{i} / {total}"{gap}>'
-            + (ambient(i + int(number) * 7) if layout == "dk-cover" else "") +
+            +
             f'<header class="dk-head"><span class="dk-eyebrow">{html.escape(s["eyebrow"])}</span>'
             f'<span class="dk-count">{i:02d} / {total:02d}</span></header>'
             f'<h2 class="dk-title">{s["title"]}</h2>'

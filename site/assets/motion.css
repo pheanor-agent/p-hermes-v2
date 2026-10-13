@@ -57,7 +57,7 @@
 
 /* ----- cover hero ----- */
 #deck .dk-cover .dk-title{font-size:64px;line-height:1.3}
-#deck .dk-cover .dk-title em{font-style:normal;background:linear-gradient(90deg,#82dec6,#9bc2ff 55%,#ffcf86);-webkit-background-clip:text;background-clip:text;color:transparent}
+#deck .dk-cover .dk-title em{font-style:normal;color:#82dec6}
 
 
 /* ----- slide entrance: every slide arrives with motion ----- */
@@ -72,18 +72,8 @@
 @keyframes mo-in-up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 @keyframes mo-fade{from{opacity:0}to{opacity:1}}
 
-/* ----- ambient background: slow drifting glow on the stage ----- */
-#deck::before{content:"";position:absolute;inset:-20%;background:radial-gradient(35% 30% at 20% 30%,rgba(130,222,198,.07),transparent 70%),radial-gradient(30% 28% at 80% 70%,rgba(155,194,255,.07),transparent 70%),radial-gradient(25% 25% at 60% 20%,rgba(255,207,134,.05),transparent 70%);animation:mo-drift 26s ease-in-out infinite alternate;pointer-events:none}
-@keyframes mo-drift{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(4%,-3%) rotate(4deg)}100%{transform:translate(-3%,3%) rotate(-3deg)}}
 #deck .dk-slide{z-index:1}
 
-/* ----- floating particles for cover / interlude slides (inserted by deckify) ----- */
-#deck .dk-ambient{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
-#deck .dk-ambient circle{fill:#82dec6;opacity:.35;animation:mo-float var(--t,14s) ease-in-out infinite alternate;animation-delay:var(--dl,0s)}
-#deck .dk-ambient circle:nth-child(3n){fill:#9bc2ff}
-#deck .dk-ambient circle:nth-child(5n){fill:#ffcf86}
-#deck .dk-ambient path{fill:none;stroke:#82dec6;stroke-opacity:.12;stroke-width:1.5;stroke-dasharray:6 10;animation:mo-march 3s linear infinite}
-@keyframes mo-float{from{transform:translate(0,0)}to{transform:translate(var(--x,30px),var(--y,-40px))}}
 
 /* ----- interlude: one big statement to switch the mood ----- */
 #deck .dk-interlude{display:none;place-items:center;text-align:center;padding:120px 160px}
@@ -93,14 +83,9 @@
 #deck .dk-interlude .dk-kicker{font:700 22px system-ui,sans-serif;letter-spacing:.3em;color:#82dec6;margin:0 0 30px}
 #deck .dk-interlude .dk-big{margin:0;font-size:84px;line-height:1.32;font-weight:800;letter-spacing:-.03em;color:#f4f7fb;text-wrap:balance}
 #deck .dk-interlude .dk-big .w{display:inline-block;opacity:0;transform:translateY(40px) scale(.96);animation:mo-word .7s cubic-bezier(.2,.9,.3,1.2) forwards;animation-delay:calc(var(--i) * 110ms + 300ms)}
-#deck .dk-interlude .dk-big em{font-style:normal;background:linear-gradient(90deg,#82dec6,#9bc2ff 55%,#ffcf86);-webkit-background-clip:text;background-clip:text;color:transparent}
+#deck .dk-interlude .dk-big em{font-style:normal;color:#82dec6}
 #deck .dk-interlude .dk-sub{margin:34px auto 0;max-width:1000px;font-size:30px;line-height:1.55;color:#bdcbdc;opacity:0;animation:mo-fade 1s ease-out 1.6s forwards}
 @keyframes mo-word{to{opacity:1;transform:none}}
-#deck .dk-interlude .dk-rings{position:absolute;left:50%;top:50%;width:0;height:0;z-index:0}
-#deck .dk-interlude .dk-rings i{position:absolute;left:0;top:0;border:2px solid rgba(130,222,198,.25);border-radius:50%;transform:translate(-50%,-50%);animation:mo-ring 6s ease-out infinite}
-#deck .dk-interlude .dk-rings i:nth-child(2){animation-delay:2s}
-#deck .dk-interlude .dk-rings i:nth-child(3){animation-delay:4s}
-@keyframes mo-ring{from{width:120px;height:120px;opacity:.9}to{width:1500px;height:1500px;opacity:0}}
 
 /* ----- self-playing demo panel ----- */
 #deck .dk-sim .dk-body{grid-template-columns:minmax(0,1fr) 380px;gap:34px}
