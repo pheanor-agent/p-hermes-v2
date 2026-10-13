@@ -102,19 +102,27 @@ def check_content_alignment(errors: list[str]) -> None:
     """Check public scope and operational contract markers without freezing prose."""
     classes = ("permanent_deletion", "external_publication", "credential_security", "policy_amendment")
     required = {
-        "index.html": ("Hermes 엔진", "로컬 운영", "wiki/reference/contracts.html#scope"),
+        "index.html": ("Hermes 엔진", "로컬 운영", "wiki/architecture.html#scope"),
         "lectures/00-overview.html": ("세션 기록", "로컬 운영"),
         "lectures/04-integration.html": ("참조 구현",),
-        "wiki/knowledge-context.html": ("write-lesson.py", "--id", "--body-file", "validation_status: candidate", "contracts.html#scope"),
-        "wiki/reference/workflow.html": classes + ("simple", "JOB", "contracts.html#scope"),
-        "wiki/reference/terms.html": classes + ("request_id", "status", "contracts.html#scope"),
-        "wiki/reference/contracts.html": ('id="scope"', "Hermes 엔진", "JSON", "Markdown", "intent_revision", "request_sha256", "hermes-agent.nousresearch.com"),
+        "wiki/architecture.html": ('id="scope"', "Hermes 엔진", "로컬 운영", "hermes-agent.nousresearch.com"),
+        "wiki/knowledge-context.html": ("write-lesson.py", "--id", "--body-file", "validation_status: candidate", "architecture.html#scope"),
+        "wiki/integration.html": ("architecture.html#scope",),
+        "wiki/reference/workflow.html": classes + ("simple", "JOB", "architecture.html#scope"),
+        "wiki/reference/terms.html": classes + ("request_id", "status", "partial", "architecture.html#scope"),
+        "wiki/reference/contracts.html": ("JSON", "Markdown", "intent_revision", "request_sha256", "request_id", "architecture.html#scope"),
+        "wiki/reference/code.html": ("orchestrator.py", "worker.py", "filesystem_transport.py", "architecture.html#scope"),
     }
+    # The wiki is a standalone technical reference: it does not link into the lectures.
+    wiki_pages = ("wiki/architecture.html", "wiki/integration.html", "wiki/knowledge-context.html", "wiki/reference/code.html",
+                  "wiki/reference/contracts.html", "wiki/reference/terms.html", "wiki/reference/workflow.html")
     forbidden = {
         "lectures/00-overview.html": ("Hermes의 모든 약속은",),
         "lectures/04-integration.html": ("원본 코드", "원본 구현과 테스트는"),
         "wiki/knowledge-context.html": ("index.md</code>에 한 행을 추가합니다",),
     }
+    for page in wiki_pages:
+        forbidden[page] = forbidden.get(page, ()) + ("lectures/", "작업 에이전트", "매니저 에이전트")
     for relative, markers in required.items():
         for tree in (ROOT / "site", DOCS):
             path = tree / relative

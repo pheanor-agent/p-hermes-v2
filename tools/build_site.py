@@ -16,12 +16,14 @@ OUT = ROOT / "docs"
 HOME = ROOT / "site" / "index.html"
 
 
-WIKI_NOTES = {
-    "integration.html": ("강의 04 참조", "요청과 결과를 식별자·상태·산출물로 다시 대조하는 방법"),
-    "knowledge-context.html": ("강의 03 참조", "무엇을 어디에 남기고, 언제 어떤 지식을 읽는지"),
-    "reference/contracts.html": ("강의 01 참조", "요청서와 응답서의 칸, 종결 상태, 공개 범위의 차이"),
-    "reference/terms.html": ("용어", "역할·단계·상태 이름을 한 표로 맞춰 읽기"),
-    "reference/workflow.html": ("강의 02 참조", "처리 경로, JOB 단계 계약, 승인 기록과 복구 규칙"),
+WIKI_NOTES = {  # order = order on the wiki index
+    "architecture.html": ("구성", "구성요소와 연결, 엔진·로컬 운영 확장·공개 구현의 경계"),
+    "reference/contracts.html": ("프로토콜", "요청서·응답서 형식, 식별자, 등록과 dispatcher 수명주기, 종결 상태"),
+    "reference/workflow.html": ("작업 흐름", "JOB 판단 기준, 폴더 구조, 단계 계약과 게이트, 승인 기록과 복구"),
+    "knowledge-context.html": ("지식", "저장 위치, 읽히는 시점, 자료 묶음과 검색, 교훈 기록과 정리"),
+    "integration.html": ("검증", "확인의 두 겹, 위험별 깊이, 백업과 변경 기록, 게시 확인"),
+    "reference/code.html": ("코드", "공개 참조 구현과 테스트의 구조, 실행 방법"),
+    "reference/terms.html": ("용어", "한국어 용어와 코드·필드 표기 대응"),
 }
 
 
@@ -107,14 +109,16 @@ def _build() -> None:
     ]
     wiki_dir = ROOT / "site" / "wiki"
     wiki_cards = []
-    for source in sorted(p for p in wiki_dir.rglob("*.html") if p.name != "index.html"):
+    order = list(WIKI_NOTES)
+    sources = [p for p in wiki_dir.rglob("*.html") if p.name != "index.html"]
+    for source in sorted(sources, key=lambda p: (order.index(p.relative_to(wiki_dir).as_posix()) if p.relative_to(wiki_dir).as_posix() in order else len(order), p.as_posix())):
         rel = source.relative_to(wiki_dir).as_posix()
         heading = re.search(r"<h1[^>]*>(.*?)</h1>", source.read_text(encoding="utf-8"), re.S)
         tag, note = WIKI_NOTES.get(rel, ("위키", ""))
         wiki_cards.append((rel, tag, plain(heading.group(1)) if heading else source.stem, note))
     for directory, title, lead, cards in (
         ("lectures", "강의 목차", "전체 그림에서 시작해 역할, 작업 흐름, 지식, 통합 순서로 읽습니다.", lecture_cards),
-        ("wiki", "위키 목차", "강의에서 본 개념의 세부 계약·경로·용어를 찾아봅니다.", wiki_cards),
+        ("wiki", "위키 목차", "시스템이 어떤 파일·프로세스·규칙으로 움직이는지 기술적으로 설명합니다.", wiki_cards),
     ):
         index = OUT / directory / "index.html"
         index.parent.mkdir(parents=True, exist_ok=True)
