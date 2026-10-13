@@ -122,7 +122,7 @@ def check_content_alignment(errors: list[str]) -> None:
         "wiki/knowledge-context.html": ("index.md</code>에 한 행을 추가합니다",),
     }
     for page in wiki_pages:
-        forbidden[page] = forbidden.get(page, ()) + ("lectures/", "작업 에이전트", "매니저 에이전트")
+        forbidden[page] = forbidden.get(page, ()) + ("lectures/", "작업 에이전트", "매니저 에이전트", "작업자")
     for relative, markers in required.items():
         for tree in (ROOT / "site", DOCS):
             path = tree / relative

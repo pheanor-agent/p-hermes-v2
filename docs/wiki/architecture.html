@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="매니저·등록기·dispatcher·워커와 파일의 연결, 공개 구현의 범위"><title>구성과 범위 · p-hermes 위키</title><link rel="stylesheet" href="../assets/design-system.css"><link rel="stylesheet" href="../assets/wiki.css"></head>
+<body class="wiki-doc"><a class="skip" href="#main">본문으로 건너뛰기</a><header class="topbar"><a href="../index.html">← p-hermes</a><span>위키 · 구성과 범위</span></header>
+<main id="main"><div class="wiki-layout"><nav class="wiki-toc" aria-label="이 문서의 목차"><p>목차</p><ol><li><a href="#요소와-파일">요소와 파일</a></li><li><a href="#한-요청이-지나가는-순서">한 요청이 지나가는 순서</a></li><li><a href="#상태-파일과-응답서">상태 파일과 응답서</a></li><li><a href="#scope">Hermes 엔진·로컬 운영·p-hermes 공개 범위</a></li><li><a href="#근거-파일">근거 파일</a></li></ol></nav><article class="wiki-body"><section class="hero"><p class="eyebrow">위키 · 구현 참조</p><h1>구성과 범위</h1><p class="lead">파일 handoff를 이루는 구성요소와 각 요소가 주고받는 파일을 설명합니다. 구성별 책임과 경계를 확인해 공개 참조 코드와 로컬 운영 파일을 구분할 수 있습니다.</p></section>
+<article class="chapter rendered-doc"><p>아래 로컬 경로는 설치별 좌표를 설명합니다. 전체 범위는 <a href="architecture.html#scope">구성별 경계</a>에서 구분합니다.</p>
+<h2 id="요소와-파일">요소와 파일</h2>
+<p>표의 로컬 경로는 <code>&lt;로컬 운영 루트&gt;</code>를 기준으로 한 상대 경로입니다. 공개 p-hermes 저장소에 같은 경로가 있다는 뜻은 아닙니다.</p>
+<table><thead><tr><th>요소</th><th>위치</th><th>책임</th><th>주고받는 파일</th></tr></thead><tbody>
+<tr><td>매니저 세션</td><td>Hermes 런타임 세션 저장소; 구체 경로는 설치 설정이 정합니다.</td><td>요청의 목표·범위·완료 기준을 정하고 등록 결과와 산출을 확인합니다.</td><td>요청 본문 파일, 등록 결과 JSON, 응답서와 산출물</td></tr>
+<tr><td>요청 등록기</td><td><code>orchestration/glm/scripts/ensure_request.py</code>, 등록 자료는 <code>orchestration/glm/goals/</code></td><td>목표·시도 식별자를 관리하고 요청서를 inbox에 새로 만들거나 기존 시도를 재사용합니다.</td><td>매니저가 준비한 본문, <code>goals/&lt;goal_id&gt;.json</code>, <code>inbox/&lt;request_id&gt;-request.md</code>, 등록 결과 JSON</td></tr>
+<tr><td>inbox</td><td><code>orchestration/glm/inbox/</code></td><td>등록된 요청서 하나를 한 번의 시도로 보관합니다.</td><td><code>*-request.md</code>; 처리 후 원 요청은 별도 <code>done/</code> 하위에 보존될 수 있습니다.</td></tr>
+<tr><td>dispatcher</td><td><code>orchestration/worker_dispatch.py</code></td><td>허용된 요청 경로를 확인하고 중복·시도 상태를 기록하며 제한된 워커 프로세스를 실행하고 terminal 응답을 정산합니다.</td><td>inbox 요청서, <code>tasks/&lt;request_id&gt;/state.json</code>, profile별 claim·시도 로그, outbox 응답서</td></tr>
+<tr><td>워커 프로세스</td><td>dispatcher가 실행한 자식 프로세스</td><td>요청서와 필요한 참조를 읽고 허용 범위에서 작업해 산출과 응답을 남깁니다.</td><td>요청서·자료 묶음(context pack) 읽기; outbox 응답서와 요청에 따른 JOB 산출물 쓰기</td></tr>
+<tr><td>outbox와 상태</td><td><code>orchestration/glm/outbox/</code>, <code>orchestration/tasks/&lt;request_id&gt;/state.json</code></td><td>응답서는 사람이 읽는 결과를 전달하고, 상태 파일은 시도·dispatcher 실행 상태를 구조화합니다.</td><td><code>*-response.md</code>, <code>state.json</code>, 필요 시 checkpoint·로그</td></tr>
+<tr><td>JOB 폴더와 게이트</td><td><code>workspace/jobs/&lt;JOB&gt;/</code>, <code>core/skills/custom/workflow/</code></td><td>여러 단계 작업의 승인·실행·검증·완료 근거와 산출을 보관하며, 게이트가 단계 필수 파일을 검사합니다.</td><td><code>request.md</code>, <code>approval.md</code>, <code>execution.md</code>, <code>verification.md</code>, <code>result.md</code>, <code>artifacts/</code></td></tr>
+<tr><td>지식 저장소</td><td><code>knowledge/</code> 아래 lessons·references·wiki 등</td><td>재사용할 사실·근거와 절차 후보를 보존하며 요청 관련 자료를 찾아 작업에 연결합니다.</td><td>자료 묶음, 검색 후보, 원본·교훈 파일</td></tr>
+<tr><td>주기 작업</td><td><code>cron/</code> 및 Hermes scheduler 상태</td><td>일정에 따라 지정된 프롬프트·명령을 실행하도록 예약합니다. 실행 컨텍스트와 파일 dispatcher는 별도 구성입니다.</td><td>예약 정의·실행 상태·결과 로그</td></tr>
+</tbody></table>
+<h2 id="한-요청이-지나가는-순서">한 요청이 지나가는 순서</h2>
+<pre><code>매니저
+  → 등록기: goal/revision을 확인하고 요청서 생성·재사용·대체
+  → inbox: &lt;request_id&gt;-request.md
+  → dispatcher: 경로·중복 확인, task state/attempt 기록, 워커 실행
+  → 워커: 요청 수행, 산출 보존, 응답서 작성
+  → outbox: &lt;request_id&gt;-response.md
+  → 판정: dispatcher 상태·응답서·산출 경로를 대조해 수용 또는 이어가기</code></pre>
+<p>등록 결과의 <code>created</code>, <code>reused</code>, <code>superseded</code>는 각각 새 요청, 기존 요청 재사용, 새 revision/시도로 이전 요청을 대체해 등록했음을 나타냅니다. 등록만으로 자식 프로세스가 실행되지는 않습니다.</p>
+<h2 id="상태-파일과-응답서">상태 파일과 응답서</h2>
+<p><code>state.json</code>은 새 상태형 작업의 실행 기록입니다. 예를 들어 <code>queued</code>는 등록 대기, <code>running</code>은 워커 실행, <code>verifying</code>은 응답 확인, <code>succeeded</code>는 실행 완료를 나타냅니다. 실행 중 부분 결과나 복구 대기는 <code>waiting</code>, 실패·차단은 <code>failed</code>로 정산될 수 있습니다. 이 상태는 응답서의 <code>done</code>/<code>partial</code>/<code>failed</code>/<code>blocked</code>와 같은 필드나 상태 체계가 아닙니다. 응답서와 파일 실물을 함께 확인합니다.</p>
+<h2 id="scope">Hermes 엔진·로컬 운영·p-hermes 공개 범위</h2>
+<p>이 사이트는 Hermes 엔진 위의 로컬 운영 확장을 설명하며, 공개 저장소의 소형 파일 전달 참조 구현과 구분합니다.</p>
+<table><thead><tr><th>범위</th><th>책임과 확인할 수 있는 것</th><th>위치 또는 정본</th></tr></thead><tbody>
+<tr><td>Hermes 엔진</td><td>대화 세션을 실행하고 모델·도구 사용, 세션·메모리·스킬 등 제품 기능을 제공합니다. 파일 handoff 흐름 전체가 엔진 자체의 공통 인터페이스라는 뜻은 아닙니다.</td><td><a href="https://hermes-agent.nousresearch.com/docs/developer-guide/architecture">hermes-agent.nousresearch.com 공식 구조 문서</a></td></tr>
+<tr><td>로컬 운영 확장</td><td>설치에 맞춘 매니저·워커 규칙, 요청 등록·dispatcher, inbox/outbox, JOB 게이트와 지식 저장소를 결합합니다. 구체 경로와 동작은 해당 설치의 운영 정본에서 확인합니다.</td><td><code>&lt;로컬 운영 루트&gt;/orchestration/</code>, <code>core/</code>, <code>workspace/jobs/</code>, <code>knowledge/</code></td></tr>
+<tr><td>p-hermes 공개 구현</td><td>학습을 위한 독립적인 파일 handoff 예제·계약 테스트·합성 fixture를 제공합니다. Hermes 전체, 사설 dispatcher/JOB 운영, 실제 서비스 권한을 설치하거나 대표하지 않습니다.</td><td><a href="https://github.com/pheanor-agent/p-hermes-v2">공개 저장소</a>의 <code>reference/</code>, <code>tests/</code>, <code>examples/</code></td></tr>
+</tbody></table>
+<h2 id="근거-파일">근거 파일</h2>
+<table><thead><tr><th>확인 내용</th><th>정본 경로</th></tr></thead><tbody>
+<tr><td>디렉터리 소유와 경계</td><td><code>&lt;로컬 운영 루트&gt;/orchestration/STRUCTURE.md</code></td></tr>
+<tr><td>요청 등록·목표 revision</td><td><code>&lt;로컬 운영 루트&gt;/orchestration/glm/scripts/ensure_request.py</code></td></tr>
+<tr><td>dispatcher·프로세스·응답 정산</td><td><code>&lt;로컬 운영 루트&gt;/orchestration/worker_dispatch.py</code>, <code>orchestration/glm/executor/state.py</code></td></tr>
+<tr><td>응답서 계약·JOB 게이트</td><td><code>&lt;로컬 운영 루트&gt;/orchestration/WORKER.md</code>, <code>core/skills/custom/workflow/</code></td></tr>
+<tr><td>공개 사이트·코드 범위</td><td><code>README.md</code>, <code>content/reference/contracts.md</code>, <code>reference/</code></td></tr>
+</tbody></table><p class="note">확인 기준: 2026-10-13. 경로와 절차는 해당 설치의 현재 정본을 다시 확인합니다.</p>
+</article></article></div></main><footer class="footer"><a href="../index.html">홈</a> · <a href="../wiki/index.html">위키 목차</a></footer></body></html>

@@ -56,3 +56,7 @@ body.wiki-doc figcaption{font-size:13.5px;color:#8fa1b8;margin-top:6px}
 .wiki-body .rendered-doc>h2:first-of-type{margin-top:22px!important}
 /* Small flow figures keep their natural 1:1 size so labels stay body-sized. */
 body.wiki-doc svg.flow-svg{width:260px!important;max-width:100%;height:auto;margin:6px 0 10px}
+
+/* identifiers in table cells stay whole (no mid-word wrap) */
+.wiki-body td:first-child code,.wiki-body td code:only-child{white-space:nowrap}
+.wiki-body td{overflow-wrap:normal;word-break:keep-all}
