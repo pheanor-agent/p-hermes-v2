@@ -1,0 +1,766 @@
+{
+ "schema": "legacy-index-inventory/1",
+ "generated_on": "2026-10-14",
+ "manifest_snapshot_sha256": "714a98736e92bdc79f10170fcb08b25b71cf3a3c3d7d5cb4311fd85886058452",
+ "count": 39,
+ "items": [
+  {
+   "legacy_id": "misc-openai-harness-engineering-md",
+   "title": ": Codex",
+   "public_source_url": "https://openai.com/ko-KR/index/harness-engineering",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "overview",
+    "context-memory-knowledge",
+    "evaluation-observability-security",
+    "case-implementation"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "user-provided per manifest (provided_date 2026-06-02)",
+   "utilization_check": "Discussed in JOB records; contextual reference, not operational adoption proof",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": "openai-harness-engineering",
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "misc-arxiv-agent-paper-md",
+   "title": "A Survey of Context Engineering for Large Language Models",
+   "public_source_url": "https://arxiv.org/abs/2507.13334",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "context-memory-knowledge",
+    "orchestration-workflow",
+    "evaluation-observability-security"
+   ],
+   "self_summary": "LLM의 성능은 추론 동안 제공되는 컨텍스 정보에 의해 근본적으로 결정됩니다. 이 서베이는 단순한 프롬프트 디자인을 초월하여 LLM에 대한 정보 페이로드의 체계적 최적화를 포괄하는 컨텍스 엔지니어링을 도입합니다. 기본 컴포넌트(컨텍스 검색·생성, 컨텍스 처리, 컨텍스 관리)와 이것들을 아키텍처적으로 통합하는 고도 구현(RAG, 메모리 시스템, 도구 통합 추론, 멀티 에이전트 시스템)을 탐색합",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "user-provided per manifest (provided_date 2026-06-02)",
+   "utilization_check": "Literature discovery only; no Hermes adoption",
+   "source_date": "2026-03-25",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": "context-engineering-survey",
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "skills-agentskills-home-md",
+   "title": "Agent Skills",
+   "public_source_url": "https://agentskills.io/home",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "skills-tools",
+    "context-memory-knowledge"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "user-provided per manifest (provided_date 2026-06-02)",
+   "utilization_check": "Format reference; not proof of Hermes compatibility",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": "agentskills-standard",
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "evaluation-vercel-agents-md-vs-skills-md",
+   "title": "AGENTS.md outperforms skills in our agent evals",
+   "public_source_url": "https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "skills-tools",
+    "evaluation-observability-security"
+   ],
+   "self_summary": "AGENTS.md가 스킬보다 성능 우수 (100% vs 79%), 스킬 트리거 신뢰성 문제",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "user-provided per manifest (provided_date 2026-06-02)",
+   "utilization_check": "Vendor-specific limited evaluation; no adoption evidence",
+   "source_date": "2026-03-25",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": "vercel-agents-md-skills-evals",
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "misc-google-multi-agent-framework-md",
+   "title": "Architecting Efficient Context-Aware Multi-Agent Framework for Production",
+   "public_source_url": "https://developers.googleblog.com/en/architecting-efficient-context-aware-multi-agent-framework-for-production",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "orchestration-workflow",
+    "context-memory-knowledge",
+    "case-implementation"
+   ],
+   "self_summary": "프로덕션급 에이전트를 만들기 위해서는 \"컨텍스트 관리\"가 문자열 조작에서 아키텍처적 관심사항으로 승격되어야 합니다. Google ADK는 컨텍스를 첫째 급 시스템으로 설계하여 비용, 지연, 신호 저하, 물리적 한계를 해결합니다.",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "user-provided per manifest (provided_date 2026-06-02)",
+   "utilization_check": "Architecture comparison only",
+   "source_date": "2026-03-25",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": "google-context-aware-multi-agent",
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "workflows-claude-workflow-patterns-md",
+   "title": "Common workflow patterns for AI agentsand when to use them",
+   "public_source_url": "https://claude.com/blog/common-workflow-patterns-for-ai-agents-and-when-to-use-them",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "orchestration-workflow",
+    "evaluation-observability-security"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "user-provided per manifest (provided_date 2026-06-02)",
+   "utilization_check": "Pattern guide only",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": "claude-workflow-patterns",
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "workflows-snow-runbear-ai-marketing-team-md",
+   "title": "How I Built an AI Marketing Team with Claude Code (and Cowork)",
+   "public_source_url": "https://snow.runbear.io/how-i-built-an-ai-marketing-team-with-claude-code-and-cowork-f3405a53ee22",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "orchestration-workflow",
+    "skills-tools",
+    "case-implementation"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "user-provided per manifest (provided_date 2026-06-02)",
+   "utilization_check": "Practitioner case only",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": "runbear-ai-marketing-team",
+   "merged_index_entries": 2,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "misc-tunguz-software-after-ai-md",
+   "title": "Software After AI — Tomasz Tunguz",
+   "public_source_url": "https://tomtunguz.com/harnessing-ai",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "overview",
+    "orchestration-workflow",
+    "context-memory-knowledge",
+    "case-implementation"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "user-provided per manifest (provided_date 2026-06-01)",
+   "utilization_check": "사용자가 66자 요청과 함께 링크를 제공한 것이 DB 증거로 확인됨. 하네스에 관한 글로서 제목 수준에서 포함; 이번 조사에서 본문 내용/사용 근거를 확인하지 못해 요약을 확대하지 않음.",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": "harnessing-ai-tunguz",
+   "merged_index_entries": 1,
+   "manager_flag": "false (reviewed include)"
+  },
+  {
+   "legacy_id": "memory-clawsouls-experiential-memory-md",
+   "title": "과잉확신 효과: 요약된 메모리가 AI 에이전트를 더 나쁘게 만드는 이유",
+   "public_source_url": "https://blog.clawsouls.ai/ko/posts/experiential-memory-experiment",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "context-memory-knowledge",
+    "evaluation-observability-security"
+   ],
+   "self_summary": "반면 베이스라인 에이전트는 모른다는 것을 압니다. 답변에 조건을 붙입니다. 1차 원리에서 추론합니다. 자신 있게 틀린 답을 말하는 대신 \"일반적인 모범 사례에 기반하면…\"이라고 합니다.",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "user-provided per manifest (provided_date 2026-06-02)",
+   "utilization_check": "Experiment lead; methods require independent appraisal",
+   "source_date": "2026-03-25",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": "experiential-memory-experiment",
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "misc-wikidocs-agent-guide-md",
+   "title": ": AI , ''",
+   "public_source_url": "https://wikidocs.net/blog/@jaehong/9481",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "wiki-references-skillify-openclaw-application-md",
+   "title": "[[skillify]] OpenClaw 적용 분석",
+   "public_source_url": null,
+   "source_url_status": "null (not recorded in retrievable source)",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "wiki-references-skillify-md",
+   "title": "[[Skillify]]: 에이전트 실수를 영구적 구조적 수정으로 변환",
+   "public_source_url": "https://x.com/garrytan/status/2046876981711769720",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "**하루 한 번 skillify**:",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "skills-addyosmani-good-spec-md",
+   "title": "addyosmani-good-spec.md",
+   "public_source_url": "https://addyosmani.com/blog/good-spec",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "skills-skill-creator-guide-md",
+   "title": "Anthropic Skill Generator (Skill Creator)",
+   "public_source_url": "https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "agent-patterns-anthropic-tools-md",
+   "title": "anthropic-tools",
+   "public_source_url": "https://github.com/anthropics/anthropic-tools",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-05-29",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "github-anthropics-skills-md",
+   "title": "anthropics-skills.md",
+   "public_source_url": "https://github.com/anthropics/skills",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "Claude의 스킬 시스템 구현. 폴더 형태의 지시사항, 스크립트, 리소스로 구성되며 Claude가 특수 작업을 반복 가능하게 수행하도록 가르칩니다. SKILL.md 파일에 지시사항과 메타데이터 포함.",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-06-02",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "workflows-autoresearch-karpathy-md",
+   "title": "AutoResearch - 자율적 연구 시스템",
+   "public_source_url": "https://github.com/karpathy/autoresearch",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "AI 에이전트가 자율적으로 실험 수행. 코드 수정 → 훈련 → 결과 확인 → 반복. program.md로 컨텍스트 제공.",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-03-13",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 2,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "skills-crewai-md",
+   "title": "crewAI",
+   "public_source_url": "https://github.com/crewAIInc/crewAI",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-06-01",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "workflows-agentic-workflow-ep86-md",
+   "title": "EP 86: 진짜 내 일을 위한 Agentic Workflow",
+   "public_source_url": "https://aifrontier.kr/ko/episodes/ep86",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "Lablup 신정규 대표가 **Backend.AI:GO** (AI 라우터 제품)을 40일 만에 개발한 경험을 공유하며, 실제 엔지니어링 관점에서 에이전트 코딩의 현재와 한계를 논의.",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-04-12",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "github-everything-claude-code-md",
+   "title": "Everything Claude Code",
+   "public_source_url": "https://github.com/affaan-m/everything-claude-code",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-04-08",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "false (reviewed include)"
+  },
+  {
+   "legacy_id": "github-forrestchang-andrej-karpathy-skills-md",
+   "title": "forrestchang-andrej-karpathy-skills.md",
+   "public_source_url": "https://github.com/forrestchang/andrej-karpathy-skills",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "Andrej Karpathy의 LLM 코딩 문제점 관찰에서 파생된 Claude Code 가이드라인. 4가지 원칙 (Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution)을 하나의 파일로 제공.",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-03-25",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "github-harness-md",
+   "title": "Harness - Agent Team & Skill Architect",
+   "public_source_url": "https://github.com/revfactory/harness",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "github-hippo-memory-md",
+   "title": "Hippo Memory",
+   "public_source_url": "https://github.com/kitfunso/hippo-memory",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-04-08",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "github-hyperagents-review-md",
+   "title": "Hyperagents 검토",
+   "public_source_url": "https://github.com/facebookresearch/hyperagents",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "knowledge-system-architecture-md",
+   "title": "knowledge-system-architecture",
+   "public_source_url": null,
+   "source_url_status": "null (not recorded in retrievable source)",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "indexed-only",
+   "registration_check": "index entry present; no reference or wiki page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "skills-langgraph-md",
+   "title": "langgraph",
+   "public_source_url": "https://github.com/langchain-ai/langgraph",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-06-01",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "memory-letta-memgpt-md",
+   "title": "letta-memgpt.md",
+   "public_source_url": "https://letta.com",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "memory-mem0-memory-architecture-md",
+   "title": "mem0-memory-architecture.md",
+   "public_source_url": "https://mem0.ai/research",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "LLM 기반 에이전트의 근본적 한계인 상태 비저장 문제 해결. 대화에서 중요 정보를 동적으로 추출, 구조화, 검색하는 메모리 아키텍처. Mem0ᵍ는 그래프 기반으로 엔티티 간 관계 저장 및 멀티세션 관계 추적 지원.",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-03-25",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "memory-seojoonkim-memory-md",
+   "title": "seojoonkim-memory.md",
+   "public_source_url": "https://seojoonkim.medium.com/memory-d6f559f1fe73",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "guide-show-hn-continue-y-n-a-60-second-game-about-ai-agent-permiss-md",
+   "title": "Show HN: Continue? Y/N: A 60-second game about AI agent permission fatigue",
+   "public_source_url": "https://llmgame.scalex.dev",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-05-29",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "github-mattpocock-skills-md",
+   "title": "Skills For Real Engineers - mattpocock/skills",
+   "public_source_url": "https://github.com/mattpocock/skills",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "**주제**: Claude Code, Codex 등 AI 코딩 에이전트용 실제 엔지니어링 스킬 컬렉션. GSD/BMAD/Spec-Kit와 달리 제어권 유지 + 작은 단위로 구성 가능.",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-06-02",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "github-steipete-agent-scripts-md",
+   "title": "steipete/agent-scripts",
+   "public_source_url": "https://github.com/steipete/agent-scripts",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "memory-supermemory-asmr-md",
+   "title": "supermemory-asmr.md",
+   "public_source_url": "https://x.com/DhravyaShah/status/2035517012647272689",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "skills-superpowers-agentic-skills-md",
+   "title": "superpowers-agentic-skills.md",
+   "public_source_url": "https://github.com/obra/superpowers",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "코딩 에이전트를 위한 완전한 소프트웨어 개발 워크플로우. 브레인스토밍, Git Worktrees, 계획 작성, 서브에이전트 개발 프로세스 포함. TDD, 체계적 접근, 복잡성 감소, 증거 기반 검증 철학.",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-03-25",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 2,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "memory-weaviate-context-engineering-md",
+   "title": "Weaviate: Context Engineering for AI Agents",
+   "public_source_url": "https://weaviate.io/blog/context-engineering",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "컨텍스트의 4가지 실패 모드와 6가지 해결 요소. RAG 기반 메모리 시스템 설계 가이드.",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-06-02",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "web-claude-code-loop-boris-cherny-md",
+   "title": "web/claude-code-loop-boris-cherny",
+   "public_source_url": null,
+   "source_url_status": "null (not recorded in retrievable source)",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "indexed-only",
+   "registration_check": "index entry present; no reference or wiki page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "false (reviewed include)"
+  },
+  {
+   "legacy_id": "web-claude-code-loop-engineering-20-step-md",
+   "title": "web/claude-code-loop-engineering-20-step",
+   "public_source_url": null,
+   "source_url_status": "null (not recorded in retrievable source)",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "indexed-only",
+   "registration_check": "index entry present; no reference or wiki page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "false (reviewed include)"
+  },
+  {
+   "legacy_id": "wiki-references-skillify-design-proposal-md",
+   "title": "스킬 시스템 종합 분석: 설계 제안서",
+   "public_source_url": null,
+   "source_url_status": "null (not recorded in retrievable source)",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "index line only; source summary not retrievable",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": null,
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 1,
+   "manager_flag": "true"
+  },
+  {
+   "legacy_id": "workflows-velog-we-programmer-md",
+   "title": "우리, 프로그래머들 — .md로 코딩하는 시대",
+   "public_source_url": "https://velog.io/@teo/we-programmer",
+   "source_url_status": "confirmed-from-wiki-record",
+   "topics": [
+    "unclassified-legacy"
+   ],
+   "self_summary": "로버트 C. 마틴(Uncle Bob)의 책 \"우리, 프로그래머들\"을 계기로 AI 시대의 프로그래머 정신과 역할을 재정의한 글입니다. 개발자는 '디테일을 챙기는 사람'이며, 추상화를 통해 지층을 쌓아왔습니다. AI 시대에는 코드 생성이 쉬워졌지만, 비결정적 출력을 통제하는 '하네스 코딩'이 새로운 디테일이 되었습니다. 프롬프트는 이제 코딩이 되었으며, 우리는 여전히 추상화를 다루며 시스템을 엮",
+   "state": "derived-only",
+   "registration_check": "index entry present; reference file missing; wiki derived page located",
+   "provision_check": "unknown",
+   "utilization_check": "미확인 (색인·원천 페이지만 확인)",
+   "source_date": "2026-03-25",
+   "rights": "미확인; 원문 미배포. 링크·자체 요약만 제공",
+   "manifest_record_id": null,
+   "merged_index_entries": 2,
+   "manager_flag": "true"
+  }
+ ],
+ "manifest_record_count_at_snapshot": 47
+}

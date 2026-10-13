@@ -19,6 +19,7 @@ p-hermes는 Hermes 엔진 위에 더한 로컬 운영 체계를 에이전트·�
 - `reference/` — 파일 handoff 공개 참조 구현
 - `tests/` — 참조 구현의 계약 테스트
 - `examples/` — 합성 입력을 사용하는 독립 교육 자료
+- `harness-references/` — 외부 하네스 엔지니어링 자료의 독립 탐색 라이브러리 ([읽기 시작](harness-references/README.md))
 - `content/`, `publication/` — 공개 설명 원고와 범위 메모
 
 저장소 자료는 사이트 페이지에 복제하지 않습니다. 공개 구현은 전체 Hermes 운영 시스템을 설치하거나 복제하지 않으며, 예제의 결과를 실제 운영 결과로 해석해서는 안 됩니다.

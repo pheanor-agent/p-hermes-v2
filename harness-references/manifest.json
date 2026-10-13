@@ -1,0 +1,1107 @@
+{
+  "schema_version": "1.0",
+  "title": "Harness Engineering Reference Library",
+  "updated_at": "2026-10-14",
+  "counts": {
+    "records": 47,
+    "public_cards": 47,
+    "original_full_texts_preserved": 0
+  },
+  "url_policy": "Canonical URLs remove tracking parameters and terminal punctuation; meaningful paths and version selectors are preserved. Related URLs are grouped under one record.",
+  "records": [
+    {
+      "id": "agent-harness-technical-debt",
+      "title": "Hidden Technical Debt of AI Systems: Agent Harness",
+      "canonical_url": "https://leehanchung.github.io/blogs/2026/05/08/hidden-technical-debt-agent-harness/",
+      "alternate_urls": [],
+      "topics": [
+        "overview",
+        "evaluation-observability-security"
+      ],
+      "published": "2026-05-08",
+      "provided_by_user": true,
+      "provided_date": "2026-06-09",
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/misc/agent-harness-technical-debt.md",
+      "utilization": "Conceptual reference only; no operational adoption evidence",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/agent-harness-technical-debt.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "openai-harness-engineering",
+      "title": "Harness engineering: leveraging Codex in an agent-first world",
+      "canonical_url": "https://openai.com/index/harness-engineering",
+      "alternate_urls": [
+        "https://openai.com/ko-KR/index/harness-engineering/"
+      ],
+      "topics": [
+        "overview",
+        "context-memory-knowledge",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "2026-02-11",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": true,
+      "registration_note": "Processed wiki page and index entry exist; referenced current reference-card path is missing",
+      "utilization": "Discussed in JOB records; contextual reference, not operational adoption proof",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/openai-harness-engineering.md",
+      "registration_evidence": "derived_document",
+      "registration_indexed": true
+    },
+    {
+      "id": "anthropic-effective-long-running-agents",
+      "title": "Effective harnesses for long-running agents",
+      "canonical_url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+      "alternate_urls": [
+        "https://github.com/anthropics/claude-quickstarts/tree/main/autonomous-coding"
+      ],
+      "topics": [
+        "overview",
+        "orchestration-workflow",
+        "context-memory-knowledge",
+        "case-implementation"
+      ],
+      "published": "not confirmed from retrieved page",
+      "provided_by_user": false,
+      "provided_date": null,
+      "registered_in_knowledge": false,
+      "registration_note": "No exact current reference registration verified",
+      "utilization": "Included as a required primary source; no Hermes deployment",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/anthropic-effective-long-running-agents.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "anthropic-harness-design-long-running-apps",
+      "title": "Harness design for long-running application development",
+      "canonical_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+      "alternate_urls": [],
+      "topics": [
+        "overview",
+        "orchestration-workflow",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "not confirmed from retrieved page",
+      "provided_by_user": false,
+      "provided_date": null,
+      "registered_in_knowledge": false,
+      "registration_note": "Added as a related primary source; exact registration not verified",
+      "utilization": "Pattern comparison only",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/anthropic-harness-design-long-running-apps.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "anthropic-building-effective-agents",
+      "title": "Building effective agents",
+      "canonical_url": "https://www.anthropic.com/engineering/building-effective-agents",
+      "alternate_urls": [],
+      "topics": [
+        "overview",
+        "orchestration-workflow",
+        "skills-tools"
+      ],
+      "published": "2024-12 (search result); exact date not checked",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference card verified",
+      "utilization": "General design guidance; no operational adoption",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/anthropic-building-effective-agents.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "anthropic-multi-agent-research-system",
+      "title": "How we built our multi-agent research system",
+      "canonical_url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "alternate_urls": [],
+      "topics": [
+        "orchestration-workflow",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "2025-06-13 (search result; not rechecked on page)",
+      "provided_by_user": false,
+      "provided_date": null,
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference card verified",
+      "utilization": "Related official case study; not adopted",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/anthropic-multi-agent-research-system.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "claude-workflow-patterns",
+      "title": "Common workflow patterns for AI agents—and when to use them",
+      "canonical_url": "https://claude.com/blog/common-workflow-patterns-for-ai-agents-and-when-to-use-them",
+      "alternate_urls": [],
+      "topics": [
+        "orchestration-workflow",
+        "evaluation-observability-security"
+      ],
+      "published": "not confirmed",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference card verified",
+      "utilization": "Pattern guide only",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/claude-workflow-patterns.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "addy-loop-engineering",
+      "title": "Loop Engineering",
+      "canonical_url": "https://addyo.substack.com/p/loop-engineering",
+      "alternate_urls": [],
+      "topics": [
+        "orchestration-workflow",
+        "context-memory-knowledge",
+        "skills-tools",
+        "evaluation-observability-security"
+      ],
+      "published": "2026-06-11 (reference record)",
+      "provided_by_user": false,
+      "provided_date": null,
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/addyo-loop-engineering.md",
+      "utilization": "Reference record only; no adoption evidence",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/addy-loop-engineering.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "openai-multi-agent-docs",
+      "title": "OpenAI multi-agent and orchestration API guides",
+      "canonical_url": "https://developers.openai.com/api/docs/guides/responses-multi-agent",
+      "alternate_urls": [
+        "https://platform.openai.com/docs/guides/agents/orchestration"
+      ],
+      "topics": [
+        "orchestration-workflow",
+        "skills-tools",
+        "case-implementation"
+      ],
+      "published": "living docs; not checked",
+      "provided_by_user": true,
+      "provided_date": "2026-09-23",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference card verified",
+      "utilization": "Official docs links only; no operational adoption evidence",
+      "rights": "Terms not checked; links and summary only",
+      "original_preserved": false,
+      "card": "cards/openai-multi-agent-docs.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "hermes-official-docs",
+      "title": "Hermes official documentation: harness-related features",
+      "canonical_url": "https://hermes-agent.nousresearch.com/docs/",
+      "alternate_urls": [
+        "https://hermes-agent.nousresearch.com/docs/user-guide/features/loops",
+        "https://hermes-agent.nousresearch.com/docs/user-guide/features/context-files",
+        "https://hermes-agent.nousresearch.com/docs/developer-guide/session-storage",
+        "https://hermes-agent.nousresearch.com/docs/developer-guide/prompt-assembly",
+        "https://hermes-agent.nousresearch.com/docs/user-guide/features/memory"
+      ],
+      "topics": [
+        "orchestration-workflow",
+        "context-memory-knowledge",
+        "skills-tools",
+        "case-implementation"
+      ],
+      "published": "living docs; not checked",
+      "provided_by_user": true,
+      "provided_date": "2026-10-06",
+      "registered_in_knowledge": false,
+      "registration_note": "Official docs URLs found in session evidence; references corpus registration not asserted",
+      "utilization": "Canonical external documentation links for Hermes itself",
+      "rights": "Terms not checked; links and summary only",
+      "original_preserved": false,
+      "card": "cards/hermes-official-docs.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "google-context-aware-multi-agent",
+      "title": "Architecting efficient context-aware multi-agent framework for production",
+      "canonical_url": "https://developers.googleblog.com/architecting-efficient-context-aware-multi-agent-framework-for-production",
+      "alternate_urls": [
+        "https://developers.googleblog.com/en/architecting-efficient-context-aware-multi-agent-framework-for-production"
+      ],
+      "topics": [
+        "orchestration-workflow",
+        "context-memory-knowledge",
+        "case-implementation"
+      ],
+      "published": "2025-12-04 (search result)",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference card verified",
+      "utilization": "Architecture comparison only",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/google-context-aware-multi-agent.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "letta-context-repositories",
+      "title": "Introducing Context Repositories: Git-based Memory for Coding Agents",
+      "canonical_url": "https://www.letta.com/blog/context-repositories",
+      "alternate_urls": [],
+      "topics": [
+        "context-memory-knowledge",
+        "skills-tools",
+        "case-implementation"
+      ],
+      "published": "2026-02-12 (existing reference record)",
+      "provided_by_user": true,
+      "provided_date": "2026-06-09",
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/memory/letta-context-repositories.md",
+      "utilization": "Reference comparison; no Hermes memory replacement",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/letta-context-repositories.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "agents-are-hard",
+      "title": "Agents are hard",
+      "canonical_url": "https://lucumr.pocoo.org/2025/11/21/agents-are-hard/",
+      "alternate_urls": [],
+      "topics": [
+        "overview",
+        "orchestration-workflow",
+        "evaluation-observability-security"
+      ],
+      "published": "2025-11-21 (URL date)",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference card verified",
+      "utilization": "Adjacent practitioner perspective",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/agents-are-hard.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "simon-willison-agentic-engineering",
+      "title": "Agentic Engineering Patterns",
+      "canonical_url": "https://simonwillison.net/guides/agentic-engineering-patterns/",
+      "alternate_urls": [],
+      "topics": [
+        "overview",
+        "orchestration-workflow",
+        "evaluation-observability-security",
+        "skills-tools"
+      ],
+      "published": "continuously updated guide",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference card verified",
+      "utilization": "Pattern reference only",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/simon-willison-agentic-engineering.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "agentskills-standard",
+      "title": "Agent Skills",
+      "canonical_url": "https://agentskills.io/home",
+      "alternate_urls": [
+        "https://agentskills.io/specification"
+      ],
+      "topics": [
+        "skills-tools",
+        "context-memory-knowledge"
+      ],
+      "published": "living specification; not checked",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference card verified",
+      "utilization": "Format reference; not proof of Hermes compatibility",
+      "rights": "Terms not checked; links and summary only",
+      "original_preserved": false,
+      "card": "cards/agent-skills-standard.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "vercel-agents-md-skills-evals",
+      "title": "AGENTS.md outperforms skills in our agent evals",
+      "canonical_url": "https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals",
+      "alternate_urls": [],
+      "topics": [
+        "skills-tools",
+        "evaluation-observability-security"
+      ],
+      "published": "not confirmed",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference card verified",
+      "utilization": "Vendor-specific limited evaluation; no adoption evidence",
+      "rights": "Unverified; link and original summary only",
+      "original_preserved": false,
+      "card": "cards/vercel-agents-md-skills-evals.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "deepseek-harness",
+      "title": "DeepSeek Harness",
+      "canonical_url": "https://github.com/deepseek-ai/deepseek-harness",
+      "alternate_urls": [],
+      "topics": [
+        "orchestration-workflow",
+        "skills-tools",
+        "case-implementation"
+      ],
+      "published": "developer preview; rolling repository",
+      "provided_by_user": true,
+      "provided_date": "2026-08-12",
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/github/deepseek-harness.md; related prior design analysis",
+      "utilization": "Research/design reference; not evidence of deployment",
+      "rights": "GitHub repository displays MIT; third-party components remain separate",
+      "original_preserved": false,
+      "card": "cards/deepseek-harness.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "meta-harness",
+      "title": "Meta-Harness: End-to-End Optimization of Model Harnesses",
+      "canonical_url": "https://arxiv.org/abs/2603.28052",
+      "alternate_urls": [
+        "https://github.com/stanford-iris-lab/meta-harness"
+      ],
+      "topics": [
+        "context-memory-knowledge",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "2026-03-30 (arXiv submission)",
+      "provided_by_user": true,
+      "provided_date": "2026-06-27",
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/github/meta-harness.md and references index",
+      "utilization": "Reference/research; no local benchmark adoption",
+      "rights": "arXiv page shows CC BY 4.0; code license not examined",
+      "original_preserved": false,
+      "card": "cards/meta-harness.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "jaz-harness-language",
+      "title": "Harness as a Language: A Minimalist Agent Framework With Maximal Expressivity",
+      "canonical_url": "https://arxiv.org/abs/2609.26891",
+      "alternate_urls": [
+        "https://arxiv.org/html/2609.26891"
+      ],
+      "topics": [
+        "overview",
+        "orchestration-workflow",
+        "context-memory-knowledge",
+        "evaluation-observability-security"
+      ],
+      "published": "2026-09-27 v1 analyzed previously; arXiv currently shows v2",
+      "provided_by_user": false,
+      "provided_date": null,
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/github/jaz-harness-as-a-language.md; prior analysis",
+      "utilization": "Prior review: reference only; no runtime or benchmark execution",
+      "rights": "arXiv page shows CC BY 4.0; no paper text copied",
+      "original_preserved": false,
+      "card": "cards/jaz-harness-language.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "aaabench",
+      "title": "AAABench",
+      "canonical_url": "https://github.com/ukanwat/aaabench",
+      "alternate_urls": [],
+      "topics": [
+        "orchestration-workflow",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "existing source record captured 2026-08-14",
+      "provided_by_user": false,
+      "provided_date": null,
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/github/aaabench.md; prior review",
+      "utilization": "Conditional research reference; no install/run",
+      "rights": "Existing review says repository code MIT; third-party asset terms separate",
+      "original_preserved": false,
+      "card": "cards/aaabench.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "browser-harness",
+      "title": "browser-harness (browser-use)",
+      "canonical_url": "https://github.com/browser-use/browser-harness",
+      "alternate_urls": [],
+      "topics": [
+        "skills-tools",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "existing reference reviewed 2026-07-04",
+      "provided_by_user": true,
+      "provided_date": "2026-07-04",
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/github/browser-harness.md",
+      "utilization": "Existing card says reference only, not introduced; current upstream not rechecked",
+      "rights": "Existing card says MIT; this run did not independently recheck",
+      "original_preserved": false,
+      "card": "cards/browser-harness.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "context-engineering-survey",
+      "title": "A Survey of Context Engineering for Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2507.13334",
+      "alternate_urls": [],
+      "topics": [
+        "context-memory-knowledge",
+        "orchestration-workflow",
+        "evaluation-observability-security"
+      ],
+      "published": "2025-07 submission; current page v2",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference registration verified",
+      "utilization": "Literature discovery only; no Hermes adoption",
+      "rights": "License not checked; summary and URL only",
+      "original_preserved": false,
+      "card": "cards/context-engineering-survey.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "code-as-agent-harness",
+      "title": "Code as Agent Harness",
+      "canonical_url": "https://arxiv.org/abs/2605.18747",
+      "alternate_urls": [],
+      "topics": [
+        "overview",
+        "context-memory-knowledge",
+        "orchestration-workflow",
+        "evaluation-observability-security"
+      ],
+      "published": "2026-05 (submission month)",
+      "provided_by_user": false,
+      "provided_date": null,
+      "registered_in_knowledge": false,
+      "registration_note": "Added from external literature search; not previously tracked as user-provided",
+      "utilization": "Research survey lead only",
+      "rights": "arXiv page displays CC BY 4.0; paper not copied",
+      "original_preserved": false,
+      "card": "cards/code-as-agent-harness.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "raven-composable-agentic-intelligence",
+      "title": "Raven: The Harness of Harnesses for Composable Agentic Intelligence",
+      "canonical_url": "https://arxiv.org/abs/2609.33439",
+      "alternate_urls": [
+        "https://arxiv.org/abs/2609.33439v1"
+      ],
+      "topics": [
+        "overview",
+        "orchestration-workflow",
+        "case-implementation"
+      ],
+      "published": "2026-09 (v1)",
+      "provided_by_user": true,
+      "provided_date": "2026-10-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference registration verified",
+      "utilization": "Abstract-level bibliographic reference; no full-paper review",
+      "rights": "arXiv page displays CC BY 4.0; paper not copied",
+      "original_preserved": false,
+      "card": "cards/raven-composable-agentic-intelligence.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "agentic-harness-evolution",
+      "title": "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses",
+      "canonical_url": "https://arxiv.org/abs/2604.25850",
+      "alternate_urls": [],
+      "topics": [
+        "evaluation-observability-security",
+        "orchestration-workflow",
+        "case-implementation"
+      ],
+      "published": "2026-04 (v4 page)",
+      "provided_by_user": false,
+      "provided_date": null,
+      "registered_in_knowledge": false,
+      "registration_note": "Added from external literature search; not a known user-provided source",
+      "utilization": "Title/abstract-level research lead only",
+      "rights": "License not verified; summary and URL only",
+      "original_preserved": false,
+      "card": "cards/agentic-harness-evolution.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "apache-maka-agent-graph",
+      "title": "Apache Maka Agent Graph and stream scheduling draft",
+      "canonical_url": "https://github.com/apache/maka/blob/main/docs/architecture/agent-graph-stream-scheduling-draft.md",
+      "alternate_urls": [
+        "https://github.com/apache/maka/blob/main/docs/architecture/agent-graph-stream-scheduling-draft.zh-CN.md",
+        "https://raw.githubusercontent.com/apache/maka/main/docs/architecture/agent-graph-stream-scheduling-draft.md",
+        "https://github.com/apache/maka"
+      ],
+      "topics": [
+        "orchestration-workflow",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "living draft; retrieved 2026-10-14",
+      "provided_by_user": true,
+      "provided_date": "2026-10-13",
+      "registered_in_knowledge": false,
+      "registration_note": "No reference registration verified",
+      "utilization": "Design draft comparison only",
+      "rights": "File-level terms not checked; link and summary only",
+      "original_preserved": false,
+      "card": "cards/apache-maka-agent-graph.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "langgraph-human-approval",
+      "title": "Add human-in-the-loop review to LangGraph tool calls",
+      "canonical_url": "https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop/add-human-in-the-loop",
+      "alternate_urls": [],
+      "topics": [
+        "orchestration-workflow",
+        "evaluation-observability-security"
+      ],
+      "published": "living docs; not checked",
+      "provided_by_user": true,
+      "provided_date": "2026-10-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No reference registration verified",
+      "utilization": "Framework-specific documentation reference only",
+      "rights": "Terms not checked; link and summary only",
+      "original_preserved": false,
+      "card": "cards/langgraph-human-approval.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "microsoft-agent-design-patterns",
+      "title": "AI agent design patterns",
+      "canonical_url": "https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+      "alternate_urls": [],
+      "topics": [
+        "overview",
+        "orchestration-workflow",
+        "evaluation-observability-security"
+      ],
+      "published": "living docs; not checked",
+      "provided_by_user": true,
+      "provided_date": "2026-10-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No reference registration verified",
+      "utilization": "Vendor architecture overview only",
+      "rights": "Terms not checked; link and summary only",
+      "original_preserved": false,
+      "card": "cards/microsoft-agent-design-patterns.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "experiential-memory-experiment",
+      "title": "Experiential vs Synthetic Memory in Long-Running AI Agents",
+      "canonical_url": "https://blog.clawsouls.ai/ko/posts/experiential-memory-experiment/",
+      "alternate_urls": [
+        "https://github.com/clawsouls/experiential-memory-dataset"
+      ],
+      "topics": [
+        "context-memory-knowledge",
+        "evaluation-observability-security"
+      ],
+      "published": "not confirmed",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No reference registration verified",
+      "utilization": "Experiment lead; methods require independent appraisal",
+      "rights": "Article terms not verified; no prompts/data copied",
+      "original_preserved": false,
+      "card": "cards/experiential-memory-experiment.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "runbear-ai-marketing-team",
+      "title": "How I built an AI marketing team with Claude Code (and Cowork)",
+      "canonical_url": "https://snow.runbear.io/how-i-built-an-ai-marketing-team-with-claude-code-and-cowork-f3405a53ee22",
+      "alternate_urls": [],
+      "topics": [
+        "orchestration-workflow",
+        "skills-tools",
+        "case-implementation"
+      ],
+      "published": "not confirmed",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No reference registration verified",
+      "utilization": "Practitioner case only",
+      "rights": "Terms not checked; link and summary only",
+      "original_preserved": false,
+      "card": "cards/runbear-ai-marketing-team.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "agent-reach",
+      "title": "Agent Reach",
+      "canonical_url": "https://github.com/Panniantong/agent-reach",
+      "alternate_urls": [
+        "https://github.com/Panniantong/Agent-Reach"
+      ],
+      "topics": [
+        "skills-tools",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "rolling repository; retrieved 2026-10-14",
+      "provided_by_user": true,
+      "provided_date": "2026 conversation; exact day not resolved",
+      "registered_in_knowledge": false,
+      "registration_note": "No reference registration verified",
+      "utilization": "Capability-layer reference; no install or configuration",
+      "rights": "GitHub page displayed MIT license at 2026-10-14; applies to repository files subject to their terms",
+      "original_preserved": false,
+      "card": "cards/agent-reach.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "flowkater-agentic-engineering-skills",
+      "title": "에이전틱 엔지니어링 시대의 생존 스킬 9가지",
+      "canonical_url": "https://flowkater.io/posts/2026-03-01-agentic-engineering-9-skills/",
+      "alternate_urls": [
+        "https://flowkater.io/en/posts/2026-03-01-agentic-engineering-9-skills/"
+      ],
+      "topics": [
+        "overview",
+        "orchestration-workflow",
+        "context-memory-knowledge",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "2026-03-01 (URL/page context)",
+      "provided_by_user": true,
+      "provided_date": "2026-06-02",
+      "registered_in_knowledge": false,
+      "registration_note": "No reference registration verified",
+      "utilization": "Practitioner essay; no operational adoption or controlled evaluation",
+      "rights": "License not confirmed; original article not reproduced",
+      "original_preserved": false,
+      "card": "cards/flowkater-agentic-engineering-skills.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "graph-of-thoughts",
+      "title": "Graph of Thoughts: Solving Elaborate Problems with Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2308.09687",
+      "alternate_urls": [
+        "https://arxiv.org/html/2308.09687"
+      ],
+      "topics": [
+        "orchestration-workflow",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "AAAI 2024; arXiv 2023",
+      "provided_by_user": true,
+      "provided_date": "2026-08-12",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference registration verified",
+      "utilization": "Research comparison only",
+      "rights": "Version-specific license not checked; paper not copied",
+      "original_preserved": false,
+      "card": "cards/graph-of-thoughts.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "graph-engineering-claude-codez",
+      "title": "Graph Engineering with Claude: 14-Step roadmap from 0 to graph architect",
+      "canonical_url": "https://x.com/0xCodez/status/2079165300625330317",
+      "alternate_urls": [],
+      "topics": [
+        "orchestration-workflow",
+        "case-implementation"
+      ],
+      "published": "unknown",
+      "provided_by_user": true,
+      "provided_date": "2026-07-21",
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/web/graph-engineering-claude-codez.md",
+      "utilization": "등록 자료. 14단계 그래프 설계 로드맵; X 본문 접근 제한 때문에 내부 기록도 본문 일부 미확인. 참고 기록이지 채택 지침이 아님.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "X 본문 일부 미확인; 지식 레코드 요약 기반",
+      "card": "cards/graph-engineering-claude-codez.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "claude-code-loop-engineering-20-step",
+      "title": "Loop Engineering: The 20-Step Roadmap From Prompter to Loop Designer",
+      "canonical_url": "https://x.com/eng_khairallah1/status/2075862184299565100",
+      "alternate_urls": [],
+      "topics": [
+        "orchestration-workflow",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "unknown",
+      "provided_by_user": true,
+      "provided_date": "2026-07-21",
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/claude-code-loop-engineering-20-step.md",
+      "utilization": "등록된 사용자 제공 텍스트 기반 로드맵. 측정 가능한 완료조건, 외부 검증기, 종료 조건, 상태, 승인 지점을 다루나 운영 채택 근거로 보지 않음.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "사용자 제공 텍스트 및 지식 문서 요약 확인; 외부 X 페이지는 로그인 게이트",
+      "card": "cards/claude-code-loop-engineering-20-step.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "memgpt-context-os",
+      "title": "MemGPT — Context OS",
+      "canonical_url": "https://memgpt.readme.io/docs/memgpt-memories",
+      "alternate_urls": [
+        "https://arxiv.org/abs/2310.08560"
+      ],
+      "topics": [
+        "context-memory-knowledge",
+        "case-implementation"
+      ],
+      "published": "unknown",
+      "provided_by_user": null,
+      "provided_date": null,
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/memory/memgpt-context-os.md",
+      "utilization": "컨텍스트를 계층형 메모리/페이지 교체로 관리하는 연구·구현 개념. Hermes memory authority나 운영 채택으로 취급하지 않음.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "등록된 지식 문서 요약 확인; 사용자 제공 여부는 감사 증거로 확정되지 않아 unknown",
+      "card": "cards/memgpt-context-os.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "google-cloud-self-improving-agent-loops",
+      "title": "7 Rules for Self-Improving Agent Loops",
+      "canonical_url": "https://x.com/i/status/2086874630032073142",
+      "alternate_urls": [
+        "https://google.github.io/agents-cli"
+      ],
+      "topics": [
+        "evaluation-observability-security",
+        "orchestration-workflow",
+        "case-implementation"
+      ],
+      "published": "unknown",
+      "provided_by_user": true,
+      "provided_date": "2026-08-11",
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/agent-evaluation/google-cloud-self-improving-agent-loops.md",
+      "utilization": "측정-채점-수정 루프, 독립 grader, held-out set 및 deterministic check를 요약한 자료. 해당 JOB의 synthetic pilot 설계 근거와 분리해 표기; 전역 자동수정 채택 아님.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "사용자 첨부 Notes 및 X 본문 대조를 기존 JOB 기록으로 확인; 첨부 원문은 현재 지정 cache 경로에서 찾지 못함",
+      "card": "cards/google-cloud-self-improving-agent-loops.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "multi-agent-orchestration-patterns",
+      "title": "멀티 에이전트 오케스트레이션 리퍼런스 모음",
+      "canonical_url": "https://x.com/i/status/2037902655016804496",
+      "alternate_urls": [
+        "https://composio.dev/content/openclaw-vs-hermes-agent"
+      ],
+      "topics": [
+        "orchestration-workflow",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "unknown",
+      "provided_by_user": null,
+      "provided_date": null,
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/multi-agent-orchestration-patterns.md",
+      "utilization": "OpenClaw/Hermes supervisor, supervisor-worker, sentinel 및 router 패턴을 모은 기존 요약. 2차 출처와 정량 주장은 독립 확인이 필요하며 정책/실행규칙이 아님.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "지식 문서 존재 확인; 제공 시점/등록 요청/사용자 발화는 원천 증거로 미확정",
+      "card": "cards/multi-agent-orchestration-patterns.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "supermemory",
+      "title": "Supermemory — Memory and Context Engine for AI",
+      "canonical_url": "https://github.com/supermemoryai/supermemory",
+      "alternate_urls": [
+        "https://app.supermemory.ai",
+        "https://supermemory.ai/install"
+      ],
+      "topics": [
+        "context-memory-knowledge",
+        "skills-tools",
+        "case-implementation"
+      ],
+      "published": "unknown",
+      "provided_by_user": null,
+      "provided_date": null,
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/github/supermemoryai-supermemory.md",
+      "utilization": "메모리·프로필·검색·connector의 제품 기록. 벤치마크/제품 기능은 원천의 주장이고 Hermes 도입 또는 성능 검증을 의미하지 않음.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "기존 reference 파일 확인; 제공 시점은 미확정",
+      "card": "cards/supermemory.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "codebase-memory-mcp",
+      "title": "codebase-memory-mcp — external read-only reference",
+      "canonical_url": "https://github.com/DeusData/codebase-memory-mcp",
+      "alternate_urls": [],
+      "topics": [
+        "context-memory-knowledge",
+        "skills-tools",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "unknown",
+      "provided_by_user": null,
+      "provided_date": null,
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/github/codebase-memory-mcp.md",
+      "utilization": "코드베이스 그래프·MCP·증거 기반 배포에 관한 read-only 비교 자료. upstream 보안/성능 주장은 별도 검증 대상으로 남김.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "지식 문서 확인; 사용자 제공 여부 및 활용 시점은 미확정",
+      "card": "cards/codebase-memory-mcp.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "openai-build-skills",
+      "title": "OpenAI — Build skills",
+      "canonical_url": "https://learn.chatgpt.com/docs/build-skills",
+      "alternate_urls": [],
+      "topics": [
+        "skills-tools",
+        "case-implementation"
+      ],
+      "published": "unknown",
+      "provided_by_user": null,
+      "provided_date": null,
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/external/openai-build-skills.md",
+      "utilization": "OpenAI skills의 호출·배포 문서 요약. Hermes의 호출 형식과 동등하다고 보지 않으며 vendor-specific 자료임.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "Registered reference record and document text verified; evidence reviewed here does not establish a direct user-provided event/date.",
+      "card": "cards/openai-build-skills.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "openai-skills-concept",
+      "title": "OpenAI — Skills concept",
+      "canonical_url": "https://developers.openai.com/plugins/concepts/skills.md",
+      "alternate_urls": [],
+      "topics": [
+        "skills-tools",
+        "context-memory-knowledge"
+      ],
+      "published": "unknown",
+      "provided_by_user": null,
+      "provided_date": null,
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/external/openai-plugin-skills-concept.md",
+      "utilization": "재사용 가능한 instruction/reference/script 단위 및 MCP와의 경계를 설명하는 벤더 개념 자료. Hermes 운영정책으로 채택하지 않음.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "Registered reference record and document text verified; evidence reviewed here does not establish a direct user-provided event/date.",
+      "card": "cards/openai-skills-concept.md",
+      "registration_evidence": "reference_file",
+      "registration_indexed": null
+    },
+    {
+      "id": "google-cloud-long-horizon-patterns",
+      "title": "5 design patterns for long-horizon agent harness",
+      "canonical_url": "https://x.com/GoogleCloudTech/status/2090248297214525569",
+      "alternate_urls": [],
+      "topics": [
+        "orchestration-workflow",
+        "context-memory-knowledge",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "2026-08-20 (내부 참조 기록(익명))",
+      "provided_by_user": true,
+      "provided_date": "2026-08-26",
+      "registered_in_knowledge": false,
+      "registration_note": "내부 참조 기록(익명) reference-record/1 has source ID, capture, URL, and snapshot hash; active catalog registration is false; design-only reference record",
+      "utilization": "내부 참조 기록(익명) reference-only/design-only approval; five no-network/no-native-write contract fixtures PASS. No Hermes production/runtime change or external performance validation.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "내부 참조 기록(익명) record documents 2026-08-26 capture, user Notes transcript, source URL and snapshot SHA-256; current attachment cache file not found; no attachment redistributed",
+      "card": "cards/google-cloud-long-horizon-patterns.md",
+      "registration_evidence": "job_registration_record_only",
+      "registration_indexed": false
+    },
+    {
+      "id": "harnessing-ai-tunguz",
+      "title": "Harnessing AI",
+      "canonical_url": "https://tomtunguz.com/harnessing-ai/",
+      "alternate_urls": [],
+      "topics": [
+        "overview",
+        "orchestration-workflow",
+        "context-memory-knowledge",
+        "case-implementation"
+      ],
+      "published": "unknown",
+      "provided_by_user": true,
+      "provided_date": "2026-06-01",
+      "registered_in_knowledge": false,
+      "registration_note": "No exact reference card verified; references index has separate software-after-AI item only",
+      "utilization": "사용자가 66자 요청과 함께 링크를 제공한 것이 DB 증거로 확인됨. 하네스에 관한 글로서 제목 수준에서 포함; 이번 조사에서 본문 내용/사용 근거를 확인하지 못해 요약을 확대하지 않음.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "URL/제공 사건은 원천 메시지 증거로 확인; 본문 전문 및 활용 근거 미확인",
+      "card": "cards/harnessing-ai-tunguz.md",
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": false
+    },
+    {
+      "id": "typesafe-ai-skills",
+      "title": "typesafe-ai/skills — skills repository",
+      "canonical_url": "https://github.com/typesafe-ai/skills",
+      "alternate_urls": [
+        "https://docs.typesafe.ai",
+        "https://docs.typesafe.ai/llms.txt"
+      ],
+      "topics": [
+        "skills-tools",
+        "evaluation-observability-security",
+        "case-implementation"
+      ],
+      "published": "unknown",
+      "provided_by_user": true,
+      "provided_date": "2026-09-15",
+      "registered_in_knowledge": true,
+      "registration_note": "knowledge/references/llm-course/New-Models/jev-llm.md; not indexed in reference index",
+      "utilization": "JEV 관련 사용자 검토 요청과 연결된 스킬 저장소. 링크와 등록 파일을 확인했으나 구체적인 Hermes/JEv 운영 채택 증거는 이 자료만으로 단정하지 않음.",
+      "rights": "not verified; original text/code not redistributed",
+      "original_preserved": false,
+      "source_confirmation": "GLM 사용자 발화에서 요청 확인; 등록 파일 존재, index 미등재. 관련 활용 증거는 별도 검토 필요",
+      "card": "cards/typesafe-ai-skills.md",
+      "registration_evidence": "reference_file_not_indexed",
+      "registration_indexed": false
+    },
+    {
+      "id": "claude-code-memory-docs",
+      "title": "Claude Code memory 문서 (공식)",
+      "canonical_url": "https://docs.anthropic.com/en/docs/claude-code/memory",
+      "alternate_urls": [],
+      "topics": [
+        "context-memory-knowledge"
+      ],
+      "published": "unknown",
+      "provided_by_user": true,
+      "provided_date": "unknown (사용자 메시지 원천 확인, 날짜 미확인)",
+      "registered_in_knowledge": false,
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": null,
+      "registration_note": "사용자 메시지 URL 1건 확인. 지식 reference 파일은 제한 검색에서 확인되지 않음",
+      "utilization": "unknown: 활용 증거 없음. 설계 참고 후보로만 기록",
+      "rights": "공식 문서 원문은 복사하지 않고 링크와 자체 요약만 제공",
+      "original_preserved": false,
+      "source_confirmation": "URL과 사용자 메시지 원천만 확인. 원문 페이지는 이번 작업에서 열람하지 않음",
+      "card": "cards/claude-code-memory-docs.md"
+    },
+    {
+      "id": "codex-agents-md-docs",
+      "title": "Codex agent configuration: AGENTS.md (공식)",
+      "canonical_url": "https://developers.openai.com/codex/agent-configuration/agents-md",
+      "alternate_urls": [],
+      "topics": [
+        "context-memory-knowledge",
+        "workflow-orchestration"
+      ],
+      "published": "unknown",
+      "provided_by_user": true,
+      "provided_date": "unknown (사용자 메시지 원천 확인, 날짜 미확인)",
+      "registered_in_knowledge": false,
+      "registration_evidence": "not_found_after_targeted_check",
+      "registration_indexed": null,
+      "registration_note": "사용자 메시지 URL 1건 확인. 지식 reference 파일은 제한 검색에서 확인되지 않음",
+      "utilization": "unknown: 활용 증거 없음. 지침 파일 형식 비교 참고 후보로만 기록",
+      "rights": "공식 문서 원문은 복사하지 않고 링크와 자체 요약만 제공",
+      "original_preserved": false,
+      "source_confirmation": "URL과 사용자 메시지 원천만 확인. 원문 페이지는 이번 작업에서 열람하지 않음",
+      "card": "cards/codex-agents-md-docs.md"
+    }
+  ]
+}
