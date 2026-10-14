@@ -39,4 +39,3 @@
 - [vercel-agents-md-skills-evals.md](vercel-agents-md-skills-evals.md) — 지침 파일을 스킬과 평가와 함께 다루는 방식과 대조할 수 있다.
 - [claude-code-memory-docs.md](claude-code-memory-docs.md) — 같은 목적의 다른 도구 지침 체계를 비교하는 짝 자료다.
 - [openai-skills-concept.md](openai-skills-concept.md) — 지침 파일과 스킬 개념이 어떻게 역할을 나누는지 정리할 때 참고가 된다.
-

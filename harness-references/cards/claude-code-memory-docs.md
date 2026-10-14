@@ -39,4 +39,3 @@
 - [letta-context-repositories.md](letta-context-repositories.md) — 에이전트 메모리를 파일 저장소로 다루는 방식과 지침·메모리의 분리를 비교하는 데 쓸 수 있다.
 - [memgpt-context-os.md](memgpt-context-os.md) — 컨텍스트 창 바깥의 저장소를 계층으로 관리하는 설계와 자동 기록 구조를 대조하는 참고 자료다.
 - [context-engineering-survey.md](context-engineering-survey.md) — 지침, 메모리, 검색을 컨텍스트 공급 전략으로 묶은 개관이다.
-
