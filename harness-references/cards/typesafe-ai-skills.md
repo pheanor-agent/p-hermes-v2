@@ -4,9 +4,9 @@
 - Alternate sources: https://docs.typesafe.ai (공식 문서, `llms.txt` 포함). 사용자가 첨부한 스킬 문서에 이 문서 사이트의 개념·cookbook·SDK 페이지 링크 23개가 들어 있어 개별 카드 대신 이 카드의 대체 출처로 묶음.
 - Topics: skills-tools, evaluation-observability-security, case-implementation
 - Publication date: unknown / not independently verified
-- User-provided: True; date: 2026-09-15
+- User-provided: True; date: 2026-09-20
 - Knowledge registration: True; evidence: knowledge/references/llm-course/New-Models/jev-llm.md; not indexed in reference index
-- Source confirmation: GLM 사용자 발화에서 요청 확인; 등록 파일 존재, index 미등재. 관련 활용 증거는 별도 검토 필요
+- Source confirmation: 보존된 사용자 메시지 시각을 서울 날짜로 환산해 2026-09-20 제공을 확인함. 같은 내용의 반복 저장은 한 제공 사건으로 묶음. 등록 파일은 확인했으나 색인 등재는 미확인.
 - Utilization: JEV 관련 사용자 검토 요청과 연결된 스킬 저장소. 링크와 등록 파일을 확인했으나 구체적인 Hermes/JEv 운영 채택 증거는 이 자료만으로 단정하지 않음.
 - Rights: not verified; no full text, code, images, or private attachments are redistributed here.
 - 정리 근거: 지식 기록 대조 + 원문 일부 확인

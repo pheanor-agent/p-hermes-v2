@@ -4,7 +4,7 @@
 
 | Field | Meaning |
 |---|---|
-| `id` | Stable local record identifier; also card basename. |
+| `id` | Stable local record identifier. It is not required to equal the card basename; use the separate `card` field for the path (for example `agentskills-standard` → `cards/agent-skills-standard.md`). |
 | `canonical_url` | Preferred public source URL; not a claim that the page is currently reachable. |
 | `alternate_urls` | Related canonical/localized/format URLs grouped with this record. |
 | `topics` | One or more controlled categories from `CATALOG.md`. |

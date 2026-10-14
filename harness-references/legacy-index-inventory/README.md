@@ -1,42 +1,488 @@
-# 하네스 과거 등록 참고 자료 재고표 (legacy-index inventory)
+# 과거 등록 참고 자료 재고표
 
-이 폴더는 과거 참고 색인(`references/index.md`)에는 등록되어 있었지만 현재 카드 목록에서 빠진 하네스 관련 자료를 한 곳에 모은 독립 재고표다.
+과거 색인에서 확인한 39개 자료를 여섯 주제로 탐색합니다. 원출처·참조 파일을 찾지 못한 상태도 표시하며, 제목과 기존 기록을 바탕으로 분류한 자료는 원문을 새로 검증한 것으로 해석하지 않습니다.
 
-- 대상: 색인 항목 88개 중 하네스 관련으로 표시된 42개 + 같은 원천 URL을 공유하는 항목 + 검토 후 포함한 항목 4개 → 원천 기준 병합 후 39개 항목
-- 제외: 일반 모델 카드·범용 라이브러리 등 하네스와 무관한 7개 (사유는 내부 감사 기록에만 있음)
-- 기준 시점: 2026-10-14. 주 manifest 스냅샷: 47개 record, SHA-256 `714a98736e92…`(inventory.json에 전체 값 기록). 작성 중 주 manifest가 병렬 갱신되어 최종 스냅샷 기준으로 다시 대조했다. 이후 주 manifest에는 두 record(`typesafe-ai-skills`, `apache-maka-agent-graph`)의 대체 출처 URL만 추가되어 현재 해시는 이 값과 다르며, record 수와 id는 같다.
+- [전체 JSON](inventory.json) · [전체 CSV](inventory.csv) · [메인 목차](../CATALOG.md)
+- 여러 주제에 속한 자료는 각 주제에서 반복 표시됩니다. 고유 항목 수는 39개입니다.
+- `main_card`는 라이브러리 루트를 기준으로 한 경로입니다. `classification_evidence`와 `summary_evidence`는 분류·요약의 근거를 나타냅니다.
 
-## 파일
+## 개요
 
-- `inventory.json`: 항목별 전체 필드 (기계 판독용)
-- `inventory.csv`: 같은 내용의 표 형식 (JSON 값은 문자열로 인코딩)
+- **Harness engineering: leveraging Codex in an agent-first world** — [상세 카드](../cards/openai-harness-engineering.md) · [원문](https://openai.com/ko-KR/index/harness-engineering)
+  - OpenAI의 agent-first 제품 개발 경험담은 짧은 AGENTS.md를 백과사전보다 지도로 쓰고, 근거가 되는 저장소 문서를 기록 시스템으로 두며, 구조·제약·평가·관측을 도구와 자동 검사에 녹이는 방식을 설명한다. 격리 worktree와 로그·지표 등 에이전트가 관찰·검증 가능한 작업 환경도 강조한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
 
-## 항목 필드
+- **Software After AI (Harnessing AI) — Tomasz Tunguz** — [상세 카드](../cards/harnessing-ai-tunguz.md) · [원문](https://tomtunguz.com/harnessing-ai)
+  - Tomasz Tunguz는 LLM을 신뢰 가능한 에이전트로 만드는 런타임·제약·신뢰성 층을 하네스로 설명하고, 문맥·도구·오케스트레이션·상태·샌드박스·관측·비용의 일곱 구성요소를 제시한다. 이는 저자의 개념 프레임이며 운영 채택 증거는 아니다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-01)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
 
-| 필드 | 뜻 |
-|---|---|
-| title | 원천 페이지 또는 색인에서 확인한 제목 |
-| public_source_url | 공개 원천 URL. 기록에서 확인되지 않으면 null |
-| topics | 주 manifest의 주제 태그 (주 manifest에 없으면 `unclassified-legacy`) |
-| self_summary | 원천 기록을 바탕으로 한 짧은 자체 요약 (원문 복사 아님) |
-| state | `file-present` / `derived-only` / `indexed-only` |
-| registration_check | 색인·참고 파일·파생 문서 중 무엇이 확인되었는지 |
-| provision_check | 사용자 제공 여부 (주 manifest 기준, 미확정이면 unknown) |
-| utilization_check | 활용 확인 수준. 원천 기록의 주장이며 운영 채택 증거가 아님 |
-| source_date | 원천 기록에서 확인된 날짜 (없으면 빈 값) |
-| rights | 원문 미배포. 권리 상태는 확인하지 않았으므로 미확인 |
-| manifest_record_id | 주 manifest에서 같은 URL을 가진 record id (없으면 null) |
-| merged_index_entries | 같은 원천으로 병합된 색인 항목 수 |
+- **하네스 엔지니어링: AI 에이전트 시대, 경쟁력은 모델이 아니라 마구에서 나온다** — [원문](https://wikidocs.net/blog/@jaehong/9481)
+  - 에이전트 신뢰성을 모델 자체보다 도구·상태·컨텍스트·검증을 포함한 하네스 설계와 연결하는 개요 글이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
 
-## 읽는 법
+- **EP 86: 진짜 내 일을 위한 Agentic Workflow** — [원문](https://aifrontier.kr/ko/episodes/ep86)
+  - 팟캐스트 인터뷰에서 실제 소프트웨어 개발 사례를 통해 에이전트 워크플로의 적용과 한계를 다룬다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
 
-- `state`가 `derived-only`이면 색인 항목은 있으나 참고 파일이 없고, 가공된 위키 페이지에서 원천을 찾았다는 뜻이다.
-- `indexed-only`는 색인 항목만 있고 원천 페이지를 찾지 못한 항목이다.
-- 이 재고표는 과거 등록 흔적을 찾아보기 위한 목록이다. 여기에 있다고 해서 현재 운영에 채택되었다는 뜻은 아니다.
-- 메인 카드와 주 manifest는 이 재고표가 수정하지 않는다. 주 manifest에 없는 항목은 `manifest_record_id`가 null이다.
+- **우리, 프로그래머들 — .md로 코딩하는 시대** — [원문](https://velog.io/@teo/we-programmer)
+  - AI 시대 개발자의 역할과 에이전트 코드 생성·제어를 다룬 한국어 글을 요약한다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
 
-## 확인 범위와 한계
+## 작업 흐름·위임
 
-- 원천 확인은 색인 줄, 가공된 위키 페이지, 참고 파일의 머리말과 본문 일부에 한정했다. 원문 전체와 링크 최신성은 확인하지 않았다.
-- 권리·라이선스는 확인하지 않았다. 원문은 배포하지 않고 링크와 자체 요약만 둔다.
-- 일부 X(트위터) 링크는 공개 게시물 주소이며, 원천 로그인 게이트로 본문을 확인하지 못했다.
+- **A Survey of Context Engineering for Large Language Models** — [상세 카드](../cards/context-engineering-survey.md) · [원문](https://arxiv.org/abs/2507.13334)
+  - 대규모 언어모델에서 context retrieval/generation, context processing/management 및 RAG, memory, tool-integrated reasoning, multi-agent system 등 아키텍처 계층을 폭넓게 조사하는 ongoing survey다. 검색 결과에 1,300편 이상을 분석했다는 저자 설명이 있다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Architecting efficient context-aware multi-agent framework for production** — [상세 카드](../cards/google-context-aware-multi-agent.md) · [원문](https://developers.googleblog.com/en/architecting-efficient-context-aware-multi-agent-framework-for-production)
+  - Google ADK에서 context engineering을 시스템·lifecycle·제약을 가진 first-class concern으로 다루며, session 저장 상태와 model에 제시하는 working context를 구분하는 구조를 설명한다. 검색 결과는 context processing과 효율적 multi-agent 운영을 강조한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Common workflow patterns for AI agents—and when to use them** — [상세 카드](../cards/claude-workflow-patterns.md) · [원문](https://claude.com/blog/common-workflow-patterns-for-ai-agents-and-when-to-use-them)
+  - 고정 순서의 sequential, 독립 작업의 parallel, 평가 후 반복 개선하는 evaluator-optimizer 패턴을 비교한다. 먼저 단일 agent로 시도하고, 실제 latency 병목·독립성·측정된 품질 향상이 확인될 때에만 더 복잡한 패턴을 선택하라고 권한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **How I built an AI marketing team with Claude Code (and Cowork)** — [상세 카드](../cards/runbear-ai-marketing-team.md) · [원문](https://snow.runbear.io/how-i-built-an-ai-marketing-team-with-claude-code-and-cowork-f3405a53ee22)
+  - A practitioner report describing an AI marketing team assembled around Claude Code and Cowork. It is an applied case, not a controlled evaluation; this card does not copy implementation content or claim a general workflow result.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Software After AI (Harnessing AI) — Tomasz Tunguz** — [상세 카드](../cards/harnessing-ai-tunguz.md) · [원문](https://tomtunguz.com/harnessing-ai)
+  - Tomasz Tunguz는 LLM을 신뢰 가능한 에이전트로 만드는 런타임·제약·신뢰성 층을 하네스로 설명하고, 문맥·도구·오케스트레이션·상태·샌드박스·관측·비용의 일곱 구성요소를 제시한다. 이는 저자의 개념 프레임이며 운영 채택 증거는 아니다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-01)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **하네스 엔지니어링: AI 에이전트 시대, 경쟁력은 모델이 아니라 마구에서 나온다** — [원문](https://wikidocs.net/blog/@jaehong/9481)
+  - 에이전트 신뢰성을 모델 자체보다 도구·상태·컨텍스트·검증을 포함한 하네스 설계와 연결하는 개요 글이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Good Spec: 좋은 명세 작성 가이드** — [원문](https://addyosmani.com/blog/good-spec)
+  - 구현 전에 요구사항과 명세를 명확히 해 에이전트가 작업할 계약을 제공하는 글이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **AutoResearch - 자율적 연구 시스템** — [원문](https://github.com/karpathy/autoresearch)
+  - 연구자가 프로그램 지침과 제한된 실험 루프를 통해 모델 학습 실험을 반복하는 구현 사례다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **crewAI** — [원문](https://github.com/crewAIInc/crewAI)
+  - crewAI 저장소의 멀티 에이전트 프레임워크 구현을 가리키는 색인 항목이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **EP 86: 진짜 내 일을 위한 Agentic Workflow** — [원문](https://aifrontier.kr/ko/episodes/ep86)
+  - 팟캐스트 인터뷰에서 실제 소프트웨어 개발 사례를 통해 에이전트 워크플로의 적용과 한계를 다룬다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Everything Claude Code** — [원문](https://github.com/affaan-m/everything-claude-code)
+  - Claude Code 관련 워크플로·도구·지침을 모은 공개 저장소로, 범위와 내용은 upstream에서 확인해야 한다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Andrej Karpathy Skills — forrestchang** — [원문](https://github.com/forrestchang/andrej-karpathy-skills)
+  - LLM 코딩의 단순성·목표 중심 실행 등을 가이드로 묶은 공개 skill 파일이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Harness - Agent Team & Skill Architect** — [원문](https://github.com/revfactory/harness)
+  - 전문 에이전트 팀, 역할 간 위임, 스킬 생성과 검증을 묶은 Claude Code 플러그인 사례다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Hyperagents 검토** — [원문](https://github.com/facebookresearch/hyperagents)
+  - Hyperagents 연구/구현을 검토한 기록이며, 운영 성능이나 채택 근거로 보지 않는다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **langgraph** — [원문](https://github.com/langchain-ai/langgraph)
+  - LangGraph 저장소의 그래프 기반 에이전트 워크플로 구현을 가리키는 참고 링크다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Skills For Real Engineers - mattpocock/skills** — [원문](https://github.com/mattpocock/skills)
+  - 엔지니어링 작업을 위한 재사용 가능한 스킬 모음이며, 구현 방식은 저장소별로 달라질 수 있다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Superpowers: 개발 작업을 구조화한 에이전트 스킬** — [원문](https://github.com/obra/superpowers)
+  - 브레인스토밍부터 테스트·리뷰까지 소프트웨어 개발을 구조화한 에이전트 스킬 모음이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Claude Code loop — Boris Cherny (index label)** — 원출처 URL 미확인
+  - Claude Code 작업 루프에 관한 것으로 보이는 인덱스 항목이나 출처 URL·본문은 확인되지 않았다.
+  - 출처 상태: indexed-only · 제공: unknown
+  - 등록 확인: index entry present; no reference or wiki page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Claude Code loop engineering 20-step (index label)** — 원출처 URL 미확인
+  - 20단계 Claude Code loop 자료로 보이는 인덱스 항목이며 URL과 본문은 확인되지 않았다.
+  - 출처 상태: indexed-only · 제공: unknown
+  - 등록 확인: index entry present; no reference or wiki page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **우리, 프로그래머들 — .md로 코딩하는 시대** — [원문](https://velog.io/@teo/we-programmer)
+  - AI 시대 개발자의 역할과 에이전트 코드 생성·제어를 다룬 한국어 글을 요약한다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+## 문맥·메모리·지식
+
+- **Harness engineering: leveraging Codex in an agent-first world** — [상세 카드](../cards/openai-harness-engineering.md) · [원문](https://openai.com/ko-KR/index/harness-engineering)
+  - OpenAI의 agent-first 제품 개발 경험담은 짧은 AGENTS.md를 백과사전보다 지도로 쓰고, 근거가 되는 저장소 문서를 기록 시스템으로 두며, 구조·제약·평가·관측을 도구와 자동 검사에 녹이는 방식을 설명한다. 격리 worktree와 로그·지표 등 에이전트가 관찰·검증 가능한 작업 환경도 강조한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **A Survey of Context Engineering for Large Language Models** — [상세 카드](../cards/context-engineering-survey.md) · [원문](https://arxiv.org/abs/2507.13334)
+  - 대규모 언어모델에서 context retrieval/generation, context processing/management 및 RAG, memory, tool-integrated reasoning, multi-agent system 등 아키텍처 계층을 폭넓게 조사하는 ongoing survey다. 검색 결과에 1,300편 이상을 분석했다는 저자 설명이 있다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Agent Skills** — [상세 카드](../cards/agent-skills-standard.md) · [원문](https://agentskills.io/home)
+  - Agent Skills는 에이전트가 절차적 능력과 도메인 지식을 발견·로드할 수 있도록 디렉터리와 `SKILL.md` 중심으로 구성하는 portable format을 표방한다. 규격 본문과 구현별 지원 범위를 원문에서 구분해 확인해야 한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Architecting efficient context-aware multi-agent framework for production** — [상세 카드](../cards/google-context-aware-multi-agent.md) · [원문](https://developers.googleblog.com/en/architecting-efficient-context-aware-multi-agent-framework-for-production)
+  - Google ADK에서 context engineering을 시스템·lifecycle·제약을 가진 first-class concern으로 다루며, session 저장 상태와 model에 제시하는 working context를 구분하는 구조를 설명한다. 검색 결과는 context processing과 효율적 multi-agent 운영을 강조한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Software After AI (Harnessing AI) — Tomasz Tunguz** — [상세 카드](../cards/harnessing-ai-tunguz.md) · [원문](https://tomtunguz.com/harnessing-ai)
+  - Tomasz Tunguz는 LLM을 신뢰 가능한 에이전트로 만드는 런타임·제약·신뢰성 층을 하네스로 설명하고, 문맥·도구·오케스트레이션·상태·샌드박스·관측·비용의 일곱 구성요소를 제시한다. 이는 저자의 개념 프레임이며 운영 채택 증거는 아니다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-01)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Experiential vs Synthetic Memory in Long-Running AI Agents** — [상세 카드](../cards/experiential-memory-experiment.md) · [원문](https://blog.clawsouls.ai/ko/posts/experiential-memory-experiment)
+  - The linked material concerns comparison of experiential versus synthetic memory for long-running agents. The linked dataset repository describes isolated sessions, memory retrieval and a blinded single human evaluator; these are source claims and deserve separate methodological review.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **하네스 엔지니어링: AI 에이전트 시대, 경쟁력은 모델이 아니라 마구에서 나온다** — [원문](https://wikidocs.net/blog/@jaehong/9481)
+  - 에이전트 신뢰성을 모델 자체보다 도구·상태·컨텍스트·검증을 포함한 하네스 설계와 연결하는 개요 글이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Anthropic Skills repository** — [원문](https://github.com/anthropics/skills)
+  - Anthropic Skills 저장소는 반복 작업 지침과 관련 리소스를 패키지화하는 구현 사례다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Hippo Memory** — [원문](https://github.com/kitfunso/hippo-memory)
+  - 에이전트 기억 저장소의 구현 사례를 가리키며, 구체 동작은 저장소 원문 확인이 필요하다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Knowledge system architecture** — 원출처 URL 미확인
+  - 지식 시스템의 구성과 지식 관리 개념을 다루는 색인 항목이다; 참조 원문은 찾지 못했다.
+  - 출처 상태: indexed-only · 제공: unknown
+  - 등록 확인: index entry present; no reference or wiki page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Letta / MemGPT memory** — [원문](https://letta.com)
+  - Letta/MemGPT 계열의 에이전트 기억 설계를 가리키는 항목으로, 상세 출처는 별도 확인이 필요하다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Mem0 memory architecture** — [원문](https://mem0.ai/research)
+  - 대화에서 정보를 추출·검색하는 장기 기억 설계와 그래프 관계 모델을 요약한 항목이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Seo Joon Kim: Memory** — [원문](https://seojoonkim.medium.com/memory-d6f559f1fe73)
+  - 개인 블로그의 메모리 관련 자료를 가리키며, 제목만으로 상세 내용을 확정할 수 없다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Supermemory — agent memory post** — [원문](https://x.com/DhravyaShah/status/2035517012647272689)
+  - Supermemory의 에이전트 메모리 관련 게시물 링크로, 원문 확인 없이는 세부 주장을 확정하지 않는다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Weaviate: Context Engineering for AI Agents** — [원문](https://weaviate.io/blog/context-engineering)
+  - 에이전트 컨텍스트의 실패 유형과 검색·메모리 설계 대응을 소개하는 기술 글이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+## 스킬·도구
+
+- **Agent Skills** — [상세 카드](../cards/agent-skills-standard.md) · [원문](https://agentskills.io/home)
+  - Agent Skills는 에이전트가 절차적 능력과 도메인 지식을 발견·로드할 수 있도록 디렉터리와 `SKILL.md` 중심으로 구성하는 portable format을 표방한다. 규격 본문과 구현별 지원 범위를 원문에서 구분해 확인해야 한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **AGENTS.md outperforms skills in our agent evals** — [상세 카드](../cards/vercel-agents-md-skills-evals.md) · [원문](https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals)
+  - Vercel이 특정 Next.js 작업 묶음과 agent configuration들에서 AGENTS.md, Skills, baseline을 비교한 평가 사례다. 검색 스니펫에는 baseline 53%, default skill 53%, 명시 지시가 있는 skill 79%, AGENTS.md index 100%로 소개된다. 이 비율은 해당 task set/configuration의 자체 평가 결과다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **How I built an AI marketing team with Claude Code (and Cowork)** — [상세 카드](../cards/runbear-ai-marketing-team.md) · [원문](https://snow.runbear.io/how-i-built-an-ai-marketing-team-with-claude-code-and-cowork-f3405a53ee22)
+  - A practitioner report describing an AI marketing team assembled around Claude Code and Cowork. It is an applied case, not a controlled evaluation; this card does not copy implementation content or claim a general workflow result.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Skillify OpenClaw 적용 분석** — 원출처 URL 미확인
+  - Skillify의 실패-수정 루프를 OpenClaw 구성에 맞춰 테스트, resolver, 점검 흐름으로 옮긴 설계안이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Skillify: 에이전트 실수를 영구적 구조적 수정으로 변환** — [원문](https://x.com/garrytan/status/2046876981711769720)
+  - 에이전트 실패를 재사용 가능한 스킬과 결정적 도구·테스트로 바꾸자는 Skillify 패턴을 정리한다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Good Spec: 좋은 명세 작성 가이드** — [원문](https://addyosmani.com/blog/good-spec)
+  - 구현 전에 요구사항과 명세를 명확히 해 에이전트가 작업할 계약을 제공하는 글이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Anthropic Skill Generator (Skill Creator)** — [원문](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)
+  - Anthropic의 Skill Creator가 스킬 구성, 점진적 공개와 평가 반복을 안내하는 자료다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Anthropic tools repository** — [원문](https://github.com/anthropics/anthropic-tools)
+  - Anthropic의 저장소로, 공개된 도구·에이전트 구현 자료를 제공하는 출처다; 세부 내용은 원문 확인이 필요하다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Anthropic Skills repository** — [원문](https://github.com/anthropics/skills)
+  - Anthropic Skills 저장소는 반복 작업 지침과 관련 리소스를 패키지화하는 구현 사례다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Everything Claude Code** — [원문](https://github.com/affaan-m/everything-claude-code)
+  - Claude Code 관련 워크플로·도구·지침을 모은 공개 저장소로, 범위와 내용은 upstream에서 확인해야 한다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Andrej Karpathy Skills — forrestchang** — [원문](https://github.com/forrestchang/andrej-karpathy-skills)
+  - LLM 코딩의 단순성·목표 중심 실행 등을 가이드로 묶은 공개 skill 파일이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Harness - Agent Team & Skill Architect** — [원문](https://github.com/revfactory/harness)
+  - 전문 에이전트 팀, 역할 간 위임, 스킬 생성과 검증을 묶은 Claude Code 플러그인 사례다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Skills For Real Engineers - mattpocock/skills** — [원문](https://github.com/mattpocock/skills)
+  - 엔지니어링 작업을 위한 재사용 가능한 스킬 모음이며, 구현 방식은 저장소별로 달라질 수 있다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **steipete/agent-scripts** — [원문](https://github.com/steipete/agent-scripts)
+  - 에이전트 보조 스크립트 저장소를 가리키는 참고 링크다; 세부 내용은 원문 확인 전 미확정이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Superpowers: 개발 작업을 구조화한 에이전트 스킬** — [원문](https://github.com/obra/superpowers)
+  - 브레인스토밍부터 테스트·리뷰까지 소프트웨어 개발을 구조화한 에이전트 스킬 모음이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **스킬 시스템 종합 분석: 설계 제안서** — 원출처 URL 미확인
+  - 스킬 설계·평가·라우팅 검증을 교차 비교한 설계 제안서의 요약 페이지다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+## 평가·관측·보안
+
+- **Harness engineering: leveraging Codex in an agent-first world** — [상세 카드](../cards/openai-harness-engineering.md) · [원문](https://openai.com/ko-KR/index/harness-engineering)
+  - OpenAI의 agent-first 제품 개발 경험담은 짧은 AGENTS.md를 백과사전보다 지도로 쓰고, 근거가 되는 저장소 문서를 기록 시스템으로 두며, 구조·제약·평가·관측을 도구와 자동 검사에 녹이는 방식을 설명한다. 격리 worktree와 로그·지표 등 에이전트가 관찰·검증 가능한 작업 환경도 강조한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **A Survey of Context Engineering for Large Language Models** — [상세 카드](../cards/context-engineering-survey.md) · [원문](https://arxiv.org/abs/2507.13334)
+  - 대규모 언어모델에서 context retrieval/generation, context processing/management 및 RAG, memory, tool-integrated reasoning, multi-agent system 등 아키텍처 계층을 폭넓게 조사하는 ongoing survey다. 검색 결과에 1,300편 이상을 분석했다는 저자 설명이 있다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **AGENTS.md outperforms skills in our agent evals** — [상세 카드](../cards/vercel-agents-md-skills-evals.md) · [원문](https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals)
+  - Vercel이 특정 Next.js 작업 묶음과 agent configuration들에서 AGENTS.md, Skills, baseline을 비교한 평가 사례다. 검색 스니펫에는 baseline 53%, default skill 53%, 명시 지시가 있는 skill 79%, AGENTS.md index 100%로 소개된다. 이 비율은 해당 task set/configuration의 자체 평가 결과다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Common workflow patterns for AI agents—and when to use them** — [상세 카드](../cards/claude-workflow-patterns.md) · [원문](https://claude.com/blog/common-workflow-patterns-for-ai-agents-and-when-to-use-them)
+  - 고정 순서의 sequential, 독립 작업의 parallel, 평가 후 반복 개선하는 evaluator-optimizer 패턴을 비교한다. 먼저 단일 agent로 시도하고, 실제 latency 병목·독립성·측정된 품질 향상이 확인될 때에만 더 복잡한 패턴을 선택하라고 권한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Experiential vs Synthetic Memory in Long-Running AI Agents** — [상세 카드](../cards/experiential-memory-experiment.md) · [원문](https://blog.clawsouls.ai/ko/posts/experiential-memory-experiment)
+  - The linked material concerns comparison of experiential versus synthetic memory for long-running agents. The linked dataset repository describes isolated sessions, memory retrieval and a blinded single human evaluator; these are source claims and deserve separate methodological review.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **하네스 엔지니어링: AI 에이전트 시대, 경쟁력은 모델이 아니라 마구에서 나온다** — [원문](https://wikidocs.net/blog/@jaehong/9481)
+  - 에이전트 신뢰성을 모델 자체보다 도구·상태·컨텍스트·검증을 포함한 하네스 설계와 연결하는 개요 글이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Skillify OpenClaw 적용 분석** — 원출처 URL 미확인
+  - Skillify의 실패-수정 루프를 OpenClaw 구성에 맞춰 테스트, resolver, 점검 흐름으로 옮긴 설계안이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Skillify: 에이전트 실수를 영구적 구조적 수정으로 변환** — [원문](https://x.com/garrytan/status/2046876981711769720)
+  - 에이전트 실패를 재사용 가능한 스킬과 결정적 도구·테스트로 바꾸자는 Skillify 패턴을 정리한다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Anthropic Skill Generator (Skill Creator)** — [원문](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)
+  - Anthropic의 Skill Creator가 스킬 구성, 점진적 공개와 평가 반복을 안내하는 자료다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **AutoResearch - 자율적 연구 시스템** — [원문](https://github.com/karpathy/autoresearch)
+  - 연구자가 프로그램 지침과 제한된 실험 루프를 통해 모델 학습 실험을 반복하는 구현 사례다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Knowledge system architecture** — 원출처 URL 미확인
+  - 지식 시스템의 구성과 지식 관리 개념을 다루는 색인 항목이다; 참조 원문은 찾지 못했다.
+  - 출처 상태: indexed-only · 제공: unknown
+  - 등록 확인: index entry present; no reference or wiki page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Show HN: Continue? Y/N: A 60-second game about AI agent permission fatigue** — [원문](https://llmgame.scalex.dev)
+  - 에이전트 권한 확인이 반복될 때의 사용자 피로를 게임 형식으로 보여주는 자료다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Skills For Real Engineers - mattpocock/skills** — [원문](https://github.com/mattpocock/skills)
+  - 엔지니어링 작업을 위한 재사용 가능한 스킬 모음이며, 구현 방식은 저장소별로 달라질 수 있다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Superpowers: 개발 작업을 구조화한 에이전트 스킬** — [원문](https://github.com/obra/superpowers)
+  - 브레인스토밍부터 테스트·리뷰까지 소프트웨어 개발을 구조화한 에이전트 스킬 모음이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Weaviate: Context Engineering for AI Agents** — [원문](https://weaviate.io/blog/context-engineering)
+  - 에이전트 컨텍스트의 실패 유형과 검색·메모리 설계 대응을 소개하는 기술 글이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Claude Code loop engineering 20-step (index label)** — 원출처 URL 미확인
+  - 20단계 Claude Code loop 자료로 보이는 인덱스 항목이며 URL과 본문은 확인되지 않았다.
+  - 출처 상태: indexed-only · 제공: unknown
+  - 등록 확인: index entry present; no reference or wiki page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **스킬 시스템 종합 분석: 설계 제안서** — 원출처 URL 미확인
+  - 스킬 설계·평가·라우팅 검증을 교차 비교한 설계 제안서의 요약 페이지다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+## 사례·구현
+
+- **Harness engineering: leveraging Codex in an agent-first world** — [상세 카드](../cards/openai-harness-engineering.md) · [원문](https://openai.com/ko-KR/index/harness-engineering)
+  - OpenAI의 agent-first 제품 개발 경험담은 짧은 AGENTS.md를 백과사전보다 지도로 쓰고, 근거가 되는 저장소 문서를 기록 시스템으로 두며, 구조·제약·평가·관측을 도구와 자동 검사에 녹이는 방식을 설명한다. 격리 worktree와 로그·지표 등 에이전트가 관찰·검증 가능한 작업 환경도 강조한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Architecting efficient context-aware multi-agent framework for production** — [상세 카드](../cards/google-context-aware-multi-agent.md) · [원문](https://developers.googleblog.com/en/architecting-efficient-context-aware-multi-agent-framework-for-production)
+  - Google ADK에서 context engineering을 시스템·lifecycle·제약을 가진 first-class concern으로 다루며, session 저장 상태와 model에 제시하는 working context를 구분하는 구조를 설명한다. 검색 결과는 context processing과 효율적 multi-agent 운영을 강조한다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **How I built an AI marketing team with Claude Code (and Cowork)** — [상세 카드](../cards/runbear-ai-marketing-team.md) · [원문](https://snow.runbear.io/how-i-built-an-ai-marketing-team-with-claude-code-and-cowork-f3405a53ee22)
+  - A practitioner report describing an AI marketing team assembled around Claude Code and Cowork. It is an applied case, not a controlled evaluation; this card does not copy implementation content or claim a general workflow result.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-02)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Software After AI (Harnessing AI) — Tomasz Tunguz** — [상세 카드](../cards/harnessing-ai-tunguz.md) · [원문](https://tomtunguz.com/harnessing-ai)
+  - Tomasz Tunguz는 LLM을 신뢰 가능한 에이전트로 만드는 런타임·제약·신뢰성 층을 하네스로 설명하고, 문맥·도구·오케스트레이션·상태·샌드박스·관측·비용의 일곱 구성요소를 제시한다. 이는 저자의 개념 프레임이며 운영 채택 증거는 아니다.
+  - 출처 상태: derived-only · 제공: 사용자 제공 확인 (2026-06-01)
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: 기존 주 manifest의 주제 기록
+
+- **Skillify OpenClaw 적용 분석** — 원출처 URL 미확인
+  - Skillify의 실패-수정 루프를 OpenClaw 구성에 맞춰 테스트, resolver, 점검 흐름으로 옮긴 설계안이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Anthropic tools repository** — [원문](https://github.com/anthropics/anthropic-tools)
+  - Anthropic의 저장소로, 공개된 도구·에이전트 구현 자료를 제공하는 출처다; 세부 내용은 원문 확인이 필요하다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **AutoResearch - 자율적 연구 시스템** — [원문](https://github.com/karpathy/autoresearch)
+  - 연구자가 프로그램 지침과 제한된 실험 루프를 통해 모델 학습 실험을 반복하는 구현 사례다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **crewAI** — [원문](https://github.com/crewAIInc/crewAI)
+  - crewAI 저장소의 멀티 에이전트 프레임워크 구현을 가리키는 색인 항목이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **EP 86: 진짜 내 일을 위한 Agentic Workflow** — [원문](https://aifrontier.kr/ko/episodes/ep86)
+  - 팟캐스트 인터뷰에서 실제 소프트웨어 개발 사례를 통해 에이전트 워크플로의 적용과 한계를 다룬다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Everything Claude Code** — [원문](https://github.com/affaan-m/everything-claude-code)
+  - Claude Code 관련 워크플로·도구·지침을 모은 공개 저장소로, 범위와 내용은 upstream에서 확인해야 한다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Harness - Agent Team & Skill Architect** — [원문](https://github.com/revfactory/harness)
+  - 전문 에이전트 팀, 역할 간 위임, 스킬 생성과 검증을 묶은 Claude Code 플러그인 사례다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Hippo Memory** — [원문](https://github.com/kitfunso/hippo-memory)
+  - 에이전트 기억 저장소의 구현 사례를 가리키며, 구체 동작은 저장소 원문 확인이 필요하다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Hyperagents 검토** — [원문](https://github.com/facebookresearch/hyperagents)
+  - Hyperagents 연구/구현을 검토한 기록이며, 운영 성능이나 채택 근거로 보지 않는다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **langgraph** — [원문](https://github.com/langchain-ai/langgraph)
+  - LangGraph 저장소의 그래프 기반 에이전트 워크플로 구현을 가리키는 참고 링크다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Letta / MemGPT memory** — [원문](https://letta.com)
+  - Letta/MemGPT 계열의 에이전트 기억 설계를 가리키는 항목으로, 상세 출처는 별도 확인이 필요하다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Mem0 memory architecture** — [원문](https://mem0.ai/research)
+  - 대화에서 정보를 추출·검색하는 장기 기억 설계와 그래프 관계 모델을 요약한 항목이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **steipete/agent-scripts** — [원문](https://github.com/steipete/agent-scripts)
+  - 에이전트 보조 스크립트 저장소를 가리키는 참고 링크다; 세부 내용은 원문 확인 전 미확정이다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **Claude Code loop — Boris Cherny (index label)** — 원출처 URL 미확인
+  - Claude Code 작업 루프에 관한 것으로 보이는 인덱스 항목이나 출처 URL·본문은 확인되지 않았다.
+  - 출처 상태: indexed-only · 제공: unknown
+  - 등록 확인: index entry present; no reference or wiki page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **스킬 시스템 종합 분석: 설계 제안서** — 원출처 URL 미확인
+  - 스킬 설계·평가·라우팅 검증을 교차 비교한 설계 제안서의 요약 페이지다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+- **우리, 프로그래머들 — .md로 코딩하는 시대** — [원문](https://velog.io/@teo/we-programmer)
+  - AI 시대 개발자의 역할과 에이전트 코드 생성·제어를 다룬 한국어 글을 요약한다.
+  - 출처 상태: derived-only · 제공: unknown
+  - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
+
+## 확인 범위
+
+원출처가 없는 항목과 과거 색인·파생 문서만 남은 항목을 삭제하거나 검증된 자료로 승격하지 않았습니다. 직접 원문 전체를 읽은 자료인지, 기존 기록을 요약한 자료인지는 각 상세 카드와 분류 근거를 함께 확인하세요. 제3자 원문·코드·이미지를 재배포하지 않으며 최신 라이선스는 원출처에서 확인해야 합니다.

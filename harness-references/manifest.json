@@ -1055,7 +1055,7 @@
     },
     {
       "id": "harnessing-ai-tunguz",
-      "title": "Harnessing AI",
+      "title": "Software After AI (Harnessing AI) — Tomasz Tunguz",
       "canonical_url": "https://tomtunguz.com/harnessing-ai/",
       "alternate_urls": [],
       "topics": [
@@ -1064,19 +1064,19 @@
         "context-memory-knowledge",
         "case-implementation"
       ],
-      "published": "unknown",
+      "published": "2026-05-27 (retrieved page text)",
       "provided_by_user": true,
       "provided_date": "2026-06-01",
-      "registered_in_knowledge": false,
-      "registration_note": "No exact reference card verified; references index has separate software-after-AI item only",
-      "utilization": "사용자가 66자 요청과 함께 링크를 제공한 것이 DB 증거로 확인됨. 하네스에 관한 글로서 제목 수준에서 포함; 이번 조사에서 본문 내용/사용 근거를 확인하지 못해 요약을 확대하지 않음.",
+      "registered_in_knowledge": true,
+      "registration_note": "과거 참고 색인과 파생 위키에서 같은 원문 URL을 확인; 참조 파일 실물은 미확인.",
+      "utilization": "사용자 제공 및 과거 지식 기록을 확인하고 원문을 대조함. 개념 참고 자료이며 운영 채택·실사용 근거는 확인되지 않음.",
       "rights": "not verified; original text/code not redistributed",
       "original_preserved": false,
-      "source_confirmation": "URL/제공 사건은 원천 메시지 증거로 확인; 본문 전문 및 활용 근거 미확인",
+      "source_confirmation": "보존된 원문 추출본을 본문과 결론까지 확인하여 제목·일곱 구성요소·게시일을 대조함. 실제 운영 활용 근거는 미확인.",
       "card": "cards/harnessing-ai-tunguz.md",
-      "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false,
-      "digest_basis": "원문 일부 확인"
+      "registration_evidence": "derived_document",
+      "registration_indexed": true,
+      "digest_basis": "원문 전체 확인"
     },
     {
       "id": "typesafe-ai-skills",
@@ -1093,13 +1093,13 @@
       ],
       "published": "unknown",
       "provided_by_user": true,
-      "provided_date": "2026-09-15",
+      "provided_date": "2026-09-20",
       "registered_in_knowledge": true,
       "registration_note": "knowledge/references/llm-course/New-Models/jev-llm.md; not indexed in reference index",
       "utilization": "JEV 관련 사용자 검토 요청과 연결된 스킬 저장소. 링크와 등록 파일을 확인했으나 구체적인 Hermes/JEv 운영 채택 증거는 이 자료만으로 단정하지 않음.",
       "rights": "not verified; original text/code not redistributed",
       "original_preserved": false,
-      "source_confirmation": "GLM 사용자 발화에서 요청 확인; 등록 파일 존재, index 미등재. 관련 활용 증거는 별도 검토 필요",
+      "source_confirmation": "보존된 사용자 메시지 시각을 서울 날짜로 환산해 2026-09-20 제공을 확인함. 같은 내용의 반복 저장은 한 제공 사건으로 묶음. 등록 파일은 확인했으나 색인 등재는 미확인.",
       "card": "cards/typesafe-ai-skills.md",
       "registration_evidence": "reference_file_not_indexed",
       "registration_indexed": false,
@@ -1123,9 +1123,9 @@
       "utilization": "unknown: 활용 증거 없음. 설계 참고 후보로만 기록",
       "rights": "공식 문서 원문은 복사하지 않고 링크와 자체 요약만 제공",
       "original_preserved": false,
-      "source_confirmation": "URL과 사용자 메시지 원천만 확인. 원문 페이지는 이번 작업에서 열람하지 않음",
+      "source_confirmation": "사용자 메시지의 URL만 확인; 원문 페이지는 열람하지 않음. 상세 내용은 이번 근거에서 확인되지 않음.",
       "card": "cards/claude-code-memory-docs.md",
-      "digest_basis": "원문 일부 확인"
+      "digest_basis": "지식 기록 기준(원문 미열람)"
     },
     {
       "id": "codex-agents-md-docs",
@@ -1134,7 +1134,7 @@
       "alternate_urls": [],
       "topics": [
         "context-memory-knowledge",
-        "workflow-orchestration"
+        "orchestration-workflow"
       ],
       "published": "unknown",
       "provided_by_user": true,
@@ -1146,9 +1146,9 @@
       "utilization": "unknown: 활용 증거 없음. 지침 파일 형식 비교 참고 후보로만 기록",
       "rights": "공식 문서 원문은 복사하지 않고 링크와 자체 요약만 제공",
       "original_preserved": false,
-      "source_confirmation": "URL과 사용자 메시지 원천만 확인. 원문 페이지는 이번 작업에서 열람하지 않음",
+      "source_confirmation": "사용자 메시지의 URL만 확인; 원문 페이지는 열람하지 않음. 상세 내용은 이번 근거에서 확인되지 않음.",
       "card": "cards/codex-agents-md-docs.md",
-      "digest_basis": "원문 일부 확인"
+      "digest_basis": "지식 기록 기준(원문 미열람)"
     }
   ]
 }

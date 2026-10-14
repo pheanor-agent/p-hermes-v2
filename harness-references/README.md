@@ -9,7 +9,8 @@
 3. 관심 주제의 하위 목차를 열고 개별 카드를 읽습니다.
 4. [manifest.json](manifest.json) 또는 [manifest.csv](manifest.csv)로 출처·상태를 기계적으로 조회합니다.
 5. [조사 방법과 한계](SURVEY.md)에서 수집 범위·포함 및 제외 기준을 확인합니다.
-6. [필드 정의](METADATA.md), [권리/라이선스](LICENSE), [갱신 방법](MAINTENANCE.md)을 확인합니다.
+6. [과거 참고 색인 39건 재고표](legacy-index-inventory/README.md)에서 기존 색인 자료의 주제별 요약·원문 링크·대응 카드를 탐색합니다.
+7. [필드 정의](METADATA.md), [권리/라이선스](LICENSE), [갱신 방법](MAINTENANCE.md)을 확인합니다.
 
 ## 주제별 목차
 

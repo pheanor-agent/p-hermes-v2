@@ -1,14 +1,14 @@
 # 조사 범위와 한계
 
-조사 기준일: 2026-10-14. 목적은 에이전트 harness engineering 관련 링크와 공개 문서를 사람이 직접 탐색할 수 있는 독립 라이브러리로 제공하는 것입니다. 이 문서는 기존 79-URL/31-card 제한 조사와 후속 무필터 후보 감사의 분모를 구분합니다. 원천 메시지·내부 파일 연결·원문 첨부는 비공개 조사 JOB artifacts에만 보관합니다.
+조사 기준일: 2026-10-14. 목적은 에이전트 harness engineering 관련 링크와 공개 문서를 사람이 직접 탐색할 수 있는 독립 라이브러리로 제공하는 것입니다. 이 문서는 기존 79-URL/31-card 제한 조사와 후속 무필터 후보 감사의 분모를 구분합니다. 원천 메시지·내부 파일 연결·원문 첨부는 비공개 조사 JOB artifacts에만 보관합니다. [과거 참고 색인 39건 주제별 재고표](legacy-index-inventory/README.md)도 함께 제공합니다.
 
 ## 최종 공개 집계
 
-- 공개 manifest 및 카드: 47개 자료 레코드 / 47개 카드(2026-10-14 보완 시 Claude Code memory·Codex AGENTS.md 2건 추가). 단일 카드에 원천 URL 여러 개를 묶은 자료가 있습니다.
-- 지식 등록 구분(manifest 기준): 17 reference files, 1 derived knowledge document, 1 JOB registration record only, 1 reference file confirmed but not indexed, 25건은 제한 검색에서 exact knowledge registration 미확인. 별도 index-only 등록은 이번 45건에서 확인되지 않았습니다. '미확인'은 절대적 부재 보장이 아닙니다.
-- 사용자 제공 상태(manifest 기준): 31 true, 8 false, 6 unknown. 제공 날짜와 원문 발행일은 별도이며, unknown을 false로 합산하지 않았습니다.
+- 공개 manifest 및 카드: 47개 자료 레코드 / 47개 카드. 초기 제한조사 산출은 33개 카드에서 시작해 기존 보완 12건을 더한 45개였고, 2026-10-14 후속으로 Claude Code memory와 Codex AGENTS.md 2건을 추가해 최종 47개가 되었습니다. 단일 카드에 원천 URL 여러 개를 묶은 자료가 있습니다.
+- 지식 등록 구분(manifest 기준): 17 reference files, 2 derived knowledge documents, 1 JOB registration record only, 1 reference file confirmed but not indexed, 26건은 제한 검색에서 exact knowledge registration 미확인. 합계는 최종 47건이며 별도 index-only 등록은 확인되지 않았습니다. '미확인'은 절대적 부재 보장이 아닙니다.
+- 사용자 제공 상태(manifest 기준, 최종 47건): 33 true, 8 false, 6 unknown. 제공 날짜와 원문 발행일은 별도이며, unknown을 false로 합산하지 않았습니다.
 - 기존 제한 조사(수치 원기록 유지): 155개 Hermes 사용자 메시지 후보에서 79개 URL을 추렸고, 공개 자료 30개 URL과 대응시켰으며 49개 URL은 비관련·자기참조·runtime/API endpoint 등 근거에 따라 제외했습니다. 이는 전수 URL 감사 수치가 아닙니다.
-- 기존 제한 조사 manifest 33개에서 이번 보완 12개를 더했습니다. 기존 33개 카드 중 일부는 조사에서 찾은 후보가 아닌 지정 핵심 출처/보충자료입니다.
+- 조사 버전 이력: 초기 제한조사 33개 + 그때 반영한 보완 12개 = 45개. 이후 2026-10-14 후속 카드 2개(Claude Code memory, Codex AGENTS.md)를 추가해 현재 47개입니다. 초기 33개 중 일부는 후보 탐색이 아닌 지정 핵심 출처/보충자료입니다.
 - 후속 unfiltered-audit ledger: 10,333개 URL 추출 occurrence, 2,059행 unique-url-ledger, 645행 missing-unregistered context 후보(정규화 613 URL)가 기록되어 있습니다. 이들은 원시 발견/후보 분모이며 관련 문서 수나 누락 자료 수가 아닙니다. 중복 메시지, 자동화/worker 문맥, localhost/API, 문서 삽입, 서식 오류 URL 등이 포함되어 수동 맥락 판정이 필요합니다.
 - 별도 missing-context-related 후보 파일은 7,127 rows, link-only review는 1,008 rows, registered source ledger는 15,537 rows, 첨부 포인터는 8 rows, 첨부 cache inventory는 5 rows입니다. 이 파일들의 행은 고유 자료 수와 같지 않습니다.
 - 명시적 보완: graph engineering, 20-step loop engineering, MemGPT, Google Cloud self-improving evaluation loop, multi-agent orchestration, Supermemory, codebase-memory-mcp, OpenAI skills 문서 2종, Google Cloud Tech long-horizon 5 patterns 및 첨부 Notes provenance, Harnessing AI, typesafe-ai/skills.
@@ -30,8 +30,8 @@
 - `utilization`: 등록·언급·설계 검토·JOB 분석·운영 채택을 구분합니다. 설계 검토는 production 적용 증거가 아니며 증거를 찾지 못한 경우 `unknown` 또는 제한된 문구를 사용합니다.
 - `source_confirmation`: 전문, 첨부 전사, 등록 요약, 제목/URL만 확인한 수준을 표시합니다. 제목만으로 의미를 추정하지 않습니다.
 - Google Cloud Tech long-horizon 첨부 Notes는 제공 사건과 내부 참조 기록(익명) 연계가 확인되지만 지정 cache 원본은 이번 재검사에서 찾지 못했습니다. 라이브러리에는 원문 전문 대신 공개 URL·자체 요약·확인 한계만 남겼습니다.
-- `typesafe-ai/skills`는 GLM 사용자 메시지에서 한 제공 사건으로 확인되며 동일 본문 hash를 가진 반복 message rows는 별도 제공 사건으로 세지 않았습니다. 지식 파일은 존재하나 주 인덱스 등재는 확인되지 않았습니다.
-- `Harnessing AI`는 짧은 사용자 제공 요청과 URL만 확인되었고, 현재 공개 라이브러리 진입용 별도 reference card가 없어서 제목 수준 카드로 보완했습니다. 페이지 전문/실제 활용은 미확인입니다.
+- `typesafe-ai/skills`는 GLM 메시지 2420/2998/4391의 동일 timestamp `1789879693.213`(KST 2026-09-20)으로 한 제공 사건을 확인했으며, 동일 본문 hash의 반복 rows는 별도 제공 사건으로 세지 않았습니다. 지식 파일은 존재하나 주 인덱스 등재는 확인되지 않았습니다.
+- `Harnessing AI`는 보존된 원문 추출본에서 게시일과 결론까지 확인해 독립 카드를 보완했습니다. 같은 URL의 과거 색인·파생 위키 등록도 확인했으며, 실제 운영 활용은 별도 증거가 없습니다.
 
 ## 포함·제외 분류
 
