@@ -20,5 +20,12 @@
 | `original_preserved` | Whether this library redistributes original full text (all current records are false). |
 | `source_confirmation` | What was actually checked, including partial/title-only status. |
 | `card` | Relative path to the standalone summary card. |
+| `digest_basis` | What the card's 상세 정리 section was written from: `원문 전체 확인` (whole source read), `원문 일부 확인` (part of the source read, e.g. abstract/intro or a login-limited post), `지식 기록 대조 + 원문 일부 확인` (an earlier knowledge record checked against part of the source), `지식 기록 기준(원문 미열람)` (earlier record only). |
 
 Dates use ISO `YYYY-MM-DD` when verified. Do not replace unknown with an assumed date. Provenance in the public library is intentionally anonymized; detailed source locators remain in the private audit records.
+
+## Card structure
+
+Each card has: metadata lines, `## 자체 요약` (one-paragraph summary), `## 상세 정리` (a working digest meant to be usable without opening the link), and a relevance/reading note.
+
+`## 상세 정리` always has five subsections: `### 핵심 주장` (main claims), `### 구조와 패턴` (components, flow, patterns), `### 적용 방법` (how to apply), `### 근거와 한계` (evidence, conditions, what was not read), `### 연결` (related cards). The digest is written in our own words; numbers from papers or vendors are labeled as source claims together with their conditions. When `digest_basis` is partial, check the original before relying on details the digest does not cover.

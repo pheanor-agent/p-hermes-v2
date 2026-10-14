@@ -28,7 +28,8 @@
       "original_preserved": false,
       "card": "cards/agent-harness-technical-debt.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "openai-harness-engineering",
@@ -53,7 +54,8 @@
       "original_preserved": false,
       "card": "cards/openai-harness-engineering.md",
       "registration_evidence": "derived_document",
-      "registration_indexed": true
+      "registration_indexed": true,
+      "digest_basis": "원문 전체 확인"
     },
     {
       "id": "anthropic-effective-long-running-agents",
@@ -78,7 +80,8 @@
       "original_preserved": false,
       "card": "cards/anthropic-effective-long-running-agents.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "anthropic-harness-design-long-running-apps",
@@ -101,7 +104,8 @@
       "original_preserved": false,
       "card": "cards/anthropic-harness-design-long-running-apps.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "anthropic-building-effective-agents",
@@ -123,7 +127,8 @@
       "original_preserved": false,
       "card": "cards/anthropic-building-effective-agents.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 전체 확인"
     },
     {
       "id": "anthropic-multi-agent-research-system",
@@ -145,7 +150,8 @@
       "original_preserved": false,
       "card": "cards/anthropic-multi-agent-research-system.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "claude-workflow-patterns",
@@ -166,7 +172,8 @@
       "original_preserved": false,
       "card": "cards/claude-workflow-patterns.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "addy-loop-engineering",
@@ -189,7 +196,8 @@
       "original_preserved": false,
       "card": "cards/addy-loop-engineering.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "openai-multi-agent-docs",
@@ -213,7 +221,8 @@
       "original_preserved": false,
       "card": "cards/openai-multi-agent-docs.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "hermes-official-docs",
@@ -242,7 +251,8 @@
       "original_preserved": false,
       "card": "cards/hermes-official-docs.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 전체 확인"
     },
     {
       "id": "google-context-aware-multi-agent",
@@ -266,7 +276,8 @@
       "original_preserved": false,
       "card": "cards/google-context-aware-multi-agent.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "letta-context-repositories",
@@ -288,7 +299,8 @@
       "original_preserved": false,
       "card": "cards/letta-context-repositories.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "agents-are-hard",
@@ -310,7 +322,8 @@
       "original_preserved": false,
       "card": "cards/agents-are-hard.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "simon-willison-agentic-engineering",
@@ -333,7 +346,8 @@
       "original_preserved": false,
       "card": "cards/simon-willison-agentic-engineering.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "지식 기록 기준(원문 미열람)"
     },
     {
       "id": "agentskills-standard",
@@ -356,7 +370,8 @@
       "original_preserved": false,
       "card": "cards/agent-skills-standard.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "vercel-agents-md-skills-evals",
@@ -377,7 +392,8 @@
       "original_preserved": false,
       "card": "cards/vercel-agents-md-skills-evals.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 전체 확인"
     },
     {
       "id": "deepseek-harness",
@@ -399,7 +415,8 @@
       "original_preserved": false,
       "card": "cards/deepseek-harness.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "meta-harness",
@@ -423,7 +440,8 @@
       "original_preserved": false,
       "card": "cards/meta-harness.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "jaz-harness-language",
@@ -448,7 +466,8 @@
       "original_preserved": false,
       "card": "cards/jaz-harness-language.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "aaabench",
@@ -470,7 +489,8 @@
       "original_preserved": false,
       "card": "cards/aaabench.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "browser-harness",
@@ -492,7 +512,8 @@
       "original_preserved": false,
       "card": "cards/browser-harness.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "context-engineering-survey",
@@ -514,7 +535,8 @@
       "original_preserved": false,
       "card": "cards/context-engineering-survey.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "code-as-agent-harness",
@@ -537,7 +559,8 @@
       "original_preserved": false,
       "card": "cards/code-as-agent-harness.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "지식 기록 기준(원문 미열람)"
     },
     {
       "id": "raven-composable-agentic-intelligence",
@@ -561,7 +584,8 @@
       "original_preserved": false,
       "card": "cards/raven-composable-agentic-intelligence.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "agentic-harness-evolution",
@@ -583,7 +607,8 @@
       "original_preserved": false,
       "card": "cards/agentic-harness-evolution.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "지식 기록 기준(원문 미열람)"
     },
     {
       "id": "apache-maka-agent-graph",
@@ -609,7 +634,8 @@
       "original_preserved": false,
       "card": "cards/apache-maka-agent-graph.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "langgraph-human-approval",
@@ -630,7 +656,8 @@
       "original_preserved": false,
       "card": "cards/langgraph-human-approval.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "microsoft-agent-design-patterns",
@@ -652,7 +679,8 @@
       "original_preserved": false,
       "card": "cards/microsoft-agent-design-patterns.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "experiential-memory-experiment",
@@ -675,7 +703,8 @@
       "original_preserved": false,
       "card": "cards/experiential-memory-experiment.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "runbear-ai-marketing-team",
@@ -697,7 +726,8 @@
       "original_preserved": false,
       "card": "cards/runbear-ai-marketing-team.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "agent-reach",
@@ -721,7 +751,8 @@
       "original_preserved": false,
       "card": "cards/agent-reach.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "flowkater-agentic-engineering-skills",
@@ -747,7 +778,8 @@
       "original_preserved": false,
       "card": "cards/flowkater-agentic-engineering-skills.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "graph-of-thoughts",
@@ -771,7 +803,8 @@
       "original_preserved": false,
       "card": "cards/graph-of-thoughts.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "graph-engineering-claude-codez",
@@ -793,7 +826,8 @@
       "source_confirmation": "X 본문 일부 미확인; 지식 레코드 요약 기반",
       "card": "cards/graph-engineering-claude-codez.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "claude-code-loop-engineering-20-step",
@@ -816,7 +850,8 @@
       "source_confirmation": "사용자 제공 텍스트 및 지식 문서 요약 확인; 외부 X 페이지는 로그인 게이트",
       "card": "cards/claude-code-loop-engineering-20-step.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "memgpt-context-os",
@@ -840,7 +875,8 @@
       "source_confirmation": "등록된 지식 문서 요약 확인; 사용자 제공 여부는 감사 증거로 확정되지 않아 unknown",
       "card": "cards/memgpt-context-os.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "google-cloud-self-improving-agent-loops",
@@ -865,7 +901,8 @@
       "source_confirmation": "사용자 첨부 Notes 및 X 본문 대조를 기존 JOB 기록으로 확인; 첨부 원문은 현재 지정 cache 경로에서 찾지 못함",
       "card": "cards/google-cloud-self-improving-agent-loops.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "multi-agent-orchestration-patterns",
@@ -890,7 +927,8 @@
       "source_confirmation": "지식 문서 존재 확인; 제공 시점/등록 요청/사용자 발화는 원천 증거로 미확정",
       "card": "cards/multi-agent-orchestration-patterns.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "지식 기록 대조 + 원문 일부 확인"
     },
     {
       "id": "supermemory",
@@ -916,7 +954,8 @@
       "source_confirmation": "기존 reference 파일 확인; 제공 시점은 미확정",
       "card": "cards/supermemory.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "codebase-memory-mcp",
@@ -940,7 +979,8 @@
       "source_confirmation": "지식 문서 확인; 사용자 제공 여부 및 활용 시점은 미확정",
       "card": "cards/codebase-memory-mcp.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "openai-build-skills",
@@ -962,7 +1002,8 @@
       "source_confirmation": "Registered reference record and document text verified; evidence reviewed here does not establish a direct user-provided event/date.",
       "card": "cards/openai-build-skills.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "지식 기록 대조 + 원문 일부 확인"
     },
     {
       "id": "openai-skills-concept",
@@ -984,7 +1025,8 @@
       "source_confirmation": "Registered reference record and document text verified; evidence reviewed here does not establish a direct user-provided event/date.",
       "card": "cards/openai-skills-concept.md",
       "registration_evidence": "reference_file",
-      "registration_indexed": null
+      "registration_indexed": null,
+      "digest_basis": "지식 기록 대조 + 원문 일부 확인"
     },
     {
       "id": "google-cloud-long-horizon-patterns",
@@ -1008,7 +1050,8 @@
       "source_confirmation": "내부 참조 기록(익명) record documents 2026-08-26 capture, user Notes transcript, source URL and snapshot SHA-256; current attachment cache file not found; no attachment redistributed",
       "card": "cards/google-cloud-long-horizon-patterns.md",
       "registration_evidence": "job_registration_record_only",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "harnessing-ai-tunguz",
@@ -1032,7 +1075,8 @@
       "source_confirmation": "URL/제공 사건은 원천 메시지 증거로 확인; 본문 전문 및 활용 근거 미확인",
       "card": "cards/harnessing-ai-tunguz.md",
       "registration_evidence": "not_found_after_targeted_check",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "typesafe-ai-skills",
@@ -1058,7 +1102,8 @@
       "source_confirmation": "GLM 사용자 발화에서 요청 확인; 등록 파일 존재, index 미등재. 관련 활용 증거는 별도 검토 필요",
       "card": "cards/typesafe-ai-skills.md",
       "registration_evidence": "reference_file_not_indexed",
-      "registration_indexed": false
+      "registration_indexed": false,
+      "digest_basis": "지식 기록 대조 + 원문 일부 확인"
     },
     {
       "id": "claude-code-memory-docs",
@@ -1079,7 +1124,8 @@
       "rights": "공식 문서 원문은 복사하지 않고 링크와 자체 요약만 제공",
       "original_preserved": false,
       "source_confirmation": "URL과 사용자 메시지 원천만 확인. 원문 페이지는 이번 작업에서 열람하지 않음",
-      "card": "cards/claude-code-memory-docs.md"
+      "card": "cards/claude-code-memory-docs.md",
+      "digest_basis": "원문 일부 확인"
     },
     {
       "id": "codex-agents-md-docs",
@@ -1101,7 +1147,8 @@
       "rights": "공식 문서 원문은 복사하지 않고 링크와 자체 요약만 제공",
       "original_preserved": false,
       "source_confirmation": "URL과 사용자 메시지 원천만 확인. 원문 페이지는 이번 작업에서 열람하지 않음",
-      "card": "cards/codex-agents-md-docs.md"
+      "card": "cards/codex-agents-md-docs.md",
+      "digest_basis": "원문 일부 확인"
     }
   ]
 }
