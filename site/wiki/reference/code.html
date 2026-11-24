@@ -6,12 +6,16 @@
 <article class="chapter rendered-doc"><p>이 문서는 공개 교육용 구현만 다룹니다. 로컬 운영 경로와 전체 경계는 <a href="../architecture.html#scope">구성과 범위</a>에서 확인합니다.</p>
 <h2>모듈이 맡는 부분</h2>
 <table><thead><tr><th>파일</th><th>함수</th><th>프로토콜과의 대응</th></tr></thead><tbody>
-<tr><td><code>reference/orchestrator.py</code></td><td><code>request_digest(request)</code></td><td>요청 객체를 키 정렬·압축 JSON으로 직렬화한 바이트의 SHA-256을 계산합니다. 이 함수는 <code>submit</code>이나 워커가 호출하지 않습니다. 워커 응답의 <code>request_sha256</code>은 실제 요청 파일 바이트의 해시이므로 두 값은 다를 수 있습니다.</td></tr>
+<tr><td><code>reference/orchestrator.py</code></td><td><code>request_file_digest(path)</code></td><td>요청 파일의 원본 바이트에 대한 SHA-256을 계산합니다. 워커의 <code>request_sha256</code>과 같은 값이므로 응답을 요청 파일과 대조할 때 씁니다. 객체를 다시 직렬화하지 않으므로 공백만 달라도 다른 해시가 됩니다.</td></tr>
 <tr><td><code>reference/orchestrator.py</code></td><td><code>submit(request, inbox)</code></td><td>필수 키와 형식, 안전한 <code>request_id</code>를 확인해 inbox에 JSON 요청을 생성합니다. 같은 파일을 다시 제출하면 동일 내용은 멱등 처리하고, 같은 ID의 다른 내용은 거부합니다.</td></tr>
-<tr><td><code>reference/orchestrator.py</code></td><td><code>collect(request_id, outbox)</code></td><td>응답 파일을 읽어 요청 ID 일치와 terminal 상태(<code>done</code>, <code>partial</code>, <code>failed</code>, <code>blocked</code>)를 확인한 뒤 반환합니다.</td></tr>
+<tr><td><code>reference/orchestrator.py</code></td><td><code>collect(request_id, outbox, request_path=None)</code></td><td>응답 파일을 읽어 요청 ID 일치와 terminal 상태(<code>done</code>, <code>partial</code>, <code>failed</code>, <code>blocked</code>)를 확인한 뒤 반환합니다. <code>request_path</code>를 주면 응답의 <code>request_sha256</code>이 요청 파일 바이트와 같은지도 확인하고, 다르면 <code>ValueError</code>를 냅니다. 응답이 아직 없으면 <code>None</code>을 반환합니다.</td></tr>
+<tr><td><code>reference/orchestrator.py</code></td><td><code>revise_request(previous, new_request_id, **changes)</code></td><td>같은 목표의 다음 시도를 만듭니다. <code>goal_id</code>는 유지하고 <code>intent_revision</code>을 1 올리며 새 <code>request_id</code>를 씁니다. 이전 요청 파일은 고치지 않습니다.</td></tr>
+<tr><td><code>reference/orchestrator.py</code></td><td><code>accept(request_id, outbox, reviews, decision, note="")</code></td><td>종결 응답에 대한 매니저 판정을 <code>reviews/&lt;request_id&gt;.json</code>에 한 번만 씁니다. <code>decision</code>은 <code>accepted</code> 또는 <code>needs_work</code>이며, 종결 응답이 없으면 <code>ValueError</code>입니다. 같은 판정은 기존 기록을 돌려주고, 다른 판정은 거부합니다.</td></tr>
+<tr><td><code>reference/orchestrator.py</code></td><td><code>check_duplicate(request, inbox, outbox)</code></td><td>같은 <code>goal_id</code>이며 아직 응답이 없는 다른 요청의 <code>request_id</code> 목록을 돌려줍니다. 제출을 막지 않는 소프트 경고이며, lease나 잠금이 아닙니다.</td></tr>
 <tr><td><code>reference/worker.py</code></td><td><code>resolve_inputs(root, names)</code></td><td>입력의 절대경로·상위 경로 참조를 거부하고, 해석된 파일이 허용 루트 아래의 일반 파일인지 확인합니다.</td></tr>
 <tr><td><code>reference/worker.py</code></td><td><code>process_one(request_path, outbox, allowed_root, handler)</code></td><td>요청 원본 바이트의 digest를 계산하고 JSON 필드를 검증한 뒤 입력 경계를 검사합니다. 사용자 handler 또는 기본 handler를 한 번 실행하고 terminal 응답을 발행합니다. 잘못된 요청은 <code>blocked</code>, 예외는 남은 산출이 있으면 <code>partial</code>, 없으면 <code>failed</code>가 됩니다.</td></tr>
 <tr><td><code>reference/worker.py</code></td><td><code>_response(...)</code>, <code>_publish(...)</code></td><td>응답에 요청·목표 ID와 revision, status, request digest, 산출 목록을 담고, 동일 요청에 이미 terminal 응답이 있으면 내용을 비교해 덮어쓰지 않습니다.</td></tr>
+<tr><td><code>reference/worker.py</code></td><td><code>record_timeout(request_path, outbox, seconds)</code></td><td>응답이 없을 때만 <code>status: failed</code>, <code>error: "timeout after &lt;n&gt;s"</code> 응답을 <code>_publish</code>와 같은 쓰기 한 번 규칙으로 씁니다. 이미 응답이 있으면 그 응답을 돌려줍니다.</td></tr>
 <tr><td><code>reference/filesystem_transport.py</code></td><td><code>encode_json(value)</code>, <code>read_json(path)</code></td><td>UTF-8 JSON object를 일관되게 인코딩·읽습니다. 최상위 값이 객체가 아니면 거부합니다.</td></tr>
 <tr><td><code>reference/filesystem_transport.py</code></td><td><code>write_json_atomic(path, value, replace=False)</code></td><td>같은 디렉터리에 임시 파일을 쓰고 flush/fsync한 뒤 원자적으로 게시합니다. 기본 모드는 기존 파일을 덮지 않으며 <code>replace=True</code>일 때만 교체합니다.</td></tr>
 </tbody></table>
@@ -22,15 +26,19 @@
   → outbox/&lt;request_id&gt;.json
   → orchestrator.collect(request_id, outbox)</code></pre>
 <p><code>submit</code>은 요청 객체의 필수 필드와 경로 토큰을 검사하며, 입력 파일의 실제 루트 경계 검사는 worker의 <code>resolve_inputs</code>가 수행합니다. <code>policy</code> 객체의 라벨만으로 운영체제 권한이 생기거나 제한되지 않습니다. worker는 허용 루트 밖으로 해석되는 입력을 막지만 프로세스 사용자·파일 권한은 호출자가 책임집니다.</p>
-<h2>요청 객체 해시와 파일 해시</h2>
-<p><code>request_digest(request)</code>는 압축 JSON을 해싱합니다. <code>submit</code>이 쓰는 요청 파일은 <code>encode_json</code>의 들여쓰기 2칸과 마지막 줄바꿈을 포함하고, 워커는 그 파일에서 읽은 원본 바이트를 해싱합니다. 따라서 같은 요청 객체라도 두 해시는 다릅니다. 응답을 요청 파일과 대조할 때는 실제 제출한 파일의 바이트를 사용합니다.</p>
-<pre><code>import hashlib
+<h2>요청 파일 해시와 응답 대조</h2>
+<p><code>request_file_digest(path)</code>는 요청 파일의 원본 바이트를 해싱합니다. 워커도 같은 방식으로 <code>request_sha256</code>을 기록하므로, 두 값을 비교하면 응답이 그 요청 파일에서 나왔는지 확인할 수 있습니다. 요청 객체를 다시 직렬화해 해시를 구하면 <code>submit</code>이 쓴 들여쓰기와 마지막 줄바꿈 때문에 값이 달라지므로 사용하지 않습니다.</p>
+<pre><code>from orchestrator import collect, request_file_digest
 
-file_digest = hashlib.sha256(request_path.read_bytes()).hexdigest()
-assert response["request_sha256"] == file_digest</code></pre>
-<p><code>collect</code>는 요청 ID와 terminal 상태를 확인합니다. 요청 파일 해시의 일치 여부는 호출자가 위와 같이 확인합니다.</p>
+response = collect(request_id, outbox, request_path=request_path)
+assert response["request_sha256"] == request_file_digest(request_path)</code></pre>
+<p><code>collect</code>는 요청 ID와 terminal 상태를 확인합니다. <code>request_path</code>를 넘기면 같은 해시 대조도 함께 수행하므로 호출자가 따로 비교하지 않아도 됩니다.</p>
+<h2>검토 판정과 시간 초과</h2>
+<p>워커의 <code>done</code>은 결과를 끝냈다는 뜻이며 수용이 아닙니다. 매니저는 <code>accept(request_id, outbox, reviews, decision)</code>으로 <code>accepted</code> 또는 <code>needs_work</code> 판정을 <code>reviews/&lt;request_id&gt;.json</code>에 한 번만 남깁니다. <code>needs_work</code>이면 같은 <code>request_id</code>를 고치지 않고, <code>revise_request(previous, new_request_id, **changes)</code>로 같은 <code>goal_id</code>에 한 단계 높은 <code>intent_revision</code>과 새 <code>request_id</code>를 가진 요청을 다시 제출합니다.</p>
+<p><code>record_timeout(request_path, outbox, seconds)</code>는 응답이 없을 때만 <code>failed</code> 응답(<code>timeout after &lt;n&gt;s</code>)을 씁니다. 응답이 이미 있으면 그 응답을 그대로 돌려줍니다. 이 기록도 워커 산출과 같은 쓰기 한 번 규칙을 따릅니다. 늦게 끝난 워커의 게시는 <code>ValueError</code>로 실패하고, 먼저 게시된 terminal 응답이 남습니다.</p>
+<p><code>check_duplicate(request, inbox, outbox)</code>는 같은 <code>goal_id</code>이며 아직 응답이 없는 다른 요청의 ID 목록을 돌려줍니다. 제출을 막지 않는 경고이며 lease나 잠금이 아닙니다. 두 워커가 같은 요청을 동시에 처리하면 handler가 두 번 실행될 수 있으며, <code>test_limitation_two_workers_can_run_the_same_handler</code>가 이 한계를 관측합니다.</p>
 <h2>테스트가 확인하는 경계</h2>
-<p><code>tests/test_contracts.py</code>는 임시 디렉터리와 합성 입력만 사용합니다. 등록 멱등성·같은 ID의 내용 충돌, 안전하지 않은 ID, 원자 쓰기의 덮어쓰기 방지, 정상 제출-처리-수집, 경로 traversal 및 symlink 차단, 필수 필드·policy 형식 오류, handler 예외의 failed/partial 분류, terminal 응답 재처리 방지, 수집 시 request ID 불일치를 검사합니다. 테스트는 실제 Hermes 서비스나 권한 경계를 검증하지 않습니다.</p>
+<p><code>tests/test_contracts.py</code>는 임시 디렉터리와 합성 입력만 사용합니다. 등록 멱등성·같은 ID의 내용 충돌, 안전하지 않은 ID, 원자 쓰기의 덮어쓰기 방지, 정상 제출-처리-수집, 경로 traversal 및 symlink 차단, 필수 필드·policy 형식 오류, handler 예외의 failed/partial 분류, terminal 응답 재처리 방지, 수집 시 request ID 불일치를 검사합니다. <code>tests/test_review_and_timeout.py</code>는 요청 파일 바이트 대조, 판정 기록의 한 번 쓰기, <code>needs_work</code> 뒤 새 revision 재제출, 시간 초과 기록, 중복 경고와 동시 실행 한계를 검사합니다. 테스트는 실제 Hermes 서비스나 권한 경계를 검증하지 않습니다.</p>
 <h2>예제에서 분리한 동작</h2>
 <table><thead><tr><th>경로</th><th>관찰하는 동작</th><th>한계</th></tr></thead><tbody>
 <tr><td><code>examples/integration-check/src/integration_check.py</code></td><td><code>LIGHT_FILES</code>로 단계별 필요 파일을 비교하고, fixture를 읽어 합성 산출을 먼저 쓴 다음 누락 조건을 응답에 기록합니다. 승인 근거가 모두 있으면 <code>done</code>, 빠진 조건이 있으면 <code>partial</code>입니다.</td><td>실제 gate나 JOB을 실행하지 않고 fixture의 선언을 점검합니다.</td></tr>
@@ -51,6 +59,7 @@ make example NAME=knowledge-context-check</code></pre>
 <tr><td>입력 경계·worker·응답</td><td><code>reference/worker.py</code></td></tr>
 <tr><td>JSON 파일 게시·읽기</td><td><code>reference/filesystem_transport.py</code></td></tr>
 <tr><td>계약 테스트</td><td><code>tests/test_contracts.py</code></td></tr>
+<tr><td>검토·시간 초과·중복 경고 테스트</td><td><code>tests/test_review_and_timeout.py</code></td></tr>
 <tr><td>예제 구현·테스트</td><td><code>examples/integration-check/src/</code>, <code>examples/integration-check/tests/</code>, <code>examples/knowledge-context-check/src/</code>, <code>examples/knowledge-context-check/tests/</code></td></tr>
 <tr><td>실행 명령</td><td><code>Makefile</code></td></tr>
 </tbody></table><p class="note">확인 기준: 2026-10-13. 함수와 실행 명령은 공개 저장소의 현재 파일에서 확인했습니다.</p>

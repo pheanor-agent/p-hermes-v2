@@ -7,10 +7,10 @@ from typing import Any, Callable
 
 try:
     from .filesystem_transport import read_json, write_json_atomic
-    from .orchestrator import SAFE_ID, TERMINAL
+    from .orchestrator import SAFE_ID, TERMINAL, collect
 except ImportError:  # Also supports direct-module use in the unittest harness.
     from filesystem_transport import read_json, write_json_atomic
-    from orchestrator import SAFE_ID, TERMINAL
+    from orchestrator import SAFE_ID, TERMINAL, collect
 
 
 class InvalidRequest(ValueError):
@@ -121,3 +121,31 @@ def _publish(response: dict[str, Any], outbox: Path) -> dict[str, Any]:
             raise ValueError("terminal response already exists and is immutable")
         return existing
     return response
+
+
+def record_timeout(request_path: Path, outbox: Path, seconds: float) -> dict[str, Any]:
+    """Caller-side helper: publish `failed` ("timeout after <n>s") only when no response exists yet.
+
+    If a response already exists (from a worker that finished in time), that response is returned
+    unchanged. The timeout record goes through the same write-once `_publish` rule as worker output,
+    and it binds to the request file bytes like any other response.
+    """
+    if isinstance(seconds, bool) or not isinstance(seconds, (int, float)) or seconds <= 0:
+        raise ValueError("seconds must be a positive number")
+    digest = hashlib.sha256(Path(request_path).read_bytes()).hexdigest()
+    request = read_json(request_path)
+    request_id = request.get("request_id")
+    if not isinstance(request_id, str) or not SAFE_ID.fullmatch(request_id):
+        raise ValueError("request_id must be a safe filename token")
+    existing = collect(request_id, outbox)
+    if existing is not None:
+        return existing
+    response = _response(request_id, request, digest, "failed", error=f"timeout after {seconds}s")
+    try:
+        return _publish(response, outbox)
+    except ValueError:
+        # A worker may have published a terminal response between the check and the write.
+        existing = collect(request_id, outbox)
+        if existing is None:
+            raise
+        return existing

@@ -109,9 +109,9 @@ def check_content_alignment(errors: list[str]) -> None:
         "wiki/knowledge-context.html": ("write-lesson.py", "--id", "--body-file", "validation_status: candidate", "architecture.html#scope"),
         "wiki/integration.html": ("architecture.html#scope",),
         "wiki/reference/workflow.html": classes + ("simple", "JOB", "architecture.html#scope"),
-        "wiki/reference/terms.html": classes + ("request_id", "status", "partial", "architecture.html#scope"),
-        "wiki/reference/contracts.html": ("JSON", "Markdown", "intent_revision", "request_sha256", "request_id", "architecture.html#scope"),
-        "wiki/reference/code.html": ("orchestrator.py", "worker.py", "filesystem_transport.py", "architecture.html#scope"),
+        "wiki/reference/terms.html": classes + ("request_id", "status", "partial", "architecture.html#scope", "needs_work", "request_file_digest"),
+        "wiki/reference/contracts.html": ("JSON", "Markdown", "intent_revision", "request_sha256", "request_id", "architecture.html#scope", "needs_work", "timeout after"),
+        "wiki/reference/code.html": ("orchestrator.py", "worker.py", "filesystem_transport.py", "architecture.html#scope", "request_file_digest", "revise_request", "check_duplicate", "record_timeout"),
     }
     # The wiki is a standalone technical reference: it does not link into the lectures.
     wiki_pages = ("wiki/architecture.html", "wiki/integration.html", "wiki/knowledge-context.html", "wiki/reference/code.html",
