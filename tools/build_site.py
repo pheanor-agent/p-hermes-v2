@@ -47,7 +47,7 @@ def page(title: str, lead: str, cards: list[tuple[str, str, str, str]], depth: i
         f'<main class="main"><div class="heading"><h2>{escape(title)}</h2><p>{escape(lead)}</p></div>'
         f'<nav class="courses" aria-label="{escape(title)}">{items}</nav></main>'
         f'<footer class="footer"><span>p-hermes · 에이전트 시스템을 이해하는 강의와 참조</span>'
-        f'<nav aria-label="홈"><a href="{prefix}index.html">홈으로 →</a></nav></footer></body></html>'
+        f'<nav aria-label="홈"><a href="{prefix}privacy.html">개인정보처리방침</a> · <a href="{prefix}index.html">홈으로 →</a></nav></footer></body></html>'
     )
 
 
@@ -129,6 +129,8 @@ def _build() -> None:
     deckify.build(ROOT / "site" / "lectures", OUT / "lectures")
     import wikify
     wikify.build(OUT / "wiki")
+    import publish_meta
+    publish_meta.apply(OUT)
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     actual = hashlib.sha256((OUT / "index.html").read_bytes()).hexdigest()
     source = hashlib.sha256(HOME.read_bytes()).hexdigest()

@@ -156,7 +156,21 @@ def main() -> int:
         if (DOCS / relative).exists():
             errors.append(f"retired public page tree remains: {relative}")
 
+    for required in ("404.html", "privacy.html", "sitemap.xml", "robots.txt", "assets/og.png", "assets/favicon.svg"):
+        if not (DOCS / required).is_file():
+            errors.append(f"required publish file missing: {required}")
+    home_text = published_home.read_text(encoding="utf-8") if published_home.is_file() else ""
+    if 'href="privacy.html"' not in home_text:
+        errors.append("home does not link privacy.html")
+
     html_paths = sorted(DOCS.rglob("*.html"))
+    for path in html_paths:
+        text = path.read_text(encoding="utf-8")
+        if 'http-equiv="refresh"' in text:
+            continue
+        for marker in ('property="og:image"', 'property="og:title"', 'rel="icon"'):
+            if marker not in text:
+                errors.append(f"share metadata {marker} missing in {path.relative_to(DOCS)}")
     pages: dict[Path, Page] = {}
     for path in html_paths:
         page = Page()
