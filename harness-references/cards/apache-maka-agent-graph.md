@@ -1,7 +1,7 @@
 # Apache Maka: Agent Graph and stream scheduling draft
 
-- 원문 (영어): https://github.com/apache/maka/blob/main/docs/architecture/agent-graph-stream-scheduling-draft.md
-- 원문 (중국어): https://github.com/apache/maka/blob/main/docs/architecture/agent-graph-stream-scheduling-draft.zh-CN.md
+- 원문 (영어): https://github.com/apache/maka/blob/103841fdf14645f00063170e42c39181e0d0fa42/docs/architecture/agent-graph-stream-scheduling-draft.md
+- 원문 (중국어): https://github.com/apache/maka/blob/103841fdf14645f00063170e42c39181e0d0fa42/docs/architecture/agent-graph-stream-scheduling-draft.zh-CN.md
 - 저장소: https://github.com/apache/maka (사용자가 저장소 링크로 처음 제공)
 - 출처 시점: live draft; retrieved 2026-10-14. 원문 링크 제공 2026-10-13 (KST, 내부 증거).
 - 주제: orchestration/workflow · evaluation/observability · case/implementation

@@ -202,7 +202,7 @@
   - 출처 상태: derived-only · 제공: unknown
   - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry
 
-- **Supermemory — agent memory post** — [원문](https://x.com/DhravyaShah/status/2035517012647272689)
+- **Supermemory — agent memory post** — [원문](https://web.archive.org/web/20260324045106/https://x.com/dhravyashah/status/2035517012647272689)
   - Supermemory의 에이전트 메모리 관련 게시물 링크로, 원문 확인 없이는 세부 주장을 확정하지 않는다.
   - 출처 상태: derived-only · 제공: unknown
   - 등록 확인: index entry present; reference file missing; wiki derived page located · 분류 근거: title-and-existing-wiki-or-index-record; original source not re-opened for this inventory entry

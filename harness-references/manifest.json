@@ -613,9 +613,9 @@
     {
       "id": "apache-maka-agent-graph",
       "title": "Apache Maka Agent Graph and stream scheduling draft",
-      "canonical_url": "https://github.com/apache/maka/blob/main/docs/architecture/agent-graph-stream-scheduling-draft.md",
+      "canonical_url": "https://github.com/apache/maka/blob/103841fdf14645f00063170e42c39181e0d0fa42/docs/architecture/agent-graph-stream-scheduling-draft.md",
       "alternate_urls": [
-        "https://github.com/apache/maka/blob/main/docs/architecture/agent-graph-stream-scheduling-draft.zh-CN.md",
+        "https://github.com/apache/maka/blob/103841fdf14645f00063170e42c39181e0d0fa42/docs/architecture/agent-graph-stream-scheduling-draft.zh-CN.md",
         "https://raw.githubusercontent.com/apache/maka/main/docs/architecture/agent-graph-stream-scheduling-draft.md",
         "https://github.com/apache/maka"
       ],
@@ -856,7 +856,7 @@
     {
       "id": "memgpt-context-os",
       "title": "MemGPT — Context OS",
-      "canonical_url": "https://memgpt.readme.io/docs/memgpt-memories",
+      "canonical_url": "https://arxiv.org/abs/2310.08560",
       "alternate_urls": [
         "https://arxiv.org/abs/2310.08560"
       ],

@@ -1,6 +1,6 @@
 # MemGPT — Context OS
 
-- Source: https://memgpt.readme.io/docs/memgpt-memories
+- Source: https://arxiv.org/abs/2310.08560
 - Alternate sources: https://arxiv.org/abs/2310.08560
 - Topics: context-memory-knowledge, case-implementation
 - Publication date: unknown / not independently verified
